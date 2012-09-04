@@ -103,7 +103,7 @@ class attribute_location(Model):
     _inherits = {'product.attribute': 'attribute_id'}
     _columns = {
         'attribute_id': fields.many2one('product.attribute', 'Product Attribute', required=True, ondelete="cascade"),
-        'attribute_set_id': fields.many2one('attribute.set', 'Attribute Set', required=True),
+        'attribute_set_id': fields.related('attribute_group_id', 'attribute_set_id', type='many2one', relation='attribute.set', string='Attribute Set', store=True, readonly=True),
         'attribute_group_id': fields.many2one('attribute.group', 'Attribute Group', required=True),
         'sequence': fields.integer('Sequence'),
         }
@@ -136,25 +136,4 @@ class attribute_set(Model):
         'name': fields.char('Name', size=128, required=True),
         'attribute_group_ids': fields.one2many('attribute.group', 'attribute_set_id', 'Attribute Groups'),
         }
-
-    def create(self, cr, uid, vals, context=None):
-        original_vals = vals.copy()
-        vals['attribute_group_ids'] = []
-        set_id = super(attribute_set, self).create(cr, uid, vals, context)
-        self.write(cr, uid, set_id, original_vals, context=context)
-        return set_id
-
-    def write(self, cr, uid, ids, vals, context=None):
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for set_id in ids:
-            full_vals = vals.copy()
-            for group in full_vals['attribute_group_ids']:
-                if group[2]:
-                    group[2]['attribute_set_id'] = set_id
-                    for attribute in group[2]['attribute_ids']:
-                        if attribute[2]:
-                            attribute[2]['attribute_set_id'] = set_id
-            super(attribute_set, self).write(cr, uid, set_id, full_vals, context)
-        return True
 
