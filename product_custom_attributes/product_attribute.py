@@ -25,7 +25,6 @@ from openerp.osv.osv import except_osv
 from openerp.tools import _
 
 #You should install the library Unicode2Ascii, you can find it in the akretion github repository
-from unicode2ascii import Unicode2Ascii
 from tools.translate import _
 
 class attribute_option(Model):
@@ -92,7 +91,7 @@ class product_attribute(Model):
     def onchange_field_description(self, cr, uid, ids, field_description, context=None):
         name = 'x_'
         if field_description:
-            name = Unicode2Ascii('x_%s' % field_description.replace(' ', '_').lower())
+            name = unidecode('x_%s' % field_description.replace(' ', '_').lower())
         return  {'value' : {'name' : name}}
 
 
