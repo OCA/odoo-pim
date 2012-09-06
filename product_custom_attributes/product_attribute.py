@@ -22,10 +22,11 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv.osv import except_osv
-from openerp.tools import _
+from openerp.tools.translate import _
 
 #You should install the library Unicode2Ascii, you can find it in the akretion github repository
-from tools.translate import _
+from unicode2ascii import Unicode2Ascii
+
 
 class attribute_option(Model):
     _name = "attribute.option"
