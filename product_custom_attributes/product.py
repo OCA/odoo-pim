@@ -22,8 +22,9 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv.osv import except_osv
-from lxml import etree
+from openerp.osv.orm import setup_modifiers
 from tools.translate import _
+from lxml import etree
 
 
 class product_product(Model):
@@ -81,6 +82,40 @@ class product_product(Model):
 
     def save_and_close_product_attributes(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
+
+    def _build_attribute_field(self, cr, uid, page, attribute, context=None):
+        parent = page
+        kwargs = {'name': "%s" % attribute.name}
+        if attribute.ttype == 'many2many':
+            parent = etree.SubElement(page, 'group', colspan="2", col="4")
+            #FIXME the following isn't displayed in v7:
+            sep = etree.SubElement(parent, 'separator',
+                                    string="%s" % attribute.field_description, colspan="4")
+            kwargs['nolabel'] = "1"
+        if attribute.ttype in ['many2one', 'many2many']:
+            if attribute.relation_model_id:
+                if attribute.domain:
+                    kwargs['domain'] = attribute.domain
+                else:
+                    ids = [op.value_ref.id for op in attribute.option_ids]
+                    kwargs['domain'] = "[('id', 'in', %s)]" % ids
+            else:
+                kwargs['domain'] = "[('attribute_id', '=', %s)]" % attribute.attribute_id.id
+        field = etree.SubElement(parent, 'field', **kwargs)
+        setup_modifiers(field, self.fields_get(cr, uid, attribute.name, context))
+        return parent
+
+    def _build_attributes_notebook(self, cr, uid, attribute_group_ids, context=None):
+        notebook = etree.Element('notebook', name="attributes_notebook", colspan="4")
+        toupdate_fields = []
+        grp_obj = self.pool.get('attribute.group')
+        for group in grp_obj.browse(cr, uid, attribute_group_ids, context=context):
+            page = etree.SubElement(notebook, 'page', string=group.name.capitalize())
+            for attribute in group.attribute_ids:
+                if attribute.name not in toupdate_fields:
+                    toupdate_fields.append(attribute.name)
+                    self._build_attribute_field(cr, uid, page, attribute, context=context)
+        return notebook, toupdate_fields
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         if context is None:
