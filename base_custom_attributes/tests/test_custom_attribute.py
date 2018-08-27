@@ -6,66 +6,33 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
+import mock
 
 
 class TestCustomAttribute(common.TransactionCase):
 
     def setUp(self):
-
         super(TestCustomAttribute, self).setUp()
+        self.model_id = self.env.ref('base.model_res_partner').id
+        # Do not commit
+        self.env.cr.commit = mock.Mock()
 
-        self.attribute_model = self.env['attribute.attribute']
-        self.set_model = self.env['attribute.set']
-        self.group_model = self.env['attribute.group']
-        self.location_model = self.env['attribute.location']
-        self.option_model = self.env['attribute.option']
-        self.wizard_model = self.env['attribute.option.wizard']
-        self.model_model = self.env['ir.model']
-        self.field_model = self.env['ir.model.fields']
-
-        self.model = self.env['ir.model'].search([
-            ('model', '=', 'x_test_model_1')])
-        if not self.model:
-            self.model = self.env['ir.model'].create({
-                'name': 'test_model_1',
-                'model': 'x_test_model_1'
+    def _create_attribute(self, vals):
+        vals.update({
+            'model_id': self.model_id,
+            'field_description': 'Attribute %s' % vals['attribute_type'],
+            'name': 'x_%s' % vals['attribute_type'],
             })
-
-        self.set_1 = self.set_model.create({
-            'name': 'Set 1',
-            'model_id': self.model.id,
-        })
-
-        self.set_2 = self.set_model.create({
-            'name': 'Set 2',
-            'model_id': self.model.id,
-        })
-
-        self.group_1 = self.group_model.create({
-            'name': 'Group 1',
-            'attribute_set_id': self.set_1.id,
-            'model_id': self.model.id,
-        })
-
-        self.vals = {
-            'field_description': 'Attribute 1',
-            'name': 'x_attribute_1',
-            'attribute_type': 'char',
-            'model_id': self.model.id,
-        }
+        return self.env['attribute.attribute'].create(vals)
 
     def test_create_attribute_char(self):
-        self.vals.update({
+        attribute = self._create_attribute({
             'attribute_type': 'char',
-            'name': 'x_attribute_char',
             })
-        attribute = self.attribute_model.create(self.vals)
-
         self.assertEqual(attribute.ttype, 'char')
 
     def test_create_attribute_selection(self):
-        self.vals.update({
-            'name': 'x_attribute_selection',
+        attribute = self._create_attribute({
             'attribute_type': 'select',
             'option_ids': [
                 (0, 0, {
@@ -76,15 +43,13 @@ class TestCustomAttribute(common.TransactionCase):
                 }),
             ]
         })
-        attribute = self.attribute_model.create(self.vals)
 
         self.assertEqual(attribute.ttype, 'many2one')
         self.assertEqual(attribute.relation, 'attribute.option')
 
     def test_create_attribute_multiselect(self):
-        self.vals.update({
+        attribute = self._create_attribute({
             'attribute_type': 'multiselect',
-            'name': 'x_attribute_mutliselect',
             'option_ids': [
                 (0, 0, {
                     'name': 'Value 1',
@@ -94,7 +59,6 @@ class TestCustomAttribute(common.TransactionCase):
                 }),
             ]
         })
-        attribute = self.attribute_model.create(self.vals)
 
         self.assertEqual(attribute.ttype, 'many2many')
         self.assertEqual(attribute.relation, 'attribute.option')

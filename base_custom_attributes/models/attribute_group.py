@@ -5,7 +5,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class AttributeGroup(models.Model):
@@ -24,7 +24,8 @@ class AttributeGroup(models.Model):
 
     attribute_set_id = fields.Many2one(
         'attribute.set',
-        'Attribute Set'
+        'Attribute Set',
+        required=True,
     )
 
     attribute_ids = fields.One2many(
@@ -33,33 +34,9 @@ class AttributeGroup(models.Model):
         'Attributes'
     )
 
-    def _get_default_model(self):
-        force_model = self.env.context.get('force_model')
-
-        if force_model:
-            models = self.env['ir.model'].search([
-                ('model', '=', force_model)])
-
-            if models:
-                return models[0]
-
-        return False
-
     model_id = fields.Many2one(
         'ir.model',
         'Model',
-        required=True,
-        default=_get_default_model,
+        readonly=True,
+        related='attribute_set_id.model_id',
     )
-
-    @api.model
-    def create(self, vals):
-        for attribute in vals.get('attribute_ids', []):
-            if (
-                vals.get('attribute_set_id') and
-                attribute[2] and
-                not attribute[2].get('attribute_set_id')
-            ):
-                attribute[2]['attribute_set_id'] = vals['attribute_set_id']
-
-        return super(AttributeGroup, self).create(vals)
