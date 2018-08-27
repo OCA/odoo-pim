@@ -1,25 +1,9 @@
-# -*- encoding: utf-8 -*-
-###############################################################################
-#                                                                             #
-#   base_attribute.attributes for OpenERP                                     #
-#   Copyright (C) 2011 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>  #
-#   Copyright (C) 2013 Akretion Raphaël VALYI <raphael.valyi@akretion.com>    #
-#   Copyright (C) 2015 Savoir-faire Linux                                     #
-#                                                                             #
-#   This program is free software: you can redistribute it and/or modify      #
-#   it under the terms of the GNU Affero General Public License as            #
-#   published by the Free Software Foundation, either version 3 of the        #
-#   License, or (at your option) any later version.                           #
-#                                                                             #
-#   This program is distributed in the hope that it will be useful,           #
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of            #
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             #
-#   GNU Affero General Public License for more details.                       #
-#                                                                             #
-#   You should have received a copy of the GNU Affero General Public License  #
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.     #
-#                                                                             #
-###############################################################################
+# -*- coding: utf-8 -*-
+# Copyright 2011 Akretion (http://www.akretion.com).
+# @author Benoît GUILLOT <benoit.guillot@akretion.com>
+# @author Raphaël VALYI <raphael.valyi@akretion.com>
+# Copyright 2015 Savoir-faire Linux
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
 
@@ -39,7 +23,8 @@ class TestCustomAttribute(common.TransactionCase):
         self.model_model = self.env['ir.model']
         self.field_model = self.env['ir.model.fields']
 
-        self.model = self.env['ir.model'].search([('model', '=', 'x_test_model_1')])
+        self.model = self.env['ir.model'].search([
+            ('model', '=', 'x_test_model_1')])
         if not self.model:
             self.model = self.env['ir.model'].create({
                 'name': 'test_model_1',
@@ -119,7 +104,8 @@ class TestCustomAttribute(common.TransactionCase):
 #        sequence_type = sequence_type_model.create({
 #            'name': 'Sequence type 1',
 #        })
-#        model = self.model_model.search([('name', '=', 'res.partner.category')])
+#        model = self.model_model.search([
+#           ('name', '=', 'res.partner.category')])
 #
 #        self.vals.update({
 #            'attribute_type': 'multiselect',
