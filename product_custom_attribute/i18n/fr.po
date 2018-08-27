@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* product_custom_attributes
+#	* product_custom_attribute
 #
 msgid ""
 msgstr ""
@@ -16,103 +16,103 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-05-17 07:08+0000\n"
 "X-Generator: Launchpad (build 17007)\n"
 
-#. module: product_custom_attributes
-#: code:addons/product_custom_attributes/product.py:110
+#. module: product_custom_attribute
+#: code:addons/product_custom_attribute/product.py:110
 #, python-format
 msgid "Information"
 msgstr "Information"
 
-#. module: product_custom_attributes
-#: model:ir.model,name:product_custom_attributes.model_product_product
+#. module: product_custom_attribute
+#: model:ir.model,name:product_custom_attribute.model_product_product
 #: view:product.product:0
 msgid "Product"
 msgstr "Article"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:product.product:0
 msgid "attributes_placeholder"
 msgstr "attributes_placeholder"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:product.product:0
 msgid "Open Attributes"
 msgstr "Ouvrir les attributs"
 
-#. module: product_custom_attributes
-#: model:ir.actions.act_window,name:product_custom_attributes.open_product_by_attribute_set
-#: model:ir.ui.menu,name:product_custom_attributes.open_product_wizard
+#. module: product_custom_attribute
+#: model:ir.actions.act_window,name:product_custom_attribute.open_product_by_attribute_set
+#: model:ir.ui.menu,name:product_custom_attribute.open_product_wizard
 msgid "Open Product By Attribute Set"
 msgstr "Ouvrir les articles par jeux d'attributs"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:open.product.by.attribute.set:0
 msgid "Open product by attributes set"
 msgstr "Ouvrir les articles par jeux d'attributs"
 
-#. module: product_custom_attributes
-#: model:ir.model.fields,field_description:product_custom_attributes.field_open_product_by_attribute_set_attribute_set_id
-#: model:ir.model.fields,field_description:product_custom_attributes.field_product_template_attribute_set_id
+#. module: product_custom_attribute
+#: model:ir.model.fields,field_description:product_custom_attribute.field_open_product_by_attribute_set_attribute_set_id
+#: model:ir.model.fields,field_description:product_custom_attribute.field_product_template_attribute_set_id
 #: field:open.product.by.attribute.set,attribute_set_id:0
 #: field:product.template,attribute_set_id:0
 msgid "Attribute Set"
 msgstr "Jeux d'attributs"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:open.product.by.attribute.set:0
 msgid "Open Product By attribute"
 msgstr "Ouvrir article par attribut"
 
-#. module: product_custom_attributes
-#: model:ir.model,name:product_custom_attributes.model_product_template
+#. module: product_custom_attribute
+#: model:ir.model,name:product_custom_attribute.model_product_template
 msgid "Product Template"
 msgstr "Modèle d'article"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:product.product:0
 msgid "Save and Close"
 msgstr "Sauvegarder et fermer"
 
-#. module: product_custom_attributes
-#: model:ir.actions.act_window,name:product_custom_attributes.attribute_set_form_action
-#: model:ir.ui.menu,name:product_custom_attributes.menu_attribute_set_action
+#. module: product_custom_attribute
+#: model:ir.actions.act_window,name:product_custom_attribute.attribute_set_form_action
+#: model:ir.ui.menu,name:product_custom_attribute.menu_attribute_set_action
 msgid "Product Attribute Sets"
 msgstr "Jeux d'attributs de produit"
 
-#. module: product_custom_attributes
-#: model:ir.model.fields,field_description:product_custom_attributes.field_product_product_attribute_group_ids
+#. module: product_custom_attribute
+#: model:ir.model.fields,field_description:product_custom_attribute.field_product_product_attribute_group_ids
 #: field:product.product,attribute_group_ids:0
 msgid "Groups"
 msgstr "Groupes"
 
-#. module: product_custom_attributes
-#: code:addons/product_custom_attributes/product.py:108
+#. module: product_custom_attribute
+#: code:addons/product_custom_attribute/product.py:108
 #, python-format
 msgid "Custom Attributes"
 msgstr "Caractéristiques générales"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:open.product.by.attribute.set:0
 #: view:product.product:0
 msgid "Cancel"
 msgstr "Annuler"
 
-#. module: product_custom_attributes
-#: model:ir.ui.menu,name:product_custom_attributes.menu_attribute_in_config_product
+#. module: product_custom_attribute
+#: model:ir.ui.menu,name:product_custom_attribute.menu_attribute_in_config_product
 msgid "Attributes"
 msgstr "Attributs"
 
-#. module: product_custom_attributes
-#: model:ir.model,name:product_custom_attributes.model_open_product_by_attribute_set
+#. module: product_custom_attribute
+#: model:ir.model,name:product_custom_attribute.model_open_product_by_attribute_set
 msgid "Wizard to open product by attributes set"
 msgstr "Assistant d'ouverture des articles par jeux d'attributs"
 
-#. module: product_custom_attributes
-#: model:ir.actions.act_window,name:product_custom_attributes.attribute_attribute_form_action
-#: model:ir.ui.menu,name:product_custom_attributes.menu_attribute_attribute_action
+#. module: product_custom_attribute
+#: model:ir.actions.act_window,name:product_custom_attribute.attribute_attribute_form_action
+#: model:ir.ui.menu,name:product_custom_attribute.menu_attribute_attribute_action
 msgid "Product Attribute"
 msgstr "Attribut de produit"
 
-#. module: product_custom_attributes
+#. module: product_custom_attribute
 #: view:open.product.by.attribute.set:0
 #: view:product.product:0
 msgid "or"

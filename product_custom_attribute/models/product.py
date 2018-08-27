@@ -41,7 +41,7 @@ class ProductTemplate(models.Model):
         self.ensure_one()
 
         view = self.env.ref(
-            'product_custom_attributes.product_attributes_form_view')
+            'product_custom_attribute.product_attributes_form_view')
 
         grp_ids = self.attribute_group_ids.ids
         ctx = {'open_attributes': True, 'attribute_group_ids': grp_ids}

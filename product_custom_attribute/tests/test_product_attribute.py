@@ -20,7 +20,7 @@ class TestProductAttribute(TransactionCase):
 
     def test_write_attribute_values_select(self):
         option = self.env.ref(
-            'product_custom_attributes.computer_processor_attribute_option_1'
+            'product_custom_attribute.computer_processor_attribute_option_1'
             )
         self.product.write({
             'x_processor': option.id,

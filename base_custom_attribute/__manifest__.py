@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'base_custom_attributes',
+    'name': 'base_custom_attribute',
     'version': '10.0.0.0.1',
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',

@@ -12,7 +12,7 @@
     'website': 'https://akretion.com',
     'depends': [
         'product',
-        'base_custom_attributes',
+        'base_custom_attribute',
         'sale',
     ],
     'data': [
