@@ -24,6 +24,8 @@
         'wizard/open_product_by_attribute_set.xml',
         'wizard/product_product.xml',
     ],
-    'demo_xml': [],
+    'demo': [
+        'demo/product_attribute.xml'
+        ],
     'installable': True,
 }

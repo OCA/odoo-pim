@@ -246,7 +246,13 @@ class AttributeAttribute(models.Model):
     @api.multi
     def write(self, vals):
         if 'attribute_type' in vals.keys():
-            raise ValidationError(
-                _("Can't change the type of an attribute. "
-                  "Please create a new one."))
+            if self.search([
+                    ('attribute_type', '!=', vals['attribute_type']),
+                    ('id', 'in', self.ids),
+                    ]):
+                raise ValidationError(
+                    _("Can't change the type of an attribute. "
+                      "Please create a new one."))
+            else:
+                vals.pop('attribute_type')
         return super(AttributeAttribute, self).write(vals)
