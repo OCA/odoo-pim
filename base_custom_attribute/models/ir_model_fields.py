@@ -5,11 +5,12 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class IrModelFields(models.Model):
     _inherit = "ir.model.fields"
 
     field_description = fields.Char(
-        'Field Label', required=True, translate=True)
+        "Field Label", required=True, translate=True
+    )

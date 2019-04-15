@@ -5,34 +5,31 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class AttributeLocation(models.Model):
     _name = "attribute.location"
     _description = "Attribute Location"
     _order = "sequence"
-    _inherits = {'attribute.attribute': 'attribute_id'}
+    _inherits = {"attribute.attribute": "attribute_id"}
 
     attribute_id = fields.Many2one(
-        'attribute.attribute',
-        'Product Attribute',
+        "attribute.attribute",
+        "Product Attribute",
         required=True,
-        ondelete="cascade"
+        ondelete="cascade",
     )
 
     attribute_set_id = fields.Many2one(
-        'attribute.set',
-        'Attribute Set',
-        related='attribute_group_id.attribute_set_id',
-        readonly=True
+        "attribute.set",
+        "Attribute Set",
+        related="attribute_group_id.attribute_set_id",
+        readonly=True,
     )
 
     attribute_group_id = fields.Many2one(
-        'attribute.group',
-        'Attribute Group',
-        required=True,
-        ondelete="cascade"
+        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
     )
 
-    sequence = fields.Integer('Sequence')
+    sequence = fields.Integer("Sequence")

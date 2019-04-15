@@ -3,14 +3,14 @@
 # @author Benoit Guillot <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class OpenProductByAttributeSet(models.TransientModel):
-    _name = 'open.product.by.attribute.set'
-    _description = 'Wizard to open product by attributes set'
+    _name = "open.product.by.attribute.set"
+    _description = "Wizard to open product by attributes set"
 
-    attribute_set_id = fields.Many2one('attribute.set', 'Attribute Set')
+    attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
 
     @api.multi
     def open_product_by_attribute(self):
@@ -23,18 +23,24 @@ class OpenProductByAttributeSet(models.TransientModel):
         """
         self.ensure_one()
 
-        result = self.env.ref('product.product_template_action_all')
+        result = self.env.ref("product.product_template_action_all")
         result = result.read()[0]
 
         attribute_set = self.attribute_set_id
 
-        grp_ids = self.env['attribute.group'].search([
-            ('attribute_set_id', '=', attribute_set.id)]).ids
+        grp_ids = (
+            self.env["attribute.group"]
+            .search([("attribute_set_id", "=", attribute_set.id)])
+            .ids
+        )
 
-        result.update({
-            'context': "{'open_product_by_attribute_set': %s, \
-                'attribute_group_ids': %s}" % (True, grp_ids),
-            'domain': "[('attribute_set_id', '=', %s)]" % attribute_set.id,
-            'name': attribute_set.name,
-        })
+        result.update(
+            {
+                "context": "{'open_product_by_attribute_set': %s, \
+                'attribute_group_ids': %s}"
+                % (True, grp_ids),
+                "domain": "[('attribute_set_id', '=', %s)]" % attribute_set.id,
+                "name": attribute_set.name,
+            }
+        )
         return result

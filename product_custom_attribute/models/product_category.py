@@ -3,11 +3,12 @@
 # @author Benoit Guillot <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class ProductCategory(models.Model):
     _inherit = "product.category"
 
     attribute_set_id = fields.Many2one(
-        'attribute.set', 'Default Attribute Set')
+        "attribute.set", "Default Attribute Set"
+    )

@@ -5,32 +5,25 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class AttributeSet(models.Model):
     _name = "attribute.set"
     _description = "Attribute Set"
 
-    name = fields.Char(
-        'Name',
-        required=True,
-        translate=True,
-    )
+    name = fields.Char("Name", required=True, translate=True)
 
     attribute_group_ids = fields.One2many(
-        'attribute.group',
-        'attribute_set_id',
-        'Attribute Groups',
+        "attribute.group", "attribute_set_id", "Attribute Groups"
     )
 
     @api.model
     def _get_default_model(self):
-        force_model = self.env.context.get('force_model')
+        force_model = self.env.context.get("force_model")
 
         if force_model:
-            models = self.env['ir.model'].search([
-                ('model', '=', force_model)])
+            models = self.env["ir.model"].search([("model", "=", force_model)])
 
             if models:
                 return models[0]
@@ -38,8 +31,5 @@ class AttributeSet(models.Model):
         return False
 
     model_id = fields.Many2one(
-        'ir.model',
-        'Model',
-        required=True,
-        default=_get_default_model,
+        "ir.model", "Model", required=True, default=_get_default_model
     )

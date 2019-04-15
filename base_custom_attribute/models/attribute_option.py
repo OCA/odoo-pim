@@ -5,7 +5,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 
 
 class AttributeOption(models.Model):
@@ -15,36 +15,28 @@ class AttributeOption(models.Model):
 
     @api.model
     def _get_model_list(self):
-        models = self.env['ir.model'].search([])
+        models = self.env["ir.model"].search([])
         return [(m.model, m.name) for m in models]
 
-    name = fields.Char(
-        'Name',
-        translate=True,
-        required=True,
-    )
+    name = fields.Char("Name", translate=True, required=True)
 
-    value_ref = fields.Reference(
-        _get_model_list,
-        'Reference',
-    )
+    value_ref = fields.Reference(_get_model_list, "Reference")
 
     attribute_id = fields.Many2one(
-        'attribute.attribute',
-        'Product Attribute',
-        required=True,
+        "attribute.attribute", "Product Attribute", required=True
     )
 
-    sequence = fields.Integer('Sequence')
+    sequence = fields.Integer("Sequence")
 
-    @api.onchange('name')
+    @api.onchange("name")
     def name_change(self):
         if self.attribute_id.relation_model_id:
             warning = {
-                'title': _('Error!'),
-                'message': _(
+                "title": _("Error!"),
+                "message": _(
                     "Use the 'Load Options' button "
                     "instead to select appropriate "
-                    "model references'"),
+                    "model references'"
+                ),
             }
             return {"warning": warning}

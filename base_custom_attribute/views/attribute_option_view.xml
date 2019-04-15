@@ -31,7 +31,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="attribute_option_tree_view" model="ir.ui.view">
             <field name="name">attribute.option.tree</field>
             <field name="model">attribute.option</field>
