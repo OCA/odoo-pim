@@ -1,0 +1,45 @@
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+
+language: python
+
+stages:
+  - linting
+  - test
+
+python:
+  - "2.7"
+
+jobs:
+  include:
+    - stage: linting
+      name: "Pre-Commit"
+      python: 3.6
+      install: pip install pre_commit
+      script: pre-commit run --all
+env:
+  global:
+  - VERSION="10.0" TESTS="1" LINT_CHECK="0"
+
+  matrix:
+  - TESTS="0" LINT_CHECK="1"
+  - ODOO_REPO="odoo/odoo"
+  - ODOO_REPO="OCA/OCB"
+  - UNIT_TEST="1" ODOO_REPO="OCA/OCB"
+
+install:
+  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+  - sed -i -- 's/manifest-required-author,//g' ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
+
+script:
+  - mv .isort.cfg .isoft.cfg.disabled # to avoid trouble with pylint
+  - travis_run_tests
+
+after_success:
+  - travis_after_tests_success
