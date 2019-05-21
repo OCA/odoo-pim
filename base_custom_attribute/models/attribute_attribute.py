@@ -137,7 +137,7 @@ class AttributeAttribute(models.Model):
     )
 
     serialized = fields.Boolean(
-        "Field serialized",
+        "JSON Field",
         help="If serialized, the field will be stocked in the serialized "
         "field: attribute_custom_tmpl or attribute_custom_variant "
         "depending on the field based_on",

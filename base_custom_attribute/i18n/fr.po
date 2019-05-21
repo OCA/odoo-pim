@@ -161,7 +161,7 @@ msgstr "Options d'attribut"
 #. module: base_custom_attribute
 #: field:attribute.attribute,serialized:0
 #: model:ir.model.fields,field_description:base_custom_attribute.field_attribute_attribute_serialized
-msgid "Field serialized"
+msgid "JSON Field"
 msgstr "Champ serialisé"
 
 #. module: base_custom_attribute
