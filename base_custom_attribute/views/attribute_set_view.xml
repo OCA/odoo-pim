@@ -9,9 +9,9 @@
                 <form string="Attribute Set">
                     <group>
                         <field name="name"/>
-                        <field name="model_id" invisible="context.get('force_model')"/>
+                        <field name="model_id" invisible="context.get('default_model_id')"/>
                         <field name="attribute_group_ids" colspan="4"
-                               context="{'default_model_id': model_id, 'from_attribute_set':True}">
+                               context="{'default_model_id': model_id}">
                         </field>
                     </group>
                 </form>
