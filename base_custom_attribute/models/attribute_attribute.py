@@ -49,6 +49,11 @@ class AttributeAttribute(models.Model):
                 colspan="4",
             )
             kwargs["nolabel"] = "1"
+            if attribute.ttype == "many2many":
+                # TODO use an attribute field instead
+                # to let user specify the widget. For now it fixes:
+                # https://github.com/shopinvader/odoo-pim/issues/2
+                kwargs["widget"] = "many2many_tags"
 
         if attribute.ttype in ["many2one", "many2many"]:
             if attribute.relation_model_id:
