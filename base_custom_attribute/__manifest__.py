@@ -2,7 +2,7 @@
 
 {
     "name": "base_custom_attribute",
-    "version": "10.0.0.0.1",
+    "version": "10.0.0.0.2",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",
