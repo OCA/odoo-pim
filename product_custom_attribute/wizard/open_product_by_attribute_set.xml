@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
+  
 
     <record id="open_product_by_attribute_set_view" model="ir.ui.view">
       <field name="name">open.product.by.attribute.set.view</field>
@@ -33,8 +33,8 @@
       <menuitem
               action="open_product_by_attribute_set"
               id="open_product_wizard"
-              parent="sales_team.menu_sales"
+              parent="sale.sale_order_menu"
               sequence="60"/>
 
-  </data>
+  
 </odoo>

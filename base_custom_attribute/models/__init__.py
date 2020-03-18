@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from . import attribute_attribute
 from . import attribute_location

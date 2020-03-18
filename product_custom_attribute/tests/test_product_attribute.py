@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com).
 # @author Benoit Guillot <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestProductAttribute(TransactionCase):

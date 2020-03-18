@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
+  
 
     <record model="ir.ui.view" id="product_attributes_form_view">
       <field name="name">product.attributes.normal.wizard</field>
@@ -22,5 +22,5 @@
       </field>
     </record>
 
-  </data>
+  
 </odoo>

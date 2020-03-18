@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2011 Akretion (http://www.akretion.com).
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # @author Raphaël VALYI <raphael.valyi@akretion.com>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    
 
         <record id="attribute_set_form_view" model="ir.ui.view">
             <field name="name">attribute.set.form</field>
@@ -54,5 +54,5 @@
              action="attribute_set_form_action" id="menu_attribute_set_action"
              parent="menu_attribute_in_admin" sequence="10"/>
 
-    </data>
+    
 </odoo>

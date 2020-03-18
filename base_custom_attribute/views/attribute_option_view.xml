@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    
 
         <record id="attribute_option_form_popup_view" model="ir.ui.view">
             <field name="name">attribute.option.form.popup</field>
@@ -87,5 +87,5 @@
             action="attribute_option_form_action" id="menu_attribute_option_action"
             parent="menu_attribute_in_admin" sequence="40"/>
 
-    </data>
+    
 </odoo>

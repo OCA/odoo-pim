@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
+  
 
     <record id="attribute_attribute_form_action" model="ir.actions.act_window">
       <field name="name">Product Attribute</field>
@@ -18,5 +18,5 @@
          parent="product_custom_attribute.menu_attribute_in_config_product"
          sequence="4"/>
 
-  </data>
+  
 </odoo>
