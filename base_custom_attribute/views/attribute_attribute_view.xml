@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+
 
         <record id="attribute_attribute_form_view" model="ir.ui.view">
             <field name="name">attribute.attribute.form</field>
@@ -18,7 +18,7 @@
                         <field name="translate" attrs="{'invisible':[('attribute_type', 'not in', ('char', 'text'))]}"/>
                     </group>
                     <group colspan="4" attrs="{'invisible':[('attribute_type', 'not in', ['select', 'multiselect'])]}">
-                        <group groups="base.group_advanced_attribute">
+                        <group groups="base_custom_attribute.group_advanced_attribute">
                             <field name="relation_model_id"/>
                             <field name="domain" attrs="{'invisible':[('relation_model_id', '=', False)]}"/>
                             <button name="button_add_options" attrs="{'invisible':[('relation_model_id', '=', False), ('domain', '!=', False)]}" type="object" string="Load Options"/>
@@ -70,5 +70,5 @@
             action="attribute_attribute_form_action" id="menu_attribute_attribute_action"
             parent="menu_attribute_in_admin" sequence="30"/>
 
-    
+
 </odoo>

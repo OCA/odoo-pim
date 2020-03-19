@@ -249,7 +249,7 @@ class AttributeAttribute(models.Model):
     @api.onchange("field_description")
     def onchange_field_description(self):
         if self.field_description and not self.create_date:
-            self.name = unicode(
+            self.name = unidecode(
                 "x_" + safe_column_name(self.field_description)
             )
 
