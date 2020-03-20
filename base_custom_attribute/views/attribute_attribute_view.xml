@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-
         <record id="attribute_attribute_form_view" model="ir.ui.view">
             <field name="name">attribute.attribute.form</field>
             <field name="model">attribute.attribute</field>
@@ -11,7 +10,7 @@
                         <field name="field_description"/>
                         <field name="name" attrs="{'readonly':[('create_date', '!=', False)]}"/>
                         <field name="attribute_type" />
-                        <field name="model_id" />
+                        <field name="model_id" invisible="context.get('default_model_id')"/>
                         <field name="serialized" attrs="{'invisible':[('attribute_type', '=', 'multiselect')]}"/>
                         <field name="size" attrs="{'invisible':[('attribute_type', '!=', 'char')]}"/>
                         <field name="required_on_views"/>
@@ -69,6 +68,5 @@
         <menuitem
             action="attribute_attribute_form_action" id="menu_attribute_attribute_action"
             parent="menu_attribute_in_admin" sequence="30"/>
-
 
 </odoo>

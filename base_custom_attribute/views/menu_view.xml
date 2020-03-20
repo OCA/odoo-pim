@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
 
         <menuitem
             id="menu_attribute_in_admin" name="Attributes"
             parent="base.next_id_9" sequence="1"/>
 
-    
 </odoo>

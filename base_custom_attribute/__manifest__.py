@@ -1,4 +1,3 @@
-
 {
     "name": "base_custom_attribute",
     "version": "12.0.0.0.1",

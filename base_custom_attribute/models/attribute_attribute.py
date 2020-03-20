@@ -233,8 +233,8 @@ class AttributeAttribute(models.Model):
 
             else:
                 f_vals = {
-                    "name": u"x_custom_json_attrs",
-                    "field_description": u"Serialized JSON Attributes",
+                    "name": "x_custom_json_attrs",
+                    "field_description": "Serialized JSON Attributes",
                     "ttype": "serialized",
                     "model_id": vals["model_id"],
                 }
@@ -257,11 +257,11 @@ class AttributeAttribute(models.Model):
     def onchange_name(self):
         name = self.name
         if not name.startswith("x_"):
-            self.name = u"x_%s" % name
+            self.name = "x_%s" % name
 
     @api.multi
     def write(self, vals):
-        if "attribute_type" in vals.keys():
+        if "attribute_type" in list(vals.keys()):
             if self.search(
                 [
                     ("attribute_type", "!=", vals["attribute_type"]),
