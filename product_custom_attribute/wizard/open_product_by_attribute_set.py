@@ -12,12 +12,9 @@ class OpenProductByAttributeSet(models.TransientModel):
     attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
 
     @api.multi
-    def open_product_by_attribute(self):
+    def open_product_by_attribute_set(self):
         """
         Opens Product by attributes
-        @param cr: the current row, from the database cursor,
-        @param uid: the current user’s ID for security checks,
-        @param ids: List of account chart’s IDs
         @return: dictionary of Product list window for a given attributes set
         """
         self.ensure_one()
@@ -27,17 +24,12 @@ class OpenProductByAttributeSet(models.TransientModel):
 
         attribute_set = self.attribute_set_id
 
-        grp_ids = (
-            self.env["attribute.group"]
-            .search([("attribute_set_id", "=", attribute_set.id)])
-            .ids
-        )
-
+        # TODO : isn't it possible to simplify this return dict ?
         result.update(
             {
                 "context": "{'open_product_by_attribute_set': %s, \
-                'attribute_group_ids': %s}"
-                % (True, grp_ids),
+                'attribute_set_id': %s}"
+                % (True, attribute_set.id),
                 "domain": "[('attribute_set_id', '=', %s)]" % attribute_set.id,
                 "name": attribute_set.name,
             }

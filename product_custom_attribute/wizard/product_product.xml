@@ -8,7 +8,7 @@
           <form string="Product">
               <group name="name_set">
                   <field name="name"/>
-                  <field name="attribute_set_id" />
+                  <field name="attribute_set_id"/>
               </group>
               <separator string="attributes_placeholder" colspan="4"/>
               <footer>

@@ -13,8 +13,12 @@ class AttributeSet(models.Model):
 
     name = fields.Char("Name", required=True, translate=True)
 
-    attribute_group_ids = fields.One2many(
-        "attribute.group", "attribute_set_id", "Attribute Groups"
+    attribute_ids = fields.Many2many(
+        comodel_name="attribute.attribute",
+        string="Attributes",
+        relation='rel_attribute_set',
+        column1='attribute_set_id',
+        column2='attribute_id',
     )
 
     model_id = fields.Many2one("ir.model", "Model", required=True)

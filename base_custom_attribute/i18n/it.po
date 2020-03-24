@@ -44,7 +44,7 @@ msgstr "Gruppo caratteristiche"
 
 #. module: base_custom_attribute
 #: view:attribute.group:0
-#: model:ir.model,name:base_custom_attribute.model_attribute_location
+#: model:ir.model,name:base_custom_attribute.model_attribute_attribute
 msgid "Attribute Location"
 msgstr ""
 

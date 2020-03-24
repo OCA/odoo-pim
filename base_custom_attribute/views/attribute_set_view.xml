@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>    
+<odoo>
 
         <record id="attribute_set_form_view" model="ir.ui.view">
             <field name="name">attribute.set.form</field>
@@ -9,8 +9,14 @@
                     <group>
                         <field name="name"/>
                         <field name="model_id" invisible="context.get('default_model_id')"/>
-                        <field name="attribute_group_ids" colspan="4"
-                               context="{'default_model_id': model_id}">
+                        <field name="attribute_ids" colspan="4"
+                               context="{'default_model_id': model_id, 'default_attribute_set_ids': [(4, id)]}">
+                               <tree string="Attributes">
+                                   <field name="name" string="Attribute"/>
+                                   <field name="attribute_type" />
+                                   <field name="sequence"/>
+                                   <field name="attribute_group_id"/>
+                               </tree>
                         </field>
                     </group>
                 </form>
@@ -22,8 +28,8 @@
             <field name="model">attribute.set</field>
             <field name="arch" type="xml">
                 <tree string="Attribute Set" >
-                    <field name="name" />
-                    <field name="model_id" />
+                    <field name="name"/>
+                    <field name="model_id"/>
                 </tree>
             </field>
         </record>
@@ -34,7 +40,7 @@
             <field name="arch" type="xml">
                 <search string="Search Attribute Sets">
                     <field name="name"/>
-                    <field name="model_id" />
+                    <field name="model_id"/>
                </search>
             </field>
         </record>
@@ -52,5 +58,5 @@
          <menuitem
              action="attribute_set_form_action" id="menu_attribute_set_action"
              parent="menu_attribute_in_admin" sequence="10"/>
-    
+
 </odoo>

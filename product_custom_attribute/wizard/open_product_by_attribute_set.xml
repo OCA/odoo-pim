@@ -7,10 +7,10 @@
       <field name="arch" type="xml">
         <form string="Open product by attributes set">
           <group>
-            <field name="attribute_set_id" />
+            <field name="attribute_set_id" domain="[('model_id.model', '=', 'product.template')]"/>
           </group>
           <footer>
-            <button name="open_product_by_attribute"
+            <button name="open_product_by_attribute_set"
                     string="Open Product By attribute"
                     type="object" class="oe_highlight"/>
             or

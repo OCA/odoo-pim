@@ -11,22 +11,18 @@
         <field name="model_id" ref="base.model_res_partner"/>
     </record>
 
-    <record id="b2b_general_attribute_group" model="attribute.group">
+    <record id="customer_general_attribute_group" model="attribute.group">
         <field name="name">General</field>
         <field name="sequence" eval="1"/>
-        <field name="attribute_set_id" ref="b2b_attribute_set"/>
-    </record>
-
-    <record id="b2c_general_attribute_group" model="attribute.group">
-        <field name="name">General</field>
-        <field name="sequence" eval="1"/>
-        <field name="attribute_set_id" ref="b2c_attribute_set"/>
+        <field name="model_id" ref="base.model_res_partner"/>
     </record>
 
     <record id="customer_need_attribute" model="attribute.attribute">
         <field name="field_description">Need</field>
         <field name="name">x_need</field>
         <field name="attribute_type">text</field>
+        <field name="attribute_group_id" ref="customer_general_attribute_group"/>
+        <field name="attribute_set_ids" eval="[(4, ref('b2b_attribute_set')), (4, ref('b2c_attribute_set'))]"/>
         <field name="model_id" ref="base.model_res_partner"/>
     </record>
 

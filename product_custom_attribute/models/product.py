@@ -12,14 +12,6 @@ class ProductTemplate(models.Model):
 
     attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
 
-    attribute_group_ids = fields.One2many(
-        comodel_name="attribute.group",
-        inverse_name="attribute_set_id",
-        related="attribute_set_id.attribute_group_ids",
-        string="Groups",
-        store=False,
-    )
-
     @api.model
     def create(self, vals):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
@@ -43,8 +35,7 @@ class ProductTemplate(models.Model):
             "product_custom_attribute.product_attributes_form_view"
         )
 
-        grp_ids = self.attribute_group_ids.ids
-        ctx = {"open_attributes": True, "attribute_group_ids": grp_ids}
+        ctx = {"open_attributes": True, "attribute_set_id": self.attribute_set_id.id}
 
         return {
             "name": "Product Attributes",
@@ -76,7 +67,7 @@ class ProductTemplate(models.Model):
             submenu=submenu,
         )
 
-        if view_type == "form" and context.get("attribute_group_ids"):
+        if view_type == "form" and context.get("attribute_set_id"):
             eview = etree.fromstring(result["arch"])
 
             # hide button under the name
@@ -88,7 +79,7 @@ class ProductTemplate(models.Model):
 
             attributes_notebook, toupdate_fields = self.env[
                 "attribute.attribute"
-            ]._build_attributes_notebook(context["attribute_group_ids"])
+            ]._build_attributes_notebook(context["attribute_set_id"])
             result["fields"].update(self.fields_get(toupdate_fields))
 
             if context.get("open_attributes"):

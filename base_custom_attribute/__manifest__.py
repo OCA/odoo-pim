@@ -5,7 +5,7 @@
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "https://akretion.com",
-    "depends": ["base"],
+    "depends": ["base", "base_sparse_field"],
     "data": [
         "security/ir.model.access.csv",
         "security/attribute_security.xml",

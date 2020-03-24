@@ -68,13 +68,10 @@ class AttributeAttribute(models.Model):
                     kwargs["domain"] = "[('id', 'in', %s)]" % ids
             else:
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (
-                    attribute.attribute_id.id
+                    attribute.id
                 )
 
-        kwargs["context"] = "{'default_attribute_id': %s}" % (
-            attribute.attribute_id.id
-        )
-
+        kwargs["context"] = "{'default_attribute_id': %s}" % (attribute.id)
         kwargs["required"] = str(
             attribute.required or attribute.required_on_views
         )
@@ -85,25 +82,31 @@ class AttributeAttribute(models.Model):
         return parent
 
     @api.model
-    def _build_attributes_notebook(self, attribute_group_ids):
+    def _build_attributes_notebook(self, attribute_set_id):
         notebook = etree.Element(
             "notebook", name="attributes_notebook", colspan="4"
         )
         toupdate_fields = []
-        grp_obj = self.env["attribute.group"]
-        for group in grp_obj.browse(attribute_group_ids):
-            page = etree.SubElement(
-                notebook, "page", string=group.name.capitalize()
-            )
-            for attribute in group.attribute_ids:
-                if attribute.name not in toupdate_fields:
-                    toupdate_fields.append(attribute.name)
-                    self._build_attribute_field(page, attribute)
+        groups = []
+        attribute_set = self.env['attribute.set'].browse(attribute_set_id)
+
+        for attribute in attribute_set.attribute_ids:
+            att_group =  attribute.attribute_group_id.name.capitalize()
+            if att_group not in groups:
+                page = etree.SubElement(notebook, "page", string=att_group)
+                groups.append(att_group)
+            else:
+                xpath = ".//page[@string='%s']" % (att_group)
+                page = notebook.find(xpath)
+
+            if attribute.name not in toupdate_fields:
+                toupdate_fields.append(attribute.name)
+                self._build_attribute_field(page, attribute)
         return notebook, toupdate_fields
 
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
-        "removed selected options as they would be inconsistent"
+        "Remove selected options as they would be inconsistent"
         self.option_ids = [(5, 0)]
 
     @api.multi
@@ -160,6 +163,21 @@ class AttributeAttribute(models.Model):
         help="If activated, the attribute will be mandatory on the views, "
         "but not in the database",
     )
+
+    attribute_set_ids = fields.Many2many(
+        comodel_name="attribute.set",
+        string="Attribute Sets",
+        relation='rel_attribute_set',
+        column1='attribute_id',
+        column2='attribute_set_id',
+        required=True
+    )
+
+    attribute_group_id = fields.Many2one(
+        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
+    )
+
+    sequence = fields.Integer("Sequence")
 
     @api.model
     def create(self, vals):

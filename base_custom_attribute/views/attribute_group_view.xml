@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>   
+<odoo>
 
         <record id="attribute_group_form_view" model="ir.ui.view">
             <field name="model">attribute.group</field>
             <field name="arch" type="xml">
                 <form string="Attribute Group">
                     <group>
-                        <field name="name" />
+                        <field name="name"/>
                         <field name="sequence"/>
                         <field name="model_id" invisible="1"/>
-                        <field name="attribute_ids" colspan="4">
-                            <form string="Attribute Location">
-                                <field name="attribute_id"/>
-                                <field name="sequence" />
-                            </form>
-                            <tree string="Attribute Location" editable="bottom">
-                                <field name="attribute_id"
-                                       context="{'default_model_id': parent.model_id}"/>
+                        <field name="attribute_ids" colspan="4"
+                            context="{'default_model_id': model_id, 'default_attribute_group_id': id}">
+                            <tree string="Attributes" create="true" >
+                                <field name="name"
+                                       string="Attribute"/>
                                 <field name="sequence" />
                             </tree>
                         </field>
@@ -34,5 +31,5 @@
                 </tree>
             </field>
         </record>
-    
+
 </odoo>

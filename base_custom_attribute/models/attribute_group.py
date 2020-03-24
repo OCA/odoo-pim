@@ -16,14 +16,10 @@ class AttributeGroup(models.Model):
 
     sequence = fields.Integer("Sequence")
 
-    attribute_set_id = fields.Many2one(
-        "attribute.set", "Attribute Set", required=True
-    )
-
     attribute_ids = fields.One2many(
-        "attribute.location", "attribute_group_id", "Attributes"
+        "attribute.attribute", "attribute_group_id", "Attributes"
     )
 
     model_id = fields.Many2one(
-        "ir.model", "Model", readonly=True, related="attribute_set_id.model_id"
+        "ir.model", "Model", readonly=True, related="attribute_ids.model_id"
     )

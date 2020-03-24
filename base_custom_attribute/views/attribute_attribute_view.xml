@@ -9,7 +9,10 @@
                     <group>
                         <field name="field_description"/>
                         <field name="name" attrs="{'readonly':[('create_date', '!=', False)]}"/>
-                        <field name="attribute_type" />
+                        <field name="attribute_type"/>
+                        <field name="attribute_group_id"/>
+                        <field name="sequence"/>
+                        <field name="attribute_set_ids" widget="many2many_tags"/>
                         <field name="model_id" invisible="context.get('default_model_id')"/>
                         <field name="serialized" attrs="{'invisible':[('attribute_type', '=', 'multiselect')]}"/>
                         <field name="size" attrs="{'invisible':[('attribute_type', '!=', 'char')]}"/>
@@ -41,6 +44,9 @@
                 <tree string="Attribute">
                     <field name="name" />
                     <field name="attribute_type" />
+                    <field name="sequence"/>
+                    <field name="attribute_group_id"/>
+                    <field name="attribute_set_ids" widget="many2many_tags"/>
                 </tree>
             </field>
         </record>
