@@ -14,24 +14,13 @@ class OpenProductByAttributeSet(models.TransientModel):
     @api.multi
     def open_product_by_attribute_set(self):
         """
-        Opens Product by attributes
-        @return: dictionary of Product list window for a given attributes set
+        Opens Products of a selected Attribute Set
         """
         self.ensure_one()
 
-        result = self.env.ref("product.product_template_action_all")
-        result = result.read()[0]
+        act_product_tmpl_all = self.env.ref(
+            "product.product_template_action_all").read()[0]
+        act_product_tmpl_all['context'] = "{\
+            'search_default_attribute_set_id' : %s }" % self.attribute_set_id.id
 
-        attribute_set = self.attribute_set_id
-
-        # TODO : isn't it possible to simplify this return dict ?
-        result.update(
-            {
-                "context": "{'open_product_by_attribute_set': %s, \
-                'attribute_set_id': %s}"
-                % (True, attribute_set.id),
-                "domain": "[('attribute_set_id', '=', %s)]" % attribute_set.id,
-                "name": attribute_set.name,
-            }
-        )
-        return result
+        return act_product_tmpl_all

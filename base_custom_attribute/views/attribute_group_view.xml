@@ -12,8 +12,9 @@
                         <field name="attribute_ids" colspan="4"
                             context="{'default_model_id': model_id, 'default_attribute_group_id': id}">
                             <tree string="Attributes" create="true" >
-                                <field name="name"
-                                       string="Attribute"/>
+                                <field name="name"/>
+                                <field name="field_description"/>
+                                <field name="attribute_type"/>
                                 <field name="sequence" />
                             </tree>
                         </field>
@@ -26,8 +27,8 @@
             <field name="model">attribute.group</field>
             <field name="arch" type="xml">
                 <tree string="Attribute Group">
-                    <field name="name" />
-                    <field name="sequence" />
+                    <field name="name"/>
+                    <field name="sequence"/>
                 </tree>
             </field>
         </record>

@@ -35,74 +35,79 @@ class AttributeAttribute(models.Model):
     _inherits = {"ir.model.fields": "field_id"}
 
     @api.model
-    def _build_attribute_field(self, page, attribute):
-        parent = etree.SubElement(page, "group", colspan="2", col="4")
-        kwargs = {"name": "%s" % attribute.name}
+    def _build_attribute_field(self, page_group):
+        """Return an etree 'field' element made of the current attribute 'self'
+        and child of his etree group 'page_group'"""
+        self.ensure_one()
+        parent = etree.SubElement(page_group, "group", colspan="2")
+        kwargs = {"name": "%s" % self.name}
 
-        if attribute.ttype in ["many2many", "text"]:
-            parent = etree.SubElement(parent, "group", colspan="2", col="4")
+        if self.ttype in ["many2many", "text"]:
+            # Add a separator, sibling of field
             etree.SubElement(
                 parent,
                 "separator",
-                string="%s" % attribute.field_description,
-                colspan="4",
+                string="%s" % self.field_description,
+                colspan="2",
             )
             kwargs["nolabel"] = "1"
-            if attribute.ttype == "many2many":
+            if self.ttype == "many2many":
                 # TODO use an attribute field instead
                 # to let user specify the widget. For now it fixes:
                 # https://github.com/shopinvader/odoo-pim/issues/2
                 kwargs["widget"] = "many2many_tags"
 
-        if attribute.ttype in ["many2one", "many2many"]:
-            if attribute.relation_model_id:
+        if self.ttype in ["many2one", "many2many"]:
+            if self.relation_model_id:
                 # attribute.domain is a string, it may be an empty list
                 try:
-                    domain = ast.literal_eval(attribute.domain)
+                    domain = ast.literal_eval(self.domain)
                 except ValueError:
                     domain = None
                 if domain:
-                    kwargs["domain"] = attribute.domain
+                    kwargs["domain"] = self.domain
                 else:
-                    ids = [op.value_ref.id for op in attribute.option_ids]
+                    ids = [op.value_ref.id for op in self.option_ids]
                     kwargs["domain"] = "[('id', 'in', %s)]" % ids
+                # Add color options if the attribute's Relational Model
+                # has a color field
+                relation_model_obj = self.env[self.relation_model_id.model]
+                if 'color' in relation_model_obj.fields_get().keys():
+                    kwargs["options"] = "{'color_field': 'color'}"
             else:
-                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (
-                    attribute.id
-                )
+                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
 
-        kwargs["context"] = "{'default_attribute_id': %s}" % (attribute.id)
-        kwargs["required"] = str(
-            attribute.required or attribute.required_on_views
-        )
+        kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+        kwargs["required"] = str(self.required or self.required_on_views)
 
         field = etree.SubElement(parent, "field", **kwargs)
-        setup_modifiers(field, self.fields_get(attribute.name))
+        setup_modifiers(field, self.fields_get(self.name))
 
-        return parent
+        return field
 
     @api.model
-    def _build_attributes_notebook(self, attribute_set_id):
+    def _build_attributes_notebook(self, attribute_ids):
+        """Build an etree 'notebook' made of pages.
+        Each page is made of attributes from one attribute_group"""
         notebook = etree.Element(
-            "notebook", name="attributes_notebook", colspan="4"
+            "notebook", name="attributes_notebook"
         )
-        toupdate_fields = []
         groups = []
-        attribute_set = self.env['attribute.set'].browse(attribute_set_id)
 
-        for attribute in attribute_set.attribute_ids:
-            att_group =  attribute.attribute_group_id.name.capitalize()
-            if att_group not in groups:
-                page = etree.SubElement(notebook, "page", string=att_group)
-                groups.append(att_group)
-            else:
+        for attribute in attribute_ids:
+            att_group = attribute.attribute_group_id.name.capitalize()
+            if att_group in groups:
                 xpath = ".//page[@string='%s']" % (att_group)
                 page = notebook.find(xpath)
+            else:
+                page = etree.SubElement(notebook, "page", string=att_group)
+                # Add an element "group" parent of all the childs elements
+                # of 'page' to control the fields columns number
+                page_group = etree.SubElement(page, "group", col="4")
+                groups.append(att_group)
 
-            if attribute.name not in toupdate_fields:
-                toupdate_fields.append(attribute.name)
-                self._build_attribute_field(page, attribute)
-        return notebook, toupdate_fields
+            attribute._build_attribute_field(page_group)
+        return notebook
 
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
@@ -177,7 +182,8 @@ class AttributeAttribute(models.Model):
         "attribute.group", "Attribute Group", required=True, ondelete="cascade"
     )
 
-    sequence = fields.Integer("Sequence")
+    sequence = fields.Integer("Sequence",
+                              help="The attribute's order in his group")
 
     @api.model
     def create(self, vals):
@@ -294,4 +300,23 @@ class AttributeAttribute(models.Model):
                 )
             else:
                 vals.pop("attribute_type")
+        # Prevent changing relation_model_id for multiselect Attributes
+        # as the values of the existing many2many Attribute fields won't be
+        # deleted if changing relation_model_id
+        if "relation_model_id" in list(vals.keys()):
+            if self.search(
+                [
+                    ("relation_model_id", "!=", vals["relation_model_id"]),
+                    ("id", "in", self.ids),
+                ]
+            ):
+                raise ValidationError(
+                    _(
+                        "Can't change the attribute's Relational Model. "
+                        "Please create a new one."
+                    )
+                )
+            else:
+                vals.pop("relation_model_id")
+
         return super(AttributeAttribute, self).write(vals)

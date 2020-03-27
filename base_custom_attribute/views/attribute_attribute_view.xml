@@ -42,8 +42,9 @@
             <field name="model">attribute.attribute</field>
             <field name="arch" type="xml">
                 <tree string="Attribute">
-                    <field name="name" />
-                    <field name="attribute_type" />
+                    <field name="name"/>
+                    <field name="field_description"/>
+                    <field name="attribute_type"/>
                     <field name="sequence"/>
                     <field name="attribute_group_id"/>
                     <field name="attribute_set_ids" widget="many2many_tags"/>

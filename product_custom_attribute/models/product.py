@@ -28,29 +28,6 @@ class ProductTemplate(models.Model):
         return True
 
     @api.multi
-    def open_attributes(self):
-        self.ensure_one()
-
-        view = self.env.ref(
-            "product_custom_attribute.product_attributes_form_view"
-        )
-
-        ctx = {"open_attributes": True, "attribute_set_id": self.attribute_set_id.id}
-
-        return {
-            "name": "Product Attributes",
-            "view_type": "form",
-            "view_mode": "form",
-            "view_id": view.id,
-            "res_model": self._name,
-            "context": ctx,
-            "type": "ir.actions.act_window",
-            "nodestroy": True,
-            "target": "new",
-            "res_id": self.id,
-        }
-
-    @api.multi
     def save_and_close_product_attributes(self):
         return True
 
@@ -58,49 +35,25 @@ class ProductTemplate(models.Model):
     def fields_view_get(
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
-        context = self.env.context
-
         result = super(ProductTemplate, self).fields_view_get(
             view_id=view_id,
             view_type=view_type,
             toolbar=toolbar,
             submenu=submenu,
         )
-
-        if view_type == "form" and context.get("attribute_set_id"):
+        if view_type == "form":
+            # Create the product's attributes notebook
+            att_obj = self.env['attribute.attribute']
+            attribute_ids = att_obj.with_context(product_custom_attribute=True).search([
+                ('attribute_set_ids', '!=', False),
+                ('model_id', '=', "product.template"),
+            ])
+            notebook = att_obj.with_context(product_custom_attribute=True)\
+                ._build_attributes_notebook(attribute_ids)
+            # Add it to the product form view
             eview = etree.fromstring(result["arch"])
-
-            # hide button under the name
-            button = eview.xpath("//button[@name='open_attributes']")
-
-            if button:
-                button = button[0]
-                button.getparent().remove(button)
-
-            attributes_notebook, toupdate_fields = self.env[
-                "attribute.attribute"
-            ]._build_attributes_notebook(context["attribute_set_id"])
-            result["fields"].update(self.fields_get(toupdate_fields))
-
-            if context.get("open_attributes"):
-                placeholder = eview.xpath(
-                    "//separator[@string='attributes_placeholder']"
-                )[0]
-                placeholder.getparent().replace(
-                    placeholder, attributes_notebook
-                )
-
-            elif context.get("open_product_by_attribute_set"):
-                notebook = eview.xpath("//notebook")[0]
-                page = etree.SubElement(
-                    notebook,
-                    "page",
-                    name="attributes_page",
-                    colspan="2",
-                    col="4",
-                    string="Custom attributes",
-                )
-                page.append(attributes_notebook)
+            page_att = eview.xpath("//page[@name='product_attributes']")[0]
+            page_att.append(notebook)
 
             result["arch"] = etree.tostring(eview, pretty_print=True)
         return result

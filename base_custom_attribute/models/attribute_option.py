@@ -29,6 +29,8 @@ class AttributeOption(models.Model):
 
     @api.onchange("name")
     def name_change(self):
+        """Prevent the user to add manually an option to m2o or m2m Attributes
+        linked to another model (through 'relational_model_id')"""
         if self.attribute_id.relation_model_id:
             warning = {
                 "title": _("Error!"),

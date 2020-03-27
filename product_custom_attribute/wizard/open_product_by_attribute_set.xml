@@ -20,19 +20,20 @@
       </field>
     </record>
 
-      <record id="open_product_by_attribute_set" model="ir.actions.act_window">
-          <field name="name">Open Product By Attribute Set</field>
-          <field name="res_model">open.product.by.attribute.set</field>
-          <field name="view_type">form</field>
-          <field name="target">new</field>
-          <field name="view_id" ref="open_product_by_attribute_set_view"/>
-          <field name="help"></field>
-      </record>
+    <!-- TODO : isn't it possible to add a selection field in the products Filter menu instead ? -->
+    <record id="open_product_by_attribute_set" model="ir.actions.act_window">
+        <field name="name">Open Product By Attribute Set</field>
+        <field name="res_model">open.product.by.attribute.set</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="open_product_by_attribute_set_view"/>
+        <field name="help"></field>
+    </record>
 
-      <menuitem
-              action="open_product_by_attribute_set"
-              id="open_product_wizard"
-              parent="sale.sale_order_menu"
-              sequence="60"/>
+    <menuitem
+            action="open_product_by_attribute_set"
+            id="open_product_wizard"
+            parent="sale.sale_order_menu"
+            sequence="60"/>
 
 </odoo>
