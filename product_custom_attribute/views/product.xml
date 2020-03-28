@@ -6,14 +6,18 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_form_view" />
             <field name="arch" type="xml">
-                <field name="type" position="after">
-                    <field name="attribute_set_id"
-                      context="{'default_model_id': %(product.model_product_template)d}"
-                      domain="[('model_id.model', '=', 'product.template')]"/>
-                </field>
+                <xpath expr="//field[@name='name']/.." position="after">
+                      <div>
+                        <label for="attribute_set_id" class="oe_edit_only"/>
+                        <field name="attribute_set_id"
+                          nolabel="1"
+                          context="{'default_model_id': %(product.model_product_template)d}"
+                          domain="[('model_id.model', '=', 'product.template')]"/>
+                      </div>
+                </xpath>
                 <!-- Add an Attribute page -->
                 <xpath expr="//page[@name='general_information']" position="after">
-                  <page name="product_attributes" string="Attributes"/>
+                  <page name="product_attributes" string="Attributes" attrs="{'invisible' : [('attribute_set_id', '=', False)]}"/>
                 </xpath>
             </field>
         </record>
@@ -25,7 +29,7 @@
             <xpath expr="//filter[@name='activities_upcoming_all']" position="after">
               <field name="attribute_set_id"/>
               <separator/>
-              <filter name="attribute_set_id" string="Attribute Set" context="{'group_by': 'attribute_set_id'}"/>
+              <filter name="group_attribute_set" string="Attribute Set" context="{'group_by': 'attribute_set_id'}"/>
             </xpath>
           </field>
         </record>

@@ -9,7 +9,7 @@ class AttributeAttribute(models.Model):
 
     @api.model
     def _build_attribute_field(self, vals):
-        """Hide attributes fields which are not related to
+        """Hide attributes fields when they are not related to
         the product's attribute_set"""
         res = super(AttributeAttribute, self)._build_attribute_field(vals)
         context = self.env.context
@@ -26,19 +26,19 @@ class AttributeAttribute(models.Model):
 
     @api.model
     def _build_attributes_notebook(self, vals):
-        """Hide page's attribute_group which have no attributes fields
+        """Hide xml groups of attributes when they have no attributes fields
         related to the product's attribute_set"""
         res = super(AttributeAttribute, self)._build_attributes_notebook(vals)
         context = self.env.context
         if context.get('product_custom_attribute'):
-            for page in res:
+            for group_elt in res:
                 att_group = self.env['attribute.group'].search(
-                    [('name', '=', page.get("string"))])
+                    [('name', '=ilike', group_elt.get("string"))])
                 att_set_ids = []
                 for att in att_group.attribute_ids:
                     att_set_ids += [*att.attribute_set_ids.ids]
                 domain = "[('attribute_set_id', 'not in', %s)]" % list(set(att_set_ids))
-                page.set("attrs", "{\"invisible\": %s }" % domain)
-                setup_modifiers(page)
+                group_elt.set('attrs', "{{'invisible' : {} }}".format(domain))
+                setup_modifiers(group_elt)
 
         return res

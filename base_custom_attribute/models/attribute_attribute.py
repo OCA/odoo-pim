@@ -35,21 +35,17 @@ class AttributeAttribute(models.Model):
     _inherits = {"ir.model.fields": "field_id"}
 
     @api.model
-    def _build_attribute_field(self, page_group):
+    def _build_attribute_field(self, subgroup):
         """Return an etree 'field' element made of the current attribute 'self'
-        and child of his etree group 'page_group'"""
+        and child of his etree group 'subgroup'"""
         self.ensure_one()
-        parent = etree.SubElement(page_group, "group", colspan="2")
-        kwargs = {"name": "%s" % self.name}
+        parent = etree.SubElement(subgroup, "group", colspan="2")
 
+        kwargs = {"name": "%s" % self.name}
         if self.ttype in ["many2many", "text"]:
-            # Add a separator, sibling of field
-            etree.SubElement(
-                parent,
-                "separator",
-                string="%s" % self.field_description,
-                colspan="2",
-            )
+            # Display field label above his value
+            field_title = etree.SubElement(parent, "b", colspan="2")
+            field_title.text = self.field_description
             kwargs["nolabel"] = "1"
             if self.ttype == "many2many":
                 # TODO use an attribute field instead
@@ -87,27 +83,23 @@ class AttributeAttribute(models.Model):
 
     @api.model
     def _build_attributes_notebook(self, attribute_ids):
-        """Build an etree 'notebook' made of pages.
-        Each page is made of attributes from one attribute_group"""
-        notebook = etree.Element(
-            "notebook", name="attributes_notebook"
-        )
+        """Return a main_group etree element made of sub_groups for each
+        attribute_group."""
+        main_group = etree.Element("group", name="attributes_group", col="4")
         groups = []
 
         for attribute in attribute_ids:
-            att_group = attribute.attribute_group_id.name.capitalize()
-            if att_group in groups:
-                xpath = ".//page[@string='%s']" % (att_group)
-                page = notebook.find(xpath)
+            att_group_name = attribute.attribute_group_id.name.capitalize()
+            if att_group_name in groups:
+                xpath = ".//group[@string='%s']" % (att_group_name)
+                subgroup = main_group.find(xpath)
             else:
-                page = etree.SubElement(notebook, "page", string=att_group)
-                # Add an element "group" parent of all the childs elements
-                # of 'page' to control the fields columns number
-                page_group = etree.SubElement(page, "group", col="4")
-                groups.append(att_group)
+                subgroup = etree.SubElement(
+                    main_group, "group", string=att_group_name, colspan="2")
+                groups.append(att_group_name)
 
-            attribute._build_attribute_field(page_group)
-        return notebook
+            attribute._build_attribute_field(subgroup)
+        return main_group
 
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
