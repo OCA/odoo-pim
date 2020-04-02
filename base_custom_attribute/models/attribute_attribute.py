@@ -55,6 +55,9 @@ class AttributeAttribute(models.Model):
 
         if self.ttype in ["many2one", "many2many"]:
             if self.relation_model_id:
+                # TODO update related attribute.option in cascade to allow
+                # attribute.option creation from the field.
+                kwargs["options"] = "{'no_create': True}"
                 # attribute.domain is a string, it may be an empty list
                 try:
                     domain = ast.literal_eval(self.domain)
@@ -69,7 +72,7 @@ class AttributeAttribute(models.Model):
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
                 if 'color' in relation_model_obj.fields_get().keys():
-                    kwargs["options"] = "{'color_field': 'color'}"
+                    kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
             else:
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
 
@@ -100,11 +103,6 @@ class AttributeAttribute(models.Model):
 
             attribute._build_attribute_field(subgroup)
         return main_group
-
-    @api.onchange("relation_model_id")
-    def relation_model_id_change(self):
-        "Remove selected options as they would be inconsistent"
-        self.option_ids = [(5, 0)]
 
     @api.multi
     def button_add_options(self):
@@ -304,11 +302,17 @@ class AttributeAttribute(models.Model):
             ):
                 raise ValidationError(
                     _(
-                        "Can't change the attribute's Relational Model. "
-                        "Please create a new one."
+                        """Can't change the attribute's Relational Model in order to
+                        avoid conflicts with existing objects using this attribute.
+                        Please create a new one."""
                     )
                 )
-            else:
-                vals.pop("relation_model_id")
+        # Delete related attribute.option.wizard when deleting attribute.option
+        if "option_ids" in list(vals.keys()) and self.relation_model_id:
+            for option_change in vals["option_ids"]:
+                if option_change[0] == 2:
+                    self.env['attribute.option.wizard'].search(
+                        [('attribute_id', '=', self.id)]
+                    ).unlink()
 
         return super(AttributeAttribute, self).write(vals)

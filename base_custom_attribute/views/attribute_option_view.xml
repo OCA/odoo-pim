@@ -9,7 +9,10 @@
                 <form string="Attribute Option" col="6">
                     <group>
                         <field name="name" colspan="2"/>
-                        <field name="value_ref" colspan="2" groups="base_custom_attribute.group_advanced_attribute"/>
+                        <field name="relation_model_id" invisible="1"/>
+                        <field name="value_ref" colspan="2"
+                          groups="base_custom_attribute.group_advanced_attribute"
+                          attrs="{'invisible':[('relation_model_id', '=', False)]}"/>
                         <field name="sequence" colspan="2"/>
                     </group>
                 </form>
@@ -23,7 +26,10 @@
                 <form string="Attribute Option" col="6">
                     <group>
                         <field name="name" colspan="2"/>
-                        <field name="value_ref" colspan="2" groups="base_custom_attribute.group_advanced_attribute"/>
+                        <field name="relation_model_id" invisible="1"/>
+                        <field name="value_ref" colspan="2"
+                          groups="base_custom_attribute.group_advanced_attribute"
+                          attrs="{'invisible':[('relation_model_id', '=', False)]}"/>
                         <field name="sequence" colspan="2"/>
                         <field name="attribute_id" colspan="2"/>
                     </group>

@@ -25,12 +25,16 @@ class AttributeOption(models.Model):
         "attribute.attribute", "Product Attribute", required=True
     )
 
+    relation_model_id = fields.Many2one(
+        "ir.model", "Relational Model", related="attribute_id.relation_model_id"
+    )
+
     sequence = fields.Integer("Sequence")
 
     @api.onchange("name")
     def name_change(self):
         """Prevent the user to add manually an option to m2o or m2m Attributes
-        linked to another model (through 'relational_model_id')"""
+        linked to another model (through 'relation_model_id')"""
         if self.attribute_id.relation_model_id:
             warning = {
                 "title": _("Error!"),
