@@ -9,7 +9,7 @@
                     <field name="attribute_id" invisible="1"/>
                     <separator string="options_placeholder"/>
                     <footer>
-                        <button name="validate" string="Validate" type="object" icon="gtk-convert" class="oe_highlight"/>
+                        <button name="validate" string="Validate" type="object" class="oe_highlight"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>

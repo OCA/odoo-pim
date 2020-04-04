@@ -4,7 +4,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class AttributeSet(models.Model):
@@ -22,3 +22,9 @@ class AttributeSet(models.Model):
     )
 
     model_id = fields.Many2one("ir.model", "Model", required=True)
+
+    @api.multi
+    def button_save_before_first_att(self):
+        self.write({
+            'name' : self.name,
+        })

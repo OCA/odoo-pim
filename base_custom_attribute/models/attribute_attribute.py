@@ -104,6 +104,11 @@ class AttributeAttribute(models.Model):
             attribute._build_attribute_field(subgroup)
         return main_group
 
+    @api.onchange("relation_model_id")
+    def relation_model_id_change(self):
+        "Remove selected options as they would be inconsistent"
+        self.option_ids = [(5, 0)]
+
     @api.multi
     def button_add_options(self):
         self.ensure_one()

@@ -39,9 +39,9 @@ class AttributeOption(models.Model):
             warning = {
                 "title": _("Error!"),
                 "message": _(
-                    "Use the 'Load Options' button "
-                    "instead to select appropriate "
-                    "model references'"
+                    """Use the 'Load Attribute Options' button or specify a Domain
+                    in order to define the available Options linked to the Relational\
+                    Model"""
                 ),
             }
             return {"warning": warning}
