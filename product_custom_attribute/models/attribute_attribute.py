@@ -66,7 +66,11 @@ class AttributeAttribute(models.Model):
                             option_id = self.env['attribute.option'].browse(
                                 [option_change[1]])
                             if option_id.value_ref:
-                                product.write(
-                                    {custom_field: [(3, option_id.value_ref.id, 0)]})
+                                if self.attribute_type == 'select':
+                                    product.write({custom_field: False})
+                                elif self.attribute_type == 'multiselect':
+                                    product.write({
+                                        custom_field: [(3, option_id.value_ref.id, 0)]
+                                    })
 
         return super(AttributeAttribute, self).write(vals)
