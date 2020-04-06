@@ -71,7 +71,7 @@ class AttributeOptionWizard(models.TransientModel):
             res["fields"].update(
                 {
                     "option_ids": {
-                        "domain": [("id", "not in", attr.option_ids.ids)],
+                        "domain": [('id', 'not in', [op.value_ref.id for op in attr.option_ids])],
                         "string": "Options",
                         "type": "many2many",
                         "relation": relation,
@@ -81,7 +81,7 @@ class AttributeOptionWizard(models.TransientModel):
             )
 
             eview = etree.fromstring(res["arch"])
-            options = etree.Element("field", name="option_ids", colspan="6")
+            options = etree.Element("field", name="option_ids", nolabel="1")
             placeholder = eview.xpath(
                 "//separator[@string='options_placeholder']"
             )[0]

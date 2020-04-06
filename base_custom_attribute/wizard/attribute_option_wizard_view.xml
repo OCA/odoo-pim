@@ -7,7 +7,9 @@
             <field name="arch" type="xml">
                 <form string="Options Wizard">
                     <field name="attribute_id" invisible="1"/>
-                    <separator string="options_placeholder"/>
+                    <group>
+                      <separator string="options_placeholder"/>
+                    </group>
                     <footer>
                         <button name="validate" string="Validate" type="object" class="oe_highlight"/>
                         or
