@@ -47,8 +47,15 @@ class AttributeAttribute(models.Model):
 
     @api.multi
     def write(self, vals):
-        """ When deleting an attribute.option,delete all the attribute values
-        in existing products"""
+        """ When updating the domain field or deleting an attribute.option delete
+        all the related attribute values in existing products"""
+
+        if ("domain" in list(vals.keys()) and self.relation_model_id and
+            self.domain not in [None, '[]']):
+            custom_field = self.name
+            for product in self.env['product.template'].search([]):
+                if product.fields_get(custom_field):
+                    product.write({custom_field: [(5, 0, 0)]})
 
         if "option_ids" in list(vals.keys()) and self.relation_model_id:
             for option_change in vals["option_ids"]:
@@ -58,7 +65,8 @@ class AttributeAttribute(models.Model):
                         if product.fields_get(custom_field):
                             option_id = self.env['attribute.option'].browse(
                                 [option_change[1]])
-                            product.write(
-                                {custom_field: [(3, option_id.value_ref.id, 0)]})
+                            if option_id.value_ref:
+                                product.write(
+                                    {custom_field: [(3, option_id.value_ref.id, 0)]})
 
         return super(AttributeAttribute, self).write(vals)

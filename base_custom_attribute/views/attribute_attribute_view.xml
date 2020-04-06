@@ -8,29 +8,29 @@
                 <form string="Attribute">
                     <group col="4" colspan="4">
                         <field name="field_description"/><newline/>
-                        <field name="name" attrs="{'readonly':[('create_date', '!=', False)]}"/><newline/>
+                        <field name="name" attrs="{'readonly': [('create_date', '!=', False)]}"/><newline/>
                         <field name="attribute_type"/><newline/>
                         <field name="attribute_group_id"/><newline/>
-                        <field name="sequence" attrs="{'invisible':[('attribute_group_id', '=', False)]}"/><newline/>
+                        <field name="sequence" attrs="{'invisible': [('attribute_group_id', '=', False)]}"/><newline/>
                         <field name="attribute_set_ids" widget="many2many_tags"/><newline/>
-                        <field name="size" attrs="{'invisible':[('attribute_type', '!=', 'char')]}"/><newline/>
-                        <field name="translate" attrs="{'invisible':[('attribute_type', 'not in', ('char', 'text'))]}"/><newline/>
+                        <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/><newline/>
+                        <field name="translate" attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"/><newline/>
                         <field name="required_on_views"/><newline/>
                         <!-- The field created by this Attribute will be related to the model given
                         by 'default_model_id' through the menu's context that led to this view -->
                         <field name="model_id" invisible="context.get('default_model_id')"/><newline/>
-                        <field name="serialized" attrs="{'invisible':[('attribute_type', '=', 'multiselect')]}"/>
+                        <field name="serialized" attrs="{'invisible': [('attribute_type', '=', 'multiselect')]}"/>
                         <field name="create_date" invisible="1"/>
                     </group>
-                    <group attrs="{'invisible':[('attribute_type', 'not in', ['select', 'multiselect'])]}" col="4" colspan="4">
+                    <group attrs="{'invisible': [('attribute_type', 'not in', ['select', 'multiselect'])]}" col="4" colspan="4">
                         <group roups="base_custom_attribute.group_advanced_attribute" colspan="4" col="4">
                             <group colspan="2">
-                                <field name="relation_model_id" attrs="{'readonly':[('create_date', '!=', False)]}"/>
-                                <field name="domain" attrs="{'invisible':[('relation_model_id', '=', False)]}"/>
+                                <field name="relation_model_id" attrs="{'readonly': [('create_date', '!=', False)]}"/>
+                                <field name="domain" attrs="{'invisible': [('relation_model_id', '=', False)]}"/>
                             </group> <newline/>
-                            <group colspan="2" attrs="{'invisible':[('relation_model_id', '=', False)]}">
+                            <group colspan="2" attrs="{'invisible': [('relation_model_id', '=', False)]}">
                               <button name="button_add_options"
-                                attrs="{'invisible':[('domain', 'not in', [False, '[]'] )]}"
+                                attrs="{'invisible': [('domain', 'not in', [False, '[]'] )]}"
                                 type="object"
                                 string="Load Attribute Options"
                                 class="oe_highlight"
@@ -40,8 +40,10 @@
                         <group colspan="4">
                         <field name="option_ids" string="Attribute Options" colspan="4">
                             <tree editable="top">
+                                <field name="relation_model_id" invisible="1"/>
+                                <field name="value_ref" invisible="1"/>
                                 <field name="sequence" invisible="1"/>
-                                <field name="name"/>
+                                <field name="name" attrs="{'invisible': [('relation_model_id', '!=', False), ('value_ref', 'in', [False, ''])]}"/>
                             </tree>
                         </field>
                         </group>

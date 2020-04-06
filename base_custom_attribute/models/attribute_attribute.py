@@ -66,7 +66,11 @@ class AttributeAttribute(models.Model):
                 if domain:
                     kwargs["domain"] = self.domain
                 else:
-                    ids = [op.value_ref.id for op in self.option_ids]
+                    ids = []
+                    for option in self.option_ids:
+                        # Display only options linked to an existing object
+                        if option.value_ref:
+                            ids.append(option.value_ref.id)
                     kwargs["domain"] = "[('id', 'in', %s)]" % ids
                 # Add color options if the attribute's Relational Model
                 # has a color field
@@ -109,9 +113,22 @@ class AttributeAttribute(models.Model):
         "Remove selected options as they would be inconsistent"
         self.option_ids = [(5, 0)]
 
+    @api.onchange("domain")
+    def domain_change(self):
+        "Remove selected options as the domain will predominate on actual options"
+        if self.domain not in [False, '[]']:
+            self.option_ids = [(5, 0)]
+
     @api.multi
     def button_add_options(self):
         self.ensure_one()
+        # Before adding another option delete the ones which are linked
+        # to a deleted object
+        for option in self.option_ids:
+            if not option.value_ref:
+                option.unlink()
+        # Then open the Options Wizard which will display an 'opt_ids' m2m field related
+        # to the 'relation_model_id' model
         return {
             "context": "{'attribute_id': %s}" % (self.id),
             "name": _("Options Wizard"),

@@ -71,13 +71,16 @@ class AttributeOptionWizard(models.TransientModel):
             res["fields"].update(
                 {
                     "option_ids": {
-                        "domain": [('id', 'not in', [op.value_ref.id for op in attr.option_ids])],
+                        "domain": [('id', 'not in',
+                            [op.value_ref.id for op in attr.option_ids if op.value_ref]
+                        )],
                         "string": "Options",
                         "type": "many2many",
                         "relation": relation,
                         "required": True,
                     }
                 }
+
             )
 
             eview = etree.fromstring(res["arch"])
