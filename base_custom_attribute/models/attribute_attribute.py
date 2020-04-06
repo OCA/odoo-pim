@@ -66,11 +66,8 @@ class AttributeAttribute(models.Model):
                 if domain:
                     kwargs["domain"] = self.domain
                 else:
-                    ids = []
-                    for option in self.option_ids:
-                        # Display only options linked to an existing object
-                        if option.value_ref:
-                            ids.append(option.value_ref.id)
+                    # Display only options linked to an existing object
+                    ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
                     kwargs["domain"] = "[('id', 'in', %s)]" % ids
                 # Add color options if the attribute's Relational Model
                 # has a color field
@@ -115,9 +112,20 @@ class AttributeAttribute(models.Model):
 
     @api.onchange("domain")
     def domain_change(self):
-        "Remove selected options as the domain will predominate on actual options"
-        if self.domain not in [False, '[]']:
-            self.option_ids = [(5, 0)]
+        if self.domain != '':
+            try:
+                ast.literal_eval(self.domain)
+            except ValueError:
+                raise ValidationError(
+                    _(
+                        """ "{}" is an unvalid Domain name.\n
+                        Specify a Python expression defining a list of triplets.\
+                        For example : "[('color', '=', 'red')]" """.format(self.domain)
+                    ),
+                )
+            # Remove selected options as the domain will predominate on actual options
+            if self.domain != '[]':
+                self.option_ids = [(5, 0)]
 
     @api.multi
     def button_add_options(self):

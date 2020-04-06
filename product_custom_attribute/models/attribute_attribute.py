@@ -50,8 +50,7 @@ class AttributeAttribute(models.Model):
         """ When updating the domain field or deleting an attribute.option delete
         all the related attribute values in existing products"""
 
-        if ("domain" in list(vals.keys()) and self.relation_model_id and
-            self.domain not in [None, '[]']):
+        if vals.get('domain', False) not in [False, '[]'] and self.relation_model_id:
             custom_field = self.name
             for product in self.env['product.template'].search([]):
                 if product.fields_get(custom_field):

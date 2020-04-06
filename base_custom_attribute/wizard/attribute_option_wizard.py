@@ -67,13 +67,12 @@ class AttributeOptionWizard(models.TransientModel):
             model = attr.relation_model_id
 
             relation = model.model
+            domain_ids = [op.value_ref.id for op in attr.option_ids if op.value_ref]
 
             res["fields"].update(
                 {
                     "option_ids": {
-                        "domain": [('id', 'not in',
-                            [op.value_ref.id for op in attr.option_ids if op.value_ref]
-                        )],
+                        "domain": [('id', 'not in', domain_ids)],
                         "string": "Options",
                         "type": "many2many",
                         "relation": relation,
