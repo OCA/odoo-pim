@@ -1,5 +1,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import ast
+
 from odoo import api, models
 from odoo.osv.orm import setup_modifiers
 
@@ -48,28 +50,31 @@ class AttributeAttribute(models.Model):
     @api.multi
     def write(self, vals):
         """ When updating the domain field or deleting an attribute.option delete
-        all the related attribute values in existing products"""
+        all the related attribute values in existing products that are not in the
+        new domain or options"""
+        res = super(AttributeAttribute, self).write(vals)
+        context = self.env.context
+        if context.get('product_custom_attribute'):
+            if self.relation_model_id:
+                try:
+                    domain = ast.literal_eval(self.domain)
+                except ValueError:
+                    domain = []
+                if domain != []:
+                    domain.insert(0, '|')
 
-        if vals.get('domain', False) not in [False, '[]'] and self.relation_model_id:
-            custom_field = self.name
-            for product in self.env['product.template'].search([]):
-                if product.fields_get(custom_field):
-                    product.write({custom_field: [(5, 0, 0)]})
+                rel_model_ids = self.env[self.relation_model_id.model].search(
+                    domain + [('id', 'in', [op.value_ref.id for op in self.option_ids])]
+                )
 
-        if "option_ids" in list(vals.keys()) and self.relation_model_id:
-            for option_change in vals["option_ids"]:
-                if option_change[0] == 2:
-                    custom_field = self.name
-                    for product in self.env['product.template'].search([]):
-                        if product.fields_get(custom_field):
-                            option_id = self.env['attribute.option'].browse(
-                                [option_change[1]])
-                            if option_id.value_ref:
+                custom_field = self.name
+                for product in self.env['product.template'].search([]):
+                    if product.fields_get(custom_field):
+                        for value in product[custom_field]:
+                            if value not in rel_model_ids:
                                 if self.attribute_type == 'select':
                                     product.write({custom_field: False})
                                 elif self.attribute_type == 'multiselect':
-                                    product.write({
-                                        custom_field: [(3, option_id.value_ref.id, 0)]
-                                    })
+                                    product.write({custom_field: [(3, value.id, 0)]})
 
-        return super(AttributeAttribute, self).write(vals)
+        return res
