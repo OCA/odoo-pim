@@ -7,7 +7,7 @@
       <field name="inherit_id" ref="product.product_category_form_view"/>
       <field name="arch" type="xml">
         <field name="parent_id" position="after">
-          <field name="attribute_set_id"/>
+          <field name="attribute_set_id" domain="[('model_id', '=', 'product.template')]" class="oe_inline"/>
         </field>
       </field>
     </record>

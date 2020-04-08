@@ -10,7 +10,21 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
+    def _get_default_att_set(self):
+        """ Fill default Product's attribute_set with its Category's
+        default attribute_set."""
+        default_categ_id_id = self._get_default_category_id()
+        if default_categ_id_id:
+            default_categ_id = self.env['product.category'].search(
+                [('id', '=', default_categ_id_id)]
+            )
+            return default_categ_id.attribute_set_id.id
+
+    attribute_set_id = fields.Many2one(
+        "attribute.set",
+        "Attribute Set",
+        default=_get_default_att_set,
+    )
 
     @api.model
     def create(self, vals):
@@ -30,6 +44,12 @@ class ProductTemplate(models.Model):
     @api.multi
     def save_and_close_product_attributes(self):
         return True
+
+    @api.onchange("categ_id")
+    def update_att_set_onchange_categ_id(self):
+        self.ensure_one()
+        if self.categ_id and not self.attribute_set_id:
+            self.attribute_set_id = self.categ_id.attribute_set_id
 
     @api.model
     def fields_view_get(

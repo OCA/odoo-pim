@@ -16,10 +16,10 @@
                         <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/><newline/>
                         <field name="translate" attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"/><newline/>
                         <field name="required_on_views"/><newline/>
+                        <field name="serialized"/><newline/>
                         <!-- The field created by this Attribute will be related to the model given
                         by 'default_model_id' through the menu's context that led to this view -->
-                        <field name="model_id" invisible="context.get('default_model_id')"/><newline/>
-                        <field name="serialized" attrs="{'invisible': [('attribute_type', '=', 'multiselect')]}"/>
+                        <field name="model_id" invisible="context.get('default_model_id')"/>
                         <field name="create_date" invisible="1"/>
                     </group>
                     <group attrs="{'invisible': [('attribute_type', 'not in', ['select', 'multiselect'])]}" col="4" colspan="4">
