@@ -4,7 +4,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class AttributeGroup(models.Model):
@@ -21,6 +21,9 @@ class AttributeGroup(models.Model):
         "attribute.attribute", "attribute_group_id", "Attributes"
     )
 
-    model_id = fields.Many2one(
-        "ir.model", "Model", readonly=True, related="attribute_ids.model_id"
-    )
+    @api.multi
+    def button_save_before_first_att(self):
+        self.write({
+            'name': self.name,
+            'sequence': self.sequence,
+        })

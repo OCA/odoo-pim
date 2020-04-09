@@ -8,6 +8,7 @@
       <field name="view_mode">tree,form</field>
       <field name="search_view_id" ref="base_custom_attribute.view_attribute_attribute_search"/>
       <field name="context" eval="{'default_model_id': ref('product.model_product_template')}"/>
+      <field name="domain" eval="[('model_id', '=', ref('product.model_product_template'))]"/>
       <field name="help"></field>
     </record>
 

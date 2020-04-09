@@ -5,14 +5,21 @@
             <field name="model">attribute.group</field>
             <field name="arch" type="xml">
                 <form string="Attribute Group">
+                    <field name="create_date" invisible="1"/>
                     <group>
                         <field name="name" string="Group name" class="oe_inline"/>
                         <field name="sequence" string="Sequence in Set" class="oe_inline"/>
-                        <field name="model_id" invisible="1"/>
                     </group>
+                    <button
+                        type="object"
+                        name="button_save_before_first_att"
+                        string="Save &amp; add Attributes"
+                        attrs="{'invisible':[('create_date', '!=', False)]}"
+                        class="oe_highlight"/>
                     <group>
                         <field name="attribute_ids" colspan="4"
-                            context="{'default_model_id': model_id, 'default_attribute_group_id': id}">
+                            context="{'default_model_id': context.get('default_model_id'), 'default_attribute_group_id': id}"
+                            attrs="{'invisible':[('create_date', '=', False)]}">
                             <tree string="Attributes" create="true" >
                                 <field name="name"/>
                                 <field name="field_description"/>
