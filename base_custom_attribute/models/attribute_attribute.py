@@ -306,6 +306,7 @@ class AttributeAttribute(models.Model):
 
     @api.multi
     def write(self, vals):
+        # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
             if self.search(
                 [
@@ -321,7 +322,7 @@ class AttributeAttribute(models.Model):
                 )
             else:
                 vals.pop("attribute_type")
-        # Prevent changing relation_model_id for multiselect Attributes
+        # Prevent from changing relation_model_id for multiselect Attributes
         # as the values of the existing many2many Attribute fields won't be
         # deleted if changing relation_model_id
         if "relation_model_id" in list(vals.keys()):
@@ -338,12 +339,27 @@ class AttributeAttribute(models.Model):
                         Please create a new one."""
                     )
                 )
+        # Prevent from changing 'JSON Field'
+        if "serialized" in list(vals.keys()):
+            if self.search(
+                [
+                    ("serialized", "!=", vals["serialized"]),
+                    ("id", "in", self.ids),
+                ]
+            ):
+                raise ValidationError(
+                    _(
+                        """It is not allowed to change the boolean 'JSON Field'.
+                        A serialized field can not be change to non-serialized \
+                        and vice versa."""
+                    )
+                )
         # Delete related attribute.option.wizard when deleting attribute.option
         if "option_ids" in list(vals.keys()) and self.relation_model_id:
             for option_change in vals["option_ids"]:
                 if option_change[0] == 2:
                     self.env['attribute.option.wizard'].search(
-                        [('attribute_id', '=', self.id)]
+                        [('attribute_id', 'in', self.ids)]
                     ).unlink()
 
         return super(AttributeAttribute, self).write(vals)
@@ -354,7 +370,6 @@ class AttributeAttribute(models.Model):
         for attribute in self:
             related_field = self.env['ir.model.fields'].search(
                 [('id', '=', attribute.field_id.id)]
-            )
-            related_field.unlink()
+            ).unlink()
 
         return super(AttributeAttribute, self).unlink()
