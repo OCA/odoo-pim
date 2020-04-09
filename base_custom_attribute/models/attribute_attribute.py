@@ -270,7 +270,6 @@ class AttributeAttribute(models.Model):
         elif attr_type == "multiselect":
             vals["ttype"] = "many2many"
             vals["relation"] = relation
-            vals["serialized"] = True
 
         else:
             vals["ttype"] = attr_type
