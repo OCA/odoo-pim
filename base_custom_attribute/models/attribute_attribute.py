@@ -105,6 +105,78 @@ class AttributeAttribute(models.Model):
             attribute._build_attribute_field(subgroup)
         return main_group
 
+    field_id = fields.Many2one(
+        "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
+    )
+
+    attribute_type = fields.Selection(
+        [
+            ("char", "Char"),
+            ("text", "Text"),
+            ("select", "Select"),
+            ("multiselect", "Multiselect"),
+            ("boolean", "Boolean"),
+            ("integer", "Integer"),
+            ("date", "Date"),
+            ("datetime", "Datetime"),
+            ("binary", "Binary"),
+            ("float", "Float"),
+        ],
+        "Type",
+        required=True,
+    )
+
+    serialized = fields.Boolean(
+        "JSON Field",
+        # TODO : Improve this help, 'attribute_custom_tmpl' does not mean anything
+        help="If serialized, the field will be stocked in the serialized "
+        "field: attribute_custom_tmpl or attribute_custom_variant "
+        "depending on the field based_on",
+    )
+
+    option_ids = fields.One2many(
+        "attribute.option", "attribute_id", "Attribute Options"
+    )
+
+    create_date = fields.Datetime("Created date", readonly=True)
+
+    relation_model_id = fields.Many2one("ir.model", "Relational Model")
+
+    required_on_views = fields.Boolean(
+        "Required (on views)",
+        help="If activated, the attribute will be mandatory on the views, "
+        "but not in the database",
+    )
+
+    attribute_set_ids = fields.Many2many(
+        comodel_name="attribute.set",
+        string="Attribute Sets",
+        relation='rel_attribute_set',
+        column1='attribute_id',
+        column2='attribute_set_id',
+        required=True
+    )
+
+    attribute_group_id = fields.Many2one(
+        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
+    )
+
+    sequence = fields.Integer("Sequence",
+                              help="The attribute's order in his group")
+
+    @api.onchange("field_description")
+    def onchange_field_description(self):
+        if self.field_description and not self.create_date:
+            self.name = unidecode(
+                "x_" + safe_column_name(self.field_description)
+            )
+
+    @api.onchange("name")
+    def onchange_name(self):
+        name = self.name
+        if not name.startswith("x_"):
+            self.name = "x_%s" % name
+
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
         "Remove selected options as they would be inconsistent"
@@ -146,64 +218,6 @@ class AttributeAttribute(models.Model):
             "type": "ir.actions.act_window",
             "target": "new",
         }
-
-    field_id = fields.Many2one(
-        "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
-    )
-
-    attribute_type = fields.Selection(
-        [
-            ("char", "Char"),
-            ("text", "Text"),
-            ("select", "Select"),
-            ("multiselect", "Multiselect"),
-            ("boolean", "Boolean"),
-            ("integer", "Integer"),
-            ("date", "Date"),
-            ("datetime", "Datetime"),
-            ("binary", "Binary"),
-            ("float", "Float"),
-        ],
-        "Type",
-        required=True,
-    )
-
-    serialized = fields.Boolean(
-        "JSON Field",
-        help="If serialized, the field will be stocked in the serialized "
-        "field: attribute_custom_tmpl or attribute_custom_variant "
-        "depending on the field based_on",
-    )
-
-    option_ids = fields.One2many(
-        "attribute.option", "attribute_id", "Attribute Options"
-    )
-
-    create_date = fields.Datetime("Created date", readonly=True)
-
-    relation_model_id = fields.Many2one("ir.model", "Relational Model")
-
-    required_on_views = fields.Boolean(
-        "Required (on views)",
-        help="If activated, the attribute will be mandatory on the views, "
-        "but not in the database",
-    )
-
-    attribute_set_ids = fields.Many2many(
-        comodel_name="attribute.set",
-        string="Attribute Sets",
-        relation='rel_attribute_set',
-        column1='attribute_id',
-        column2='attribute_set_id',
-        required=True
-    )
-
-    attribute_group_id = fields.Many2one(
-        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
-    )
-
-    sequence = fields.Integer("Sequence",
-                              help="The attribute's order in his group")
 
     @api.model
     def create(self, vals):
@@ -290,19 +304,6 @@ class AttributeAttribute(models.Model):
         vals["state"] = "manual"
         return super(AttributeAttribute, self).create(vals)
 
-    @api.onchange("field_description")
-    def onchange_field_description(self):
-        if self.field_description and not self.create_date:
-            self.name = unidecode(
-                "x_" + safe_column_name(self.field_description)
-            )
-
-    @api.onchange("name")
-    def onchange_name(self):
-        name = self.name
-        if not name.startswith("x_"):
-            self.name = "x_%s" % name
-
     @api.multi
     def write(self, vals):
         if "attribute_type" in list(vals.keys()):
@@ -346,3 +347,14 @@ class AttributeAttribute(models.Model):
                     ).unlink()
 
         return super(AttributeAttribute, self).write(vals)
+
+    @api.multi
+    def unlink(self):
+        """ Delete the Attribute's related field when deleting an Attribute"""
+        for attribute in self:
+            related_field = self.env['ir.model.fields'].search(
+                [('id', '=', attribute.field_id.id)]
+            )
+            related_field.unlink()
+
+        return super(AttributeAttribute, self).unlink()

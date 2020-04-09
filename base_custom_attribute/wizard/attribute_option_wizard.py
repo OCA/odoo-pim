@@ -19,6 +19,7 @@ class AttributeOptionWizard(models.TransientModel):
         "Product Attribute",
         required=True,
         default=lambda self: self.env.context.get("attribute_id", False),
+        ondelete='cascade',
     )
 
     @api.multi
