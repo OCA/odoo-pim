@@ -270,6 +270,17 @@ class AttributeAttribute(models.Model):
         elif attr_type == "multiselect":
             vals["ttype"] = "many2many"
             vals["relation"] = relation
+            # Specify the relation_table's name in case of m2m not serialized
+            # to avoid creating the same default relation_table name for any attribute
+            # linked to the same attribute.option or relation_model_id's model.
+            if not vals.get("serialized"):
+                att_model_id = self.env["ir.model"].browse(vals["model_id"])
+                table_name = "x_" + att_model_id.model.replace(".", "_")\
+                    + "_" + vals["name"]\
+                    + "_" + relation.replace(".", "_")\
+                    + "_rel"
+                # avoid too long relation_table names
+                vals['relation_table'] = table_name[0:60]
 
         else:
             vals["ttype"] = attr_type
@@ -367,7 +378,7 @@ class AttributeAttribute(models.Model):
     def unlink(self):
         """ Delete the Attribute's related field when deleting an Attribute"""
         for attribute in self:
-            related_field = self.env['ir.model.fields'].search(
+            self.env['ir.model.fields'].search(
                 [('id', '=', attribute.field_id.id)]
             ).unlink()
 

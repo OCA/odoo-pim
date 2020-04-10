@@ -53,8 +53,7 @@ class AttributeAttribute(models.Model):
         all the related attribute values in existing products that are not in the
         new domain or options"""
         res = super(AttributeAttribute, self).write(vals)
-        context = self.env.context
-        if context.get('product_custom_attribute'):
+        if self.model == 'product.template':
             if self.relation_model_id:
                 try:
                     domain = ast.literal_eval(self.domain)
