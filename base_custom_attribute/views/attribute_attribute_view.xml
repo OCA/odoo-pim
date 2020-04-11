@@ -16,6 +16,7 @@
                             widget="many2many_tags"
                             domain="[('model_id', '=', context.get('default_model_id'))]"
                             options="{'no_create': 1}"
+                            required="not context.get('from_attribute_set')"
                             invisible="context.get('from_attribute_set')"
                             />
                         <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/>

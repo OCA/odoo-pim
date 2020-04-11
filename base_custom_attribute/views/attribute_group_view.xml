@@ -5,10 +5,9 @@
             <field name="model">attribute.group</field>
             <field name="arch" type="xml">
                 <form string="Attribute Group">
-                    <field name="create_date" invisible="1"/>
                     <group>
                         <field name="name" string="Group name" class="oe_inline"/>
-                        <field name="sequence" string="Sequence in Set" class="oe_inline"/>
+                        <field name="sequence" class="oe_inline"/>
                     </group>
                 </form>
             </field>

@@ -160,7 +160,7 @@ class AttributeAttribute(models.Model):
         "attribute.group", "Attribute Group", required=True, ondelete="cascade"
     )
 
-    sequence = fields.Integer("Sequence",
+    sequence = fields.Integer("Sequence in Group",
                               help="The attribute's order in his group")
 
     @api.onchange("field_description")
