@@ -6,22 +6,22 @@
             <field name="model">attribute.attribute</field>
             <field name="arch" type="xml">
                 <form string="Attribute">
-                    <group col="4" colspan="4">
-                        <field name="field_description"/><newline/>
-                        <field name="name" attrs="{'readonly': [('create_date', '!=', False)]}"/><newline/>
+                    <group col="2" class="col-6">
+                        <field name="field_description"/>
+                        <field name="name" attrs="{'readonly': [('create_date', '!=', False)]}"/>
                         <field name="attribute_type"/><newline/>
-                        <field name="attribute_group_id" options="{'no_create': 1}" /><newline/>
-                        <field name="sequence"/><newline/>
+                        <field name="attribute_group_id" options="{'no_create': 1}" />
+                        <field name="sequence"/>
                         <field name="attribute_set_ids"
                             widget="many2many_tags"
                             domain="[('model_id', '=', context.get('default_model_id'))]"
                             options="{'no_create': 1}"
                             invisible="context.get('from_attribute_set')"
-                            /><newline/>
-                        <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/><newline/>
-                        <field name="translate" attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"/><newline/>
-                        <field name="required_on_views"/><newline/>
-                        <field name="serialized" attrs="{'readonly': [('create_date', '!=', False)]}"/><newline/>
+                            />
+                        <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/>
+                        <field name="translate" attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"/>
+                        <field name="required_on_views"/>
+                        <field name="serialized" attrs="{'readonly': [('create_date', '!=', False)]}"/>
                         <!-- The field created by this Attribute will be related to the model given
                         by 'default_model_id' through the menu's context that led to this view -->
                         <field name="model_id" invisible="context.get('default_model_id')"/>
