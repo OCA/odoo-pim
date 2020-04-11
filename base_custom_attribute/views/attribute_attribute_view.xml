@@ -10,12 +10,14 @@
                         <field name="field_description"/><newline/>
                         <field name="name" attrs="{'readonly': [('create_date', '!=', False)]}"/><newline/>
                         <field name="attribute_type"/><newline/>
-                        <field name="attribute_group_id"/><newline/>
-                        <field name="sequence" string="Sequence in Group" attrs="{'invisible': [('attribute_group_id', '=', False)]}"/><newline/>
+                        <field name="attribute_group_id" options="{'no_create': 1}" /><newline/>
+                        <field name="sequence"/><newline/>
                         <field name="attribute_set_ids"
                             widget="many2many_tags"
-                            context="{'default_model_id' : context.get('default_model_id')}"
-                            domain="[('model_id', '=', context.get('default_model_id'))]"/><newline/>
+                            domain="[('model_id', '=', context.get('default_model_id'))]"
+                            options="{'no_create': 1}"
+                            invisible="context.get('from_attribute_set')"
+                            /><newline/>
                         <field name="size" attrs="{'invisible': [('attribute_type', '!=', 'char')]}"/><newline/>
                         <field name="translate" attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"/><newline/>
                         <field name="required_on_views"/><newline/>

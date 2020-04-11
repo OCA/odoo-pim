@@ -154,7 +154,6 @@ class AttributeAttribute(models.Model):
         relation='rel_attribute_set',
         column1='attribute_id',
         column2='attribute_set_id',
-        required=True
     )
 
     attribute_group_id = fields.Many2one(

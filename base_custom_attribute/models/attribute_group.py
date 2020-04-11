@@ -20,10 +20,3 @@ class AttributeGroup(models.Model):
     attribute_ids = fields.One2many(
         "attribute.attribute", "attribute_group_id", "Attributes"
     )
-
-    @api.multi
-    def button_save_before_first_att(self):
-        self.write({
-            'name': self.name,
-            'sequence': self.sequence,
-        })
