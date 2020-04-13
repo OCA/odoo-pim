@@ -10,6 +10,4 @@ from odoo import fields, models
 class IrModelFields(models.Model):
     _inherit = "ir.model.fields"
 
-    field_description = fields.Char(
-        "Field Label", required=True, translate=True
-    )
+    field_description = fields.Char("Field Label", required=True, translate=True)

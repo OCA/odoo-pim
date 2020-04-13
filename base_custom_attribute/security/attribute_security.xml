@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="0">
-
     <record id="group_advanced_attribute" model="res.groups">
         <field name="name">Advanced Attribute Option</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
-
 </odoo>

@@ -4,7 +4,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AttributeGroup(models.Model):
@@ -14,8 +14,9 @@ class AttributeGroup(models.Model):
 
     name = fields.Char("Name", size=128, required=True, translate=True)
 
-    sequence = fields.Integer("Sequence in Set",
-                              help="The Group order in his attribute's Set")
+    sequence = fields.Integer(
+        "Sequence in Set", help="The Group order in his attribute's Set"
+    )
 
     attribute_ids = fields.One2many(
         "attribute.attribute", "attribute_group_id", "Attributes"

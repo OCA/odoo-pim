@@ -19,8 +19,12 @@ class OpenProductByAttributeSet(models.TransientModel):
         self.ensure_one()
 
         act_product_tmpl_all = self.env.ref(
-            "product.product_template_action_all").read()[0]
-        act_product_tmpl_all['context'] = "{\
-            'search_default_attribute_set_id' : %s}" % self.attribute_set_id.id
+            "product.product_template_action_all"
+        ).read()[0]
+        act_product_tmpl_all["context"] = (
+            "{\
+            'search_default_attribute_set_id' : %s}"
+            % self.attribute_set_id.id
+        )
 
         return act_product_tmpl_all

@@ -4,6 +4,7 @@
 
 
 from lxml import etree
+
 from odoo import api, fields, models
 
 
@@ -15,15 +16,13 @@ class ProductTemplate(models.Model):
         default attribute_set."""
         default_categ_id_id = self._get_default_category_id()
         if default_categ_id_id:
-            default_categ_id = self.env['product.category'].search(
-                [('id', '=', default_categ_id_id)]
+            default_categ_id = self.env["product.category"].search(
+                [("id", "=", default_categ_id_id)]
             )
             return default_categ_id.attribute_set_id.id
 
     attribute_set_id = fields.Many2one(
-        "attribute.set",
-        "Attribute Set",
-        default=_get_default_att_set,
+        "attribute.set", "Attribute Set", default=_get_default_att_set
     )
 
     @api.model
@@ -56,20 +55,20 @@ class ProductTemplate(models.Model):
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
         result = super(ProductTemplate, self).fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
         if view_type == "form":
             # Create the product's attributes notebook
-            att_obj = self.env['attribute.attribute']
-            attribute_ids = att_obj.with_context(product_custom_attribute=True).search([
-                ('attribute_set_ids', '!=', False),
-                ('model_id', '=', "product.template"),
-            ])
-            notebook = att_obj.with_context(product_custom_attribute=True)\
-                ._build_attributes_notebook(attribute_ids)
+            att_obj = self.env["attribute.attribute"]
+            attribute_ids = att_obj.with_context(product_custom_attribute=True).search(
+                [
+                    ("attribute_set_ids", "!=", False),
+                    ("model_id", "=", "product.template"),
+                ]
+            )
+            notebook = att_obj.with_context(
+                product_custom_attribute=True
+            )._build_attributes_notebook(attribute_ids)
             # Add it to the product form view
             eview = etree.fromstring(result["arch"])
             page_att = eview.xpath("//page[@name='product_attributes']")[0]

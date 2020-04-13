@@ -9,6 +9,7 @@ import logging
 import re
 
 from lxml import etree
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv.orm import setup_modifiers
@@ -72,7 +73,7 @@ class AttributeAttribute(models.Model):
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
-                if 'color' in relation_model_obj.fields_get().keys():
+                if "color" in relation_model_obj.fields_get().keys():
                     kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
             else:
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
@@ -99,7 +100,8 @@ class AttributeAttribute(models.Model):
                 subgroup = main_group.find(xpath)
             else:
                 subgroup = etree.SubElement(
-                    main_group, "group", string=att_group_name, colspan="2")
+                    main_group, "group", string=att_group_name, colspan="2"
+                )
                 groups.append(att_group_name)
 
             attribute._build_attribute_field(subgroup)
@@ -151,24 +153,23 @@ class AttributeAttribute(models.Model):
     attribute_set_ids = fields.Many2many(
         comodel_name="attribute.set",
         string="Attribute Sets",
-        relation='rel_attribute_set',
-        column1='attribute_id',
-        column2='attribute_set_id',
+        relation="rel_attribute_set",
+        column1="attribute_id",
+        column2="attribute_set_id",
     )
 
     attribute_group_id = fields.Many2one(
         "attribute.group", "Attribute Group", required=True, ondelete="cascade"
     )
 
-    sequence = fields.Integer("Sequence in Group",
-                              help="The attribute's order in his group")
+    sequence = fields.Integer(
+        "Sequence in Group", help="The attribute's order in his group"
+    )
 
     @api.onchange("field_description")
     def onchange_field_description(self):
         if self.field_description and not self.create_date:
-            self.name = unidecode(
-                "x_" + safe_column_name(self.field_description)
-            )
+            self.name = unidecode("x_" + safe_column_name(self.field_description))
 
     @api.onchange("name")
     def onchange_name(self):
@@ -183,7 +184,7 @@ class AttributeAttribute(models.Model):
 
     @api.onchange("domain")
     def domain_change(self):
-        if self.domain != '':
+        if self.domain != "":
             try:
                 ast.literal_eval(self.domain)
             except ValueError:
@@ -191,11 +192,13 @@ class AttributeAttribute(models.Model):
                     _(
                         """ "{}" is an unvalid Domain name.\n
                         Specify a Python expression defining a list of triplets.\
-                        For example : "[('color', '=', 'red')]" """.format(self.domain)
-                    ),
+                        For example : "[('color', '=', 'red')]" """.format(
+                            self.domain
+                        )
+                    )
                 )
             # Remove selected options as the domain will predominate on actual options
-            if self.domain != '[]':
+            if self.domain != "[]":
                 self.option_ids = [(5, 0)]
 
     @api.multi
@@ -274,12 +277,17 @@ class AttributeAttribute(models.Model):
             # linked to the same attribute.option or relation_model_id's model.
             if not vals.get("serialized"):
                 att_model_id = self.env["ir.model"].browse(vals["model_id"])
-                table_name = "x_" + att_model_id.model.replace(".", "_")\
-                    + "_" + vals["name"]\
-                    + "_" + relation.replace(".", "_")\
+                table_name = (
+                    "x_"
+                    + att_model_id.model.replace(".", "_")
+                    + "_"
+                    + vals["name"]
+                    + "_"
+                    + relation.replace(".", "_")
                     + "_rel"
+                )
                 # avoid too long relation_table names
-                vals['relation_table'] = table_name[0:60]
+                vals["relation_table"] = table_name[0:60]
 
         else:
             vals["ttype"] = attr_type
@@ -351,10 +359,7 @@ class AttributeAttribute(models.Model):
         # Prevent from changing 'JSON Field'
         if "serialized" in list(vals.keys()):
             if self.search(
-                [
-                    ("serialized", "!=", vals["serialized"]),
-                    ("id", "in", self.ids),
-                ]
+                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
             ):
                 raise ValidationError(
                     _(
@@ -367,8 +372,8 @@ class AttributeAttribute(models.Model):
         if "option_ids" in list(vals.keys()) and self.relation_model_id:
             for option_change in vals["option_ids"]:
                 if option_change[0] == 2:
-                    self.env['attribute.option.wizard'].search(
-                        [('attribute_id', 'in', self.ids)]
+                    self.env["attribute.option.wizard"].search(
+                        [("attribute_id", "in", self.ids)]
                     ).unlink()
 
         return super(AttributeAttribute, self).write(vals)
@@ -377,8 +382,8 @@ class AttributeAttribute(models.Model):
     def unlink(self):
         """ Delete the Attribute's related field when deleting an Attribute"""
         for attribute in self:
-            self.env['ir.model.fields'].search(
-                [('id', '=', attribute.field_id.id)]
+            self.env["ir.model.fields"].search(
+                [("id", "=", attribute.field_id.id)]
             ).unlink()
 
         return super(AttributeAttribute, self).unlink()

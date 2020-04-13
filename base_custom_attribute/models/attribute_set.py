@@ -4,7 +4,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class AttributeSet(models.Model):
@@ -16,15 +16,13 @@ class AttributeSet(models.Model):
     attribute_ids = fields.Many2many(
         comodel_name="attribute.attribute",
         string="Attributes",
-        relation='rel_attribute_set',
-        column1='attribute_set_id',
-        column2='attribute_id',
+        relation="rel_attribute_set",
+        column1="attribute_set_id",
+        column2="attribute_id",
     )
 
     model_id = fields.Many2one("ir.model", "Model", required=True)
 
     @api.multi
     def button_save_before_first_att(self):
-        self.write({
-            'name' : self.name,
-        })
+        self.write({"name": self.name})

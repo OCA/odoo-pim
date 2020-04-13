@@ -6,20 +6,21 @@
 
 
 from lxml import etree
+
 from odoo import api, fields, models
 
 
 class AttributeOptionWizard(models.TransientModel):
     _name = "attribute.option.wizard"
     _rec_name = "attribute_id"
-    _description = 'Custom Attributes Option'
+    _description = "Custom Attributes Option"
 
     attribute_id = fields.Many2one(
         "attribute.attribute",
         "Product Attribute",
         required=True,
         default=lambda self: self.env.context.get("attribute_id", False),
-        ondelete='cascade',
+        ondelete="cascade",
     )
 
     @api.multi
@@ -41,8 +42,7 @@ class AttributeOptionWizard(models.TransientModel):
                 {
                     "attribute_id": vals["attribute_id"],
                     "name": name,
-                    "value_ref": "%s,%s"
-                    % (attr.relation_model_id.model, op_id),
+                    "value_ref": "{},{}".format(attr.relation_model_id.model, op_id),
                 }
             )
 
@@ -56,10 +56,7 @@ class AttributeOptionWizard(models.TransientModel):
     ):
         context = self.env.context
         res = super(AttributeOptionWizard, self).fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
 
         if view_type == "form" and context and context.get("attribute_id"):
@@ -73,21 +70,18 @@ class AttributeOptionWizard(models.TransientModel):
             res["fields"].update(
                 {
                     "option_ids": {
-                        "domain": [('id', 'not in', domain_ids)],
+                        "domain": [("id", "not in", domain_ids)],
                         "string": "Options",
                         "type": "many2many",
                         "relation": relation,
                         "required": True,
                     }
                 }
-
             )
 
             eview = etree.fromstring(res["arch"])
             options = etree.Element("field", name="option_ids", nolabel="1")
-            placeholder = eview.xpath(
-                "//separator[@string='options_placeholder']"
-            )[0]
+            placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["arch"] = etree.tostring(eview, pretty_print=True)
 
