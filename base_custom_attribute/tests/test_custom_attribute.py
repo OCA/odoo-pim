@@ -13,6 +13,7 @@ class TestCustomAttribute(common.TransactionCase):
     def setUp(self):
         super(TestCustomAttribute, self).setUp()
         self.model_id = self.env.ref("base.model_res_partner").id
+        self.group = self.env["attribute.group"].create({"name": "My Group"})
         # Do not commit
         self.env.cr.commit = mock.Mock()
 
@@ -22,6 +23,7 @@ class TestCustomAttribute(common.TransactionCase):
                 "model_id": self.model_id,
                 "field_description": "Attribute %s" % vals["attribute_type"],
                 "name": "x_%s" % vals["attribute_type"],
+                "attribute_group_id": self.group.id,
             }
         )
         return self.env["attribute.attribute"].create(vals)
