@@ -16,8 +16,6 @@
         "views/attribute_attribute.xml",
         "views/product.xml",
         "views/product_category.xml",
-        "wizard/open_product_by_attribute_set.xml",
-        "wizard/product_product.xml",
     ],
     "demo": ["demo/product_attribute.xml"],
     "installable": True,

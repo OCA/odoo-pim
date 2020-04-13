@@ -59,31 +59,3 @@ class TestCustomAttribute(common.TransactionCase):
 
         self.assertEqual(attribute.ttype, "many2many")
         self.assertEqual(attribute.relation, "attribute.option")
-
-
-#    def test_wizard(self):
-#        sequence_type_model = self.env['res.partner.category']
-#        sequence_type = sequence_type_model.create({
-#            'name': 'Sequence type 1',
-#        })
-#        model = self.model_model.search([
-#           ('name', '=', 'res.partner.category')])
-#
-#        self.vals.update({
-#            'attribute_type': 'multiselect',
-#            'name': 'x_attribute_multiselect_2',
-#            'relation_model_id': model.id,
-#        })
-#
-#        attribute = self.attribute_model.create(self.vals)
-#
-#        self.wizard_model.create({
-#            'attribute_id': attribute.id,
-#            'option_ids': [(6, 0, [sequence_type.id])]
-#        })
-#
-#        attribute.refresh()
-#
-#        self.assertEqual(len(attribute.option_ids), 1)
-#        option = attribute.option_ids[0]
-#        self.assertEqual(option.value_ref, sequence_type)
