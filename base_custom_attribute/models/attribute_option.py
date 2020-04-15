@@ -41,7 +41,10 @@ class AttributeOption(models.Model):
                 "message": _(
                     """Use the 'Load Attribute Options' button or specify a Domain
                     in order to define the available Options linked to the Relational\
-                    Model"""
+                    Model.
+
+                    If the button is not visible, you need to erase the Domain value\
+                    and Save first."""
                 ),
             }
             return {"warning": warning}

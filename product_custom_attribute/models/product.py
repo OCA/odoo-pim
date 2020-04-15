@@ -58,7 +58,6 @@ class ProductTemplate(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
         if view_type == "form":
-            # Create the product's attributes notebook
             att_obj = self.env["attribute.attribute"]
             attribute_ids = att_obj.with_context(product_custom_attribute=True).search(
                 [
@@ -66,13 +65,18 @@ class ProductTemplate(models.Model):
                     ("model_id", "=", "product.template"),
                 ]
             )
-            notebook = att_obj.with_context(
+            # Create the product's Group of attributes groups named 'main_group'
+            main_group = att_obj.with_context(
                 product_custom_attribute=True
-            )._build_attributes_notebook(attribute_ids)
+            )._build_attributes_main_group(attribute_ids)
             # Add it to the product form view
             eview = etree.fromstring(result["arch"])
             page_att = eview.xpath("//page[@name='product_attributes']")[0]
-            page_att.append(notebook)
+            page_att.append(main_group)
 
             result["arch"] = etree.tostring(eview, pretty_print=True)
         return result
+
+
+# TODO : override fields_view_get() of the 'product.product' model in order to
+# display the attributes in the Variants too.

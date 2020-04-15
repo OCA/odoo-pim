@@ -41,6 +41,13 @@ class AttributeAttribute(models.Model):
         and child of his etree group 'subgroup'"""
         self.ensure_one()
         parent = etree.SubElement(subgroup, "group", colspan="2")
+        # Hide the attributes which are not in the destination object's Attribute set
+        if "attribute_set_id" in self.env[self.model].fields_get():
+            parent.set(
+                "attrs",
+                "{'invisible': [('attribute_set_id', 'not in', %s)]}"
+                % self.attribute_set_ids.ids,
+            )
 
         kwargs = {"name": "%s" % self.name}
         if self.ttype in ["many2many", "text"]:
@@ -76,34 +83,49 @@ class AttributeAttribute(models.Model):
                 if "color" in relation_model_obj.fields_get().keys():
                     kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
             else:
+                # Define field's domain and context with attribute's id to go along with
+                # Attribute Options search and creation
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
 
         kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
         kwargs["required"] = str(self.required or self.required_on_views)
 
-        field = etree.SubElement(parent, "field", **kwargs)
-        setup_modifiers(field, self.fields_get(self.name))
-
-        return field
+        etree.SubElement(parent, "field", **kwargs)
+        setup_modifiers(parent)
 
     @api.model
-    def _build_attributes_notebook(self, attribute_ids):
+    def _build_attributes_main_group(self, attribute_ids):
         """Return a main_group etree element made of sub_groups for each
         attribute_group."""
         main_group = etree.Element("group", name="attributes_group", col="4")
         groups = []
 
         for attribute in attribute_ids:
-            att_group_name = attribute.attribute_group_id.name.capitalize()
-            if att_group_name in groups:
+            att_group = attribute.attribute_group_id
+            att_group_name = att_group.name.capitalize()
+            if att_group in groups:
                 xpath = ".//group[@string='%s']" % (att_group_name)
                 subgroup = main_group.find(xpath)
             else:
-                subgroup = etree.SubElement(
-                    main_group, "group", string=att_group_name, colspan="2"
+                # Hide the Group if none of its attributes are in
+                # the destination object's Attribute set
+                att_set_ids = []
+                for att in att_group.attribute_ids:
+                    att_set_ids += att.attribute_set_ids.ids
+                hide_domain = "[('attribute_set_id', 'not in', {})]".format(
+                    list(set(att_set_ids))
                 )
-                groups.append(att_group_name)
 
+                subgroup = etree.SubElement(
+                    main_group,
+                    "group",
+                    string=att_group_name,
+                    colspan="2",
+                    attrs="{{'invisible' : {} }}".format(hide_domain),
+                )
+                groups.append(att_group)
+
+            setup_modifiers(subgroup)
             attribute._build_attribute_field(subgroup)
         return main_group
 
@@ -321,6 +343,31 @@ class AttributeAttribute(models.Model):
         vals["state"] = "manual"
         return super(AttributeAttribute, self).create(vals)
 
+    def _delete_related_option_wizard(self, option_vals):
+        """ Delete the attribute's options wizards related to the attribute's options
+        deleted after the write"""
+        self.ensure_one()
+        for option_change in option_vals:
+            if option_change[0] == 2:
+                self.env["attribute.option.wizard"].search(
+                    [("attribute_id", "=", self.id)]
+                ).unlink()
+
+    def _propagate_new_options(self, options):
+        """Delete attribute's field values in the objects using our attribute
+        as a field, if these values are not in the new Domain or Options list
+        """
+        self.ensure_one()
+        custom_field = self.name
+        for object in self.env[self.model].search([]):
+            if object.fields_get(custom_field):
+                for value in object[custom_field]:
+                    if value not in options:
+                        if self.attribute_type == "select":
+                            object.write({custom_field: False})
+                        elif self.attribute_type == "multiselect":
+                            object.write({custom_field: [(3, value.id, 0)]})
+
     @api.multi
     def write(self, vals):
         # Prevent from changing Attribute's type
@@ -368,15 +415,37 @@ class AttributeAttribute(models.Model):
                         and vice versa."""
                     )
                 )
-        # Delete related attribute.option.wizard when deleting attribute.option
-        if "option_ids" in list(vals.keys()) and self.relation_model_id:
-            for option_change in vals["option_ids"]:
-                if option_change[0] == 2:
-                    self.env["attribute.option.wizard"].search(
-                        [("attribute_id", "in", self.ids)]
-                    ).unlink()
+        # Set the new values to self
+        res = super(AttributeAttribute, self).write(vals)
 
-        return super(AttributeAttribute, self).write(vals)
+        for att in self:
+            options = att.option_ids
+            if self.relation_model_id:
+                options = self.env[att.relation_model_id.model]
+                if "option_ids" in list(vals.keys()):
+                    # Delete related attribute.option.wizard if an attribute.option
+                    # has been deleted
+                    att._delete_related_option_wizard(vals["option_ids"])
+                    # If there is still some attribute.option available, override
+                    # 'options' with the objects they are refering to.
+                    options = options.search(
+                        [("id", "in", [op.value_ref.id for op in att.option_ids])]
+                    )
+                if "domain" in list(vals.keys()):
+                    try:
+                        domain = ast.literal_eval(att.domain)
+                    except ValueError:
+                        domain = []
+                    if domain:
+                        # If there is a Valid domain not null, it means that there is
+                        # no more attribute.option.
+                        options = options.search(domain)
+            # Delete attribute's field values in the objects using our attribute
+            # as a field, if these values are not in the new Domain or Options list
+            if {"option_ids", "domain"} & set(vals.keys()):
+                att._propagate_new_options(options)
+
+        return res
 
     @api.multi
     def unlink(self):
