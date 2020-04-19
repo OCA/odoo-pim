@@ -16,6 +16,5 @@
         "views/attribute_set_view.xml",
         "wizard/attribute_option_wizard_view.xml",
     ],
-    "demo": ["demo/attribute.xml"],
     "external_dependencies": {"python": ["unidecode"]},
 }

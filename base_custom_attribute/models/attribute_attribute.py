@@ -93,14 +93,13 @@ class AttributeAttribute(models.Model):
         etree.SubElement(parent, "field", **kwargs)
         setup_modifiers(parent)
 
-    @api.model
-    def _build_attributes_main_group(self, attribute_ids):
+    def _build_attribute_view(self):
         """Return a main_group etree element made of sub_groups for each
         attribute_group."""
         main_group = etree.Element("group", name="attributes_group", col="4")
         groups = []
 
-        for attribute in attribute_ids:
+        for attribute in self:
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
             if att_group in groups:
