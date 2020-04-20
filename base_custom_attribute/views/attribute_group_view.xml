@@ -17,6 +17,7 @@
             <tree string="Attribute Group" editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
+                <field name="model_id" invisible="context.get('default_model_id')" />
             </tree>
         </field>
     </record>

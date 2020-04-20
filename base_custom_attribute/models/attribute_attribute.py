@@ -34,32 +34,26 @@ class AttributeAttribute(models.Model):
     _name = "attribute.attribute"
     _description = "Attribute"
     _inherits = {"ir.model.fields": "field_id"}
+    _order = "sequence_group,sequence,name"
+
+    def _get_attrs(self):
+        return {
+            "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
+        }
 
     @api.model
     def _build_attribute_field(self, subgroup):
         """Return an etree 'field' element made of the current attribute 'self'
         and child of his etree group 'subgroup'"""
         self.ensure_one()
-        parent = etree.SubElement(subgroup, "group", colspan="2")
-        # Hide the attributes which are not in the destination object's Attribute set
-        if "attribute_set_id" in self.env[self.model].fields_get():
-            parent.set(
-                "attrs",
-                "{'invisible': [('attribute_set_id', 'not in', %s)]}"
-                % self.attribute_set_ids.ids,
-            )
-
         kwargs = {"name": "%s" % self.name}
-        if self.ttype in ["many2many", "text"]:
-            # Display field label above his value
-            field_title = etree.SubElement(parent, "b", colspan="2")
-            field_title.text = self.field_description
-            kwargs["nolabel"] = "1"
-            if self.ttype == "many2many":
-                # TODO use an attribute field instead
-                # to let user specify the widget. For now it fixes:
-                # https://github.com/shopinvader/odoo-pim/issues/2
-                kwargs["widget"] = "many2many_tags"
+        kwargs["attrs"] = str(self._get_attrs())
+
+        if self.ttype == "many2many":
+            # TODO use an attribute field instead
+            # to let user specify the widget. For now it fixes:
+            # https://github.com/shopinvader/odoo-pim/issues/2
+            kwargs["widget"] = "many2many_tags"
 
         if self.ttype in ["many2one", "many2many"]:
             if self.relation_model_id:
@@ -90,8 +84,17 @@ class AttributeAttribute(models.Model):
         kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
         kwargs["required"] = str(self.required or self.required_on_views)
 
-        etree.SubElement(parent, "field", **kwargs)
-        setup_modifiers(parent)
+        if self.ttype == "text":
+            # Display field label above his value
+            field_title = etree.SubElement(
+                subgroup, "b", colspan="2", attrs=kwargs["attrs"]
+            )
+            field_title.text = self.field_description
+            kwargs["nolabel"] = "1"
+            kwargs["colspan"] = "2"
+            setup_modifiers(field_title)
+        field = etree.SubElement(subgroup, "field", **kwargs)
+        setup_modifiers(field)
 
     def _build_attribute_view(self):
         """Return a main_group etree element made of sub_groups for each
@@ -114,7 +117,6 @@ class AttributeAttribute(models.Model):
                 hide_domain = "[('attribute_set_id', 'not in', {})]".format(
                     list(set(att_set_ids))
                 )
-
                 subgroup = etree.SubElement(
                     main_group,
                     "group",
@@ -145,7 +147,6 @@ class AttributeAttribute(models.Model):
             ("binary", "Binary"),
             ("float", "Float"),
         ],
-        "Type",
         required=True,
     )
 
@@ -181,6 +182,13 @@ class AttributeAttribute(models.Model):
 
     attribute_group_id = fields.Many2one(
         "attribute.group", "Attribute Group", required=True, ondelete="cascade"
+    )
+
+    sequence_group = fields.Integer(
+        "Sequence of the Group",
+        related="attribute_group_id.sequence",
+        help="The sequence of the group",
+        store="True",
     )
 
     sequence = fields.Integer(

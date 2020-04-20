@@ -13,7 +13,11 @@
                     />
                     <field name="attribute_type" />
                     <newline />
-                    <field name="attribute_group_id" options="{'no_create': 1}" />
+                    <field
+                        name="attribute_group_id"
+                        options="{'no_create': 1}"
+                        domain="[('model_id', '=', model_id)]"
+                    />
                     <field name="sequence" />
                     <field
                         name="attribute_set_ids"

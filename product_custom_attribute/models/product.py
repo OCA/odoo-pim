@@ -9,7 +9,8 @@ from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
+    _inherit = ["product.template", "attribute.set.owner.mixin"]
+    _name = "product.template"
 
     def _get_default_att_set(self):
         """ Fill default Product's attribute_set with its Category's
@@ -58,17 +59,7 @@ class ProductTemplate(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
         if view_type == "form":
-            att_obj = self.env["attribute.attribute"]
-            attribute_ids = att_obj.with_context(product_custom_attribute=True).search(
-                [
-                    ("attribute_set_ids", "!=", False),
-                    ("model_id", "=", "product.template"),
-                ]
-            )
-            # Create the product's Group of attributes groups named 'main_group'
-            main_group = att_obj.with_context(
-                product_custom_attribute=True
-            )._build_attributes_main_group(attribute_ids)
+            main_group = self._build_attribute_view()
             # Add it to the product form view
             eview = etree.fromstring(result["arch"])
             page_att = eview.xpath("//page[@name='product_attributes']")[0]
