@@ -13,7 +13,9 @@ class TestCustomAttribute(common.TransactionCase):
     def setUp(self):
         super(TestCustomAttribute, self).setUp()
         self.model_id = self.env.ref("base.model_res_partner").id
-        self.group = self.env["attribute.group"].create({"name": "My Group"})
+        self.group = self.env["attribute.group"].create(
+            {"name": "My Group", "model_id": self.model_id}
+        )
         # Do not commit
         self.env.cr.commit = mock.Mock()
 
@@ -59,31 +61,3 @@ class TestCustomAttribute(common.TransactionCase):
 
         self.assertEqual(attribute.ttype, "many2many")
         self.assertEqual(attribute.relation, "attribute.option")
-
-
-#    def test_wizard(self):
-#        sequence_type_model = self.env['res.partner.category']
-#        sequence_type = sequence_type_model.create({
-#            'name': 'Sequence type 1',
-#        })
-#        model = self.model_model.search([
-#           ('name', '=', 'res.partner.category')])
-#
-#        self.vals.update({
-#            'attribute_type': 'multiselect',
-#            'name': 'x_attribute_multiselect_2',
-#            'relation_model_id': model.id,
-#        })
-#
-#        attribute = self.attribute_model.create(self.vals)
-#
-#        self.wizard_model.create({
-#            'attribute_id': attribute.id,
-#            'option_ids': [(6, 0, [sequence_type.id])]
-#        })
-#
-#        attribute.refresh()
-#
-#        self.assertEqual(len(attribute.option_ids), 1)
-#        option = attribute.option_ids[0]
-#        self.assertEqual(option.value_ref, sequence_type)
