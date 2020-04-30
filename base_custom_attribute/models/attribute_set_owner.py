@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 class AttributeSetOwnerMixin(models.AbstractModel):
     _name = "attribute.set.owner.mixin"
+    _description = "Attribute set owner mixin"
 
     attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
 
