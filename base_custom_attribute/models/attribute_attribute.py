@@ -360,20 +360,20 @@ class AttributeAttribute(models.Model):
                     [("attribute_id", "=", self.id)]
                 ).unlink()
 
-    def _propagate_new_options(self, options):
+    def _delete_old_fields_options(self, options):
         """Delete attribute's field values in the objects using our attribute
         as a field, if these values are not in the new Domain or Options list
         """
         self.ensure_one()
         custom_field = self.name
-        for object in self.env[self.model].search([]):
-            if object.fields_get(custom_field):
-                for value in object[custom_field]:
+        for obj in self.env[self.model].search([]):
+            if obj.fields_get(custom_field):
+                for value in obj[custom_field]:
                     if value not in options:
                         if self.attribute_type == "select":
-                            object.write({custom_field: False})
+                            obj.write({custom_field: False})
                         elif self.attribute_type == "multiselect":
-                            object.write({custom_field: [(3, value.id, 0)]})
+                            obj.write({custom_field: [(3, value.id, 0)]})
 
     @api.multi
     def write(self, vals):
@@ -450,7 +450,7 @@ class AttributeAttribute(models.Model):
             # Delete attribute's field values in the objects using our attribute
             # as a field, if these values are not in the new Domain or Options list
             if {"option_ids", "domain"} & set(vals.keys()):
-                att._propagate_new_options(options)
+                att._delete_old_fields_options(options)
 
         return res
 
