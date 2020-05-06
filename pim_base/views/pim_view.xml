@@ -3,7 +3,7 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <menuitem
-        id="root_menu_pimt"
+        id="root_menu_pim"
         name="PIM"
         sequence="6"
         web_icon="pim_base,static/description/icon.png"
@@ -13,26 +13,26 @@
     <menuitem
         id="main_menu_product"
         name="Products"
-        parent="root_menu_pimt"
+        parent="root_menu_pim"
         sequence="0"
     />
     <menuitem
-        id="main_menu_attribute"
-        name="Attributes"
-        parent="root_menu_pimt"
+        id="main_menu_variant_attribute"
+        name="Variants Attributes"
+        parent="root_menu_pim"
         sequence="10"
     />
     <menuitem
         id="main_menu_category"
         name="Categories"
-        parent="root_menu_pimt"
+        parent="root_menu_pim"
         action="product.product_category_action_form"
         sequence="20"
     />
     <menuitem
         id="main_menu_uom"
         name="Units of Measure"
-        parent="root_menu_pimt"
+        parent="root_menu_pim"
         sequence="30"
     />
     <!-- Menu PRODUCT -->
@@ -52,17 +52,17 @@
     />
     <!-- Menu Attributes -->
     <menuitem
-        id="menu_attribute"
-        name="Attributes"
+        id="menu_variant_attribute"
+        name="Variants Attributes"
         action="product.attribute_action"
-        parent="main_menu_attribute"
+        parent="main_menu_variant_attribute"
         sequence="0"
     />
     <menuitem
-        id="menu_attribute_value"
+        id="menu_variant_attribute_value"
         name="Attributes Values"
         action="product.variants_action"
-        parent="main_menu_attribute"
+        parent="main_menu_variant_attribute"
         sequence="1"
     />
     <!-- Menu UoM -->

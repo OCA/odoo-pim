@@ -14,4 +14,6 @@
         "views/pim_view.xml",
     ],
     "demo": [],
+    "installable": True,
+    "application": True,
 }

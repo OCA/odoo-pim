@@ -32,12 +32,17 @@ It also creates a new user group category with 3 access rights levels :
 
 - PIM Reader
 - PIM User
-- PIM Mangeger
+- PIM Manager
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+Define your user **PIM access rights** in the Application Accesses as a Manager, User or Reader and the application menu "PIM" will appear.
 
 Bug Tracker
 ===========

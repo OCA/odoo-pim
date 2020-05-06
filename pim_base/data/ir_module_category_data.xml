@@ -3,5 +3,6 @@
     <record id="module_category_pim" model="ir.module.category">
         <field name="name">PIM</field>
         <field name="description">Manage your products catalogue easily</field>
+        <field name="sequence">2</field>
     </record>
 </odoo>

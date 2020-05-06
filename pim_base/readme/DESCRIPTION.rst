@@ -11,4 +11,4 @@ It also creates a new user group category with 3 access rights levels :
 
 - PIM Reader
 - PIM User
-- PIM Mangeger
+- PIM Manager

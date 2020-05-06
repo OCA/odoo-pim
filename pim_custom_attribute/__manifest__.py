@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "https://akretion.com",
-    "depends": ["product", "base_custom_attribute", "sale"],
+    "depends": ["product", "base_custom_attribute", "pim_base"],
     "data": [
         "views/attribute_set.xml",
         "views/attribute_group.xml",

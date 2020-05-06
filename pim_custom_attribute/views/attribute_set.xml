@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <menuitem
-        id="menu_attribute_in_config_product"
+        id="main_menu_attribute"
         name="Attributes"
-        parent="sale.prod_config_main"
-        sequence="20"
+        parent="pim_base.root_menu_pim"
+        sequence="01"
     />
     <record id="attribute_set_form_action" model="ir.actions.act_window">
         <field name="name">Product Attribute Sets</field>
@@ -28,7 +28,7 @@
     <menuitem
         action="attribute_set_form_action"
         id="menu_attribute_set_action"
-        parent="pim_custom_attribute.menu_attribute_in_config_product"
-        sequence="1"
+        parent="pim_custom_attribute.main_menu_attribute"
+        sequence="0"
     />
 </odoo>
