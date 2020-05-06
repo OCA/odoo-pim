@@ -10,7 +10,7 @@ from odoo_test_helper import FakeModelLoader
 from odoo.tests import SavepointCase
 
 
-class BuildViewCase(SavepointCase, FakeModelLoader):
+class BuildViewCase(SavepointCase):
     @classmethod
     def _create_set(cls, name):
         return cls.env["attribute.set"].create({"name": name, "model_id": cls.model_id})
@@ -28,10 +28,11 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls._backup_registry()
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
         from .models import ResPartner
 
-        cls._update_registry([ResPartner])
+        cls.loader.update_registry((ResPartner,))
         cls.model_id = cls.env.ref("base.model_res_partner").id
         cls.set_1 = cls._create_set("Set 1")
         cls.set_2 = cls._create_set("Set 2")
@@ -76,8 +77,8 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
 
     @classmethod
     def tearDownClass(cls):
-        cls._restore_registry()
-        super().tearDownClass()
+        cls.loader.restore_registry()
+        super(BuildViewCase, cls).tearDownClass()
 
     def _check_attrset_visiblility(self, attrs, set_ids):
         attrs = ast.literal_eval(attrs)
