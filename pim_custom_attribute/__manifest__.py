@@ -3,8 +3,8 @@
 
 
 {
-    "name": "Product Custom Attributes",
-    "version": "12.0.1.0.0",
+    "name": "PIM Custom Attributes",
+    "version": "12.0.2.0.0",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",

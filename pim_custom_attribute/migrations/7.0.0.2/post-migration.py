@@ -9,7 +9,7 @@ logger = logging.getLogger("upgrade")
 
 def migrate(cr, version):
     if version:  # do not run on a fresh DB, see lp:1259975
-        logger.info("Migrating product_custom_attribute from version %s", version)
+        logger.info("Migrating pim_custom_attribute from version %s", version)
         cr.execute(
             "UPDATE product_template pt "
             "SET attribute_set_id = (SELECT pp.attribute_set_id "

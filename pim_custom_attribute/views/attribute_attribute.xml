@@ -22,7 +22,7 @@
     <menuitem
         action="attribute_attribute_form_action"
         id="menu_attribute_attribute_action"
-        parent="product_custom_attribute.menu_attribute_in_config_product"
+        parent="pim_custom_attribute.menu_attribute_in_config_product"
         sequence="4"
     />
 </odoo>

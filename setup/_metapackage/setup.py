@@ -9,7 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo10-addon-base_custom_attribute',
-        'odoo10-addon-product_custom_attribute',
+        'odoo10-addon-pim_custom_attribute',
     ],
     classifiers=[
         'Programming Language :: Python',
