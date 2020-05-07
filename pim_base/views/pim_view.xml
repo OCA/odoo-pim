@@ -29,12 +29,6 @@
         action="product.product_category_action_form"
         sequence="20"
     />
-    <menuitem
-        id="main_menu_uom"
-        name="Units of Measure"
-        parent="root_menu_pim"
-        sequence="30"
-    />
     <!-- Menu PRODUCT -->
     <menuitem
         id="menu_product_template"
@@ -63,21 +57,6 @@
         name="Attributes Values"
         action="product.variants_action"
         parent="main_menu_variant_attribute"
-        sequence="1"
-    />
-    <!-- Menu UoM -->
-    <menuitem
-        id="menu_uom"
-        name="Units of Measure"
-        action="uom.product_uom_form_action"
-        parent="main_menu_uom"
-        sequence="0"
-    />
-    <menuitem
-        id="menu_uom_category"
-        name="Units of Measure Categories"
-        action="uom.product_uom_categ_form_action"
-        parent="main_menu_uom"
         sequence="1"
     />
     <!-- Display Products in tree view first -->
