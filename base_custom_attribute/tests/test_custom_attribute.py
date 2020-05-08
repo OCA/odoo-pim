@@ -22,6 +22,7 @@ class TestCustomAttribute(common.TransactionCase):
     def _create_attribute(self, vals):
         vals.update(
             {
+                "is_custom": True,
                 "model_id": self.model_id,
                 "field_description": "Attribute %s" % vals["attribute_type"],
                 "name": "x_%s" % vals["attribute_type"],

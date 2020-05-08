@@ -36,7 +36,7 @@ class AttributeAttribute(models.Model):
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
 
-    def _get_attrs(self):
+    def _set_attrs(self):
         return {
             "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
         }
@@ -46,8 +46,11 @@ class AttributeAttribute(models.Model):
         """Return an etree 'field' element made of the current attribute 'self'
         and child of his etree group 'subgroup'"""
         self.ensure_one()
+        if not self.is_custom:
+            # If the attribute is Native, don't build anything.
+            return
         kwargs = {"name": "%s" % self.name}
-        kwargs["attrs"] = str(self._get_attrs())
+        kwargs["attrs"] = str(self._set_attrs())
 
         if self.ttype == "many2many":
             # TODO use an attribute field instead
@@ -134,6 +137,21 @@ class AttributeAttribute(models.Model):
         "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
     )
 
+    # 'attribute_nature' is only an interface field, use 'is_custom' in business logic
+    attribute_nature = fields.Selection(
+        [("custom", "Custom"), ("native", "Native")],
+        string="Attribute Nature",
+        compute="_compute_attribute_nature",
+        inverse="_inverse_attribute_nature",
+        default="custom",
+    )
+    is_custom = fields.Boolean(
+        help="Check if an attribute is custom, otherwise it comes from a native field",
+        store=True,
+        default=True,
+        required=True,
+    )
+
     attribute_type = fields.Selection(
         [
             ("char", "Char"),
@@ -147,7 +165,6 @@ class AttributeAttribute(models.Model):
             ("binary", "Binary"),
             ("float", "Float"),
         ],
-        required=True,
     )
 
     serialized = fields.Boolean(
@@ -195,6 +212,23 @@ class AttributeAttribute(models.Model):
         "Sequence in Group", help="The attribute's order in his group"
     )
 
+    @api.depends("is_custom")
+    def _compute_attribute_nature(self):
+        for att in self:
+            att.attribute_nature = "custom" if att.is_custom else "native"
+
+    def _inverse_attribute_nature(self):
+        for att in self:
+            att.is_custom = att.attribute_nature == "custom"
+
+    @api.onchange("attribute_nature")
+    def onchange_attribute_nature(self):
+        self.is_custom = self.attribute_nature == "custom"
+
+    @api.onchange("model_id")
+    def onchange_model_id(self):
+        return {"domain": {"field_id": [("model_id", "=", self.model_id.id)]}}
+
     @api.onchange("field_description")
     def onchange_field_description(self):
         if self.field_description and not self.create_date:
@@ -213,7 +247,7 @@ class AttributeAttribute(models.Model):
 
     @api.onchange("domain")
     def domain_change(self):
-        if self.domain != "":
+        if self.domain not in ["", False]:
             try:
                 ast.literal_eval(self.domain)
             except ValueError:
@@ -254,21 +288,19 @@ class AttributeAttribute(models.Model):
     def create(self, vals):
         """ Create an attribute.attribute
 
-        When a `field_id` is given, the attribute will be linked to the
-        existing field. The use case is to create an attribute on a field
-        created with Python `fields`.
+        - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
+        be created as this model "_inherits" 'ir.model.fields'.
+        So we need to add here the mandatory 'ir.model.fields' instance's attributes to
+        the new 'attribute.attribute'.
+
+        - In case of a new "native" attribute, it will be linked to an existing
+        field object 'ir.model.fields' (through "field_id") that cannot be modified.
+        That's why we remove all the 'ir.model.fields' instance's attributes values
+        from `vals` before creating our new 'attribute.attribute'.
 
         """
-        if vals.get("field_id"):
-            # When a 'field_id' is given, we create an attribute on an
-            # existing 'ir.model.fields'.  As this model `_inherits`
-            # 'ir.model.fields', calling `create()` with a `field_id`
-            # will call `write` in `ir.model.fields`.
-            # When the existing field is not a 'manual' field, we are
-            # not allowed to write on it. So we call `create()` without
-            # changing the fields values.
+        if not vals.get("is_custom"):
             field_obj = self.env["ir.model.fields"]
-            field = field_obj.browse(vals["field_id"])
 
             if vals.get("serialized"):
                 raise ValidationError(
@@ -277,14 +309,15 @@ class AttributeAttribute(models.Model):
                         "Can't create a serialized attribute on "
                         "an existing ir.model.fields (%s)"
                     )
-                    % field.name,
+                    % field_obj.browse(vals["field_id"]).name,
                 )
 
-            if field.state != "manual":
-                # The ir.model.fields already exists and we want to map
-                # an attribute on it. We can't change the field so we
-                # won't add the ttype, relation and so on.
-                return super(AttributeAttribute, self).create(vals)
+            # Remove all the values that can modify the related native field
+            # before creating the new 'attribute.attribute'
+            for key in list(vals.keys()):
+                if key in field_obj.fields_get().keys():
+                    del vals[key]
+            return super(AttributeAttribute, self).create(vals)
 
         if vals.get("relation_model_id"):
             model = self.env["ir.model"].browse(vals["relation_model_id"])
@@ -456,8 +489,8 @@ class AttributeAttribute(models.Model):
 
     @api.multi
     def unlink(self):
-        """ Delete the Attribute's related field when deleting an Attribute"""
-        for attribute in self:
+        """ Delete the Attribute's related field when deleting a custom Attribute"""
+        for attribute in [att for att in self if att.is_custom]:
             self.env["ir.model.fields"].search(
                 [("id", "=", attribute.field_id.id)]
             ).unlink()

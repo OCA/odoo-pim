@@ -5,27 +5,42 @@
         <field name="model">attribute.attribute</field>
         <field name="arch" type="xml">
             <form string="Attribute">
-                <group col="2" class="col-6">
-                    <field name="field_description" />
+                <field
+                    name="attribute_nature"
+                    attrs="{'readonly': [('create_date', '!=', False)]}"
+                    options="{'horizontal': true}"
+                    class="oe_edit_only col-12"
+                    widget="radio"
+                    nolabel="1"
+                    required="1"
+                />
+                <field name="is_custom" invisible="1" />
+                <group
+                    col="2"
+                    class="col-6"
+                    invisible="context.get('default_model_id')"
+                >
+                    <!-- The field created by this Attribute will be related to the model given
+                       by 'default_model_id' through the menu's context that led to this view -->
+                    <field name="model_id" />
+                </group>
+                <separator attrs="{'invisible': [('is_custom', '=', False)]}" />
+                <group
+                    col="2"
+                    class="col-6"
+                    attrs="{'invisible': [('is_custom', '=', False)]}"
+                >
+                    <field
+                        name="field_description"
+                        attrs="{'required': [('is_custom', '=', True)]}"
+                    />
                     <field
                         name="name"
-                        attrs="{'readonly': [('create_date', '!=', False)]}"
+                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('is_custom', '=', True)]}"
                     />
-                    <field name="attribute_type" />
-                    <newline />
                     <field
-                        name="attribute_group_id"
-                        options="{'no_create': 1}"
-                        domain="[('model_id', '=', model_id)]"
-                    />
-                    <field name="sequence" />
-                    <field
-                        name="attribute_set_ids"
-                        widget="many2many_tags"
-                        domain="[('model_id', '=', context.get('default_model_id'))]"
-                        options="{'no_create': 1}"
-                        required="not context.get('from_attribute_set')"
-                        invisible="context.get('from_attribute_set')"
+                        name="attribute_type"
+                        attrs="{'required': [('is_custom', '=', True)]}"
                     />
                     <field
                         name="size"
@@ -40,16 +55,36 @@
                         name="serialized"
                         attrs="{'readonly': [('create_date', '!=', False)]}"
                     />
-                    <!-- The field created by this Attribute will be related to the model given
-                        by 'default_model_id' through the menu's context that led to this view -->
+                </group>
+                <separator />
+                <group col="2" class="col-6">
                     <field
-                        name="model_id"
-                        invisible="context.get('default_model_id')"
+                        name="field_id"
+                        string="Related native field"
+                        options="{'no_create_edit': 1}"
+                        attrs="{
+                                    'required': [('is_custom', '=', False)],
+                                    'invisible': [('is_custom', '=', True)],
+                                    'readonly': [('model_id', '=', False)],
+                                }"
+                    />
+                    <field
+                        name="attribute_group_id"
+                        options="{'no_create': 1}"
+                        domain="[('model_id', '=', model_id)]"
+                    />
+                    <field name="sequence" />
+                    <field
+                        name="attribute_set_ids"
+                        widget="many2many_tags"
+                        domain="[('model_id', '=', model_id)]"
+                        options="{'no_create': 1}"
+                        invisible="context.get('from_attribute_set')"
                     />
                     <field name="create_date" invisible="1" />
                 </group>
                 <group
-                    attrs="{'invisible': [('attribute_type', 'not in', ['select', 'multiselect'])]}"
+                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('is_custom', '=', False)]}"
                     col="4"
                     colspan="4"
                 >

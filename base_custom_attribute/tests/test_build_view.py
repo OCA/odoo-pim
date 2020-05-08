@@ -40,6 +40,7 @@ class BuildViewCase(SavepointCase):
         cls.group_2 = cls._create_group({"name": "Group 2", "sequence": 2})
         cls.attr_1 = cls._create_attribute(
             {
+                "is_custom": True,
                 "name": "x_attr_1",
                 "attribute_type": "char",
                 "sequence": 1,
@@ -49,6 +50,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_2 = cls._create_attribute(
             {
+                "is_custom": True,
                 "name": "x_attr_2",
                 "attribute_type": "text",
                 "sequence": 2,
@@ -58,6 +60,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_3 = cls._create_attribute(
             {
+                "is_custom": True,
                 "name": "x_attr_3",
                 "attribute_type": "boolean",
                 "sequence": 1,
@@ -67,6 +70,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_4 = cls._create_attribute(
             {
+                "is_custom": True,
                 "name": "x_attr_4",
                 "attribute_type": "date",
                 "sequence": 2,
@@ -158,6 +162,7 @@ class BuildViewCase(SavepointCase):
             name = "x_test_render_{}".format(attr_type)
             self._create_attribute(
                 {
+                    "is_custom": True,
                     "name": name,
                     "attribute_type": attr_type,
                     "sequence": 1,
