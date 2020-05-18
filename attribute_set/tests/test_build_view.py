@@ -58,7 +58,7 @@ class BuildViewCase(SavepointCase):
         cls.group_2 = cls._create_group({"name": "Group 2", "sequence": 2})
         cls.attr_1 = cls._create_attribute(
             {
-                "attribute_nature": "custom",
+                "nature": "custom",
                 "name": "x_attr_1",
                 "attribute_type": "char",
                 "sequence": 1,
@@ -68,7 +68,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_2 = cls._create_attribute(
             {
-                "attribute_nature": "custom",
+                "nature": "custom",
                 "name": "x_attr_2",
                 "attribute_type": "text",
                 "sequence": 2,
@@ -78,7 +78,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_3 = cls._create_attribute(
             {
-                "attribute_nature": "custom",
+                "nature": "custom",
                 "name": "x_attr_3",
                 "attribute_type": "boolean",
                 "sequence": 1,
@@ -88,7 +88,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_4 = cls._create_attribute(
             {
-                "attribute_nature": "custom",
+                "nature": "custom",
                 "name": "x_attr_4",
                 "attribute_type": "date",
                 "sequence": 2,
@@ -98,7 +98,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_native = cls._create_attribute(
             {
-                "attribute_nature": "native",
+                "nature": "native",
                 "field_id": cls.env.ref("base.field_res_partner__category_id").id,
                 "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
@@ -188,7 +188,7 @@ class BuildViewCase(SavepointCase):
             name = "x_test_render_{}".format(attr_type)
             self._create_attribute(
                 {
-                    "attribute_nature": "custom",
+                    "nature": "custom",
                     "name": name,
                     "attribute_type": attr_type,
                     "sequence": 1,
