@@ -56,7 +56,6 @@ class BuildViewCase(SavepointCase):
         cls.set_2 = cls._create_set("Set 2")
         cls.group_1 = cls._create_group({"name": "Group 1", "sequence": 1})
         cls.group_2 = cls._create_group({"name": "Group 2", "sequence": 2})
-        cls.group_native = cls._create_group({"name": "Group native", "sequence": 3})
         cls.attr_1 = cls._create_attribute(
             {
                 "attribute_nature": "custom",
@@ -101,7 +100,7 @@ class BuildViewCase(SavepointCase):
             {
                 "attribute_nature": "native",
                 "field_id": cls.env.ref("base.field_res_partner__category_id").id,
-                "attribute_group_id": cls.group_native.id,
+                "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
