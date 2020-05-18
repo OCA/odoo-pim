@@ -47,8 +47,9 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ]
         )
         for attr in native_attrs:
-            efield = eview.xpath("//field[@name='{}']".format(attr.name))[0]
-            efield.getparent().remove(efield)
+            efield = eview.xpath("//field[@name='{}']".format(attr.name))
+            if len(efield):
+                efield[0].getparent().remove(efield[0])
 
     def _insert_attribute(self, arch):
         """Insert the model's Attributes related fields into the arch's view form
