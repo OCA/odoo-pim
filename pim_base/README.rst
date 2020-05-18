@@ -26,7 +26,6 @@ The module itself doesn't do anything. It only creates a new application menu "P
 - Products and Products Variants views
 - Attributes
 - Categories
-- Units of measure
 
 It also creates a new user group category with 3 access rights levels :
 

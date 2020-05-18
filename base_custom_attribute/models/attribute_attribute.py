@@ -42,15 +42,14 @@ class AttributeAttribute(models.Model):
         }
 
     @api.model
-    def _build_attribute_field(self, subgroup):
-        """Return an etree 'field' element made of the current attribute 'self'
-        and child of his etree group 'subgroup'"""
+    def _build_attribute_field(self, attribute_egroup):
+        """Add an etree 'field' subelement (related to the current attribute 'self')
+        to attribute_egroup, with a conditional invisibility based on its
+        attribute sets."""
         self.ensure_one()
-        if not self.is_custom:
-            # If the attribute is Native, don't build anything.
-            return
         kwargs = {"name": "%s" % self.name}
         kwargs["attrs"] = str(self._set_attrs())
+        kwargs["required"] = str(self.required or self.required_on_views)
 
         if self.ttype == "many2many":
             # TODO use an attribute field instead
@@ -83,45 +82,45 @@ class AttributeAttribute(models.Model):
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
-
-        kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
-        kwargs["required"] = str(self.required or self.required_on_views)
+                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
 
         if self.ttype == "text":
             # Display field label above his value
             field_title = etree.SubElement(
-                subgroup, "b", colspan="2", attrs=kwargs["attrs"]
+                attribute_egroup, "b", colspan="2", attrs=kwargs["attrs"]
             )
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
             kwargs["colspan"] = "2"
             setup_modifiers(field_title)
-        field = etree.SubElement(subgroup, "field", **kwargs)
-        setup_modifiers(field)
+        efield = etree.SubElement(attribute_egroup, "field", **kwargs)
+        setup_modifiers(efield)
 
-    def _build_attribute_view(self):
-        """Return a main_group etree element made of sub_groups for each
-        attribute_group."""
-        main_group = etree.Element("group", name="attributes_group", col="4")
+    def _build_attribute_eview(self):
+        """Return an 'attribute_eview' including all the Attributes (in the current
+        recorset 'self') distributed in different 'attribute_egroup' for each
+        Attribute's group.
+        """
+        attribute_eview = etree.Element("group", name="attributes_group", col="4")
         groups = []
 
         for attribute in self:
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
             if att_group in groups:
-                xpath = ".//group[@string='%s']" % (att_group_name)
-                subgroup = main_group.find(xpath)
+                xpath = ".//group[@string='{}']".format(att_group_name)
+                attribute_egroup = attribute_eview.find(xpath)
             else:
-                # Hide the Group if none of its attributes are in
-                # the destination object's Attribute set
                 att_set_ids = []
                 for att in att_group.attribute_ids:
                     att_set_ids += att.attribute_set_ids.ids
+                # Hide the Group if none of its attributes are in
+                # the destination object's Attribute set
                 hide_domain = "[('attribute_set_id', 'not in', {})]".format(
                     list(set(att_set_ids))
                 )
-                subgroup = etree.SubElement(
-                    main_group,
+                attribute_egroup = etree.SubElement(
+                    attribute_eview,
                     "group",
                     string=att_group_name,
                     colspan="2",
@@ -129,27 +128,21 @@ class AttributeAttribute(models.Model):
                 )
                 groups.append(att_group)
 
-            setup_modifiers(subgroup)
-            attribute._build_attribute_field(subgroup)
-        return main_group
+            setup_modifiers(attribute_egroup)
+            attribute._build_attribute_field(attribute_egroup)
+
+        return attribute_eview
 
     field_id = fields.Many2one(
         "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
     )
 
-    # 'attribute_nature' is only an interface field, use 'is_custom' in business logic
     attribute_nature = fields.Selection(
         [("custom", "Custom"), ("native", "Native")],
         string="Attribute Nature",
-        compute="_compute_attribute_nature",
-        inverse="_inverse_attribute_nature",
-        default="custom",
-    )
-    is_custom = fields.Boolean(
-        help="Check if an attribute is custom, otherwise it comes from a native field",
-        store=True,
-        default=True,
         required=True,
+        default="custom",
+        store=True,
     )
 
     attribute_type = fields.Selection(
@@ -168,11 +161,11 @@ class AttributeAttribute(models.Model):
     )
 
     serialized = fields.Boolean(
-        "JSON Field",
-        # TODO : Improve this help, 'attribute_custom_tmpl' does not mean anything
-        help="If serialized, the field will be stocked in the serialized "
-        "field: attribute_custom_tmpl or attribute_custom_variant "
-        "depending on the field based_on",
+        "Serialized",
+        help="""If serialized, the attribute's field will be stored in the serialization
+        field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized fields
+        values) instead of creating a new SQL column for this attribute's field.
+        Useful to increase speed requests if creating a high number of attributes.""",
     )
 
     option_ids = fields.One2many(
@@ -211,19 +204,6 @@ class AttributeAttribute(models.Model):
     sequence = fields.Integer(
         "Sequence in Group", help="The attribute's order in his group"
     )
-
-    @api.depends("is_custom")
-    def _compute_attribute_nature(self):
-        for att in self:
-            att.attribute_nature = "custom" if att.is_custom else "native"
-
-    def _inverse_attribute_nature(self):
-        for att in self:
-            att.is_custom = att.attribute_nature == "custom"
-
-    @api.onchange("attribute_nature")
-    def onchange_attribute_nature(self):
-        self.is_custom = self.attribute_nature == "custom"
 
     @api.onchange("model_id")
     def onchange_model_id(self):
@@ -299,9 +279,9 @@ class AttributeAttribute(models.Model):
         from `vals` before creating our new 'attribute.attribute'.
 
         """
-        if not vals.get("is_custom"):
-            field_obj = self.env["ir.model.fields"]
+        if vals.get("attribute_nature") == "native":
 
+            field_obj = self.env["ir.model.fields"]
             if vals.get("serialized"):
                 raise ValidationError(
                     _("Error"),
@@ -317,7 +297,7 @@ class AttributeAttribute(models.Model):
             for key in list(vals.keys()):
                 if key in field_obj.fields_get().keys():
                     del vals[key]
-            return super(AttributeAttribute, self).create(vals)
+            return super().create(vals)
 
         if vals.get("relation_model_id"):
             model = self.env["ir.model"].browse(vals["relation_model_id"])
@@ -381,7 +361,7 @@ class AttributeAttribute(models.Model):
                 )
 
         vals["state"] = "manual"
-        return super(AttributeAttribute, self).create(vals)
+        return super().create(vals)
 
     def _delete_related_option_wizard(self, option_vals):
         """ Delete the attribute's options wizards related to the attribute's options
@@ -490,9 +470,9 @@ class AttributeAttribute(models.Model):
     @api.multi
     def unlink(self):
         """ Delete the Attribute's related field when deleting a custom Attribute"""
-        for attribute in [att for att in self if att.is_custom]:
-            self.env["ir.model.fields"].search(
-                [("id", "=", attribute.field_id.id)]
-            ).unlink()
-
-        return super(AttributeAttribute, self).unlink()
+        fields_to_remove = self.filtered(
+            lambda s: s.attribute_nature == "custom"
+        ).mapped("field_id")
+        res = super(AttributeAttribute, self).unlink()
+        fields_to_remove.unlink()
+        return res

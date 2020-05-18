@@ -14,7 +14,6 @@
                     nolabel="1"
                     required="1"
                 />
-                <field name="is_custom" invisible="1" />
                 <group
                     col="2"
                     class="col-6"
@@ -24,23 +23,25 @@
                        by 'default_model_id' through the menu's context that led to this view -->
                     <field name="model_id" />
                 </group>
-                <separator attrs="{'invisible': [('is_custom', '=', False)]}" />
+                <separator
+                    attrs="{'invisible': [('attribute_nature', '=', 'native')]}"
+                />
                 <group
                     col="2"
                     class="col-6"
-                    attrs="{'invisible': [('is_custom', '=', False)]}"
+                    attrs="{'invisible': [('attribute_nature', '=', 'native')]}"
                 >
                     <field
                         name="field_description"
-                        attrs="{'required': [('is_custom', '=', True)]}"
+                        attrs="{'required': [('attribute_nature', '=', 'custom')]}"
                     />
                     <field
                         name="name"
-                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('is_custom', '=', True)]}"
+                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('attribute_nature', '=', 'custom')]}"
                     />
                     <field
                         name="attribute_type"
-                        attrs="{'required': [('is_custom', '=', True)]}"
+                        attrs="{'required': [('attribute_nature', '=', 'custom')]}"
                     />
                     <field
                         name="size"
@@ -50,7 +51,6 @@
                         name="translate"
                         attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"
                     />
-                    <field name="required_on_views" />
                     <field
                         name="serialized"
                         attrs="{'readonly': [('create_date', '!=', False)]}"
@@ -63,8 +63,8 @@
                         string="Related native field"
                         options="{'no_create_edit': 1}"
                         attrs="{
-                                    'required': [('is_custom', '=', False)],
-                                    'invisible': [('is_custom', '=', True)],
+                                    'required': [('attribute_nature', '=', 'native')],
+                                    'invisible': [('attribute_nature', '=', 'custom')],
                                     'readonly': [('model_id', '=', False)],
                                 }"
                     />
@@ -81,10 +81,11 @@
                         options="{'no_create': 1}"
                         invisible="context.get('from_attribute_set')"
                     />
+                    <field name="required_on_views" />
                     <field name="create_date" invisible="1" />
                 </group>
                 <group
-                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('is_custom', '=', False)]}"
+                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('attribute_nature', '=', 'native')]}"
                     col="4"
                     colspan="4"
                 >
@@ -145,11 +146,11 @@
                     widget="handle"
                     invisible="not context.get('active_attribute_sort')"
                 />
-                <field name="name" />
                 <field name="field_description" />
                 <field name="attribute_type" />
                 <field name="attribute_group_id" />
                 <field name="attribute_set_ids" widget="many2many_tags" />
+                <field name="attribute_nature" />
             </tree>
         </field>
     </record>

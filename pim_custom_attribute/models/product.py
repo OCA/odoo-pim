@@ -3,12 +3,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from lxml import etree
-
 from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
+    """The mixin 'attribute.set.owner.mixin' override the model's fields_view_get()
+    method which will replace the 'attributes_placeholder' by a group made up of all
+    the product.template's Attributes.
+    Each Attribute will have a conditional invisibility depending on its Attriute Sets.
+    """
+
     _inherit = ["product.template", "attribute.set.owner.mixin"]
     _name = "product.template"
 
@@ -38,12 +42,7 @@ class ProductTemplate(models.Model):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
             category = self.env["product.category"].browse(vals["categ_id"])
             vals["attribute_set_id"] = category.attribute_set_id.id
-        super(ProductTemplate, self).write(vals)
-        return True
-
-    @api.multi
-    def save_and_close_product_attributes(self):
-        return True
+        return super(ProductTemplate, self).write(vals)
 
     @api.onchange("categ_id")
     def update_att_set_onchange_categ_id(self):
@@ -51,23 +50,6 @@ class ProductTemplate(models.Model):
         if self.categ_id and not self.attribute_set_id:
             self.attribute_set_id = self.categ_id.attribute_set_id
 
-    @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        result = super(ProductTemplate, self).fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
-        )
-        if view_type == "form":
-            main_group = self._build_attribute_view()
-            # Add it to the product form view
-            eview = etree.fromstring(result["arch"])
-            page_att = eview.xpath("//page[@name='product_attributes']")[0]
-            page_att.append(main_group)
 
-            result["arch"] = etree.tostring(eview, pretty_print=True)
-        return result
-
-
-# TODO : override fields_view_get() of the 'product.product' model in order to
-# display the attributes in the Variants too.
+# TODO : add the 'attribute.set.owner.mixin' to product.product in order to display
+# Attributes in Variants.

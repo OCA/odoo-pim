@@ -5,6 +5,7 @@
 
 import ast
 
+from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
 from odoo.tests import SavepointCase
@@ -33,14 +34,32 @@ class BuildViewCase(SavepointCase):
         from .models import ResPartner
 
         cls.loader.update_registry((ResPartner,))
+
+        # Create a new inherited view with the 'attributes' placeholder.
+        cls.view = cls.env["ir.ui.view"].create(
+            {
+                "name": "res.partner.form.test",
+                "model": "res.partner",
+                "inherit_id": cls.env.ref("base.view_partner_form").id,
+                "arch": """
+                    <xpath expr="//notebook" position="inside">
+                        <page name="partner_attributes">
+                            <separator name="attributes_placeholder" />
+                        </page>
+                    </xpath>
+                """,
+            }
+        )
+        # Create some attributes
         cls.model_id = cls.env.ref("base.model_res_partner").id
         cls.set_1 = cls._create_set("Set 1")
         cls.set_2 = cls._create_set("Set 2")
         cls.group_1 = cls._create_group({"name": "Group 1", "sequence": 1})
         cls.group_2 = cls._create_group({"name": "Group 2", "sequence": 2})
+        cls.group_native = cls._create_group({"name": "Group native", "sequence": 3})
         cls.attr_1 = cls._create_attribute(
             {
-                "is_custom": True,
+                "attribute_nature": "custom",
                 "name": "x_attr_1",
                 "attribute_type": "char",
                 "sequence": 1,
@@ -50,7 +69,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_2 = cls._create_attribute(
             {
-                "is_custom": True,
+                "attribute_nature": "custom",
                 "name": "x_attr_2",
                 "attribute_type": "text",
                 "sequence": 2,
@@ -60,7 +79,7 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_3 = cls._create_attribute(
             {
-                "is_custom": True,
+                "attribute_nature": "custom",
                 "name": "x_attr_3",
                 "attribute_type": "boolean",
                 "sequence": 1,
@@ -70,11 +89,19 @@ class BuildViewCase(SavepointCase):
         )
         cls.attr_4 = cls._create_attribute(
             {
-                "is_custom": True,
+                "attribute_nature": "custom",
                 "name": "x_attr_4",
                 "attribute_type": "date",
                 "sequence": 2,
                 "attribute_group_id": cls.group_2.id,
+                "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
+            }
+        )
+        cls.attr_native = cls._create_attribute(
+            {
+                "attribute_nature": "native",
+                "field_id": cls.env.ref("base.field_res_partner__category_id").id,
+                "attribute_group_id": cls.group_native.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
@@ -97,45 +124,45 @@ class BuildViewCase(SavepointCase):
         )
 
     def _get_attr_element(self, name):
-        views = self.env["res.partner"]._build_attribute_view()
-        return views.find("group/field[@name='{}']".format(name))
+        eview = self.env["res.partner"]._build_attribute_eview()
+        return eview.find("group/field[@name='{}']".format(name))
 
     def test_group_order(self):
-        views = self.env["res.partner"]._build_attribute_view()
-        groups = [g.get("string") for g in views.getchildren()]
+        eview = self.env["res.partner"]._build_attribute_eview()
+        groups = [g.get("string") for g in eview.getchildren()]
         self.assertEqual(groups, ["Group 1", "Group 2"])
 
-        self.group_1.sequence = 3
-        views = self.env["res.partner"]._build_attribute_view()
-        groups = [g.get("string") for g in views.getchildren()]
+        self.group_2.sequence = 0
+        eview = self.env["res.partner"]._build_attribute_eview()
+        groups = [g.get("string") for g in eview.getchildren()]
         self.assertEqual(groups, ["Group 2", "Group 1"])
 
     def test_group_visibility(self):
-        views = self.env["res.partner"]._build_attribute_view()
-        group = views.getchildren()[0]
+        eview = self.env["res.partner"]._build_attribute_eview()
+        group = eview.getchildren()[0]
         self._check_attrset_visiblility(group.get("attrs"), [self.set_1.id])
 
         self.attr_1.attribute_set_ids += self.set_2
-        views = self.env["res.partner"]._build_attribute_view()
-        group = views.getchildren()[0]
+        eview = self.env["res.partner"]._build_attribute_eview()
+        group = eview.getchildren()[0]
         self._check_attrset_visiblility(
             group.get("attrs"), [self.set_1.id, self.set_2.id]
         )
 
     def test_attribute_order(self):
-        views = self.env["res.partner"]._build_attribute_view()
+        eview = self.env["res.partner"]._build_attribute_eview()
         attrs = [
             item.get("name")
-            for item in views.getchildren()[0].getchildren()
+            for item in eview.getchildren()[0].getchildren()
             if item.tag == "field"
         ]
         self.assertEqual(attrs, ["x_attr_1", "x_attr_2"])
 
         self.attr_1.sequence = 3
-        views = self.env["res.partner"]._build_attribute_view()
+        eview = self.env["res.partner"]._build_attribute_eview()
         attrs = [
             item.get("name")
-            for item in views.getchildren()[0].getchildren()
+            for item in eview.getchildren()[0].getchildren()
             if item.tag == "field"
         ]
         self.assertEqual(attrs, ["x_attr_2", "x_attr_1"])
@@ -162,7 +189,7 @@ class BuildViewCase(SavepointCase):
             name = "x_test_render_{}".format(attr_type)
             self._create_attribute(
                 {
-                    "is_custom": True,
+                    "attribute_nature": "custom",
                     "name": name,
                     "attribute_type": attr_type,
                     "sequence": 1,
@@ -178,3 +205,61 @@ class BuildViewCase(SavepointCase):
                 self.assertEqual(previous.tag, "b")
             else:
                 self.assertFalse(attr.get("nolabel", False))
+
+    # TEST on NATIVE ATTRIBUTES
+    def test_include_native_attr(self):
+        # Run fields_view_get on the test view with "include_native_attribute" context
+        fields_view = (
+            self.env["res.partner"]
+            .with_context({"include_native_attribute": True})
+            .fields_view_get(
+                view_id=self.view.id, view_type="form", toolbar=False, submenu=False
+            )
+        )
+        eview = etree.fromstring(fields_view["arch"])
+        attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
+
+        # Only one field with this name
+        self.assertEqual(len(attr), 1)
+        # The moved field is inside page "partner_attributes"
+        self.assertEqual(attr[0].xpath("../../..")[0].get("name"), "partner_attributes")
+        # It has the given visibility by its related attribute sets.
+        self._check_attrset_visiblility(
+            attr[0].get("attrs"), [self.set_1.id, self.set_2.id]
+        )
+
+    def test_no_include_native_attr(self):
+        # Run fields_view_get on the test view with no "include_native_attribute"
+        # context
+        fields_view = (
+            self.env["res.partner"]
+            .with_context({"include_native_attribute": False})
+            .fields_view_get(
+                view_id=self.view.id, view_type="form", toolbar=False, submenu=False
+            )
+        )
+        eview = etree.fromstring(fields_view["arch"])
+        attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
+
+        # Only one field with this name
+        self.assertEqual(len(attr), 1)
+        # And it is not in page "partner_attributes"
+        self.assertFalse(
+            eview.xpath(
+                "//page[@name='partner_attributes']//field[@name='{}']".format(
+                    self.attr_native.name
+                )
+            )
+        )
+
+    def test_unlink_custom_attribute(self):
+        attr_1_field_id = self.attr_1.field_id.id
+        self.attr_1.unlink()
+        self.assertFalse(self.env["ir.model.fields"].browse([attr_1_field_id]).exists())
+
+    def test_unlink_native_attribute(self):
+        attr_native_field_id = self.attr_native.field_id.id
+        self.attr_native.unlink()
+        self.assertTrue(
+            self.env["ir.model.fields"].browse([attr_native_field_id]).exists()
+        )
