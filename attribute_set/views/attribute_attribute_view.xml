@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Attribute">
                 <field
-                    name="attribute_nature"
+                    name="nature"
                     attrs="{'readonly': [('create_date', '!=', False)]}"
                     options="{'horizontal': true}"
                     class="oe_edit_only col-12"
@@ -23,25 +23,23 @@
                        by 'default_model_id' through the menu's context that led to this view -->
                     <field name="model_id" />
                 </group>
-                <separator
-                    attrs="{'invisible': [('attribute_nature', '=', 'native')]}"
-                />
+                <separator attrs="{'invisible': [('nature', '=', 'native')]}" />
                 <group
                     col="2"
                     class="col-6"
-                    attrs="{'invisible': [('attribute_nature', '=', 'native')]}"
+                    attrs="{'invisible': [('nature', '=', 'native')]}"
                 >
                     <field
                         name="field_description"
-                        attrs="{'required': [('attribute_nature', '=', 'custom')]}"
+                        attrs="{'required': [('nature', '=', 'custom')]}"
                     />
                     <field
                         name="name"
-                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('attribute_nature', '=', 'custom')]}"
+                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('nature', '=', 'custom')]}"
                     />
                     <field
                         name="attribute_type"
-                        attrs="{'required': [('attribute_nature', '=', 'custom')]}"
+                        attrs="{'required': [('nature', '=', 'custom')]}"
                     />
                     <field
                         name="size"
@@ -63,8 +61,8 @@
                         string="Related native field"
                         options="{'no_create_edit': 1}"
                         attrs="{
-                                    'required': [('attribute_nature', '=', 'native')],
-                                    'invisible': [('attribute_nature', '=', 'custom')],
+                                    'required': [('nature', '=', 'native')],
+                                    'invisible': [('nature', '=', 'custom')],
                                     'readonly': [('model_id', '=', False)],
                                 }"
                     />
@@ -85,7 +83,7 @@
                     <field name="create_date" invisible="1" />
                 </group>
                 <group
-                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('attribute_nature', '=', 'native')]}"
+                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('nature', '=', 'native')]}"
                     col="4"
                     colspan="4"
                 >
@@ -150,7 +148,7 @@
                 <field name="attribute_type" />
                 <field name="attribute_group_id" />
                 <field name="attribute_set_ids" widget="many2many_tags" />
-                <field name="attribute_nature" />
+                <field name="nature" />
             </tree>
         </field>
     </record>
