@@ -78,7 +78,7 @@ class AttributeAttribute(models.Model):
                 relation_model_obj = self.env[self.relation_model_id.model]
                 if "color" in relation_model_obj.fields_get().keys():
                     kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
-            else:
+            elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
@@ -137,7 +137,7 @@ class AttributeAttribute(models.Model):
         "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
     )
 
-    attribute_nature = fields.Selection(
+    nature = fields.Selection(
         [("custom", "Custom"), ("native", "Native")],
         string="Attribute Nature",
         required=True,
@@ -279,7 +279,7 @@ class AttributeAttribute(models.Model):
         from `vals` before creating our new 'attribute.attribute'.
 
         """
-        if vals.get("attribute_nature") == "native":
+        if vals.get("nature") == "native":
 
             field_obj = self.env["ir.model.fields"]
             if vals.get("serialized"):
@@ -470,9 +470,9 @@ class AttributeAttribute(models.Model):
     @api.multi
     def unlink(self):
         """ Delete the Attribute's related field when deleting a custom Attribute"""
-        fields_to_remove = self.filtered(
-            lambda s: s.attribute_nature == "custom"
-        ).mapped("field_id")
+        fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
+            "field_id"
+        )
         res = super(AttributeAttribute, self).unlink()
         fields_to_remove.unlink()
         return res
