@@ -51,6 +51,9 @@ class AttributeAttribute(models.Model):
         kwargs["attrs"] = str(self._set_attrs())
         kwargs["required"] = str(self.required or self.required_on_views)
 
+        if self.readonly:
+            kwargs["readonly"] = str(True)
+
         if self.ttype == "many2many":
             # TODO use an attribute field instead
             # to let user specify the widget. For now it fixes:

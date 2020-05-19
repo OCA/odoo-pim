@@ -104,6 +104,14 @@ class BuildViewCase(SavepointCase):
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
+        cls.attr_native_readonly = cls._create_attribute(
+            {
+                "nature": "native",
+                "field_id": cls.env.ref("base.field_res_partner__create_uid").id,
+                "attribute_group_id": cls.group_2.id,
+                "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
+            }
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -206,16 +214,18 @@ class BuildViewCase(SavepointCase):
                 self.assertFalse(attr.get("nolabel", False))
 
     # TEST on NATIVE ATTRIBUTES
-    def test_include_native_attr(self):
-        # Run fields_view_get on the test view with "include_native_attribute" context
+    def _get_eview_from_fields_view_get(self, include_native_attribute=True):
         fields_view = (
             self.env["res.partner"]
-            .with_context({"include_native_attribute": True})
+            .with_context({"include_native_attribute": include_native_attribute})
             .fields_view_get(
                 view_id=self.view.id, view_type="form", toolbar=False, submenu=False
             )
         )
-        eview = etree.fromstring(fields_view["arch"])
+        return etree.fromstring(fields_view["arch"])
+
+    def test_include_native_attr(self):
+        eview = self._get_eview_from_fields_view_get()
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name
@@ -227,17 +237,14 @@ class BuildViewCase(SavepointCase):
             attr[0].get("attrs"), [self.set_1.id, self.set_2.id]
         )
 
+    def test_native_readonly(self):
+        eview = self._get_eview_from_fields_view_get()
+        attr = eview.xpath("//field[@name='{}']".format(self.attr_native_readonly.name))
+        self.assertTrue(attr[0].get("readonly"))
+
     def test_no_include_native_attr(self):
         # Run fields_view_get on the test view with no "include_native_attribute"
-        # context
-        fields_view = (
-            self.env["res.partner"]
-            .with_context({"include_native_attribute": False})
-            .fields_view_get(
-                view_id=self.view.id, view_type="form", toolbar=False, submenu=False
-            )
-        )
-        eview = etree.fromstring(fields_view["arch"])
+        eview = self._get_eview_from_fields_view_get(include_native_attribute=False)
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name
@@ -251,6 +258,7 @@ class BuildViewCase(SavepointCase):
             )
         )
 
+    # TESTS UNLINK
     def test_unlink_custom_attribute(self):
         attr_1_field_id = self.attr_1.field_id.id
         self.attr_1.unlink()
