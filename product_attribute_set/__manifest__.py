@@ -10,7 +10,7 @@
     "author": "Akretion",
     "website": "https://akretion.com",
     "depends": ["product", "attribute_set"],
-    "data": [],
+    "data": ["views/product.xml", "views/product_category.xml"],
     "demo": ["demo/product_attribute.xml"],
     "installable": True,
 }
