@@ -21,7 +21,7 @@
                     />
                 </div>
             </xpath>
-            <!-- Add an Attribute page -->
+            <!-- Add the 'attributes_placeholder' in an 'Attributes' page -->
             <xpath expr="//page[@name='general_information']" position="after">
                 <page
                     name="product_attributes"
