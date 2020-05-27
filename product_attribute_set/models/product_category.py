@@ -17,7 +17,7 @@ class ProductCategory(models.Model):
     @api.multi
     def write(self, vals):
         """Fill Category's products with Category's default attribute_set_id if empty"""
-        super(ProductCategory, self).write(vals)
+        super().write(vals)
         if vals.get("attribute_set_id"):
             product_ids = self.env["product.template"].search(
                 [("categ_id", "=", self.id), ("attribute_set_id", "=", False)]
