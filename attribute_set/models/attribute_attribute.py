@@ -36,7 +36,7 @@ class AttributeAttribute(models.Model):
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
 
-    def _set_attrs(self):
+    def _get_attrs(self):
         return {
             "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
         }
@@ -48,7 +48,7 @@ class AttributeAttribute(models.Model):
         attribute sets."""
         self.ensure_one()
         kwargs = {"name": "%s" % self.name}
-        kwargs["attrs"] = str(self._set_attrs())
+        kwargs["attrs"] = str(self._get_attrs())
         kwargs["required"] = str(self.required or self.required_on_views)
 
         if self.readonly:
@@ -283,23 +283,10 @@ class AttributeAttribute(models.Model):
 
         """
         if vals.get("nature") == "native":
-
-            field_obj = self.env["ir.model.fields"]
-            if vals.get("serialized"):
-                raise ValidationError(
-                    _("Error"),
-                    _(
-                        "Can't create a serialized attribute on "
-                        "an existing ir.model.fields (%s)"
-                    )
-                    % field_obj.browse(vals["field_id"]).name,
-                )
-
             # Remove all the values that can modify the related native field
             # before creating the new 'attribute.attribute'
-            for key in list(vals.keys()):
-                if key in field_obj.fields_get().keys():
-                    del vals[key]
+            for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
+                del vals[key]
             return super().create(vals)
 
         if vals.get("relation_model_id"):
@@ -426,20 +413,20 @@ class AttributeAttribute(models.Model):
                         Please create a new one."""
                     )
                 )
-        # Prevent from changing 'JSON Field'
+        # Prevent from changing 'Serialized'
         if "serialized" in list(vals.keys()):
             if self.search(
                 [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
             ):
                 raise ValidationError(
                     _(
-                        """It is not allowed to change the boolean 'JSON Field'.
+                        """It is not allowed to change the boolean 'Serialized'.
                         A serialized field can not be change to non-serialized \
                         and vice versa."""
                     )
                 )
         # Set the new values to self
-        res = super(AttributeAttribute, self).write(vals)
+        res = super().write(vals)
 
         for att in self:
             options = att.option_ids
@@ -470,12 +457,11 @@ class AttributeAttribute(models.Model):
 
         return res
 
-    @api.multi
     def unlink(self):
         """ Delete the Attribute's related field when deleting a custom Attribute"""
         fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
             "field_id"
         )
-        res = super(AttributeAttribute, self).unlink()
+        res = super().unlink()
         fields_to_remove.unlink()
         return res
