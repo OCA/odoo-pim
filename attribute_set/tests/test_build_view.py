@@ -52,6 +52,7 @@ class BuildViewCase(SavepointCase):
         )
         # Create some attributes
         cls.model_id = cls.env.ref("base.model_res_partner").id
+        cls.partner = cls.env.ref("base.res_partner_12")
         cls.set_1 = cls._create_set("Set 1")
         cls.set_2 = cls._create_set("Set 2")
         cls.group_1 = cls._create_group({"name": "Group 1", "sequence": 1})
@@ -96,6 +97,18 @@ class BuildViewCase(SavepointCase):
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
+        cls.attr_select = cls._create_attribute(
+            {
+                "nature": "custom",
+                "name": "x_attr_select",
+                "attribute_type": "select",
+                "attribute_group_id": cls.group_2.id,
+                "attribute_set_ids": [(6, 0, [cls.set_1.id])],
+            }
+        )
+        cls.attr_select_option = cls.env["attribute.option"].create(
+            {"name": "Option 1", "attribute_id": cls.attr_select.id}
+        )
         cls.attr_native = cls._create_attribute(
             {
                 "nature": "native",
@@ -118,6 +131,16 @@ class BuildViewCase(SavepointCase):
         cls.loader.restore_registry()
         super(BuildViewCase, cls).tearDownClass()
 
+    # TEST write on attributes
+    def test_write_attribute_values_text(self):
+        self.partner.write({"x_attr_2": "abcd"})
+        self.assertEqual(self.partner.x_attr_2, "abcd")
+
+    def test_write_attribute_values_select(self):
+        self.partner.write({"x_attr_select": self.attr_select_option.id})
+        self.assertEqual(self.partner.x_attr_select, self.attr_select_option)
+
+    # TEST render partner's view with attribute's place_holder
     def _check_attrset_visiblility(self, attrs, set_ids):
         attrs = ast.literal_eval(attrs)
         self.assertIn("invisible", attrs)

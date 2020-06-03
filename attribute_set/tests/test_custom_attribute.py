@@ -9,9 +9,9 @@ import mock
 from odoo.tests import common
 
 
-class TestCustomAttribute(common.TransactionCase):
+class TestAttributeSet(common.TransactionCase):
     def setUp(self):
-        super(TestCustomAttribute, self).setUp()
+        super(TestAttributeSet, self).setUp()
         self.model_id = self.env.ref("base.model_res_partner").id
         self.group = self.env["attribute.group"].create(
             {"name": "My Group", "model_id": self.model_id}
