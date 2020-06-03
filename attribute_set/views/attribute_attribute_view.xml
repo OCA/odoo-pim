@@ -88,7 +88,7 @@
                     colspan="4"
                 >
                     <group
-                        groups="attribute_set.group_advanced_attribute"
+                        groups="attribute_set.group_advanced_attribute_set"
                         colspan="4"
                         col="4"
                     >
