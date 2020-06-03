@@ -247,7 +247,6 @@ class AttributeAttribute(models.Model):
             if self.domain != "[]":
                 self.option_ids = [(5, 0)]
 
-    @api.multi
     def button_add_options(self):
         self.ensure_one()
         # Before adding another option delete the ones which are linked
@@ -378,7 +377,6 @@ class AttributeAttribute(models.Model):
                         elif self.attribute_type == "multiselect":
                             obj.write({custom_field: [(3, value.id, 0)]})
 
-    @api.multi
     def write(self, vals):
         # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
