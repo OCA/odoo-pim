@@ -12,7 +12,7 @@
                     <field
                         name="value_ref"
                         colspan="2"
-                        groups="attribute_set.group_advanced_attribute"
+                        groups="attribute_set.group_advanced_attribute_set"
                         attrs="{'invisible':[('relation_model_id', '=', False)]}"
                     />
                     <field name="sequence" colspan="2" />
@@ -31,7 +31,7 @@
                     <field
                         name="value_ref"
                         colspan="2"
-                        groups="attribute_set.group_advanced_attribute"
+                        groups="attribute_set.group_advanced_attribute_set"
                         attrs="{'invisible':[('relation_model_id', '=', False)]}"
                     />
                     <field name="sequence" colspan="2" />
@@ -50,7 +50,7 @@
                 <field name="sequence" />
                 <field
                     name="value_ref"
-                    groups="attribute_set.group_advanced_attribute"
+                    groups="attribute_set.group_advanced_attribute_set"
                 />
                 <field name="attribute_id" />
             </tree>
@@ -64,7 +64,7 @@
                 <field name="name" />
                 <field
                     name="value_ref"
-                    groups="attribute_set.group_advanced_attribute"
+                    groups="attribute_set.group_advanced_attribute_set"
                 />
                 <field name="attribute_id" />
             </search>
