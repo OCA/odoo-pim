@@ -23,7 +23,6 @@ class AttributeOptionWizard(models.TransientModel):
         ondelete="cascade",
     )
 
-    @api.multi
     def validate(self):
         return True
 
