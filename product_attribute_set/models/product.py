@@ -37,7 +37,6 @@ class ProductTemplate(models.Model):
             vals["attribute_set_id"] = category.attribute_set_id.id
         return super().create(vals)
 
-    @api.multi
     def write(self, vals):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
             category = self.env["product.category"].browse(vals["categ_id"])
