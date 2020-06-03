@@ -6,7 +6,7 @@ An Attribute is related to both an Attribute Group and an Attribute Set :
 - The **Attribute Group** is related to the *"attribute's category"*. All the attributes from the same Attribute Set and Attribute Group will be displayed under the same field's Group in the model's view.
 
 
-     🔎 In order to create a custom Attribute many2one or many2many related to **other Odoo model**, you need to activate the Technical Setting **"Advanced Attribute Option"** (:code:`group_advanced_attribute`).
+     🔎 In order to create a custom Attribute many2one or many2many related to **other Odoo model**, you need to activate the Technical Setting **"Advanced Attribute Set settings"** (:code:`group_advanced_attribute_set`).
 
 -----
 
