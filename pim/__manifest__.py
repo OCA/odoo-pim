@@ -14,6 +14,7 @@
         "product_attribute_set_completeness",
         "attribute_set_mass_edit",
         "product_search_multi_value",
+        "attribute_set_searchable",
     ],
     "data": [
         "data/ir_module_category_data.xml",
