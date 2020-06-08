@@ -12,6 +12,7 @@
         "product",
         "product_attribute_set",
         "product_attribute_set_completeness",
+        "attribute_set_mass_edit"
     ],
     "data": [
         "data/ir_module_category_data.xml",
