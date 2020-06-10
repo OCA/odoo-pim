@@ -59,9 +59,4 @@
         parent="main_menu_variant_attribute"
         sequence="1"
     />
-    <!-- Display Products in tree view first -->
-    <record id="product.product_template_action" model="ir.actions.act_window">
-        <field name="view_mode">tree,kanban,form</field>
-        <field name="view_id" ref="product.product_template_tree_view" />
-    </record>
 </odoo>
