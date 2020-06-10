@@ -26,4 +26,16 @@
             name="comment"
         >the user will be able to modify products and create attributes</field>
     </record>
+    <record model="ir.model.access" id="attribute_set_completeness_access_pim_manager">
+        <field name="name">attribute.set.completeness access for PIM manager</field>
+        <field
+            name="model_id"
+            ref="attribute_set_completeness.model_attribute_set_completeness"
+        />
+        <field name="group_id" ref="pim.group_pim_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
 </odoo>
