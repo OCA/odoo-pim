@@ -1,10 +1,10 @@
+# -*- coding: utf-8 -*-
 # Copyright 2020 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
 from lxml import etree
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -56,7 +56,9 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         at the placeholder's place."""
         eview = etree.fromstring(arch)
         form_name = eview.get("string")
-        placeholder = eview.xpath("//separator[@name='attributes_placeholder']")
+        placeholder = eview.xpath(
+            "//separator[@name='attributes_placeholder']"
+        )
 
         if len(placeholder) != 1:
             raise ValidationError(
@@ -81,8 +83,11 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     def fields_view_get(
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
-        result = super().fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
+        result = super(AttributeSetOwnerMixin, self).fields_view_get(
+            view_id=view_id,
+            view_type=view_type,
+            toolbar=toolbar,
+            submenu=submenu,
         )
         if view_type == "form":
             result["arch"] = self._insert_attribute(result["arch"])

@@ -1,20 +1,21 @@
+# -*- coding: utf-8 -*-
 # Copyright 2020 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-
 import ast
 
+import mock
 from lxml import etree
+from odoo.tests import SavepointCase
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import SavepointCase
 
-
-class BuildViewCase(SavepointCase):
+class BuildViewCase(SavepointCase, FakeModelLoader):
     @classmethod
     def _create_set(cls, name):
-        return cls.env["attribute.set"].create({"name": name, "model_id": cls.model_id})
+        return cls.env["attribute.set"].create(
+            {"name": name, "model_id": cls.model_id}
+        )
 
     @classmethod
     def _create_group(cls, vals):
@@ -28,7 +29,7 @@ class BuildViewCase(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(BuildViewCase, cls).setUpClass()
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from .models import ResPartner
@@ -48,6 +49,22 @@ class BuildViewCase(SavepointCase):
                         </page>
                     </xpath>
                 """,
+            }
+        )
+        cls.address_view = cls.env["ir.ui.view"].create(
+            {
+                "name": "res.partner.address.form.test",
+                "model": "res.partner",
+                "inherit_id": cls.env.ref("base.view_partner_address_form").id,
+                "arch": """
+                    <xpath expr="//group" position="after">
+                        <notebook>
+                            <page name="partner_attributes">
+                                <separator name="attributes_placeholder" />
+                            </page>
+                        </notebook>
+                    </xpath>
+                        """,
             }
         )
         # Create some attributes
@@ -112,7 +129,7 @@ class BuildViewCase(SavepointCase):
         cls.attr_native = cls._create_attribute(
             {
                 "nature": "native",
-                "field_id": cls.env.ref("base.field_res_partner__category_id").id,
+                "field_id": cls.env.ref("base.field_res_partner_phone").id,
                 "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
@@ -120,11 +137,14 @@ class BuildViewCase(SavepointCase):
         cls.attr_native_readonly = cls._create_attribute(
             {
                 "nature": "native",
-                "field_id": cls.env.ref("base.field_res_partner__create_uid").id,
+                "field_id": cls.env.ref(
+                    "base.field_res_partner_parent_name"
+                ).id,
                 "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
+        cls.env.cr.commit = mock.Mock()
 
     @classmethod
     def tearDownClass(cls):
@@ -240,9 +260,31 @@ class BuildViewCase(SavepointCase):
     def _get_eview_from_fields_view_get(self, include_native_attribute=True):
         fields_view = (
             self.env["res.partner"]
-            .with_context({"include_native_attribute": include_native_attribute})
+            .with_context(
+                {"include_native_attribute": include_native_attribute}
+            )
             .fields_view_get(
-                view_id=self.view.id, view_type="form", toolbar=False, submenu=False
+                view_id=self.view.id,
+                view_type="form",
+                toolbar=False,
+                submenu=False,
+            )
+        )
+        return etree.fromstring(fields_view["arch"])
+
+    def _get_eview_adress_from_fields_view_get(
+        self, include_native_attribute=True
+    ):
+        fields_view = (
+            self.env["res.partner"]
+            .with_context(
+                {"include_native_attribute": include_native_attribute}
+            )
+            .fields_view_get(
+                view_id=self.address_view.id,
+                view_type="form",
+                toolbar=False,
+                submenu=False,
             )
         )
         return etree.fromstring(fields_view["arch"])
@@ -254,7 +296,9 @@ class BuildViewCase(SavepointCase):
         # Only one field with this name
         self.assertEqual(len(attr), 1)
         # The moved field is inside page "partner_attributes"
-        self.assertEqual(attr[0].xpath("../../..")[0].get("name"), "partner_attributes")
+        self.assertEqual(
+            attr[0].xpath("../../..")[0].get("name"), "partner_attributes"
+        )
         # It has the given visibility by its related attribute sets.
         self._check_attrset_visiblility(
             attr[0].get("attrs"), [self.set_1.id, self.set_2.id]
@@ -262,12 +306,16 @@ class BuildViewCase(SavepointCase):
 
     def test_native_readonly(self):
         eview = self._get_eview_from_fields_view_get()
-        attr = eview.xpath("//field[@name='{}']".format(self.attr_native_readonly.name))
+        attr = eview.xpath(
+            "//field[@name='{}']".format(self.attr_native_readonly.name)
+        )
         self.assertTrue(attr[0].get("readonly"))
 
     def test_no_include_native_attr(self):
         # Run fields_view_get on the test view with no "include_native_attribute"
-        eview = self._get_eview_from_fields_view_get(include_native_attribute=False)
+        eview = self._get_eview_from_fields_view_get(
+            include_native_attribute=False
+        )
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name
@@ -284,8 +332,12 @@ class BuildViewCase(SavepointCase):
     # TESTS UNLINK
     def test_unlink_custom_attribute(self):
         attr_1_field_id = self.attr_1.field_id.id
-        self.attr_1.unlink()
-        self.assertFalse(self.env["ir.model.fields"].browse([attr_1_field_id]).exists())
+        # Force unlink to avoid new registry that can leads to DB lock
+        # (in tests)
+        self.attr_1.with_context(_force_unlink=True).unlink()
+        self.assertFalse(
+            self.env["ir.model.fields"].browse([attr_1_field_id]).exists()
+        )
 
     def test_unlink_native_attribute(self):
         attr_native_field_id = self.attr_native.field_id.id

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Akretion (http://www.akretion.com).
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # @author Raphaël VALYI <raphael.valyi@akretion.com>
@@ -9,7 +10,6 @@ import logging
 import re
 
 from lxml import etree
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv.orm import setup_modifiers
@@ -36,109 +36,10 @@ class AttributeAttribute(models.Model):
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
 
-    def _get_attrs(self):
-        return {
-            "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
-        }
-
-    @api.model
-    def _build_attribute_field(self, attribute_egroup):
-        """Add an etree 'field' subelement (related to the current attribute 'self')
-        to attribute_egroup, with a conditional invisibility based on its
-        attribute sets."""
-        self.ensure_one()
-        kwargs = {"name": "%s" % self.name}
-        kwargs["attrs"] = str(self._get_attrs())
-        kwargs["required"] = str(self.required or self.required_on_views)
-
-        if self.readonly:
-            kwargs["readonly"] = str(True)
-
-        if self.ttype == "many2many":
-            # TODO use an attribute field instead
-            # to let user specify the widget. For now it fixes:
-            # https://github.com/shopinvader/odoo-pim/issues/2
-            kwargs["widget"] = "many2many_tags"
-
-        if self.ttype in ["many2one", "many2many"]:
-            if self.relation_model_id:
-                # TODO update related attribute.option in cascade to allow
-                # attribute.option creation from the field.
-                kwargs["options"] = "{'no_create': True}"
-                # attribute.domain is a string, it may be an empty list
-                try:
-                    domain = ast.literal_eval(self.domain)
-                except ValueError:
-                    domain = None
-                if domain:
-                    kwargs["domain"] = self.domain
-                else:
-                    # Display only options linked to an existing object
-                    ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
-                    kwargs["domain"] = "[('id', 'in', %s)]" % ids
-                # Add color options if the attribute's Relational Model
-                # has a color field
-                relation_model_obj = self.env[self.relation_model_id.model]
-                if "color" in relation_model_obj.fields_get().keys():
-                    kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
-            elif self.nature == "custom":
-                # Define field's domain and context with attribute's id to go along with
-                # Attribute Options search and creation
-                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
-                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
-
-        if self.ttype == "text":
-            # Display field label above his value
-            field_title = etree.SubElement(
-                attribute_egroup, "b", colspan="2", attrs=kwargs["attrs"]
-            )
-            field_title.text = self.field_description
-            kwargs["nolabel"] = "1"
-            kwargs["colspan"] = "2"
-            setup_modifiers(field_title)
-        efield = etree.SubElement(attribute_egroup, "field", **kwargs)
-        setup_modifiers(efield)
-
-    def _build_attribute_eview(self):
-        """Return an 'attribute_eview' including all the Attributes (in the current
-        recorset 'self') distributed in different 'attribute_egroup' for each
-        Attribute's group.
-        """
-        attribute_eview = etree.Element("group", name="attributes_group", col="4")
-        groups = []
-
-        for attribute in self:
-            att_group = attribute.attribute_group_id
-            att_group_name = att_group.name.capitalize()
-            if att_group in groups:
-                xpath = ".//group[@string='{}']".format(att_group_name)
-                attribute_egroup = attribute_eview.find(xpath)
-            else:
-                att_set_ids = []
-                for att in att_group.attribute_ids:
-                    att_set_ids += att.attribute_set_ids.ids
-                # Hide the Group if none of its attributes are in
-                # the destination object's Attribute set
-                hide_domain = "[('attribute_set_id', 'not in', {})]".format(
-                    list(set(att_set_ids))
-                )
-                attribute_egroup = etree.SubElement(
-                    attribute_eview,
-                    "group",
-                    string=att_group_name,
-                    colspan="2",
-                    attrs="{{'invisible' : {} }}".format(hide_domain),
-                )
-                groups.append(att_group)
-
-            setup_modifiers(attribute_egroup)
-            attribute._build_attribute_field(attribute_egroup)
-
-        return attribute_eview
-
     field_id = fields.Many2one(
         "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
     )
+    copy = fields.Boolean()
 
     nature = fields.Selection(
         [("custom", "Custom"), ("native", "Native")],
@@ -160,15 +61,15 @@ class AttributeAttribute(models.Model):
             ("datetime", "Datetime"),
             ("binary", "Binary"),
             ("float", "Float"),
-        ],
+        ]
     )
 
     serialized = fields.Boolean(
         "Serialized",
         help="""If serialized, the attribute's field will be stored in the serialization
-        field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized fields
-        values) instead of creating a new SQL column for this attribute's field.
-        Useful to increase speed requests if creating a high number of attributes.""",
+            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized fields
+            values) instead of creating a new SQL column for this attribute's field.
+            Useful to increase speed requests if creating a high number of attributes.""",
     )
 
     option_ids = fields.One2many(
@@ -208,6 +109,117 @@ class AttributeAttribute(models.Model):
         "Sequence in Group", help="The attribute's order in his group"
     )
 
+    def _get_attrs(self):
+        return {
+            "invisible": [
+                ("attribute_set_id", "not in", self.attribute_set_ids.ids)
+            ]
+        }
+
+    @api.model
+    def _build_attribute_field(self, attribute_egroup):
+        """Add an etree 'field' subelement (related to the current attribute 'self')
+        to attribute_egroup, with a conditional invisibility based on its
+        attribute sets."""
+        self.ensure_one()
+        kwargs = {"name": "%s" % self.name}
+        kwargs["attrs"] = str(self._get_attrs())
+        kwargs["required"] = str(self.required or self.required_on_views)
+
+        if self.readonly:
+            kwargs["readonly"] = str(True)
+
+        if self.ttype == "many2many":
+            # TODO use an attribute field instead
+            # to let user specify the widget. For now it fixes:
+            # https://github.com/shopinvader/odoo-pim/issues/2
+            kwargs["widget"] = "many2many_tags"
+
+        if self.ttype in ["many2one", "many2many"]:
+            if self.relation_model_id:
+                # TODO update related attribute.option in cascade to allow
+                # attribute.option creation from the field.
+                kwargs["options"] = "{'no_create': True}"
+                # attribute.domain is a string, it may be an empty list
+                try:
+                    domain = ast.literal_eval(self.domain)
+                except ValueError:
+                    domain = None
+                if domain:
+                    kwargs["domain"] = self.domain
+                else:
+                    # Display only options linked to an existing object
+                    ids = [
+                        op.value_ref.id
+                        for op in self.option_ids
+                        if op.value_ref
+                    ]
+                    kwargs["domain"] = "[('id', 'in', %s)]" % ids
+                # Add color options if the attribute's Relational Model
+                # has a color field
+                relation_model_obj = self.env[self.relation_model_id.model]
+                if "color" in relation_model_obj.fields_get().keys():
+                    kwargs[
+                        "options"
+                    ] = "{'color_field': 'color', 'no_create': True}"
+            elif self.nature == "custom":
+                # Define field's domain and context with attribute's id to go along with
+                # Attribute Options search and creation
+                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
+                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+
+        if self.ttype == "text":
+            # Display field label above his value
+            field_title = etree.SubElement(
+                attribute_egroup, "b", colspan="2", attrs=kwargs["attrs"]
+            )
+            field_title.text = self.field_description
+            kwargs["nolabel"] = "1"
+            kwargs["colspan"] = "2"
+            setup_modifiers(field_title)
+        efield = etree.SubElement(attribute_egroup, "field", **kwargs)
+        setup_modifiers(efield)
+
+    @api.multi
+    def _build_attribute_eview(self):
+        """Return an 'attribute_eview' including all the Attributes (in the current
+        recorset 'self') distributed in different 'attribute_egroup' for each
+        Attribute's group.
+        """
+        attribute_eview = etree.Element(
+            "group", name="attributes_group", col="4"
+        )
+        groups = []
+
+        for attribute in self:
+            att_group = attribute.attribute_group_id
+            att_group_name = att_group.name.capitalize()
+            if att_group in groups:
+                xpath = ".//group[@string='{}']".format(att_group_name)
+                attribute_egroup = attribute_eview.find(xpath)
+            else:
+                att_set_ids = []
+                for att in att_group.attribute_ids:
+                    att_set_ids += att.attribute_set_ids.ids
+                # Hide the Group if none of its attributes are in
+                # the destination object's Attribute set
+                hide_domain = "[('attribute_set_id', 'not in', {})]".format(
+                    list(set(att_set_ids))
+                )
+                attribute_egroup = etree.SubElement(
+                    attribute_eview,
+                    "group",
+                    string=att_group_name,
+                    colspan="2",
+                    attrs="{{'invisible' : {} }}".format(hide_domain),
+                )
+                groups.append(att_group)
+
+            setup_modifiers(attribute_egroup)
+            attribute._build_attribute_field(attribute_egroup)
+
+        return attribute_eview
+
     @api.onchange("model_id")
     def onchange_model_id(self):
         return {"domain": {"field_id": [("model_id", "=", self.model_id.id)]}}
@@ -215,7 +227,9 @@ class AttributeAttribute(models.Model):
     @api.onchange("field_description")
     def onchange_field_description(self):
         if self.field_description and not self.create_date:
-            self.name = unidecode("x_" + safe_column_name(self.field_description))
+            self.name = unidecode(
+                "x_" + safe_column_name(self.field_description)
+            )
 
     @api.onchange("name")
     def onchange_name(self):
@@ -225,7 +239,9 @@ class AttributeAttribute(models.Model):
 
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
-        "Remove selected options as they would be inconsistent"
+        """
+        Remove selected options as they would be inconsistent
+        """
         self.option_ids = [(5, 0)]
 
     @api.onchange("domain")
@@ -284,9 +300,11 @@ class AttributeAttribute(models.Model):
         if vals.get("nature") == "native":
             # Remove all the values that can modify the related native field
             # before creating the new 'attribute.attribute'
-            for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
+            for key in set(vals).intersection(
+                self.env["ir.model.fields"]._fields
+            ):
                 del vals[key]
-            return super().create(vals)
+            return super(AttributeAttribute, self).create(vals)
 
         if vals.get("relation_model_id"):
             model = self.env["ir.model"].browse(vals["relation_model_id"])
@@ -350,8 +368,9 @@ class AttributeAttribute(models.Model):
                 )
 
         vals["state"] = "manual"
-        return super().create(vals)
+        return super(AttributeAttribute, self).create(vals)
 
+    @api.multi
     def _delete_related_option_wizard(self, option_vals):
         """ Delete the attribute's options wizards related to the attribute's options
         deleted after the write"""
@@ -362,6 +381,7 @@ class AttributeAttribute(models.Model):
                     [("attribute_id", "=", self.id)]
                 ).unlink()
 
+    @api.multi
     def _delete_old_fields_options(self, options):
         """Delete attribute's field values in the objects using our attribute
         as a field, if these values are not in the new Domain or Options list
@@ -377,6 +397,7 @@ class AttributeAttribute(models.Model):
                         elif self.attribute_type == "multiselect":
                             obj.write({custom_field: [(3, value.id, 0)]})
 
+    @api.multi
     def write(self, vals):
         # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
@@ -414,7 +435,10 @@ class AttributeAttribute(models.Model):
         # Prevent from changing 'Serialized'
         if "serialized" in list(vals.keys()):
             if self.search(
-                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
+                [
+                    ("serialized", "!=", vals["serialized"]),
+                    ("id", "in", self.ids),
+                ]
             ):
                 raise ValidationError(
                     _(
@@ -424,7 +448,7 @@ class AttributeAttribute(models.Model):
                     )
                 )
         # Set the new values to self
-        res = super().write(vals)
+        res = super(AttributeAttribute, self).write(vals)
 
         for att in self:
             options = att.option_ids
@@ -437,7 +461,13 @@ class AttributeAttribute(models.Model):
                     # If there is still some attribute.option available, override
                     # 'options' with the objects they are refering to.
                     options = options.search(
-                        [("id", "in", [op.value_ref.id for op in att.option_ids])]
+                        [
+                            (
+                                "id",
+                                "in",
+                                [op.value_ref.id for op in att.option_ids],
+                            )
+                        ]
                     )
                 if "domain" in list(vals.keys()):
                     try:
@@ -455,11 +485,12 @@ class AttributeAttribute(models.Model):
 
         return res
 
+    @api.multi
     def unlink(self):
         """ Delete the Attribute's related field when deleting a custom Attribute"""
-        fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
-            "field_id"
-        )
-        res = super().unlink()
+        fields_to_remove = self.filtered(
+            lambda s: s.nature == "custom"
+        ).mapped("field_id")
+        res = super(AttributeAttribute, self).unlink()
         fields_to_remove.unlink()
         return res

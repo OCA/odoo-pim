@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Akretion (http://www.akretion.com).
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # @author Raphaël VALYI <raphael.valyi@akretion.com>
@@ -12,24 +13,31 @@ class AttributeOption(models.Model):
     _description = "Attribute Option"
     _order = "sequence"
 
-    @api.model
-    def _get_model_list(self):
-        models = self.env["ir.model"].search([])
-        return [(m.model, m.name) for m in models]
-
     name = fields.Char("Name", translate=True, required=True)
 
-    value_ref = fields.Reference(_get_model_list, "Reference")
+    value_ref = fields.Reference(
+        selection=lambda self: self._get_model_list(), string="Reference"
+    )
 
     attribute_id = fields.Many2one(
-        "attribute.attribute", "Product Attribute", required=True, ondelete="cascade",
+        "attribute.attribute",
+        "Product Attribute",
+        required=True,
+        ondelete="cascade",
     )
 
     relation_model_id = fields.Many2one(
-        "ir.model", "Relational Model", related="attribute_id.relation_model_id",
+        "ir.model",
+        "Relational Model",
+        related="attribute_id.relation_model_id",
     )
 
     sequence = fields.Integer("Sequence")
+
+    @api.model
+    def _get_model_list(self):
+        ir_models = self.env["ir.model"].search([])
+        return [(m.model, m.name) for m in ir_models]
 
     @api.onchange("name")
     def name_change(self):

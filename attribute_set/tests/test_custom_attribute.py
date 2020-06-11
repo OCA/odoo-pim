@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Akretion (http://www.akretion.com).
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # @author Raphaël VALYI <raphael.valyi@akretion.com>
@@ -5,19 +6,22 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import mock
-
 from odoo.tests import common
 
 
-class TestAttributeSet(common.TransactionCase):
+class TestAttributeSet(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestAttributeSet, cls).setUpClass()
+        # Do not commit
+        cls.env.cr.commit = mock.Mock()
+
     def setUp(self):
         super(TestAttributeSet, self).setUp()
         self.model_id = self.env.ref("base.model_res_partner").id
         self.group = self.env["attribute.group"].create(
             {"name": "My Group", "model_id": self.model_id}
         )
-        # Do not commit
-        self.env.cr.commit = mock.Mock()
 
     def _create_attribute(self, vals):
         vals.update(

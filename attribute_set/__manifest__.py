@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
 {
     "name": "Attribute Set",
-    "version": "12.0.0.0.1",
+    "version": "10.0.1.0.0",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "https://akretion.com",
-    "depends": ["base", "base_sparse_field"],
+    "website": "https://shopinvader.com",
+    "depends": ["base", "base_sparse_field_list_support"],
     "data": [
         "security/ir.model.access.csv",
         "security/attribute_security.xml",
