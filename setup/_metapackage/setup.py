@@ -10,7 +10,6 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-attribute_set',
         'odoo12-addon-pim',
-        'odoo12-addon-pim_attribute_set',
         'odoo12-addon-product_attribute_set',
     ],
     classifiers=[
