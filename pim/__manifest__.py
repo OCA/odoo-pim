@@ -12,6 +12,7 @@
         "product",
         "product_attribute_set",
         "product_attribute_set_completeness",
+        "product_search_multi_value",
     ],
     "data": [
         "data/ir_module_category_data.xml",
