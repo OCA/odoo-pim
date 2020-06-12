@@ -83,6 +83,7 @@ Contributors
 * Benoît Guillot <benoit.guillot@akretion.com>
 * Akretion Raphaël VALYI <raphael.valyi@akretion.com>
 * David Dufresne <david.dufresne@savoirfairelinux.com>
+* Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
