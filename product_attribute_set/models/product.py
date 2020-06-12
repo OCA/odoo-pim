@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Akretion (http://www.akretion.com).
 # @author Benoit Guillot <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -35,13 +36,14 @@ class ProductTemplate(models.Model):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
             category = self.env["product.category"].browse(vals["categ_id"])
             vals["attribute_set_id"] = category.attribute_set_id.id
-        return super().create(vals)
+        return super(ProductTemplate, self).create(vals)
 
+    @api.multi
     def write(self, vals):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
             category = self.env["product.category"].browse(vals["categ_id"])
             vals["attribute_set_id"] = category.attribute_set_id.id
-        return super().write(vals)
+        return super(ProductTemplate, self).write(vals)
 
     @api.onchange("categ_id")
     def update_att_set_onchange_categ_id(self):

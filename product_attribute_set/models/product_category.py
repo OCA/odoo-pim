@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2015 Akretion (http://www.akretion.com).
 # @author Benoit Guillot <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -16,7 +17,7 @@ class ProductCategory(models.Model):
 
     def write(self, vals):
         """Fill Category's products with Category's default attribute_set_id if empty"""
-        super().write(vals)
+        super(ProductCategory, self).write(vals)
         if vals.get("attribute_set_id"):
             product_ids = self.env["product.template"].search(
                 [("categ_id", "=", self.id), ("attribute_set_id", "=", False)]

@@ -62,14 +62,14 @@
     <!-- Native attributes -->
     <record id="computer_weight_attribute" model="attribute.attribute">
         <field name="nature">native</field>
-        <field name="field_id" eval="ref('product.field_product_template__weight')" />
+        <field name="field_id" eval="ref('product.field_product_template_weight')" />
         <field name="attribute_group_id" ref="computer_transport_attribute_group" />
         <field name="attribute_set_ids" eval="[(4, ref('computer_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
     </record>
     <record id="computer_volume_attribute" model="attribute.attribute">
         <field name="nature">native</field>
-        <field name="field_id" eval="ref('product.field_product_template__volume')" />
+        <field name="field_id" eval="ref('product.field_product_template_volume')" />
         <field name="attribute_group_id" ref="computer_transport_attribute_group" />
         <field name="attribute_set_ids" eval="[(4, ref('computer_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
