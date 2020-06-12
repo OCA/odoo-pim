@@ -26,14 +26,22 @@ jobs:
       python: 3.6
       install: pip install pre_commit
       script: pre-commit run --all
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="base_custom_attribute,product_custom_attribute"
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="base_custom_attribute,product_custom_attribute"
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE="base_custom_attribute,product_custom_attribute"
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="OCA/OCB" INCLUDE="base_custom_attribute,product_custom_attribute"
+
 env:
   global:
-  - VERSION="10.0" TESTS="1" LINT_CHECK="0" MQT_DEP="PIP"
-
-  matrix:
-  - ODOO_REPO="odoo/odoo"
-  - ODOO_REPO="OCA/OCB"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB"
+  - VERSION="10.0" TESTS="0" LINT_CHECK="0" MQT_DEP="PIP"
 
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
