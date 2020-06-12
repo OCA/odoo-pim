@@ -12,7 +12,8 @@ from lxml import etree
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv.orm import setup_modifiers
+
+from ..utils.orm import setup_modifiers
 
 _logger = logging.getLogger(__name__)
 
@@ -35,6 +36,79 @@ class AttributeAttribute(models.Model):
     _description = "Attribute"
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
+
+    field_id = fields.Many2one(
+        "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
+    )
+
+    nature = fields.Selection(
+        [("custom", "Custom"), ("native", "Native")],
+        string="Attribute Nature",
+        required=True,
+        default="custom",
+        store=True,
+    )
+
+    attribute_type = fields.Selection(
+        [
+            ("char", "Char"),
+            ("text", "Text"),
+            ("select", "Select"),
+            ("multiselect", "Multiselect"),
+            ("boolean", "Boolean"),
+            ("integer", "Integer"),
+            ("date", "Date"),
+            ("datetime", "Datetime"),
+            ("binary", "Binary"),
+            ("float", "Float"),
+        ],
+    )
+
+    serialized = fields.Boolean(
+        "Serialized",
+        help="""If serialized, the attribute's field will be stored in the serialization
+            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized
+            fields values) instead of creating a new SQL column for this
+            attribute's field. Useful to increase speed requests if creating a
+            high number of attributes.""",
+    )
+
+    option_ids = fields.One2many(
+        "attribute.option", "attribute_id", "Attribute Options"
+    )
+
+    create_date = fields.Datetime("Created date", readonly=True)
+
+    relation_model_id = fields.Many2one("ir.model", "Relational Model")
+
+    required_on_views = fields.Boolean(
+        "Required (on views)",
+        help="If activated, the attribute will be mandatory on the views, "
+        "but not in the database",
+    )
+
+    attribute_set_ids = fields.Many2many(
+        comodel_name="attribute.set",
+        string="Attribute Sets",
+        relation="rel_attribute_set",
+        column1="attribute_id",
+        column2="attribute_set_id",
+    )
+
+    attribute_group_id = fields.Many2one(
+        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
+    )
+
+    sequence_group = fields.Integer(
+        "Sequence of the Group",
+        related="attribute_group_id.sequence",
+        help="The sequence of the group",
+        store="True",
+    )
+
+    sequence = fields.Integer(
+        "Sequence in Group", help="The attribute's order in his group"
+    )
 
     def _get_attrs(self):
         return {
@@ -135,78 +209,6 @@ class AttributeAttribute(models.Model):
             attribute._build_attribute_field(attribute_egroup)
 
         return attribute_eview
-
-    field_id = fields.Many2one(
-        "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
-    )
-
-    nature = fields.Selection(
-        [("custom", "Custom"), ("native", "Native")],
-        string="Attribute Nature",
-        required=True,
-        default="custom",
-        store=True,
-    )
-
-    attribute_type = fields.Selection(
-        [
-            ("char", "Char"),
-            ("text", "Text"),
-            ("select", "Select"),
-            ("multiselect", "Multiselect"),
-            ("boolean", "Boolean"),
-            ("integer", "Integer"),
-            ("date", "Date"),
-            ("datetime", "Datetime"),
-            ("binary", "Binary"),
-            ("float", "Float"),
-        ],
-    )
-
-    serialized = fields.Boolean(
-        "Serialized",
-        help="""If serialized, the attribute's field will be stored in the serialization
-        field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized fields
-        values) instead of creating a new SQL column for this attribute's field.
-        Useful to increase speed requests if creating a high number of attributes.""",
-    )
-
-    option_ids = fields.One2many(
-        "attribute.option", "attribute_id", "Attribute Options"
-    )
-
-    create_date = fields.Datetime("Created date", readonly=True)
-
-    relation_model_id = fields.Many2one("ir.model", "Relational Model")
-
-    required_on_views = fields.Boolean(
-        "Required (on views)",
-        help="If activated, the attribute will be mandatory on the views, "
-        "but not in the database",
-    )
-
-    attribute_set_ids = fields.Many2many(
-        comodel_name="attribute.set",
-        string="Attribute Sets",
-        relation="rel_attribute_set",
-        column1="attribute_id",
-        column2="attribute_set_id",
-    )
-
-    attribute_group_id = fields.Many2one(
-        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
-    )
-
-    sequence_group = fields.Integer(
-        "Sequence of the Group",
-        related="attribute_group_id.sequence",
-        help="The sequence of the group",
-        store="True",
-    )
-
-    sequence = fields.Integer(
-        "Sequence in Group", help="The attribute's order in his group"
-    )
 
     @api.onchange("model_id")
     def onchange_model_id(self):
