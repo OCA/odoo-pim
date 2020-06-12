@@ -165,7 +165,6 @@
     <record id="attribute_attribute_form_action" model="ir.actions.act_window">
         <field name="name">Attributes</field>
         <field name="res_model">attribute.attribute</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_attribute_attribute_search" />
         <field name="context">{}</field>
@@ -174,7 +173,6 @@
     <record id="attribute_attribute_sort_action" model="ir.actions.act_window">
         <field name="name">Attributes</field>
         <field name="res_model">attribute.attribute</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree</field>
         <field name="search_view_id" ref="view_attribute_attribute_search" />
         <field
