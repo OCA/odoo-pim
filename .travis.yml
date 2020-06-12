@@ -28,16 +28,10 @@ jobs:
       script: pre-commit run --all
     - stage: test
       env:
-        - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="base_custom_attribute,product_custom_attribute"
+        - TESTS="1" ODOO_REPO="odoo/odoo"
     - stage: test
       env:
-        - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="base_custom_attribute,product_custom_attribute"
-    - stage: test
-      env:
-        - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE="base_custom_attribute,product_custom_attribute"
-    - stage: test
-      env:
-        - TESTS="1" ODOO_REPO="OCA/OCB" INCLUDE="base_custom_attribute,product_custom_attribute"
+        - TESTS="1" ODOO_REPO="OCA/OCB"
 
 env:
   global:
