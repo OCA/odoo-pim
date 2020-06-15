@@ -55,7 +55,7 @@
     <menuitem
         id="menu_variant_attribute_value"
         name="Attributes Values"
-        action="product.variants_action"
+        action="product.product_variant_action"
         parent="main_menu_variant_attribute"
         sequence="1"
     />
