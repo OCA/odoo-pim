@@ -16,6 +16,12 @@ class ProductTemplate(models.Model):
     _inherit = ["product.template", "attribute.set.owner.mixin"]
     _name = "product.template"
 
+    attribute_set_id = fields.Many2one(
+        "attribute.set",
+        "Attribute Set",
+        default=lambda self: self._get_default_att_set(),
+    )
+
     def _get_default_att_set(self):
         """ Fill default Product's attribute_set with its Category's
         default attribute_set."""
@@ -25,10 +31,6 @@ class ProductTemplate(models.Model):
                 [("id", "=", default_categ_id_id)]
             )
             return default_categ_id.attribute_set_id.id
-
-    attribute_set_id = fields.Many2one(
-        "attribute.set", "Attribute Set", default=_get_default_att_set
-    )
 
     @api.model
     def create(self, vals):
