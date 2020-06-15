@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 # Copyright 2020 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Product Information Management",
-    "version": "12.0.1.1.0",
+    "version": "10.0.1.0.0",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "http://www.akretion.com/",
+    "website": "http://www.shopinvader.com",
     "depends": ["product", "product_attribute_set"],
     "data": [
         "data/ir_module_category_data.xml",
