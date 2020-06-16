@@ -47,13 +47,15 @@ class AttributeAttribute(models.Model):
         Create Mass Object if not exists, use create multi
         :return:
         """
+        mass_obj = self.env["mass.object"]
         attributes_without_mass = self.filtered(
             lambda a: not a.mass_object_ids
         )
-        data = []
+        mass_objects = mass_obj
         for attribute in attributes_without_mass:
-            data.append(attribute._prepare_create_mass_object())
-        mass_objects = self.env["mass.object"].create(data)
+            mass_objects |= mass_obj.create(
+                attribute._prepare_create_mass_object()
+            )
         for mass_object in mass_objects:
             mass_object.create_action()
         return True
@@ -115,9 +117,9 @@ class AttributeAttribute(models.Model):
         self._remove_attribute_from_mass_object()
         return super(AttributeAttribute, self).unlink()
 
-    @api.model_create_multi
+    @api.model
     @api.returns("self", lambda value: value.id)
-    def create(self, vals_list):
-        attributes = super(AttributeAttribute, self).create(vals_list)
+    def create(self, vals):
+        attributes = super(AttributeAttribute, self).create(vals)
         attributes._manage_mass_objects()
         return attributes

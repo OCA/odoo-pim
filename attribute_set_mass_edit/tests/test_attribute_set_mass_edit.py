@@ -2,26 +2,27 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestAttributeSetMassEdit(TransactionCase):
-    def setUp(self):
-        super(TestAttributeSetMassEdit, self).setUp()
-        self.model_id = self.env.ref("base.model_res_partner").id
-        self.group = self.env["attribute.group"].create(
-            {"name": "My Group", "model_id": self.model_id}
+class TestAttributeSetMassEdit(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestAttributeSetMassEdit, cls).setUpClass()
+        cls.model_id = cls.env.ref("base.model_res_partner").id
+        cls.group = cls.env["attribute.group"].create(
+            {"name": "My Group", "model_id": cls.model_id}
         )
         vals = {
             "nature": "custom",
-            "model_id": self.model_id,
+            "model_id": cls.model_id,
             "attribute_type": "char",
             "field_description": "Attribute test",
             "name": "x_test",
-            "attribute_group_id": self.group.id,
+            "attribute_group_id": cls.group.id,
         }
 
-        self.attr = self.env["attribute.attribute"].create(vals)
+        cls.attr = cls.env["attribute.attribute"].create(vals)
 
     def _get_mass_object(self):
         mass_obj = self.env["mass.object"]
