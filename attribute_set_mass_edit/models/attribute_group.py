@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, models
+from odoo.fields import first
 
 
 class AttributeGroup(models.Model):
@@ -12,9 +13,12 @@ class AttributeGroup(models.Model):
     def write(self, vals):
         res = super(AttributeGroup, self).write(vals)
         if "name" in vals.keys():
+            mass_objects = self.env["mass.object"].search(
+                [("attribute_group_id", "in", self.ids)]
+            )
             for group in self:
-                mass_object = self.env["mass.object"].search(
-                    [("attribute_group_id", "=", group.id)]
+                mass_object = first(
+                    mass_objects.filtered(lambda o: o.attribute_group_id == group)
                 )
                 if mass_object:
                     mass_object.name = group.name
