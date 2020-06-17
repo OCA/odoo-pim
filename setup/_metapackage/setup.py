@@ -8,8 +8,7 @@ setuptools.setup(
     description="Meta package for shopinvader-odoo-pim Odoo addons",
     version=version,
     install_requires=[
-        'odoo10-addon-base_custom_attribute',
-        'odoo10-addon-product_custom_attribute',
+        'odoo10-addon-attribute_set',
     ],
     classifiers=[
         'Programming Language :: Python',
