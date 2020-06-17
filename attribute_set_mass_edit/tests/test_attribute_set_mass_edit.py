@@ -18,7 +18,7 @@ class TestAttributeSetMassEdit(SavepointCase):
             "model_id": cls.model_id,
             "attribute_type": "char",
             "field_description": "Attribute test",
-            "name": "x_test",
+            "name": "x_test_mass",
             "attribute_group_id": cls.group.id,
         }
 
