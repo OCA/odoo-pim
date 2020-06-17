@@ -144,7 +144,15 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
-        cls.env.cr.commit = mock.Mock()
+
+    def setUp(self):
+        super(BuildViewCase, self).setUp()
+        commit_patcher = mock.patch.object(self.env.cr.__class__, "commit")
+        commit_patcher.start()
+
+        @self.addCleanup
+        def stop_mock():
+            commit_patcher.stop()
 
     @classmethod
     def tearDownClass(cls):
@@ -341,7 +349,7 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
 
     def test_unlink_native_attribute(self):
         attr_native_field_id = self.attr_native.field_id.id
-        self.attr_native.unlink()
+        self.attr_native.with_context(_force_unlink=True).unlink()
         self.assertTrue(
             self.env["ir.model.fields"].browse([attr_native_field_id]).exists()
         )
