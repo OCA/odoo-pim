@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+import mock
 from odoo.tests.common import SavepointCase
 
 
@@ -23,6 +23,15 @@ class TestAttributeSetMassEdit(SavepointCase):
         }
 
         cls.attr = cls.env["attribute.attribute"].create(vals)
+
+    def setUp(self):
+        super(TestAttributeSetMassEdit, self).setUp()
+        commit_patcher = mock.patch.object(self.env.cr.__class__, "commit")
+        commit_patcher.start()
+
+        @self.addCleanup
+        def stop_mock():
+            commit_patcher.stop()
 
     def _get_mass_object(self):
         mass_obj = self.env["mass.object"]
@@ -48,7 +57,7 @@ class TestAttributeSetMassEdit(SavepointCase):
         self.attr.allow_mass_editing = True
         mass_object = self._get_mass_object()
         self.assertTrue(mass_object)
-        self.attr.unlink()
+        self.attr.with_context(_force_unlink=True).unlink()
         self.assertFalse(mass_object.exists())
 
     def test_group_rename(self):
