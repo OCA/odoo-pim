@@ -3,7 +3,7 @@
 
 {
     "name": "Product Information Management",
-    "version": "12.0.1.1.1",
+    "version": "12.0.1.1.2",
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "http://www.akretion.com/",
