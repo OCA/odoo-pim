@@ -49,12 +49,12 @@ Credits
 Authors
 ~~~~~~~
 
-* Acsone Sa/NV
+* ACSONE SA/NV
 
 Contributors
 ~~~~~~~~~~~~
 
-* Cédric Pigeon <cedric.pigeon@acsone.eu>
+* Cédric PIGEON <cedric.pigeon@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
