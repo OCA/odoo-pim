@@ -11,8 +11,8 @@
     "data": [
         "data/ir_module_category_data.xml",
         "security/pim_security.xml",
-        "views/pim_view.xml",
         "views/product_view.xml",
+        "views/pim_view.xml",
         "views/attribute_set.xml",
         "views/attribute_group.xml",
         "views/attribute_attribute.xml",
