@@ -110,11 +110,20 @@ class AttributeAttribute(models.Model):
     )
 
     def _get_attrs(self):
-        return {
+        attrs = {
             "invisible": [
                 ("attribute_set_id", "not in", self.attribute_set_ids.ids)
             ]
         }
+        if self.required or self.required_on_views:
+            attrs.update(
+                {
+                    "required": [
+                        ("attribute_set_id", "in", self.attribute_set_ids.ids)
+                    ]
+                }
+            )
+        return attrs
 
     @api.model
     def _build_attribute_field(self, attribute_egroup):
@@ -124,7 +133,6 @@ class AttributeAttribute(models.Model):
         self.ensure_one()
         kwargs = {"name": "%s" % self.name}
         kwargs["attrs"] = str(self._get_attrs())
-        kwargs["required"] = str(self.required or self.required_on_views)
 
         if self.readonly:
             kwargs["readonly"] = str(True)
