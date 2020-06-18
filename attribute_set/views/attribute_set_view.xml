@@ -25,6 +25,7 @@
                             <field name="name" />
                             <field name="field_description" />
                             <field name="attribute_type" />
+                            <field name="required" />
                             <field name="sequence" />
                             <field name="attribute_group_id" />
                         </tree>

@@ -153,6 +153,18 @@ class BuildViewCase(SavepointCase):
             "Expected {}, get {}".format(set(set_ids), set(domain[2])),
         )
 
+    def _check_attrset_required(self, attrs, set_ids):
+        attrs = ast.literal_eval(attrs)
+        self.assertIn("required", attrs)
+        domain = attrs["required"][0]
+        self.assertEqual("attribute_set_id", domain[0])
+        self.assertEqual("in", domain[1])
+        self.assertEqual(
+            set(set_ids),
+            set(domain[2]),
+            "Expected {}, get {}".format(set(set_ids), set(domain[2])),
+        )
+
     def _get_attr_element(self, name):
         eview = self.env["res.partner"]._build_attribute_eview()
         return eview.find("group/field[@name='{}']".format(name))
@@ -206,12 +218,13 @@ class BuildViewCase(SavepointCase):
         self._check_attrset_visiblility(attrs, [self.set_1.id, self.set_2.id])
 
     def test_attr_required(self):
-        required = self._get_attr_element("x_attr_1").get("required")
-        self.assertEqual(required, "False")
+        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        attrs = ast.literal_eval(attrs)
+        self.assertNotIn("required", attrs)
 
         self.attr_1.required_on_views = True
-        required = self._get_attr_element("x_attr_1").get("required")
-        self.assertEqual(required, "True")
+        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        self._check_attrset_required(attrs, [self.set_1.id])
 
     def test_render_all_field_type(self):
         field = self.env["attribute.attribute"]._fields["attribute_type"]
