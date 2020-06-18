@@ -33,7 +33,7 @@
     <menuitem
         id="menu_product_template"
         name="Products"
-        action="product.product_template_action"
+        action="pim.product_template_action"
         parent="main_menu_product"
         sequence="0"
     />
