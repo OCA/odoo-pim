@@ -1,2 +1,3 @@
 --extra-index-url=https://wheelhouse.shopinvader.com/simple
 odoo_test_helper
+odoo10-addon-mass-editing
