@@ -59,4 +59,12 @@
         parent="main_menu_variant_attribute"
         sequence="1"
     />
+    <!-- Settings Menu -->
+    <menuitem
+        id="menu_pim_settings"
+        name="Settings"
+        sequence="100"
+        parent="root_menu_pim"
+        groups="pim.group_pim_manager"
+    />
 </odoo>

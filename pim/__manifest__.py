@@ -24,6 +24,7 @@
         "views/attribute_set.xml",
         "views/attribute_group.xml",
         "views/attribute_attribute.xml",
+        "views/res_config_settings.xml",
     ],
     "demo": [],
     "installable": True,

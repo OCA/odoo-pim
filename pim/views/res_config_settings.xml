@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_config_settings" model="ir.ui.view">
+        <field name="name">PIM config</field>
+        <field name="model">pim.config.settings</field>
+        <field name="arch" type="xml">
+            <form string="Configure PIM" class="oe_form_configuration">
+                <header>
+                    <button
+                        string="Apply"
+                        type="object"
+                        name="execute"
+                        class="oe_highlight"
+                    />
+                    <button
+                        string="Cancel"
+                        type="object"
+                        name="cancel"
+                        class="oe_link"
+                        special="cancel"
+                    />
+                </header>
+                <group string="Company" groups="base.group_multi_company">
+                    <label for="id" string="Company" />
+                    <div>
+                        <field
+                            name="company_id"
+                            options="{'no_create': True}"
+                            class="oe_inline"
+                        />
+                    </div>
+                </group>
+                <group string="Product Attribute">
+                    <field name="pim_default_product_attribute_set_id" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="action_config" model="ir.actions.act_window">
+        <field name="name">Configure PIM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pim.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+    <menuitem
+        id="menu_config"
+        name="Configuration"
+        parent="menu_pim_settings"
+        sequence="10"
+        action="action_config"
+    />
+</odoo>
