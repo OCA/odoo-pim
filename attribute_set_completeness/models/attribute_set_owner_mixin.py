@@ -29,7 +29,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                     if record[field_name]:
                         completion_rate += criteria.completion_rate
                 record.completion_rate = completion_rate
-                if completion_rate < 1:
+                if completion_rate < 100:
                     record.completion_state = "not_complete"
                 else:
                     record.completion_state = "complete"
