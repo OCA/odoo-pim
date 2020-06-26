@@ -16,18 +16,25 @@ class ProductTemplate(models.Model):
     _inherit = ["product.template", "attribute.set.owner.mixin"]
     _name = "product.template"
 
+    @api.model
     def _get_default_att_set(self):
         """ Fill default Product's attribute_set with its Category's
-        default attribute_set."""
+        default attribute_set or company default one"""
+        attribute_set_id = self.env["attribute.set"].browse()
         default_categ_id_id = self._get_default_category_id()
         if default_categ_id_id:
             default_categ_id = self.env["product.category"].search(
                 [("id", "=", default_categ_id_id)]
             )
-            return default_categ_id.attribute_set_id.id
+            attribute_set_id = default_categ_id.attribute_set_id
+        if not attribute_set_id:
+            attribute_set_id = self.env.user.company_id.product_default_attribute_set_id
+        return attribute_set_id
 
     attribute_set_id = fields.Many2one(
-        "attribute.set", "Attribute Set", default=_get_default_att_set
+        "attribute.set",
+        "Attribute Set",
+        default=lambda self: self._get_default_att_set(),
     )
 
     @api.model
