@@ -53,6 +53,10 @@
                         name="serialized"
                         attrs="{'readonly': [('create_date', '!=', False)]}"
                     />
+                    <field
+                        name="company_dependent"
+                        attrs="{'readonly': [('create_date', '!=', False)]}"
+                    />
                 </group>
                 <separator />
                 <group col="2" class="col-6">

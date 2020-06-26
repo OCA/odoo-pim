@@ -108,6 +108,7 @@ class AttributeAttribute(models.Model):
     sequence = fields.Integer(
         "Sequence in Group", help="The attribute's order in his group"
     )
+    company_dependent = fields.Boolean()
 
     def _get_attrs(self):
         attrs = {
@@ -376,7 +377,17 @@ class AttributeAttribute(models.Model):
                 )
 
         vals["state"] = "manual"
-        return super(AttributeAttribute, self).create(vals)
+        attr = super(AttributeAttribute, self).create(vals)
+        if attr.company_dependent:
+            # reload the registry
+            attr.field_id.pool.setup_models(self.env.cr, partial=(
+                not attr.field_id.pool.ready))
+            # update database schema of model and its descendant models
+            models = attr.field_id.pool.descendants([attr.model_id._name], '_inherits')
+            attr.field_id.pool.init_models(
+                self.env.cr, models, dict(self.env.context, update_custom_fields=True))
+            attr.field_id.pool.signal_registry_change()
+        return attr
 
     @api.multi
     def _delete_related_option_wizard(self, option_vals):
