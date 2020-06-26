@@ -10,9 +10,9 @@ class AttributeSet(models.Model):
     _inherit = "attribute.set"
 
     attribute_set_completeness_ids = fields.One2many(
-        "attribute.set.completeness",
-        "attribute_set_id",
-        "Completeness Requirements",
+        comodel_name="attribute.set.completeness",
+        inverse_name="attribute_set_id",
+        string="Completeness Requirements",
         auto_join=True,
     )
 
@@ -21,6 +21,10 @@ class AttributeSet(models.Model):
         for attr_set in self:
             completion_config = attr_set.attribute_set_completeness_ids
             if completion_config:
-                total = sum([rule.completion_rate for rule in completion_config])
-                if total != 1.0:
-                    raise ValidationError(_("Total of completion rate must be 100 %"))
+                total = sum(
+                    [rule.completion_rate for rule in completion_config]
+                )
+                if total != 100.0:
+                    raise ValidationError(
+                        _("Total of completion rate must be 100 %")
+                    )
