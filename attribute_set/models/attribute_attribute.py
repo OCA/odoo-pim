@@ -10,6 +10,7 @@ import logging
 import re
 
 from lxml import etree
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv.orm import setup_modifiers
@@ -111,17 +112,11 @@ class AttributeAttribute(models.Model):
 
     def _get_attrs(self):
         attrs = {
-            "invisible": [
-                ("attribute_set_id", "not in", self.attribute_set_ids.ids)
-            ]
+            "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
         }
         if self.required or self.required_on_views:
             attrs.update(
-                {
-                    "required": [
-                        ("attribute_set_id", "in", self.attribute_set_ids.ids)
-                    ]
-                }
+                {"required": [("attribute_set_id", "in", self.attribute_set_ids.ids)]}
             )
         return attrs
 
@@ -157,19 +152,13 @@ class AttributeAttribute(models.Model):
                     kwargs["domain"] = self.domain
                 else:
                     # Display only options linked to an existing object
-                    ids = [
-                        op.value_ref.id
-                        for op in self.option_ids
-                        if op.value_ref
-                    ]
+                    ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
                     kwargs["domain"] = "[('id', 'in', %s)]" % ids
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
                 if "color" in relation_model_obj.fields_get().keys():
-                    kwargs[
-                        "options"
-                    ] = "{'color_field': 'color', 'no_create': True}"
+                    kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
             elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
@@ -194,9 +183,7 @@ class AttributeAttribute(models.Model):
         recorset 'self') distributed in different 'attribute_egroup' for each
         Attribute's group.
         """
-        attribute_eview = etree.Element(
-            "group", name="attributes_group", col="4"
-        )
+        attribute_eview = etree.Element("group", name="attributes_group", col="4")
         groups = []
 
         for attribute in self:
@@ -235,9 +222,7 @@ class AttributeAttribute(models.Model):
     @api.onchange("field_description")
     def onchange_field_description(self):
         if self.field_description and not self.create_date:
-            self.name = unidecode(
-                "x_" + safe_column_name(self.field_description)
-            )
+            self.name = unidecode("x_" + safe_column_name(self.field_description))
 
     @api.onchange("name")
     def onchange_name(self):
@@ -308,9 +293,7 @@ class AttributeAttribute(models.Model):
         if vals.get("nature") == "native":
             # Remove all the values that can modify the related native field
             # before creating the new 'attribute.attribute'
-            for key in set(vals).intersection(
-                self.env["ir.model.fields"]._fields
-            ):
+            for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
                 del vals[key]
             return super(AttributeAttribute, self).create(vals)
 
@@ -443,10 +426,7 @@ class AttributeAttribute(models.Model):
         # Prevent from changing 'Serialized'
         if "serialized" in list(vals.keys()):
             if self.search(
-                [
-                    ("serialized", "!=", vals["serialized"]),
-                    ("id", "in", self.ids),
-                ]
+                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids),]
             ):
                 raise ValidationError(
                     _(
@@ -469,13 +449,7 @@ class AttributeAttribute(models.Model):
                     # If there is still some attribute.option available, override
                     # 'options' with the objects they are refering to.
                     options = options.search(
-                        [
-                            (
-                                "id",
-                                "in",
-                                [op.value_ref.id for op in att.option_ids],
-                            )
-                        ]
+                        [("id", "in", [op.value_ref.id for op in att.option_ids],)]
                     )
                 if "domain" in list(vals.keys()):
                     try:
@@ -496,9 +470,9 @@ class AttributeAttribute(models.Model):
     @api.multi
     def unlink(self):
         """ Delete the Attribute's related field when deleting a custom Attribute"""
-        fields_to_remove = self.filtered(
-            lambda s: s.nature == "custom"
-        ).mapped("field_id")
+        fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
+            "field_id"
+        )
         res = super(AttributeAttribute, self).unlink()
         fields_to_remove.unlink()
         return res
