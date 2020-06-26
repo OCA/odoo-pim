@@ -7,6 +7,7 @@
 
 
 from lxml import etree
+
 from odoo import api, fields, models
 
 
@@ -41,9 +42,7 @@ class AttributeOptionWizard(models.TransientModel):
                 {
                     "attribute_id": vals["attribute_id"],
                     "name": name,
-                    "value_ref": "{},{}".format(
-                        attr.relation_model_id.model, op_id
-                    ),
+                    "value_ref": "{},{}".format(attr.relation_model_id.model, op_id),
                 }
             )
 
@@ -57,10 +56,7 @@ class AttributeOptionWizard(models.TransientModel):
     ):
         context = self.env.context
         res = super(AttributeOptionWizard, self).fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
 
         if view_type == "form" and context and context.get("attribute_id"):
@@ -69,9 +65,7 @@ class AttributeOptionWizard(models.TransientModel):
             model = attr.relation_model_id
 
             relation = model.model
-            domain_ids = [
-                op.value_ref.id for op in attr.option_ids if op.value_ref
-            ]
+            domain_ids = [op.value_ref.id for op in attr.option_ids if op.value_ref]
 
             res["fields"].update(
                 {
@@ -87,9 +81,7 @@ class AttributeOptionWizard(models.TransientModel):
 
             eview = etree.fromstring(res["arch"])
             options = etree.Element("field", name="option_ids", nolabel="1")
-            placeholder = eview.xpath(
-                "//separator[@string='options_placeholder']"
-            )[0]
+            placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["arch"] = etree.tostring(eview, pretty_print=True)
 

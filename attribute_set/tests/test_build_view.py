@@ -6,16 +6,15 @@ import ast
 
 import mock
 from lxml import etree
-from odoo.tests import SavepointCase
 from odoo_test_helper import FakeModelLoader
+
+from odoo.tests import SavepointCase
 
 
 class BuildViewCase(SavepointCase, FakeModelLoader):
     @classmethod
     def _create_set(cls, name):
-        return cls.env["attribute.set"].create(
-            {"name": name, "model_id": cls.model_id}
-        )
+        return cls.env["attribute.set"].create({"name": name, "model_id": cls.model_id})
 
     @classmethod
     def _create_group(cls, vals):
@@ -137,9 +136,7 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
         cls.attr_native_readonly = cls._create_attribute(
             {
                 "nature": "native",
-                "field_id": cls.env.ref(
-                    "base.field_res_partner_parent_name"
-                ).id,
+                "field_id": cls.env.ref("base.field_res_partner_parent_name").id,
                 "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
@@ -281,26 +278,17 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
     def _get_eview_from_fields_view_get(self, include_native_attribute=True):
         fields_view = (
             self.env["res.partner"]
-            .with_context(
-                {"include_native_attribute": include_native_attribute}
-            )
+            .with_context({"include_native_attribute": include_native_attribute})
             .fields_view_get(
-                view_id=self.view.id,
-                view_type="form",
-                toolbar=False,
-                submenu=False,
+                view_id=self.view.id, view_type="form", toolbar=False, submenu=False,
             )
         )
         return etree.fromstring(fields_view["arch"])
 
-    def _get_eview_adress_from_fields_view_get(
-        self, include_native_attribute=True
-    ):
+    def _get_eview_adress_from_fields_view_get(self, include_native_attribute=True):
         fields_view = (
             self.env["res.partner"]
-            .with_context(
-                {"include_native_attribute": include_native_attribute}
-            )
+            .with_context({"include_native_attribute": include_native_attribute})
             .fields_view_get(
                 view_id=self.address_view.id,
                 view_type="form",
@@ -317,9 +305,7 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
         # Only one field with this name
         self.assertEqual(len(attr), 1)
         # The moved field is inside page "partner_attributes"
-        self.assertEqual(
-            attr[0].xpath("../../..")[0].get("name"), "partner_attributes"
-        )
+        self.assertEqual(attr[0].xpath("../../..")[0].get("name"), "partner_attributes")
         # It has the given visibility by its related attribute sets.
         self._check_attrset_visiblility(
             attr[0].get("attrs"), [self.set_1.id, self.set_2.id]
@@ -327,16 +313,12 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
 
     def test_native_readonly(self):
         eview = self._get_eview_from_fields_view_get()
-        attr = eview.xpath(
-            "//field[@name='{}']".format(self.attr_native_readonly.name)
-        )
+        attr = eview.xpath("//field[@name='{}']".format(self.attr_native_readonly.name))
         self.assertTrue(attr[0].get("readonly"))
 
     def test_no_include_native_attr(self):
         # Run fields_view_get on the test view with no "include_native_attribute"
-        eview = self._get_eview_from_fields_view_get(
-            include_native_attribute=False
-        )
+        eview = self._get_eview_from_fields_view_get(include_native_attribute=False)
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name
@@ -356,9 +338,7 @@ class BuildViewCase(SavepointCase, FakeModelLoader):
         # Force unlink to avoid new registry that can leads to DB lock
         # (in tests)
         self.attr_1.with_context(_force_unlink=True).unlink()
-        self.assertFalse(
-            self.env["ir.model.fields"].browse([attr_1_field_id]).exists()
-        )
+        self.assertFalse(self.env["ir.model.fields"].browse([attr_1_field_id]).exists())
 
     def test_unlink_native_attribute(self):
         attr_native_field_id = self.attr_native.field_id.id

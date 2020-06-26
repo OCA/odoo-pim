@@ -5,6 +5,7 @@
 
 
 from lxml import etree
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -56,9 +57,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         at the placeholder's place."""
         eview = etree.fromstring(arch)
         form_name = eview.get("string")
-        placeholder = eview.xpath(
-            "//separator[@name='attributes_placeholder']"
-        )
+        placeholder = eview.xpath("//separator[@name='attributes_placeholder']")
 
         if len(placeholder) != 1:
             raise ValidationError(
@@ -84,10 +83,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
         result = super(AttributeSetOwnerMixin, self).fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
         if view_type == "form":
             result["arch"] = self._insert_attribute(result["arch"])

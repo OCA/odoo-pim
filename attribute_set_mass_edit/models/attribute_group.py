@@ -19,9 +19,7 @@ class AttributeGroup(models.Model):
             )
             for group in self:
                 mass_object = first(
-                    mass_objects.filtered(
-                        lambda o: o.attribute_group_id == group
-                    )
+                    mass_objects.filtered(lambda o: o.attribute_group_id == group)
                 )
                 if mass_object:
                     mass_object.name = group.name

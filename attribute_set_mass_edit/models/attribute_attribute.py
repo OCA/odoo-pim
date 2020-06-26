@@ -16,16 +16,12 @@ class AttributeAttribute(models.Model):
 
     @api.multi
     def _get_mass_object_ids_domain(self):
-        return [
-            ("attribute_group_id", "in", self.mapped("attribute_group_id").ids)
-        ]
+        return [("attribute_group_id", "in", self.mapped("attribute_group_id").ids)]
 
     @api.multi
     @api.depends()
     def _compute_mass_object_ids(self):
-        objects = self.env["mass.object"].search(
-            self._get_mass_object_ids_domain()
-        )
+        objects = self.env["mass.object"].search(self._get_mass_object_ids_domain())
         for attribute in self:
             attribute.mass_object_ids = objects.filtered(
                 lambda o, g=attribute.attribute_group_id: o.attribute_group_id.id
@@ -48,14 +44,10 @@ class AttributeAttribute(models.Model):
         :return:
         """
         mass_obj = self.env["mass.object"]
-        attributes_without_mass = self.filtered(
-            lambda a: not a.mass_object_ids
-        )
+        attributes_without_mass = self.filtered(lambda a: not a.mass_object_ids)
         mass_objects = mass_obj
         for attribute in attributes_without_mass:
-            mass_objects |= mass_obj.create(
-                attribute._prepare_create_mass_object()
-            )
+            mass_objects |= mass_obj.create(attribute._prepare_create_mass_object())
         for mass_object in mass_objects:
             mass_object.create_action()
         return True
@@ -91,9 +83,7 @@ class AttributeAttribute(models.Model):
         for allowed_attribute in allowed_attributes:
             if (
                 allowed_attribute
-                not in allowed_attribute.mass_object_ids.mapped(
-                    "field_ids"
-                ).ids
+                not in allowed_attribute.mass_object_ids.mapped("field_ids").ids
             ):
                 allowed_attribute.mass_object_ids.write(
                     {"field_ids": [(4, allowed_attribute.field_id.id)]}

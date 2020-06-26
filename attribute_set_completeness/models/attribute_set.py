@@ -22,10 +22,6 @@ class AttributeSet(models.Model):
         for attr_set in self:
             completion_config = attr_set.attribute_set_completeness_ids
             if completion_config:
-                total = sum(
-                    [rule.completion_rate for rule in completion_config]
-                )
+                total = sum([rule.completion_rate for rule in completion_config])
                 if total != 1.0:
-                    raise ValidationError(
-                        _("Total of completion rate must be 100 %")
-                    )
+                    raise ValidationError(_("Total of completion rate must be 100 %"))

@@ -10,9 +10,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
 
     _inherit = "attribute.set.owner.mixin"
 
-    completion_rate = fields.Float(
-        compute="_compute_completion_rate", readonly=True
-    )
+    completion_rate = fields.Float(compute="_compute_completion_rate", readonly=True)
     completion_state = fields.Selection(
         selection=[("complete", "Complete"), ("not_complete", "Not complete")],
         compute="_compute_completion_rate",
@@ -43,9 +41,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     def _search_complete_state(self, operator, value):
 
         negative = operator in expression.NEGATIVE_TERM_OPERATORS
-        default_res = (
-            expression.TRUE_DOMAIN if negative else expression.FALSE_DOMAIN
-        )
+        default_res = expression.TRUE_DOMAIN if negative else expression.FALSE_DOMAIN
 
         # In case we have no value
         if not value:
@@ -62,9 +58,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             if value not in ["complete", "not_complete"]:
                 return default_res
             else:
-                products = products.filtered(
-                    lambda x: x.completion_state == value
-                )
+                products = products.filtered(lambda x: x.completion_state == value)
             return [("id", "in", products.ids)]
 
         return default_res
