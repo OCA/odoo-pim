@@ -16,6 +16,14 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         compute="_compute_completion_rate",
         search="_search_complete_state",
     )
+    attribute_set_completeneness_ids = fields.One2many(
+        related="attribute_set_id.attribute_set_completeness_ids",
+        readonly=True,
+    )
+    attribute_set_not_completed_ids = fields.Many2many(
+        comodel_name="attribute.set.completeness",
+        compute="_compute_completion_rate",
+    )
 
     @api.multi
     def _compute_completion_rate(self):
@@ -28,6 +36,8 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                     field_name = criteria.field_id.name
                     if record[field_name]:
                         completion_rate += criteria.completion_rate
+                    else:
+                        record.attribute_set_not_completed_ids |= criteria
                 record.completion_rate = completion_rate
                 if completion_rate < 100:
                     record.completion_state = "not_complete"
