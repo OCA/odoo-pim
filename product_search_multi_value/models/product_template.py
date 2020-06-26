@@ -12,9 +12,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     search_multi = fields.Char(
-        "Multiple search",
-        compute="_compute_search_multi",
-        search="_search_multi",
+        "Multiple search", compute="_compute_search_multi", search="_search_multi",
     )
 
     @api.multi
