@@ -67,10 +67,11 @@ class AttributeAttribute(models.Model):
 
     serialized = fields.Boolean(
         "Serialized",
-        help="""If serialized, the attribute's field will be stored in the serialization
-            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized fields
-            values) instead of creating a new SQL column for this attribute's field.
-            Useful to increase speed requests if creating a high number of attributes.""",
+        help="""If serialized, the attribute's field will be stored in the
+            serialization field 'x_custom_json_attrs' (i.e. a JSON containing
+            all the serialized fields values) instead of creating a new SQL
+            column for this attribute's field. Useful to increase speed
+            requests if creating a high number of attributes.""",
     )
 
     option_ids = fields.One2many(
@@ -426,7 +427,7 @@ class AttributeAttribute(models.Model):
         # Prevent from changing 'Serialized'
         if "serialized" in list(vals.keys()):
             if self.search(
-                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids),]
+                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
             ):
                 raise ValidationError(
                     _(
