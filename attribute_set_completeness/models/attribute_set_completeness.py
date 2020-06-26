@@ -8,6 +8,7 @@ class AttributeSetCompleteness(models.Model):
 
     _name = "attribute.set.completeness"
     _description = "Attribute Set Completeness"
+    _rec_name = "field_id"
 
     attribute_set_id = fields.Many2one(
         "attribute.set", required=True, ondelete="cascade"
@@ -16,7 +17,15 @@ class AttributeSetCompleteness(models.Model):
         "ir.model.fields", "Field Name", required=True, ondelete="cascade"
     )
     field_description = fields.Char(
-        related="field_id.field_description", string="Field Description", store=True
+        related="field_id.field_description",
+        string="Field Description",
+        store=True,
+        readonly=True,
     )
     completion_rate = fields.Float()
-    model_id = fields.Many2one(related="attribute_set_id.model_id")
+    completion_rate_progress = fields.Float(
+        related="completion_rate", readonly=True
+    )
+    model_id = fields.Many2one(
+        related="attribute_set_id.model_id", readonly=True
+    )
