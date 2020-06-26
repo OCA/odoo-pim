@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <group name="attributes" position="after">
                 <group name="completeness" string="Completeness">
-                    <field name="attribute_set_completeness_ids" nolabel="1" />
+                    <field name="attribute_set_completeness_ids" context="{'default_attribute_set_id': active_id}" widget="one2many" nolabel="1" />
                 </group>
             </group>
         </field>
