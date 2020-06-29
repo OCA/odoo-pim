@@ -16,12 +16,10 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         search="_search_complete_state",
     )
     attribute_set_completeneness_ids = fields.One2many(
-        related="attribute_set_id.attribute_set_completeness_ids",
-        readonly=True,
+        related="attribute_set_id.attribute_set_completeness_ids", readonly=True,
     )
     attribute_set_not_completed_ids = fields.Many2many(
-        comodel_name="attribute.set.completeness",
-        compute="_compute_completion_rate",
+        comodel_name="attribute.set.completeness", compute="_compute_completion_rate",
     )
 
     @api.multi
