@@ -37,8 +37,8 @@ class TestAttributeSetCompleteness(SavepointCase):
             "model_id": cls.model_id,
             "attribute_ids": [(4, cls.attr1.id), (4, cls.attr2.id)],
             "attribute_set_completeness_ids": [
-                (0, 0, {"field_id": cls.attr1.field_id.id, "completion_rate": 0.5}),
-                (0, 0, {"field_id": cls.attr2.field_id.id, "completion_rate": 0.5}),
+                (0, 0, {"field_id": cls.attr1.field_id.id, "completion_rate": 50.0}),
+                (0, 0, {"field_id": cls.attr2.field_id.id, "completion_rate": 50.0}),
             ],
         }
         cls.attr_set = cls.env["attribute.set"].create(vals)
@@ -59,8 +59,8 @@ class TestAttributeSetCompleteness(SavepointCase):
             "model_id": self.model_id,
             "attribute_ids": [(4, self.attr1.id), (4, self.attr2.id)],
             "attribute_set_completeness_ids": [
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 0.5}),
-                (0, 0, {"field_id": self.attr2.field_id.id, "completion_rate": 0.1}),
+                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 50.0}),
+                (0, 0, {"field_id": self.attr2.field_id.id, "completion_rate": 10.0}),
             ],
         }
         with self.assertRaises(ValidationError):
@@ -71,7 +71,7 @@ class TestAttributeSetCompleteness(SavepointCase):
         vals = {
             "attribute_set_completeness_ids": [
                 (2, completion_rules[0].id),
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 0.1}),
+                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 10.0}),
             ]
         }
 
@@ -83,7 +83,7 @@ class TestAttributeSetCompleteness(SavepointCase):
         vals = {
             "attribute_set_completeness_ids": [
                 (2, completion_rules[0].id),
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 2}),
+                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 200.0},),
             ]
         }
 
@@ -104,9 +104,9 @@ class TestAttributeSetCompleteness(SavepointCase):
         partner.write({"x_test": "test"})
         partner.invalidate_cache()
         self.assertEqual(partner.completion_state, "not_complete")
-        self.assertEqual(partner.completion_rate, 0.5)
+        self.assertEqual(partner.completion_rate, 50.0)
 
         partner.write({"x_test2": "test"})
         partner.invalidate_cache()
         self.assertEqual(partner.completion_state, "complete")
-        self.assertEqual(partner.completion_rate, 1)
+        self.assertEqual(partner.completion_rate, 100.0)

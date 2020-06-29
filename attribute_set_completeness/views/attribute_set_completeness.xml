@@ -10,10 +10,15 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="attribute_set_id" invisible="1" />
-                <field name="model_id" invisible="1" />
+                <field name="model_id" />
                 <field name="field_id" domain="[('model_id', '=', model_id)]" />
                 <field name="field_description" />
-                <field name="completion_rate" widget="percentage" sum="Total" />
+                <field name="completion_rate" sum="Total" />
+                <field
+                    name="completion_rate_progress"
+                    widget="progressbar"
+                    sum="Total"
+                />
             </tree>
         </field>
     </record>

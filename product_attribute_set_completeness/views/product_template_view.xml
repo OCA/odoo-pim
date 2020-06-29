@@ -15,20 +15,45 @@
             <header position="after">
 
             </header>
+            <xpath expr="//separator[@name='attributes_placeholder']" position="before">
+                <group>
+                    <group>
+                        <label
+                            for="attribute_set_not_completed_ids"
+                            string="Not completed attributes"
+                        />
+                        <field
+                            name="attribute_set_not_completed_ids"
+                            nolabel="1"
+                            widget="many2many_tags"
+                        />
+                    </group>
+                </group>
+            </xpath>
             <xpath expr="//field[@name='attribute_set_id']/.." position="after">
                 <div>
-                    <field
-                        widget='label_selection'
-                        name="completion_state"
-                        options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                        attrs="{'invisible': [('attribute_set_id', '=', False)]}"
-                    />
-                    <field
-                        name="completion_rate"
-                        widget="percentage"
-                        attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
-                                                      ('completion_state', '=', 'complete')]}"
-                    />
+                    <field name="attribute_set_completeneness_ids" invisible="1" />
+                    <group
+                        string="Completion"
+                        attrs="{'invisible': [('attribute_set_completeneness_ids', '=', [])]}"
+                    >
+                        <group>
+                            <field
+                                widget='label_selection'
+                                name="completion_state"
+                                nolabel="1"
+                                options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
+                                attrs="{'invisible': [('attribute_set_id', '=', False)]}"
+                            />
+                            <field
+                                name="completion_rate"
+                                widget="percentpie"
+                                nolabel="1"
+                                attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
+                                                              ('completion_state', '=', 'complete')]}"
+                            />
+                        </group>
+                    </group>
                 </div>
             </xpath>
         </field>
