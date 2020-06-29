@@ -23,9 +23,5 @@ class AttributeSetCompleteness(models.Model):
         readonly=True,
     )
     completion_rate = fields.Float()
-    completion_rate_progress = fields.Float(
-        related="completion_rate", readonly=True
-    )
-    model_id = fields.Many2one(
-        related="attribute_set_id.model_id", readonly=True
-    )
+    completion_rate_progress = fields.Float(related="completion_rate", readonly=True)
+    model_id = fields.Many2one(related="attribute_set_id.model_id", readonly=True)
