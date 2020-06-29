@@ -53,11 +53,21 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             operator = "!=" if negative else "="
 
         if operator in ["=", "!="]:
-            products = self.search([("attribute_set_id", "!=", False)])
             if value not in ["complete", "not_complete"]:
                 return default_res
+            if (operator == "=" and value == "complete") or (
+                operator == "!=" and value == "not_complete"
+            ):
+                products = self.search([("attribute_set_id", "!=", False)])
+                products = products.filtered(lambda x: x.completion_state == "complete")
             else:
-                products = products.filtered(lambda x: x.completion_state == value)
+                products = self.search([("attribute_set_id", "!=", False)])
+                products = products.filtered(
+                    lambda x: x.completion_state == "not_complete"
+                )
+                prod_no_set = self.search([("attribute_set_id", "=", False)])
+                products |= prod_no_set
+
             return [("id", "in", products.ids)]
 
         return default_res
