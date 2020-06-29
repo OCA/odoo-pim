@@ -18,16 +18,25 @@
             <xpath expr="//separator[@name='attributes_placeholder']" position="before">
                 <group>
                     <group>
-                        <label for="attribute_set_not_completed_ids" string="Not completed attributes"/>
-                        <field name="attribute_set_not_completed_ids" nolabel="1" widget="many2many_tags"/>
+                        <label
+                            for="attribute_set_not_completed_ids"
+                            string="Not completed attributes"
+                        />
+                        <field
+                            name="attribute_set_not_completed_ids"
+                            nolabel="1"
+                            widget="many2many_tags"
+                        />
                     </group>
                 </group>
-
             </xpath>
             <xpath expr="//field[@name='attribute_set_id']/.." position="after">
                 <div>
-                    <field name="attribute_set_completeneness_ids" invisible="1"/>
-                    <group string="Completion" attrs="{'invisible': [('attribute_set_completeneness_ids', '=', [])]}">
+                    <field name="attribute_set_completeneness_ids" invisible="1" />
+                    <group
+                        string="Completion"
+                        attrs="{'invisible': [('attribute_set_completeneness_ids', '=', [])]}"
+                    >
                         <group>
                             <field
                                 widget='label_selection'
