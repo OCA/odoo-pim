@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo10-addon-attribute_set',
         'odoo10-addon-attribute_set_completeness',
         'odoo10-addon-attribute_set_mass_edit',
+        'odoo10-addon-attribute_set_searchable',
         'odoo10-addon-pim',
         'odoo10-addon-product_attribute_set',
         'odoo10-addon-product_attribute_set_completeness',
