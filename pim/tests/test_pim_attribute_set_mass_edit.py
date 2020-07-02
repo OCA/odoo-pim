@@ -36,7 +36,7 @@ class TestPimAttributeSetMassEdit(SavepointCase):
             commit_patcher.stop()
 
     def test_attr_mass_edit(self):
-        mass_object = self.env["mass.object"].search(
+        mass_object = self.env["mass.editing"].search(
             [("attribute_group_id", "=", self.attr.attribute_group_id.id)]
         )
         pim_user_grp = self.env.ref("pim.group_pim_user")

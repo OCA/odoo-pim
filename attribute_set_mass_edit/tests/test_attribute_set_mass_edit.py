@@ -35,7 +35,7 @@ class TestAttributeSetMassEdit(SavepointCase):
             commit_patcher.stop()
 
     def _get_mass_object(self):
-        mass_obj = self.env["mass.object"]
+        mass_obj = self.env["mass.editing"]
         return mass_obj.search(
             [("attribute_group_id", "=", self.attr.attribute_group_id.id)]
         )
@@ -47,7 +47,9 @@ class TestAttributeSetMassEdit(SavepointCase):
         mass_object = self._get_mass_object()
         self.assertTrue(mass_object)
         self.assertEqual(mass_object.name, self.attr.attribute_group_id.name)
-        self.assertIn(self.attr.field_id.id, mass_object.field_ids.ids)
+        self.assertIn(
+            self.attr.field_id.id, mass_object.mapped("line_ids.field_id").ids
+        )
         self.attr.allow_mass_editing = False
         mass_object = self._get_mass_object()
         self.assertFalse(mass_object)
