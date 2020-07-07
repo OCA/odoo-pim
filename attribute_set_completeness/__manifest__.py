@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://acsone.eu",
-    "depends": ["attribute_set"],
+    "depends": ["attribute_set", "component_event"],
     "data": [
         "views/attribute_set.xml",
         "security/attribute_set_completeness.xml",
