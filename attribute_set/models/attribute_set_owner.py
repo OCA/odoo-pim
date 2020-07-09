@@ -86,4 +86,15 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         )
         if view_type == "form":
             result["arch"] = self._insert_attribute(result["arch"])
+            View = self.env["ir.ui.view"]
+            if not view_id:
+                # otherwise try to find the lowest priority matching ir.ui.view
+                view_id = View.default_view(self._name, view_type)
+            # We need to enrich fields values with new ones
+            xarch, xfields = View.postprocess_and_fields(
+                self._name, etree.fromstring(result["arch"]), view_id
+            )
+            for xfield, xvalue in xfields.items():
+                if xfield not in result["fields"]:
+                    result["fields"].update({xfield: xvalue})
         return result
