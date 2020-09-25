@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-attribute_set',
+        'odoo13-addon-pim',
         'odoo13-addon-product_attribute_set',
     ],
     classifiers=[
