@@ -9,10 +9,10 @@
         <field name="arch" type="xml">
             <tree string="Product">
                 <field
-                    name="image_medium"
+                    name="image_512"
                     widget='image'
                     class="oe_avatar"
-                    options='{"preview_image": "image_medium", "size": [40, 40]}'
+                    options='{"preview_image": "image_512", "size": [40, 40]}'
                     readonly="1"
                 />
                 <field name="default_code" />
