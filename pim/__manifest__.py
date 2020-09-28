@@ -4,7 +4,7 @@
 
 {
     "name": "Product Information Management",
-    "version": "10.0.1.0.4",
+    "version": "10.0.1.0.5",
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "http://www.shopinvader.com",
