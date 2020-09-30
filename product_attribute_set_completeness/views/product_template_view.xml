@@ -47,7 +47,7 @@
                             />
                             <field
                                 name="completion_rate"
-                                widget="percentpie"
+                                widget="progressbar"
                                 nolabel="1"
                                 attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
                                                               ('completion_state', '=', 'complete')]}"
