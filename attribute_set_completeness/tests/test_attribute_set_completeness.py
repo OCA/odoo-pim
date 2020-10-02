@@ -4,10 +4,11 @@
 from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
-class TestAttributeSetCompleteness(SavepointCase):
+class TestAttributeSetCompleteness(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -38,15 +39,16 @@ class TestAttributeSetCompleteness(SavepointCase):
             ],
         }
         cls.attr_set = cls.env["attribute.set"].create(vals)
+
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from odoo.addons.attribute_set.tests.models import ResPartner
+
+        cls.loader.update_registry([ResPartner])
+
         from .res_partner_event_listener import ResPartnerEventListener  # noqa: F401
 
-        cls.component_builder = cls.env["component.builder"]
-        cls.component_builder._register_hook()
-        cls.component_builder.load_components("attribute_set_completeness")
-        cls.loader.update_registry((ResPartner,))
+        ResPartnerEventListener._build_component(cls._components_registry)
 
     @classmethod
     def tearDownClass(cls):
