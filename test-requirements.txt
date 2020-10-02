@@ -1,6 +1,4 @@
 odoo_test_helper
-<<<<<<< HEAD
-=======
-odoo10-addon-base_search_custom_field_filter @ git+https://github.com/OCA/server-ux@refs/pull/170/head#subdirectory=setup/base_search_custom_field_filter
-odoo10-addon-mass-editing @ git+https://github.com/OCA/server-tools@refs/pull/1856/head#subdirectory=setup/mass_editing
->>>>>>> c0f3e1e... [10.0][IMP] mass_editing: Take into account last changes
+odoo12-addon-base_search_custom_field_filter @ git+https://github.com/OCA/server-ux@refs/pull/170/head#subdirectory=setup/base_search_custom_field_filter
+odoo12-addon-mass-editing @ git+https://github.com/OCA/server-ux@refs/pull/211/head#subdirectory=setup/mass_editing
+odoo12-addon-mass-operation-abstract @ git+https://github.com/OCA/server-ux@refs/pull/211/head#subdirectory=setup/mass_operation_abstract
