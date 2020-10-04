@@ -1,6 +1,6 @@
 {
     "name": "Attribute Set",
-    "version": "12.0.0.0.2",
+    "version": "12.0.0.0.3",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",
