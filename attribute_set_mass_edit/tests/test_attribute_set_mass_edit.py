@@ -58,7 +58,7 @@ class TestAttributeSetMassEdit(TransactionCase):
         new_name = "New Group Name"
         self.group.name = new_name
         self.assertEqual(mass_object.name, new_name)
-        action_name = "Mass Editing (%s)" % new_name
+        action_name = "Mass Operation (%s)" % new_name
         self.assertEqual(mass_object.ref_ir_act_window_id.name, action_name)
 
     def test_group_unlink(self):
