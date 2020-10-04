@@ -46,9 +46,13 @@ class AttributeAttribute(models.Model):
         attributes_without_mass = self.filtered(lambda a: not a.mass_editing_ids)
         mass_editings = mass_obj
         for attribute in attributes_without_mass:
-            mass_editings |= mass_obj.create(attribute._prepare_create_mass_editing())
-        for mass_editing in mass_editings:
-            mass_editing.create_action()
+            new_mass_editing = mass_obj.new(attribute._prepare_create_mass_editing())
+            # TODO: we should use tests.Form IMO
+            new_mass_editing.onchange_name()
+            mass_editings |= mass_obj.create(
+                new_mass_editing._convert_to_write(new_mass_editing._cache)
+            )
+        mass_editings.enable_mass_operation()
         return True
 
     def _remove_attribute_from_mass_editing(self):
@@ -68,7 +72,6 @@ class AttributeAttribute(models.Model):
                 ).unlink()
                 if not mass_editing.line_ids:
                     mass_editing_to_remove |= mass_editing
-        mass_editing_to_remove.unlink_action()
         mass_editing_to_remove.unlink()
         self.refresh()
 

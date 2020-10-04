@@ -22,6 +22,8 @@ class AttributeGroup(models.Model):
                 )
                 if mass_editing:
                     mass_editing.name = group.name
-                    mass_editing.unlink_action()
-                    mass_editing.create_action()
+                    # TODO: we should use tests.Form IMO
+                    mass_editing.action_name = mass_editing._prepare_action_name()
+                    mass_editing.disable_mass_operation()
+                    mass_editing.enable_mass_operation()
         return res
