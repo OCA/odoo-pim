@@ -4,10 +4,11 @@
 from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
-class TestAttributeSetCompleteness(SavepointCase):
+class TestAttributeSetCompleteness(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -38,11 +39,16 @@ class TestAttributeSetCompleteness(SavepointCase):
             ],
         }
         cls.attr_set = cls.env["attribute.set"].create(vals)
+
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from odoo.addons.attribute_set.tests.models import ResPartner
 
-        cls.loader.update_registry((ResPartner,))
+        cls.loader.update_registry([ResPartner])
+
+        from .res_partner_event_listener import ResPartnerEventListener  # noqa: F401
+
+        ResPartnerEventListener._build_component(cls._components_registry)
 
     @classmethod
     def tearDownClass(cls):
@@ -91,8 +97,8 @@ class TestAttributeSetCompleteness(SavepointCase):
             "name": "Test Partner",
         }
         partner = self.env["res.partner"].create(vals)
-        self.assertFalse(partner.completion_state)
-        self.assertFalse(partner.completion_rate)
+        self.assertEqual(partner.completion_state, "not_complete")
+        self.assertEqual(partner.completion_rate, 0.0)
 
         partner.write({"attribute_set_id": self.attr_set.id})
         partner.invalidate_cache()
