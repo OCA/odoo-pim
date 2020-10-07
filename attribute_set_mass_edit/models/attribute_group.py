@@ -13,15 +13,17 @@ class AttributeGroup(models.Model):
     def write(self, vals):
         res = super(AttributeGroup, self).write(vals)
         if "name" in vals.keys():
-            mass_objects = self.env["mass.object"].search(
+            mass_editings = self.env["mass.editing"].search(
                 [("attribute_group_id", "in", self.ids)]
             )
             for group in self:
-                mass_object = first(
-                    mass_objects.filtered(lambda o: o.attribute_group_id == group)
+                mass_editing = first(
+                    mass_editings.filtered(lambda o: o.attribute_group_id == group)
                 )
-                if mass_object:
-                    mass_object.name = group.name
-                    mass_object.unlink_action()
-                    mass_object.create_action()
+                if mass_editing:
+                    mass_editing.name = group.name
+                    # TODO: we should use tests.Form IMO
+                    mass_editing.action_name = mass_editing._prepare_action_name()
+                    mass_editing.disable_mass_operation()
+                    mass_editing.enable_mass_operation()
         return res
