@@ -49,3 +49,4 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             else:
                 record.completion_rate = 0
                 record.completion_state = "not_complete"
+                record.attribute_set_not_completed_ids = False
