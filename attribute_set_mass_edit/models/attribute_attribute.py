@@ -13,11 +13,9 @@ class AttributeAttribute(models.Model):
         comodel_name="mass.editing", compute="_compute_mass_editing_ids"
     )
 
-    @api.multi
     def _get_mass_editing_ids_domain(self):
         return [("attribute_group_id", "in", self.mapped("attribute_group_id").ids)]
 
-    @api.multi
     @api.depends()
     def _compute_mass_editing_ids(self):
         objects = self.env["mass.editing"].search(self._get_mass_editing_ids_domain())
@@ -36,7 +34,6 @@ class AttributeAttribute(models.Model):
             "name": group_id.name,
         }
 
-    @api.multi
     def _create_mass_editing(self):
         """
         Create Mass Editing if not exists, use create multi
@@ -75,7 +72,6 @@ class AttributeAttribute(models.Model):
         mass_editing_to_remove.unlink()
         self.refresh()
 
-    @api.multi
     def _prepare_mass_editing_line(self):
         return {
             "field_id": self.field_id.id,
@@ -107,7 +103,6 @@ class AttributeAttribute(models.Model):
         not_allowed_attributes = self - allowed_attributes
         not_allowed_attributes._remove_attribute_from_mass_editing()
 
-    @api.multi
     def write(self, vals):
         """
         Create Mass Editing for attributes that allow it
@@ -118,7 +113,6 @@ class AttributeAttribute(models.Model):
         self._manage_mass_editings()
         return res
 
-    @api.multi
     def unlink(self):
         self._remove_attribute_from_mass_editing()
         return super(AttributeAttribute, self).unlink()
