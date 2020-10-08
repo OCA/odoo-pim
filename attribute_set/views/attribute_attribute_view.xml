@@ -73,6 +73,7 @@
                     <field
                         name="attribute_group_id"
                         domain="[('model_id', '=', model_id)]"
+                        context="{'default_model_id': model_id}"
                     />
                     <field name="sequence" />
                     <field
