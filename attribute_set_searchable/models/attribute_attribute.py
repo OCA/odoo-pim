@@ -43,7 +43,6 @@ class AttributeAttribute(models.Model):
         if data:
             custom_filter.write(data)
 
-    @api.multi
     def write(self, vals):
         res = super(AttributeAttribute, self).write(vals)
         for attribute in self:
