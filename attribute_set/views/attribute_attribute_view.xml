@@ -66,9 +66,12 @@
                                     'readonly': [('model_id', '=', False)],
                                 }"
                     />
+                    <!--
+                    TODO @CPigeon: why no create?
+                    I you install only this module you have no way to create a group -->
+                    <!-- options="{'no_create': 1}" -->
                     <field
                         name="attribute_group_id"
-                        options="{'no_create': 1}"
                         domain="[('model_id', '=', model_id)]"
                     />
                     <field name="sequence" />
