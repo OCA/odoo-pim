@@ -1,7 +1,9 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo_test_helper import FakeModelLoader
+from odoo_test_helper import (  # pylint: disable=missing-manifest-dependency
+    FakeModelLoader,
+)
 
 from odoo.exceptions import ValidationError
 
@@ -42,11 +44,15 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
 
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
-        from odoo.addons.attribute_set.tests.models import ResPartner
+        from odoo.addons.attribute_set.tests.models import (
+            ResPartner,
+        )  # pylint: disable=odoo-addons-relative-import
 
         cls.loader.update_registry([ResPartner])
 
-        from .res_partner_event_listener import ResPartnerEventListener  # noqa: F401
+        from .res_partner_event_listener import (
+            ResPartnerEventListener,
+        )  # pylint: disable=odoo-addons-relative-import
 
         ResPartnerEventListener._build_component(cls._components_registry)
 
