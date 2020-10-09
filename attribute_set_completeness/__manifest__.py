@@ -5,8 +5,8 @@
     "name": "Attribute Set Completeness",
     "version": "13.0.1.0.0",
     "license": "AGPL-3",
-    "author": "ACSONE SA/NV",
-    "website": "https://acsone.eu",
+    "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/odoo-pim",
     "depends": ["attribute_set", "component_event"],
     "data": [
         "views/attribute_set.xml",
