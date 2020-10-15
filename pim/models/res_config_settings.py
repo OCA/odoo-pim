@@ -17,4 +17,5 @@ class PimConfigSettings(models.TransientModel):
     pim_default_product_attribute_set_id = fields.Many2one(
         comodel_name="attribute.set",
         related="company_id.product_default_attribute_set_id",
+        readonly=False,
     )
