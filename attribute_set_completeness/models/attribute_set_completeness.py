@@ -25,3 +25,6 @@ class AttributeSetCompleteness(models.Model):
     completion_rate = fields.Float()
     completion_rate_progress = fields.Float(related="completion_rate", readonly=True)
     model_id = fields.Many2one(related="attribute_set_id.model_id", readonly=True)
+
+    def name_get(self):
+        return [(rec.id, rec.field_id.field_description) for rec in self]
