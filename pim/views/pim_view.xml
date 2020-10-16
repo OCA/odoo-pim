@@ -59,10 +59,10 @@
         parent="main_menu_variant_attribute"
         sequence="1"
     />
-    <!-- Settings Menu -->
+    <!-- Configuration Menu -->
     <menuitem
         id="menu_pim_settings"
-        name="Settings"
+        name="Configuration"
         sequence="100"
         parent="root_menu_pim"
         groups="pim.group_pim_manager"

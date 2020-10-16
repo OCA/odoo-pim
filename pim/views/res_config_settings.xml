@@ -2,54 +2,55 @@
 <!-- Copyright 2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record id="view_config_settings" model="ir.ui.view">
+    <record id="pim_view_config_settings" model="ir.ui.view">
         <field name="name">PIM config</field>
-        <field name="model">pim.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <form string="Configure PIM" class="oe_form_configuration">
-                <header>
-                    <button
-                        string="Apply"
-                        type="object"
-                        name="execute"
-                        class="oe_highlight"
-                    />
-                    <button
-                        string="Cancel"
-                        type="object"
-                        name="cancel"
-                        class="oe_link"
-                        special="cancel"
-                    />
-                </header>
-                <group string="Company" groups="base.group_multi_company">
-                    <label for="id" string="Company" />
-                    <div>
-                        <field
-                            name="company_id"
-                            options="{'no_create': True}"
-                            class="oe_inline"
-                        />
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+                    class="app_settings_block"
+                    data-string="PIM"
+                    string="PIM"
+                    data-key="pim"
+                >
+                    <h2>Products</h2>
+                    <div class="col-12 col-lg-6 mt16 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <span
+                                class="o_form_label"
+                            >Default Product Attribute Set</span>
+                            <span
+                                class="fa fa-lg fa-building-o"
+                                title="Values set here are company-specific."
+                                aria-label="Values set here are company-specific."
+                                groups="base.group_multi_company"
+                                role="img"
+                            />
+                            <div class="content-group mt16">
+                                <field name="pim_default_product_attribute_set_id" />
+                            </div>
+                        </div>
                     </div>
-                </group>
-                <group string="Product Attribute">
-                    <field name="pim_default_product_attribute_set_id" />
-                </group>
-            </form>
+                </div>
+            </xpath>
         </field>
     </record>
-    <record id="action_config" model="ir.actions.act_window">
-        <field name="name">Configure PIM</field>
+    <record id="action_pim_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">pim.config.settings</field>
+        <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
         <field name="target">inline</field>
+        <field name="context">{'module' : 'pim'}</field>
     </record>
     <menuitem
-        id="menu_config"
-        name="Configuration"
+        id="menu_pim_general_settings"
+        name="Settings"
         parent="menu_pim_settings"
-        sequence="10"
-        action="action_config"
+        sequence="0"
+        action="action_pim_config_settings"
+        groups="pim.group_pim_manager"
     />
 </odoo>

@@ -11,6 +11,6 @@ class ResCompany(models.Model):
     product_default_attribute_set_id = fields.Many2one(
         comodel_name="attribute.set",
         string="Default Product Attribute Set",
-        help="Set the default attribute set that will be used as default for"
+        help="Define the default attribute set that will be used as default for "
         "new products.",
     )
