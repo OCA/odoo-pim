@@ -33,7 +33,7 @@
                 />
                 <field
                     name="completion_rate"
-                    widget="percentage"
+                    widget="progressbar"
                     attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
                                                       ('completion_state', '=', 'complete')]}"
                 />
