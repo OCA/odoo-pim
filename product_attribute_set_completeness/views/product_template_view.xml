@@ -36,7 +36,7 @@
                     name="completion_state"
                     nolabel="1"
                     options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                    attrs="{'invisible': [('attribute_set_id', '=', False)]}"
+                    attrs="{'invisible': ['|', ('attribute_set_id', '=', False), ('attribute_set_not_completed_ids', '=', [])]}"
                     class="ml-3"
                 />
                 <div>
@@ -44,8 +44,8 @@
                         name="completion_rate"
                         widget="progressbar"
                         nolabel="1"
-                        attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
-                                                      ('completion_state', '=', 'complete')]}"
+                        attrs="{'invisible': ['|', '|', ('attribute_set_id', '=', False),
+                            ('completion_state', '=', 'complete'), ('attribute_set_not_completed_ids', '=', [])]}"
                     />
                 </div>
                 <field name="attribute_set_completeneness_ids" invisible="1" />
@@ -70,7 +70,7 @@
                 <filter
                     string="Not Complete"
                     name="filter_not_complete"
-                    domain="[('completion_state', '=', 'not_complete')]"
+                    domain="[('completion_state', '=', 'not_complete'), ('attribute_set_not_completed_ids', '!=', [])]"
                 />
             </filter>
         </field>
