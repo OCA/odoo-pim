@@ -10,8 +10,13 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="attribute_set_id" invisible="1" />
+                <field name="available_field_ids" invisible="1" />
                 <field name="model_id" />
-                <field name="field_id" domain="[('model_id', '=', model_id)]" />
+                <field
+                    name="field_id"
+                    domain="[('id', 'in', available_field_ids)]"
+                    options="{'no_create': True}"
+                />
                 <field name="field_description" />
                 <field name="completion_rate" sum="Total" />
                 <field

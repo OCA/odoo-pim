@@ -12,11 +12,10 @@
             ref="product_attribute_set.product_template_form_view"
         />
         <field name="arch" type="xml">
-            <header position="after">
-
-            </header>
             <xpath expr="//separator[@name='attributes_placeholder']" position="before">
-                <group>
+                <div
+                    attrs="{'invisible': [('attribute_set_not_completed_ids', '=', [])]}"
+                >
                     <group>
                         <label
                             for="attribute_set_not_completed_ids"
@@ -28,33 +27,29 @@
                             widget="many2many_tags"
                         />
                     </group>
-                </group>
-            </xpath>
-            <xpath expr="//field[@name='attribute_set_id']/.." position="after">
-                <div>
-                    <field name="attribute_set_completeneness_ids" invisible="1" />
-                    <group
-                        string="Completion"
-                        attrs="{'invisible': [('attribute_set_completeneness_ids', '=', [])]}"
-                    >
-                        <group>
-                            <field
-                                widget='label_selection'
-                                name="completion_state"
-                                nolabel="1"
-                                options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                                attrs="{'invisible': [('attribute_set_id', '=', False)]}"
-                            />
-                            <field
-                                name="completion_rate"
-                                widget="progressbar"
-                                nolabel="1"
-                                attrs="{'invisible': ['|', ('attribute_set_id', '=', False),
-                                                              ('completion_state', '=', 'complete')]}"
-                            />
-                        </group>
-                    </group>
+                    <separator style="border-bottom-style: inset;" />
                 </div>
+            </xpath>
+            <xpath expr="//field[@name='attribute_set_id']" position="after">
+                <field
+                    widget='label_selection'
+                    name="completion_state"
+                    nolabel="1"
+                    options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
+                    attrs="{'invisible': ['|', ('attribute_set_id', '=', False), ('attribute_set_not_completed_ids', '=', [])]}"
+                    class="ml-3"
+                />
+                <div>
+                    <field
+                        name="completion_rate"
+                        widget="progressbar"
+                        nolabel="1"
+                        attrs="{'invisible': ['|', '|', ('attribute_set_id', '=', False),
+                            ('completion_state', '=', 'complete'), ('attribute_set_not_completed_ids', '=', [])]}"
+                    />
+                </div>
+                <field name="attribute_set_completeneness_ids" invisible="1" />
+                <separator />
             </xpath>
         </field>
     </record>
@@ -75,7 +70,7 @@
                 <filter
                     string="Not Complete"
                     name="filter_not_complete"
-                    domain="[('completion_state', '=', 'not_complete')]"
+                    domain="[('completion_state', '=', 'not_complete'), ('attribute_set_not_completed_ids', '!=', [])]"
                 />
             </filter>
         </field>
