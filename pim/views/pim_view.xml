@@ -20,6 +20,7 @@
         id="main_menu_variant_attribute"
         name="Variants Attributes"
         parent="root_menu_pim"
+        groups="product.group_product_variant"
         sequence="10"
     />
     <menuitem
@@ -42,6 +43,7 @@
         name="Product Variants"
         action="product.product_normal_action_sell"
         parent="main_menu_product"
+        groups="product.group_product_variant"
         sequence="1"
     />
     <!-- Menu Attributes -->
