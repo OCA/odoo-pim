@@ -26,17 +26,24 @@
                 />
                 <field name="attribute_set_id" />
                 <field name="attribute_set_not_completed_ids" invisible="1" />
+                <field name="attribute_set_completeneness_ids" invisible="1" />
                 <field
                     widget='label_selection'
                     name="completion_state"
                     options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                    attrs="{'invisible': ['|', ('attribute_set_id', '=', False), ('attribute_set_not_completed_ids', '=', [])]}"
+                    attrs="{'invisible': [
+                                            '|',
+                                            ('attribute_set_id', '=', False),
+                                            '&amp;',
+                                            ('attribute_set_not_completed_ids', '=', []),
+                                            ('attribute_set_completeneness_ids', '=', []),
+                                         ]}"
                 />
                 <field
                     name="completion_rate"
                     widget="progressbar"
                     attrs="{'invisible': ['|', '|', ('attribute_set_id', '=', False),
-                        ('completion_state', '=', 'complete'), ('attribute_set_not_completed_ids', '=', [])]}"
+                        ('completion_state', '=', 'complete'), ('attribute_set_completeneness_ids', '=', [])]}"
                 />
             </tree>
         </field>

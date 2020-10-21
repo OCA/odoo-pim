@@ -36,7 +36,13 @@
                     name="completion_state"
                     nolabel="1"
                     options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                    attrs="{'invisible': ['|', ('attribute_set_id', '=', False), ('attribute_set_not_completed_ids', '=', [])]}"
+                    attrs="{'invisible': [
+                                            '|',
+                                            ('attribute_set_id', '=', False),
+                                            '&amp;',
+                                            ('attribute_set_not_completed_ids', '=', []),
+                                            ('attribute_set_completeneness_ids', '=', []),
+                                         ]}"
                     class="ml-3"
                 />
                 <div>
