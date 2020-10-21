@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_attribute_set_completeness
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-16 17:27+0000\n"
+"PO-Revision-Date: 2020-10-16 17:27+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:product_attribute_set_completeness.product_template_search_view
+msgid "Complete"
+msgstr "Complet"
+
+#. module: product_attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:product_attribute_set_completeness.product_template_view_form
+msgid "Completion"
+msgstr "Complétude"
+
+#. module: product_attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:product_attribute_set_completeness.product_template_search_view
+msgid "Not Complete"
+msgstr "Incomplet"
+
+#. module: product_attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:product_attribute_set_completeness.product_template_view_form
+msgid "Not completed attributes"
+msgstr "Attributs à compléter"

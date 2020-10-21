@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
@@ -10,7 +10,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
 
     completion_rate = fields.Float(default=0.0, readonly=True)
     completion_state = fields.Selection(
-        selection=[("complete", "Complete"), ("not_complete", "Not complete")],
+        selection=[("complete", _("Complete")), ("not_complete", _("Not complete"))],
         default="not_complete",
         readonly=True,
     )
