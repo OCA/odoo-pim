@@ -36,13 +36,7 @@
                     name="completion_state"
                     nolabel="1"
                     options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                    attrs="{'invisible': [
-                                            '|',
-                                            ('attribute_set_id', '=', False),
-                                            '&amp;',
-                                            ('attribute_set_not_completed_ids', '=', []),
-                                            ('attribute_set_completeneness_ids', '=', []),
-                                         ]}"
+                    attrs="{'invisible': [('is_completion_state_visible', '=', False)]}"
                     class="ml-3"
                 />
                 <div>
@@ -50,11 +44,11 @@
                         name="completion_rate"
                         widget="progressbar"
                         nolabel="1"
-                        attrs="{'invisible': ['|', '|', ('attribute_set_id', '=', False),
-                            ('completion_state', '=', 'complete'), ('attribute_set_not_completed_ids', '=', [])]}"
+                        attrs="{'invisible': [('is_completion_rate_visible', '=', False)]}"
                     />
                 </div>
-                <field name="attribute_set_completeneness_ids" invisible="1" />
+                <field name="is_completion_state_visible" invisible="1" />
+                <field name="is_completion_rate_visible" invisible="1" />
                 <separator />
             </xpath>
         </field>
