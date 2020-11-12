@@ -83,6 +83,8 @@ class AttributeAttribute(models.Model):
         "ir.model", "Relational Model", ondelete="cascade"
     )
 
+    widget = fields.Char(help="Specify widget to add to the field on the views.")
+
     required_on_views = fields.Boolean(
         "Required (on views)",
         help="If activated, the attribute will be mandatory on the views, "
@@ -130,15 +132,11 @@ class AttributeAttribute(models.Model):
         self.ensure_one()
         kwargs = {"name": "%s" % self.name}
         kwargs["attrs"] = str(self._get_attrs())
+        if self.widget:
+            kwargs["widget"] = self.widget
 
         if self.readonly:
             kwargs["readonly"] = str(True)
-
-        if self.ttype == "many2many":
-            # TODO use an attribute field instead
-            # to let user specify the widget. For now it fixes:
-            # https://github.com/shopinvader/odoo-pim/issues/2
-            kwargs["widget"] = "many2many_tags"
 
         if self.ttype in ["many2one", "many2many"]:
             if self.relation_model_id:
@@ -230,6 +228,11 @@ class AttributeAttribute(models.Model):
         name = self.name
         if not name.startswith("x_"):
             self.name = "x_%s" % name
+
+    @api.onchange("attribute_type")
+    def onchange_attribute_type(self):
+        if self.attribute_type == "multiselect":
+            self.widget = "many2many_tags"
 
     @api.onchange("relation_model_id")
     def relation_model_id_change(self):
