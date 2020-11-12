@@ -79,6 +79,7 @@
                         options="{'no_create': 1}"
                         invisible="context.get('from_attribute_set')"
                     />
+                    <field name="widget" />
                     <field name="required_on_views" />
                     <field name="create_date" invisible="1" />
                 </group>
