@@ -631,6 +631,11 @@ msgid "Sort Attribute"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__widget
+msgid "Specify widget to add to the field on the views."
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__store
 msgid "Stored"
 msgstr ""
@@ -726,6 +731,11 @@ msgstr ""
 msgid ""
 "Whether values for this field can be translated (enables the translation "
 "mechanism for that field)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
+msgid "Widget"
 msgstr ""
 
 #. module: attribute_set
