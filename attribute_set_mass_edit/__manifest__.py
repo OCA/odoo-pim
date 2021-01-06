@@ -3,12 +3,12 @@
 
 {
     "name": "Attribute Set Mass Edit",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-pim",
-    "depends": ["attribute_set", "mass_editing"],
+    "depends": ["attribute_set", "mass_editing", "onchange_helper"],
     "data": ["views/attribute_attribute.xml"],
     "demo": [],
-    "installable": False,
+    "installable": True,
 }
