@@ -23,9 +23,9 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.attr = self.env["attribute.attribute"].create(vals)
 
     def _get_mass_object(self):
-        mass_obj = self.env["mass.editing"]
-        return mass_obj.search(
-            [("attribute_group_id", "=", self.attr.attribute_group_id.id)]
+        action_server_obj = self.env["ir.actions.server"]
+        return action_server_obj.search(
+            [("mass_edit_attribute_group_id", "=", self.attr.attribute_group_id.id)]
         )
 
     def test_attr_mass_edit(self):
@@ -36,7 +36,7 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.assertTrue(mass_object)
         self.assertEqual(mass_object.name, self.attr.attribute_group_id.name)
         self.assertIn(
-            self.attr.field_id.id, mass_object.mapped("line_ids.field_id").ids
+            self.attr.field_id.id, mass_object.mapped("mass_edit_line_ids.field_id").ids
         )
         self.attr.allow_mass_editing = False
         mass_object = self._get_mass_object()
@@ -58,8 +58,6 @@ class TestAttributeSetMassEdit(TransactionCase):
         new_name = "New Group Name"
         self.group.name = new_name
         self.assertEqual(mass_object.name, new_name)
-        action_name = "Mass Operation (%s)" % new_name
-        self.assertEqual(mass_object.ref_ir_act_window_id.name, action_name)
 
     def test_group_unlink(self):
         self.attr.allow_mass_editing = True
