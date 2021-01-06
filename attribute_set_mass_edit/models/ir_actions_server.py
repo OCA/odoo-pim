@@ -6,6 +6,8 @@ from odoo import fields, models
 
 class MassEditing(models.Model):
 
-    _inherit = "mass.editing"
+    _inherit = "ir.actions.server"
 
-    attribute_group_id = fields.Many2one("attribute.group", ondelete="cascade")
+    mass_edit_attribute_group_id = fields.Many2one(
+        "attribute.group", ondelete="cascade",
+    )
