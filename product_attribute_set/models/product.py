@@ -28,7 +28,7 @@ class ProductTemplate(models.Model):
         default_categ_id_id = self._get_default_category_id()
         if default_categ_id_id:
             default_categ_id = self.env["product.category"].search(
-                [("id", "=", default_categ_id_id)]
+                [("id", "=", default_categ_id_id.id)]
             )
             return default_categ_id.attribute_set_id.id
 
