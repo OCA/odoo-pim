@@ -16,6 +16,7 @@
         "views/attribute_set.xml",
         "views/attribute_group.xml",
         "views/attribute_attribute.xml",
+        "views/product_attribute_value.xml",
     ],
     "demo": [],
     "installable": True,
