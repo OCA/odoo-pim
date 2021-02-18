@@ -17,5 +17,5 @@
         "wizard/attribute_option_wizard_view.xml",
     ],
     "external_dependencies": {"python": ["unidecode"]},
-    "installable": True,
+    "installable": False,
 }
