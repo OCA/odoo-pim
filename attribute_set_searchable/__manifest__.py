@@ -10,4 +10,5 @@
     "depends": ["attribute_set", "base_search_custom_field_filter"],
     "data": ["views/attribute_attribute.xml"],
     "demo": [],
+    "installable": False,
 }
