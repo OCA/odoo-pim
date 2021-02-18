@@ -10,4 +10,5 @@
     "depends": ["attribute_set", "mass_editing"],
     "data": ["views/attribute_attribute.xml"],
     "demo": [],
+    "installable": False,
 }
