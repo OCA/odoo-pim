@@ -10,15 +10,15 @@
                     <separator string="options_placeholder" />
                 </group>
                 <footer>
-                        <button
+                    <button
                         name="validate"
                         string="Validate"
                         type="object"
                         class="oe_highlight"
                     />
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
             </form>
         </field>
     </record>
