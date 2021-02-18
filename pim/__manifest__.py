@@ -18,6 +18,6 @@
         "views/attribute_attribute.xml",
     ],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "application": True,
 }
