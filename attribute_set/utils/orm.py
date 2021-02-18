@@ -69,7 +69,7 @@ def transfer_modifiers_to_node(modifiers, node):
 
 
 def setup_modifiers(node, field=None, context=None, in_tree_view=False):
-    """ Processes node attributes and field descriptors to generate
+    """Processes node attributes and field descriptors to generate
     the ``modifiers`` node attribute and set it on the provided node.
     Alters its first argument in-place.
     :param node: ``field`` node from an OpenERP view

@@ -24,9 +24,9 @@ except ImportError as err:
 
 
 def safe_column_name(string):
-    """ Prevent portability problem in database column name
+    """Prevent portability problem in database column name
     with other DBMS system
-    Use case : if you synchronise attributes with other applications """
+    Use case : if you synchronise attributes with other applications"""
     string = unidecode(string.replace(" ", "_").lower())
     return re.sub(r"[^0-9a-z_]", "", string)
 
@@ -274,7 +274,7 @@ class AttributeAttribute(models.Model):
 
     @api.model
     def create(self, vals):
-        """ Create an attribute.attribute
+        """Create an attribute.attribute
 
         - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
         be created as this model "_inherits" 'ir.model.fields'.
@@ -359,7 +359,7 @@ class AttributeAttribute(models.Model):
         return super().create(vals)
 
     def _delete_related_option_wizard(self, option_vals):
-        """ Delete the attribute's options wizards related to the attribute's options
+        """Delete the attribute's options wizards related to the attribute's options
         deleted after the write"""
         self.ensure_one()
         for option_change in option_vals:
