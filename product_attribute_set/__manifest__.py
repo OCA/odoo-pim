@@ -10,5 +10,5 @@
     "depends": ["product", "attribute_set"],
     "data": ["views/product.xml", "views/product_category.xml"],
     "demo": ["demo/product_attribute.xml"],
-    "installable": True,
+    "installable": False,
 }
