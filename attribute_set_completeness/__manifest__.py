@@ -15,5 +15,4 @@
         "views/attribute_set_completeness.xml",
     ],
     "demo": [],
-    "external_dependencies": {"python": ["odoo_test_helper"]},
 }

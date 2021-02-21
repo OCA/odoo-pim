@@ -1,4 +1,2 @@
---extra-index-url=https://wheelhouse.shopinvader.com/simple
 odoo_test_helper
-odoo10-addon-mass-editing
 odoo10-addon-base_search_custom_field_filter @ git+https://github.com/OCA/server-ux@refs/pull/170/head#subdirectory=setup/base_search_custom_field_filter
