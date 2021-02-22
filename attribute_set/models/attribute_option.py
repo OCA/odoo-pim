@@ -32,6 +32,7 @@ class AttributeOption(models.Model):
         "ir.model",
         "Relational Model",
         related="attribute_id.relation_model_id",
+        ondelete="cascade",
     )
 
     sequence = fields.Integer("Sequence")
