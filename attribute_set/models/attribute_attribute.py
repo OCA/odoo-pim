@@ -79,7 +79,9 @@ class AttributeAttribute(models.Model):
 
     create_date = fields.Datetime("Created date", readonly=True)
 
-    relation_model_id = fields.Many2one("ir.model", "Relational Model")
+    relation_model_id = fields.Many2one(
+        "ir.model", "Relational Model", ondelete="cascade"
+    )
 
     required_on_views = fields.Boolean(
         "Required (on views)",
@@ -462,7 +464,7 @@ class AttributeAttribute(models.Model):
         return res
 
     def unlink(self):
-        """ Delete the Attribute's related field when deleting a custom Attribute"""
+        """Delete the Attribute's related field when deleting a custom Attribute"""
         fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
             "field_id"
         )

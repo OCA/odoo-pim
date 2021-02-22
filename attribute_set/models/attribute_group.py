@@ -22,4 +22,4 @@ class AttributeGroup(models.Model):
         "attribute.attribute", "attribute_group_id", "Attributes"
     )
 
-    model_id = fields.Many2one("ir.model", "Model", required=True)
+    model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
