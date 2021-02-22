@@ -21,4 +21,4 @@ class AttributeSet(models.Model):
         column2="attribute_id",
     )
 
-    model_id = fields.Many2one("ir.model", "Model", required=True)
+    model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
