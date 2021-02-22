@@ -82,10 +82,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
         result = super().fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu,
         )
         if view_type == "form":
             result["arch"] = self._insert_attribute(result["arch"])

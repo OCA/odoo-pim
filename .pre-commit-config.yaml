@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^attribute_set/|
   ^attribute_set_mass_edit/|
   ^attribute_set_searchable/|
   ^pim/|
