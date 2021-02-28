@@ -7,7 +7,7 @@
     "version": "10.0.1.2.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
-    "website": "https://acsone.eu",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": ["attribute_set", "component_event"],
     "data": [
         "views/attribute_set.xml",
@@ -15,5 +15,4 @@
         "views/attribute_set_completeness.xml",
     ],
     "demo": [],
-    "external_dependencies": {"python": ["odoo_test_helper"]},
 }

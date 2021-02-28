@@ -5,7 +5,7 @@
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "https://shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": ["base", "base_sparse_field_list_support"],
     "data": [
         "security/ir.model.access.csv",

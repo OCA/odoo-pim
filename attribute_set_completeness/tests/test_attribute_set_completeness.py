@@ -45,6 +45,7 @@ class TestAttributeSetCompleteness(SavepointCase):
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from odoo.addons.attribute_set.tests.models import ResPartner
+
         from .res_partner_event_listener import ResPartnerEventListener  # noqa: F401
 
         cls.component_builder = cls.env["component.builder"]

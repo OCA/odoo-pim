@@ -7,7 +7,7 @@
     "version": "10.0.1.1.0",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "http://www.shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": [
         "product",
         "product_attribute_set",
