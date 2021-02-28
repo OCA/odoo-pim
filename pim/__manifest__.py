@@ -6,7 +6,7 @@
     "version": "12.0.2.0.1",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "http://www.akretion.com/",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": [
         "attribute_set_searchable",
         "product",
