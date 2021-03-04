@@ -26,7 +26,10 @@ class AttributeOption(models.Model):
     )
 
     relation_model_id = fields.Many2one(
-        "ir.model", "Relational Model", related="attribute_id.relation_model_id",
+        "ir.model",
+        "Relational Model",
+        related="attribute_id.relation_model_id",
+        ondelete="cascade",
     )
 
     sequence = fields.Integer("Sequence")

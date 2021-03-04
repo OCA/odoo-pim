@@ -2,13 +2,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Product Attribute Set",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "https://shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": ["product", "attribute_set"],
     "data": ["views/product.xml", "views/product_category.xml"],
     "demo": ["demo/product_attribute.xml"],
-    "installable": False,
+    "installable": True,
 }

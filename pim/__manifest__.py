@@ -3,10 +3,10 @@
 
 {
     "name": "Product Information Management",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "Akretion",
-    "website": "http://www.shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": ["product", "product_attribute_set"],
     "data": [
         "data/ir_module_category_data.xml",
@@ -16,8 +16,9 @@
         "views/attribute_set.xml",
         "views/attribute_group.xml",
         "views/attribute_attribute.xml",
+        "views/product_attribute_value.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "application": True,
 }
