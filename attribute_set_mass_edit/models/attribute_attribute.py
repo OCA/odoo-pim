@@ -15,16 +15,6 @@ class AttributeAttribute(models.Model):
     def _get_mass_editing_ids(self):
         return self.mapped("mass_editing_line_ids").mapped("server_action_id")
 
-    def _prepare_create_mass_editing(self):
-        self.ensure_one()
-        group_id = self.attribute_group_id
-        return {
-            "mass_edit_attribute_group_id": group_id.id,
-            "model_id": group_id.model_id.id,
-            "name": group_id.name,
-            "state": "mass_edit",
-        }
-
     def _create_mass_editing(self):
         """
         Create Mass Editing if not exists, use create multi
@@ -32,15 +22,21 @@ class AttributeAttribute(models.Model):
         """
         actions_server_obj = self.env["ir.actions.server"]
         attributes_without_mass = self.filtered(lambda a: not a.mass_editing_line_ids)
+        attribute_groups = self.env["attribute.group"].search(
+            [("id", "in", attributes_without_mass.mapped("attribute_group_id").ids)]
+        )
         mass_editings = actions_server_obj
-        for attribute in attributes_without_mass:
-            vals = attribute._prepare_create_mass_editing()
+        for attribute_group in attribute_groups.filtered(
+            lambda g: not g.mass_edit_action_ids
+        ):
+            vals = attribute_group._prepare_create_mass_editing()
             vals = actions_server_obj.play_onchanges(vals, vals.keys())
             mass_editings |= actions_server_obj.create(vals)
 
         for attribute in self:
-            for mass_edit in mass_editings:
-                # Create line because there are no lines in the
+            for mass_edit in attribute_groups.mapped("mass_edit_action_ids").filtered(
+                lambda m: m.mass_edit_attribute_group_id == attribute.attribute_group_id
+            ):
                 mass_edit.write(
                     {
                         "mass_edit_line_ids": [
