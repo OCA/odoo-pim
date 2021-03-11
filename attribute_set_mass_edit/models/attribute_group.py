@@ -28,3 +28,12 @@ class AttributeGroup(models.Model):
                     # mass_editing.disable_mass_operation()
                     # mass_editing.enable_mass_operation()
         return res
+
+    def _prepare_create_mass_editing(self):
+        self.ensure_one()
+        return {
+            "mass_edit_attribute_group_id": self.id,
+            "model_id": self.model_id.id,
+            "name": self.name,
+            "state": "mass_edit",
+        }
