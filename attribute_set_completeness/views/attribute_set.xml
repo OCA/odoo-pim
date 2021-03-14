@@ -8,6 +8,9 @@
         <field name="inherit_id" ref="attribute_set.attribute_set_form_view" />
         <field name="arch" type="xml">
             <group name="attributes" position="after">
+                <group>
+                    <field name="completeness_mode" string="Automatic Rates"/>
+                </group>
                 <group name="completeness" string="Completeness">
                     <field
                         name="attribute_set_completeness_ids"
