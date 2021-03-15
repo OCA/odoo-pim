@@ -44,16 +44,18 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
 
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
+        # fmt: off
         from odoo.addons.attribute_set.tests.models import (
-            ResPartner,
-        )  # pylint: disable=odoo-addons-relative-import
+            ResPartner,  # pylint: disable=odoo-addons-relative-import
+        )
 
         cls.loader.update_registry([ResPartner])
 
         from .res_partner_event_listener import (
-            ResPartnerEventListener,
-        )  # pylint: disable=odoo-addons-relative-import
+            ResPartnerEventListener,  # pylint: disable=odoo-addons-relative-import
+        )
 
+        # fmt: on
         ResPartnerEventListener._build_component(cls._components_registry)
 
     @classmethod
