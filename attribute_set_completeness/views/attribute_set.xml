@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <group name="attributes" position="after">
                 <group>
-                    <field name="completeness_mode" string="Automatic Rates"/>
+                    <field name="completeness_mode" string="Automatic Rates" />
                 </group>
                 <group name="completeness" string="Completeness">
                     <field
