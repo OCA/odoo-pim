@@ -3,6 +3,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import first
 
 
 class AttributeSet(models.Model):
@@ -18,15 +19,17 @@ class AttributeSet(models.Model):
 
     # Add a button to let the user choose between automatic completion
     # rate vs manual input
-    completeness_mode = fields.Boolean(default=True)
+    is_automatic_rate = fields.Boolean(
+        default=True, help="Equalize all the completion rates to the same perrcentage",
+    )
 
     # If automatic mode, each attribut will have the same completion rate.
     # Taking account of the possible remainder depending of 100 divised
     # by the number of attributes.
-    @api.onchange("completeness_mode")
-    def _auto_rate_completeness(self):
-        for rec in self:
-            if rec.completeness_mode:
+    @api.onchange("is_automatic_rate")
+    def _automatic_rate(self):
+        for rec in self.filtered(lambda r: r.is_automatic_rate):
+            if rec.is_automatic_rate:
                 for attr_set in self:
                     completion_config = attr_set.attribute_set_completeness_ids
                     if completion_config:
@@ -38,8 +41,7 @@ class AttributeSet(models.Model):
                         total = sum(list_attr)
                         if total != 100:
                             remainder = 100 % attributs_num
-                            first_attr = completion_config[0]
-                            first_attr.completion_rate += remainder
+                            first(completion_config).completion_rate += remainder
 
     @api.constrains("attribute_set_completeness_ids")
     def _check_attribute_set_completeness_ids(self):
@@ -48,8 +50,8 @@ class AttributeSet(models.Model):
             if completion_config:
                 total = sum([rule.completion_rate for rule in completion_config])
                 if total != 100.0:
-                    if self.completeness_mode:
-                        self._auto_rate_completeness()
+                    if self.is_automatic_rate:
+                        self._automatic_rate()
                     else:
                         raise ValidationError(
                             _("Total of completion rate must be 100 %")
