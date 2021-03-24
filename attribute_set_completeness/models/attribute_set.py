@@ -20,7 +20,7 @@ class AttributeSet(models.Model):
     # Add a button to let the user choose between automatic completion
     # rate vs manual input
     is_automatic_rate = fields.Boolean(
-        default=True, help="Equalize all the completion rates to the same perrcentage",
+        default=True, help="Equalize all the completion rates to the same percentage",
     )
 
     # If automatic mode, each attribut will have the same completion rate.
