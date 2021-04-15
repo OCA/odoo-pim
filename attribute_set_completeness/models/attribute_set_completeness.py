@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class AttributeSetCompleteness(models.Model):
-
     _name = "attribute.set.completeness"
     _description = "Attribute Set Completeness"
     _rec_name = "field_id"
@@ -36,10 +35,8 @@ class AttributeSetCompleteness(models.Model):
     def _compute_available_field_ids(self):
         for rec in self:
             att_set_field_ids = rec.attribute_set_id.attribute_ids.mapped("field_id")
-
             att_set_complete_ids = rec.attribute_set_id.attribute_set_completeness_ids
             choosen_field_ids = att_set_complete_ids.mapped("field_id")
-
             rec.available_field_ids = att_set_field_ids - choosen_field_ids
 
     def name_get(self):
