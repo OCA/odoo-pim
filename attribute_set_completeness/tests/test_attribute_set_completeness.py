@@ -53,7 +53,7 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        super(TestAttributeSetCompleteness, cls).tearDownClass()
+        super().tearDownClass()
 
     def test_completion_rate_constrains_create(self):
         vals = {
@@ -65,7 +65,8 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
                 (0, 0, {"field_id": self.attr2.field_id.id, "completion_rate": 10.0}),
             ],
         }
-        with self.assertRaises(ValidationError):
+        error_msg = "Total of completion rate must be 100 %"
+        with self.assertRaisesRegex(ValidationError, error_msg):
             self.env["attribute.set"].create(vals)
 
     def test_completion_rate_constrains_write_low(self):
@@ -76,8 +77,8 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
                 (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 10.0}),
             ]
         }
-
-        with self.assertRaises(ValidationError):
+        error_msg = "Total of completion rate must be 100 %"
+        with self.assertRaisesRegex(ValidationError, error_msg):
             self.attr_set.write(vals)
 
     def test_completion_rate_constrains_write_high(self):
@@ -85,32 +86,35 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
         vals = {
             "attribute_set_completeness_ids": [
                 (2, completion_rules[0].id),
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 200.0},),
+                (
+                    0,
+                    0,
+                    {"field_id": self.attr1.field_id.id, "completion_rate": 200.0},
+                ),
             ]
         }
-
-        with self.assertRaises(ValidationError):
+        error_msg = "Total of completion rate must be 100 %"
+        with self.assertRaisesRegex(ValidationError, error_msg):
             self.attr_set.write(vals)
 
     def test_completion_rate(self):
-        vals = {
-            "name": "Test Partner",
-        }
+        vals = {"name": "Test Partner"}
+        # Case 1: Create the partner
         partner = self.env["res.partner"].create(vals)
-        self.assertEqual(partner.completion_state, "not_complete")
-        self.assertEqual(partner.completion_rate, 0.0)
-
+        self.assertEqual(partner.attribute_set_completion_state, "not_complete")
+        self.assertEqual(partner.attribute_set_completion_rate, 0.0)
+        # Case 2: Set an attribute set
         partner.write({"attribute_set_id": self.attr_set.id})
         partner.invalidate_cache()
-        self.assertEqual(partner.completion_state, "not_complete")
-        self.assertEqual(partner.completion_rate, 0.0)
-
+        self.assertEqual(partner.attribute_set_completion_state, "not_complete")
+        self.assertEqual(partner.attribute_set_completion_rate, 0.0)
+        # Case 3: Set a field (50% completion)
         partner.write({"x_test": "test"})
         partner.invalidate_cache()
-        self.assertEqual(partner.completion_state, "not_complete")
-        self.assertEqual(partner.completion_rate, 50.0)
-
+        self.assertEqual(partner.attribute_set_completion_state, "not_complete")
+        self.assertEqual(partner.attribute_set_completion_rate, 50.0)
+        # Case 4: Set another field (100% completion)
         partner.write({"x_test2": "test"})
         partner.invalidate_cache()
-        self.assertEqual(partner.completion_state, "complete")
-        self.assertEqual(partner.completion_rate, 100.0)
+        self.assertEqual(partner.attribute_set_completion_state, "complete")
+        self.assertEqual(partner.attribute_set_completion_rate, 100.0)
