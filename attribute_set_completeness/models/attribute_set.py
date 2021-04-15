@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class AttributeSet(models.Model):
-
     _inherit = "attribute.set"
 
     attribute_set_completeness_ids = fields.One2many(
