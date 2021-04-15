@@ -1,7 +1,7 @@
-# Copyright 2020 ACSONE SA/NV
+# Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
@@ -27,7 +27,6 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         comodel_name="attribute.set.completeness", compute="_compute_completion_rate",
     )
 
-    @api.multi
     def _compute_completion_rate(self):
         for record in self:
             attribute_set_id = record.attribute_set_id
