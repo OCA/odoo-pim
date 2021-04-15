@@ -6,7 +6,7 @@
     "version": "12.0.1.2.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
-    "website": "https://acsone.eu",
+    "website": "https://github.com/shopinvader/odoo-pim",
     "depends": ["product_attribute_set", "attribute_set_completeness"],
     "data": ["views/product_template_view.xml"],
     "demo": [],
