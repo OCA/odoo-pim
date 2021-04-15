@@ -3,9 +3,6 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record model="ir.ui.view" id="attribute_set_completeness_tree_view">
-        <field
-            name="name"
-        >attribute.set.completeness.tree (in attribute_set_completeness)</field>
         <field name="model">attribute.set.completeness</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
