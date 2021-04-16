@@ -3,16 +3,13 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="product_template_view_form" model="ir.ui.view">
-        <field
-            name="name"
-        >product.template.view.form (in product_attribute_set_completeness)</field>
         <field name="model">product.template</field>
         <field
             name="inherit_id"
             ref="product_attribute_set.product_template_form_view"
         />
         <field name="arch" type="xml">
-            <xpath expr="//separator[@name='attributes_placeholder']" position="before">
+            <separator name="attributes_placeholder" position="before">
                 <div
                     attrs="{'invisible': [('attribute_set_not_completed_ids', '=', [])]}"
                 >
@@ -29,50 +26,27 @@
                     </group>
                     <separator style="border-bottom-style: inset;" />
                 </div>
-            </xpath>
-            <xpath expr="//field[@name='attribute_set_id']" position="after">
+            </separator>
+            <field name="attribute_set_id" position="after">
                 <field
-                    widget='label_selection'
-                    name="completion_state"
-                    nolabel="1"
-                    options="{'classes': {'complete': 'success', 'not_complete':'danger'}}"
-                    attrs="{'invisible': ['|', ('attribute_set_id', '=', False), ('attribute_set_not_completed_ids', '=', [])]}"
-                    class="ml-3"
+                    widget="label_selection"
+                    name="attribute_set_completion_state"
+                    options="{'classes': {'complete': 'success', 'not_complete': 'danger'}}"
+                    attrs="{'invisible': [('attribute_set_id', '=', False)]}"
                 />
-                <div>
-                    <field
-                        name="completion_rate"
-                        widget="progressbar"
-                        nolabel="1"
-                        attrs="{'invisible': ['|', '|', ('attribute_set_id', '=', False),
-                            ('completion_state', '=', 'complete'), ('attribute_set_not_completed_ids', '=', [])]}"
-                    />
-                </div>
-                <field name="attribute_set_completeneness_ids" invisible="1" />
+                <field
+                    name="attribute_set_completion_rate"
+                    attrs="{
+                        'invisible': [
+                            '|',
+                            ('attribute_set_id', '=', False),
+                            ('attribute_set_completion_state', '=', 'complete'),
+                        ],
+                    }"
+                />
+                <field name="attribute_set_completeness_ids" invisible="1" />
                 <separator />
-            </xpath>
-        </field>
-    </record>
-    <record id="product_template_search_view" model="ir.ui.view">
-        <field
-            name="name"
-        >product.template.search (in product_attribute_set_completeness)</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_search_view" />
-        <field name="arch" type="xml">
-            <filter name="filter_to_purchase" position="after">
-                <separator />
-                <filter
-                    string="Complete"
-                    name="filter_complete"
-                    domain="[('completion_state','=','complete')]"
-                />
-                <filter
-                    string="Not Complete"
-                    name="filter_not_complete"
-                    domain="[('completion_state', '=', 'not_complete'), ('attribute_set_not_completed_ids', '!=', [])]"
-                />
-            </filter>
+            </field>
         </field>
     </record>
 </odoo>
