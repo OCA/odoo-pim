@@ -1,7 +1,7 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
@@ -14,15 +14,19 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         default="not_complete",
         readonly=True,
         compute="_compute_completion_rate",
+        store=True,
     )
 
     attribute_set_completeneness_ids = fields.One2many(
         related="attribute_set_id.attribute_set_completeness_ids", readonly=True,
     )
     attribute_set_not_completed_ids = fields.Many2many(
-        comodel_name="attribute.set.completeness", compute="_compute_completion_rate",
+        comodel_name="attribute.set.completeness",
+        compute="_compute_completion_rate",
+        store=True,
     )
 
+    @api.depends("attribute_set_id", "attribute_set_completeneness_ids")
     def _compute_completion_rate(self):
         for record in self:
             attribute_set_id = record.attribute_set_id
