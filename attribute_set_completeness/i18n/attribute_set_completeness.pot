@@ -1,0 +1,168 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* attribute_set_completeness
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__attribute_set_id
+msgid "Attribute Set"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set_completeness
+msgid "Attribute Set Completeness"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_rate
+msgid "Attribute Set Completion Rate"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_state
+msgid "Attribute Set Completion State"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completed_ids
+msgid "Attribute Set completed criterias"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_not_completed_ids
+msgid "Attribute Set not completed criterias"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__available_field_ids
+msgid "Attribute Set's fields"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_rate
+msgid "Attribute set completeness percentage"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_state
+msgid "Attribute set completeness status"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set_owner_mixin
+msgid "Attribute set owner mixin"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__complete
+msgid "Complete"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_form_view
+msgid "Completeness"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set__attribute_set_completeness_ids
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completeness_ids
+msgid "Completeness Requirements"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__completion_rate
+msgid "Completion Rate"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__completion_rate_progress
+msgid "Completion Rate Progress"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set__display_name
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__display_name
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__field_description
+msgid "Field Description"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__field_id
+msgid "Field Name"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_completeness__available_field_ids
+msgid "Fields related to the Attribute set's attributes"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set__id
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__id
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set____last_update
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness____last_update
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__model_id
+msgid "Model"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__not_complete
+msgid "Not complete"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_completeness_tree_view
+msgid "Total"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: code:addons/attribute_set_completeness/models/attribute_set.py:0
+#, python-format
+msgid "Total of completion rate must be 100 %"
+msgstr ""
