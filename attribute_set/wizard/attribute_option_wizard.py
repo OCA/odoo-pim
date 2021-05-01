@@ -22,6 +22,7 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id", False),
         ondelete="cascade",
     )
+    option_ids = fields.Boolean()
 
     def validate(self):
         return True
@@ -44,7 +45,7 @@ class AttributeOptionWizard(models.TransientModel):
                     "value_ref": "{},{}".format(attr.relation_model_id.model, op_id),
                 }
             )
-
+        vals['option_ids'] = False
         res = super().create(vals)
 
         return res
