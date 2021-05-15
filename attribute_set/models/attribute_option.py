@@ -22,7 +22,10 @@ class AttributeOption(models.Model):
     value_ref = fields.Reference(_get_model_list, "Reference")
 
     attribute_id = fields.Many2one(
-        "attribute.attribute", "Product Attribute", required=True, ondelete="cascade",
+        "attribute.attribute",
+        "Product Attribute",
+        required=True,
+        ondelete="cascade",
     )
 
     relation_model_id = fields.Many2one(
