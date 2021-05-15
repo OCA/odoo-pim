@@ -19,8 +19,11 @@ Attribute Set
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/odoo-pim-14-0/odoo-pim-14-0-attribute_set
     :alt: Translate me on Weblate
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/295/14.0
+    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows the user to create Attributes to any model.
 This is a basic module in the way that **it does not provide views to display these new Attributes.**
