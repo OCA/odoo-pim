@@ -5,8 +5,8 @@
     "name": "Product Information Management",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "author": "Akretion",
-    "website": "https://github.com/shopinvader/odoo-pim",
+    "author": "Akretion,Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/odoo-pim",
     "depends": ["product", "product_attribute_set"],
     "data": [
         "data/ir_module_category_data.xml",
