@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* attribute_set_mass_edit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: attribute_set_mass_edit
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__allow_mass_editing
+msgid "Allow Mass Editing"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model,name:attribute_set_mass_edit.model_attribute_attribute
+msgid "Attribute"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model,name:attribute_set_mass_edit.model_attribute_group
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing__attribute_group_id
+msgid "Attribute Group"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model,name:attribute_set_mass_edit.model_mass_editing
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__mass_editing_ids
+msgid "Mass Editing"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model,name:attribute_set_mass_edit.model_mass_editing_wizard
+msgid "Wizard for mass edition"
+msgstr ""
