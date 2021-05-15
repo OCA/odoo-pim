@@ -9,5 +9,6 @@ class MassEditing(models.Model):
     _inherit = "ir.actions.server"
 
     mass_edit_attribute_group_id = fields.Many2one(
-        "attribute.group", ondelete="cascade",
+        "attribute.group",
+        ondelete="cascade",
     )
