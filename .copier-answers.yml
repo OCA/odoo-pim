@@ -1,9 +1,13 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.0.13
-_src_path: git+https://github.com/shopinvader/shopinvader-addons-repo-template
-black_version: 19.10b0
+_commit: v1.1.4
+_src_path: git+https://github.com/OCA/oca-addons-repo-template
+dependency_installation_mode: PIP
 generate_requirements_txt: true
-odoo_version: '14.0'
-prettify_xml: true
-python_line_length: 88
+include_wkhtmltopdf: false
+odoo_version: 14.0
+rebel_module_groups: []
+repo_description: Product Information Management.
+repo_name: PIM
 repo_slug: odoo-pim
+travis_apt_packages: []
+travis_apt_sources: []
