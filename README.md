@@ -15,7 +15,15 @@ Product Information Management.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[attribute_set](attribute_set/) | 13.0.1.0.1 | Attribute Set
+[attribute_set_mass_edit](attribute_set_mass_edit/) | 13.0.1.0.0 | Attribute Set Mass Edit
+[attribute_set_searchable](attribute_set_searchable/) | 13.0.1.0.0 | Attribute Set Searchable
+[pim](pim/) | 13.0.1.0.0 | Product Information Management
+[product_attribute_set](product_attribute_set/) | 13.0.1.0.0 | Product Attribute Set
 
 [//]: # (end addons)
 
