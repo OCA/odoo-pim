@@ -8,4 +8,7 @@ from odoo import fields, models
 class MassEditingLine(models.Model):
     _inherit = "mass.editing.line"
 
-    attribute_id = fields.Many2one("attribute.attribute", ondelete="cascade",)
+    attribute_id = fields.Many2one(
+        "attribute.attribute",
+        ondelete="cascade",
+    )
