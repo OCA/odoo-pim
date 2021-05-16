@@ -19,8 +19,11 @@ Product Search Multi Value
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/odoo-pim-10-0/odoo-pim-10-0-product_search_multi_value
     :alt: Translate me on Weblate
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/295/10.0
+    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows users to search products based on a list of default codes or barcodes.
 It can be extended to other values if needed.
