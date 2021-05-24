@@ -45,9 +45,13 @@ class AttributeOptionWizard(models.TransientModel):
                 }
             )
 
+        del vals['option_ids']
         res = super().create(vals)
-
         return res
+
+    def read(self, fields=None, load='_classic_read'):
+        fields.remove('option_ids')
+        return super().read(fields, load)
 
     @api.model
     def fields_view_get(
