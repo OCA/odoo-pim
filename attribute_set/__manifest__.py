@@ -1,6 +1,6 @@
 {
     "name": "Attribute Set",
-    "version": "13.0.1.0.2",
+    "version": "13.0.1.0.3",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
