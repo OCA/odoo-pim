@@ -1,8 +1,9 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
-from odoo.osv.expression import AND, FALSE_DOMAIN, OR
+from odoo import _, fields, models
+from odoo.exceptions import UserError
+from odoo.osv.expression import OR
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -16,21 +17,16 @@ class ProductTemplate(models.Model):
         search="_search_multi",
     )
 
-    @api.multi
     def _compute_search_multi(self):
         self.search_multi = False
 
-    @api.multi
     def _search_multi(self, operator, value):
-        default_res = FALSE_DOMAIN
-        if operator in ["=", "ilike"]:
+        if operator == "=" or operator == "ilike":
             operator = "in"
             comparator = OR
-        elif operator in ["!=", "not ilike"]:
-            operator = "not in"
-            comparator = AND
         else:
-            return default_res
+            raise UserError(_("Operator %s is not usable with multisearch", operator))
+
         value_list = value.split(" ") if " " in value else [value]
 
         search_fields = (
@@ -42,6 +38,6 @@ class ProductTemplate(models.Model):
 
         domain_list = []
         for search_field in search_fields:
-            domain_search_field = [(search_field, operator, value_list)]
+            domain_search_field = [(search_field, operator, tuple(value_list))]
             domain_list.append(domain_search_field)
         return comparator(domain_list)
