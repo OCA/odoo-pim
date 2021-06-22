@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -12,7 +11,9 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     search_multi = fields.Char(
-        "Multiple search", compute="_compute_search_multi", search="_search_multi",
+        "Multiple search",
+        compute="_compute_search_multi",
+        search="_search_multi",
     )
 
     @api.multi
