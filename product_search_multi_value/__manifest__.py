@@ -3,9 +3,9 @@
 
 {
     "name": "Product Search Multi Value",
-    "version": "10.0.1.0.1",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "author": "ACSONE SA/NV",
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": ["product"],
     "data": ["data/search_field_data.xml", "views/product_template_view.xml"],
