@@ -12,15 +12,15 @@ Experimental addons developped to add PIM functionalities to Odoo
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[attribute_set](attribute_set/) | 12.0.0.0.3 | Attribute Set
-[attribute_set_completeness](attribute_set_completeness/) | 12.0.1.2.1 | Attribute Set Completeness
-[attribute_set_mass_edit](attribute_set_mass_edit/) | 12.0.2.0.0 | Attribute Set Mass Edit
-[attribute_set_searchable](attribute_set_searchable/) | 12.0.1.0.0 | Attribute Set Searchable
-[pim](pim/) | 12.0.2.0.1 | Product Information Management
-[product_attribute_set](product_attribute_set/) | 12.0.2.1.0 | Product Attribute Set
-[product_attribute_set_completeness](product_attribute_set_completeness/) | 12.0.1.2.1 | Product Attribute Set Completeness
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[attribute_set](attribute_set/) | 12.0.0.0.3 |  | Attribute Set
+[attribute_set_completeness](attribute_set_completeness/) | 12.0.1.2.1 |  | Attribute Set Completeness
+[attribute_set_mass_edit](attribute_set_mass_edit/) | 12.0.2.0.0 |  | Attribute Set Mass Edit
+[attribute_set_searchable](attribute_set_searchable/) | 12.0.1.0.0 |  | Attribute Set Searchable
+[pim](pim/) | 12.0.2.0.1 |  | Product Information Management
+[product_attribute_set](product_attribute_set/) | 12.0.2.1.0 |  | Product Attribute Set
+[product_attribute_set_completeness](product_attribute_set_completeness/) | 12.0.1.2.1 |  | Product Attribute Set Completeness
 
 [//]: # (end addons)
 
