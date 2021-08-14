@@ -17,13 +17,13 @@ Addons to add PIM functions to Odoo
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[attribute_set](attribute_set/) | 14.0.1.0.1 | Attribute Set
-[attribute_set_mass_edit](attribute_set_mass_edit/) | 14.0.1.0.1 | Attribute Set Mass Edit
-[attribute_set_searchable](attribute_set_searchable/) | 14.0.1.0.1 | Attribute Set Searchable
-[pim](pim/) | 14.0.1.0.1 | Product Information Management
-[product_attribute_set](product_attribute_set/) | 14.0.1.0.1 | Product Attribute Set
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[attribute_set](attribute_set/) | 14.0.1.0.1 |  | Attribute Set
+[attribute_set_mass_edit](attribute_set_mass_edit/) | 14.0.1.0.1 |  | Attribute Set Mass Edit
+[attribute_set_searchable](attribute_set_searchable/) | 14.0.1.0.1 |  | Attribute Set Searchable
+[pim](pim/) | 14.0.1.0.1 |  | Product Information Management
+[product_attribute_set](product_attribute_set/) | 14.0.1.0.1 |  | Product Attribute Set
 
 [//]: # (end addons)
 
