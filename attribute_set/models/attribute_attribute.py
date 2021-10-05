@@ -292,6 +292,27 @@ class AttributeAttribute(models.Model):
             # before creating the new 'attribute.attribute'
             for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
                 del vals[key]
+            field = self.env["ir.model.fields"].browse(vals["field_id"])
+            ttype = field.ttype
+            if ttype in ("many2one", "selection"):
+                vals["attribute_type"] = "select"
+            elif ttype == "many2many":
+                vals["attribute_type"] = "multiselect"
+            elif ttype in (
+                "char",
+                "text",
+                "boolean",
+                "integer",
+                "date",
+                "datetime",
+                "binary",
+                "float",
+            ):
+                vals["attribute_type"] = ttype
+            else:
+                raise ValidationError(
+                    _("Native field %s is not of a valid type") % field._name
+                )
             return super().create(vals)
 
         if vals.get("relation_model_id"):
