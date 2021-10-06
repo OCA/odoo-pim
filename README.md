@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [attribute_set_searchable](attribute_set_searchable/) | 14.0.1.0.1 |  | Attribute Set Searchable
 [pim](pim/) | 14.0.1.0.1 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 14.0.1.0.1 |  | Product Attribute Set
+[product_attribute_set_completeness](product_attribute_set_completeness/) | 14.0.1.0.0 |  | Product Attribute Set Completeness
 
 [//]: # (end addons)
 
