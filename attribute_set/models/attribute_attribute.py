@@ -272,49 +272,35 @@ class AttributeAttribute(models.Model):
             "target": "new",
         }
 
-    @api.model
-    def create(self, vals):
-        """ Create an attribute.attribute
+    def _prepare_native_field_values(self, vals):
+        # Remove all the values that can modify the related native field
+        # before creating the new 'attribute.attribute'
+        for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
+            del vals[key]
+        field = self.env["ir.model.fields"].browse(vals["field_id"])
+        ttype = field.ttype
+        if ttype in ("many2one", "selection"):
+            vals["attribute_type"] = "select"
+        elif ttype == "many2many":
+            vals["attribute_type"] = "multiselect"
+        elif ttype in (
+            "char",
+            "text",
+            "boolean",
+            "integer",
+            "date",
+            "datetime",
+            "binary",
+            "float",
+        ):
+            vals["attribute_type"] = ttype
+        else:
+            raise ValidationError(
+                _("Native field %s is not of a valid type") % field._name
+            )
+        return vals
 
-        - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
-        be created as this model "_inherits" 'ir.model.fields'.
-        So we need to add here the mandatory 'ir.model.fields' instance's attributes to
-        the new 'attribute.attribute'.
-
-        - In case of a new "native" attribute, it will be linked to an existing
-        field object 'ir.model.fields' (through "field_id") that cannot be modified.
-        That's why we remove all the 'ir.model.fields' instance's attributes values
-        from `vals` before creating our new 'attribute.attribute'.
-
-        """
-        if vals.get("nature") == "native":
-            # Remove all the values that can modify the related native field
-            # before creating the new 'attribute.attribute'
-            for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
-                del vals[key]
-            field = self.env["ir.model.fields"].browse(vals["field_id"])
-            ttype = field.ttype
-            if ttype in ("many2one", "selection"):
-                vals["attribute_type"] = "select"
-            elif ttype == "many2many":
-                vals["attribute_type"] = "multiselect"
-            elif ttype in (
-                "char",
-                "text",
-                "boolean",
-                "integer",
-                "date",
-                "datetime",
-                "binary",
-                "float",
-            ):
-                vals["attribute_type"] = ttype
-            else:
-                raise ValidationError(
-                    _("Native field %s is not of a valid type") % field._name
-                )
-            return super().create(vals)
-
+    def _prepare_custom_field_values(self, vals):
         if vals.get("relation_model_id"):
             model = self.env["ir.model"].browse(vals["relation_model_id"])
             relation = model.model
@@ -377,6 +363,27 @@ class AttributeAttribute(models.Model):
                 )
 
         vals["state"] = "manual"
+        return vals
+
+    @api.model
+    def create(self, vals):
+        """ Create an attribute.attribute
+
+        - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
+        be created as this model "_inherits" 'ir.model.fields'.
+        So we need to add here the mandatory 'ir.model.fields' instance's attributes to
+        the new 'attribute.attribute'.
+
+        - In case of a new "native" attribute, it will be linked to an existing
+        field object 'ir.model.fields' (through "field_id") that cannot be modified.
+        That's why we remove all the 'ir.model.fields' instance's attributes values
+        from `vals` before creating our new 'attribute.attribute'.
+
+        """
+        if vals.get("nature") == "native":
+            vals = self._prepare_native_field_values(vals)
+        else:
+            vals = self._prepare_custom_field_values(vals)
         return super().create(vals)
 
     def _delete_related_option_wizard(self, option_vals):
