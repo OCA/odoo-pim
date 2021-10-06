@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-attribute_set',
+        'odoo14-addon-attribute_set_completeness',
         'odoo14-addon-attribute_set_mass_edit',
         'odoo14-addon-attribute_set_searchable',
         'odoo14-addon-pim',
