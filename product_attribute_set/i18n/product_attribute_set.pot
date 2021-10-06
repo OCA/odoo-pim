@@ -21,8 +21,43 @@ msgid "Attribute Set"
 msgstr ""
 
 #. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completion_rate
+msgid "Attribute Set Completion Rate"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completion_state
+msgid "Attribute Set Completion State"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completed_ids
+msgid "Attribute Set completed criterias"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_not_completed_ids
+msgid "Attribute Set not completed criterias"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,help:product_attribute_set.field_product_template__attribute_set_completion_rate
+msgid "Attribute set completeness percentage"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,help:product_attribute_set.field_product_template__attribute_set_completion_state
+msgid "Attribute set completeness status"
+msgstr ""
+
+#. module: product_attribute_set
 #: model_terms:ir.ui.view,arch_db:product_attribute_set.product_template_form_view
 msgid "Attributes"
+msgstr ""
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completeness_ids
+msgid "Completeness Requirements"
 msgstr ""
 
 #. module: product_attribute_set
