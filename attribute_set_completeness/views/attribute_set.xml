@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="attribute_set_form_view">
+        <field name="name">attribute.set.form (in attribute_set_completeness)</field>
+        <field name="model">attribute.set</field>
+        <field name="inherit_id" ref="attribute_set.attribute_set_form_view" />
+        <field name="arch" type="xml">
+            <group name="attributes" position="after">
+                <group name="completeness" string="Completeness">
+                    <field
+                        name="attribute_set_completeness_ids"
+                        context="{'default_attribute_set_id': active_id}"
+                        widget="one2many"
+                        nolabel="1"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

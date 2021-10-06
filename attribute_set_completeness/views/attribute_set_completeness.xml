@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="attribute_set_completeness_tree_view">
+        <field name="model">attribute.set.completeness</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="attribute_set_id" invisible="1" />
+                <field name="available_field_ids" invisible="1" />
+                <field name="model_id" />
+                <field
+                    name="field_id"
+                    domain="[('id', 'in', available_field_ids)]"
+                    options="{'no_create': True}"
+                />
+                <field name="field_description" />
+                <field name="completion_rate" sum="Total" />
+                <field
+                    name="completion_rate_progress"
+                    widget="progressbar"
+                    sum="Total"
+                />
+            </tree>
+        </field>
+    </record>
+</odoo>
