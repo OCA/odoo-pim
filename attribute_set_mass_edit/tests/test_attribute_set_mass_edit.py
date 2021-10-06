@@ -11,16 +11,22 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.group = self.env["attribute.group"].create(
             {"name": "My Group", "model_id": self.model_id}
         )
-        vals = {
+        self.attr = self.env["attribute.attribute"].create(
+            self._prepare_attr_vals("x_test")
+        )
+        self.attr2 = self.env["attribute.attribute"].create(
+            self._prepare_attr_vals("x_test2")
+        )
+
+    def _prepare_attr_vals(self, name):
+        return {
             "nature": "custom",
             "model_id": self.model_id,
             "attribute_type": "char",
             "field_description": "Attribute test",
-            "name": "x_test",
+            "name": name,
             "attribute_group_id": self.group.id,
         }
-
-        self.attr = self.env["attribute.attribute"].create(vals)
 
     def _get_mass_object(self):
         action_server_obj = self.env["ir.actions.server"]
@@ -34,7 +40,9 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.attr.allow_mass_editing = True
         mass_object = self._get_mass_object()
         self.assertTrue(mass_object)
-        self.assertEqual(mass_object.name, self.attr.attribute_group_id.name)
+        self.assertEqual(
+            mass_object.name, f"Edit {self.attr.attribute_group_id.name} fields"
+        )
         self.assertIn(
             self.attr.field_id.id, mass_object.mapped("mass_edit_line_ids.field_id").ids
         )
@@ -57,7 +65,7 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.assertTrue(mass_object)
         new_name = "New Group Name"
         self.group.name = new_name
-        self.assertEqual(mass_object.name, new_name)
+        self.assertEqual(mass_object.name, f"Edit {new_name} fields")
 
     def test_group_unlink(self):
         self.attr.allow_mass_editing = True
@@ -65,3 +73,25 @@ class TestAttributeSetMassEdit(TransactionCase):
         self.assertTrue(mass_object)
         self.group.unlink()
         self.assertFalse(mass_object.exists())
+
+    def test_several_attr_in_same_group(self):
+        self.attr.allow_mass_editing = True
+        self.attr2.allow_mass_editing = True
+        mass_object = self._get_mass_object()
+        self.assertTrue(mass_object)
+        self.assertEqual(
+            mass_object.name, f"Edit {self.attr.attribute_group_id.name} fields"
+        )
+        self.assertIn(
+            self.attr.field_id.id, mass_object.mapped("mass_edit_line_ids.field_id").ids
+        )
+        self.assertIn(
+            self.attr2.field_id.id,
+            mass_object.mapped("mass_edit_line_ids.field_id").ids,
+        )
+        self.attr.allow_mass_editing = False
+        mass_object = self._get_mass_object()
+        self.assertTrue(mass_object)
+        self.attr2.allow_mass_editing = False
+        mass_object = self._get_mass_object()
+        self.assertFalse(mass_object)

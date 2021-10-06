@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class AttributeGroup(models.Model):
@@ -24,7 +24,16 @@ class AttributeGroup(models.Model):
                     )
                 )
                 if mass_editing:
-                    mass_editing.name = group.name
+                    mass_editing.name = group._prepare_create_mass_editing()["name"]
                     # mass_editing.disable_mass_operation()
                     # mass_editing.enable_mass_operation()
         return res
+
+    def _prepare_create_mass_editing(self):
+        self.ensure_one()
+        return {
+            "mass_edit_attribute_group_id": self.id,
+            "model_id": self.model_id.id,
+            "name": _("Edit %s fields") % self.name,
+            "state": "mass_edit",
+        }
