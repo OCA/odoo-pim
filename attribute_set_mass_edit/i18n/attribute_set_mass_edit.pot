@@ -39,6 +39,12 @@ msgid "Display Name"
 msgstr ""
 
 #. module: attribute_set_mass_edit
+#: code:addons/attribute_set_mass_edit/models/attribute_group.py:0
+#, python-format
+msgid "Edit %s fields"
+msgstr ""
+
+#. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__id
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_group__id
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_actions_server__id
