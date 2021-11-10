@@ -1,0 +1,6 @@
+diff a/.pre-commit-config.yaml b/.pre-commit-config.yaml	(rejected hunks)
+@@ -7,3 +7,3 @@ exclude: |
+   # We don't want to mess with tool-generated files
+-  .svg$|/tests/([^/]+/)?cassettes/|
++  .svg$|/tests/([^/]+/)?cassettes/|^.github/|
+   # Maybe reactivate this when all README files include prettier ignore tags?
