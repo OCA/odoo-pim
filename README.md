@@ -1,4 +1,4 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat//13.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-odoo-pim-)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/295/13.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-odoo-pim-295)
 [![Build Status](https://travis-ci.com/OCA/odoo-pim.svg?branch=13.0)](https://travis-ci.com/OCA/odoo-pim)
 [![codecov](https://codecov.io/gh/OCA/odoo-pim/branch/13.0/graph/badge.svg)](https://codecov.io/gh/OCA/odoo-pim)
 [![Translation Status](https://translation.odoo-community.org/widgets/odoo-pim-13-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/odoo-pim-13-0/?utm_source=widget)
