@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attribute_set](attribute_set/) | 13.0.1.0.3 |  | Attribute Set
+[attribute_set](attribute_set/) | 13.0.1.0.4 |  | Attribute Set
 [attribute_set_completeness](attribute_set_completeness/) | 13.0.1.0.1 |  | Attribute Set Completeness
 [attribute_set_mass_edit](attribute_set_mass_edit/) | 13.0.1.0.1 |  | Attribute Set Mass Edit
 [attribute_set_searchable](attribute_set_searchable/) | 13.0.1.0.1 |  | Attribute Set Searchable
