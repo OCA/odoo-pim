@@ -451,6 +451,12 @@ msgid "Native"
 msgstr ""
 
 #. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+#, python-format
+msgid "Native field %s is not of a valid type"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model
 msgid "Object Name"
 msgstr ""
