@@ -66,6 +66,7 @@ msgstr ""
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__complete
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_template__attribute_set_completion_state__complete
 msgid "Complete"
 msgstr ""
 
@@ -153,6 +154,7 @@ msgstr ""
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__not_complete
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_template__attribute_set_completion_state__not_complete
 msgid "Not complete"
 msgstr ""
 
