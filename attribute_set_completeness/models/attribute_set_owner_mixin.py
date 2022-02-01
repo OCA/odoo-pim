@@ -25,11 +25,13 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     attribute_set_completion_rate = fields.Float(
         compute="_compute_attribute_set_completion_rate",
         help="Attribute set completeness percentage",
+        store=True,
     )
     attribute_set_completion_state = fields.Selection(
         selection=[("complete", "Complete"), ("not_complete", "Not complete")],
         compute="_compute_attribute_set_completion_state",
         help="Attribute set completeness status",
+        store=True,
     )
 
     @api.depends("attribute_set_completeness_ids")
