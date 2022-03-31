@@ -464,7 +464,7 @@ class AttributeAttribute(models.Model):
         return res
 
     def unlink(self):
-        """ Delete the Attribute's related field when deleting a custom Attribute"""
+        """Delete the Attribute's related field when deleting a custom Attribute"""
         fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
             "field_id"
         )
