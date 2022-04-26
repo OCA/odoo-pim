@@ -1,0 +1,202 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-26 13:42+0000\n"
+"PO-Revision-Date: 2022-04-26 13:42+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pim
+#: model:ir.ui.view,arch_db:pim.view_config_settings
+msgid "Apply"
+msgstr "Appliquer"
+
+#. module: pim
+#: model:ir.model,name:pim.model_attribute_attribute
+msgid "Attribute"
+msgstr "Attributs"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_group_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_group_action
+msgid "Attribute Groups"
+msgstr "Groupes d'Attributs"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_attribute
+msgid "Attributes"
+msgstr "Caractéristiques"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_variant_attribute_value
+msgid "Attributes Values"
+msgstr "Valeurs d'Attributs"
+
+#. module: pim
+#: model:ir.ui.view,arch_db:pim.view_config_settings
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_category
+msgid "Categories"
+msgstr "Catégories"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_company_id
+#: model:ir.ui.view,arch_db:pim.view_config_settings
+msgid "Company"
+msgstr "Société"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_config
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.action_config
+#: model:ir.ui.view,arch_db:pim.view_config_settings
+msgid "Configure PIM"
+msgstr "Configurer le PIM"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_pim_default_product_attribute_set_id
+msgid "Default Product Attribute Set"
+msgstr "Set d'Attribut de Produit par Défaut"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_id
+msgid "ID"
+msgstr "ID"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_write_uid
+msgid "Last Updated by"
+msgstr "Dernière fois mis à jour par"
+
+#. module: pim
+#: model:ir.model.fields,field_description:pim.field_pim_config_settings_write_date
+msgid "Last Updated on"
+msgstr "Dernière mis à jour le"
+
+#. module: pim
+#: model:ir.module.category,description:pim.module_category_pim
+msgid "Manage your products catalogue easily"
+msgstr "Gérez votre catalogue de produits facilement"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_manager
+msgid "Manager"
+msgstr "Gestionnaire"
+
+#. module: pim
+#: model:ir.module.category,name:pim.module_category_pim
+#: model:ir.ui.menu,name:pim.root_menu_pim
+msgid "PIM"
+msgstr "PIM"
+
+#. module: pim
+#: model:ir.ui.view,arch_db:pim.pim_product_template_tree_view
+msgid "Product"
+msgstr "Produit"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_attribute_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_attribute_action
+#: model:ir.ui.view,arch_db:pim.view_config_settings
+msgid "Product Attribute"
+msgstr "Attribut de l'article"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_set_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_set_action
+msgid "Product Attribute Sets"
+msgstr "Sets d'Attributs de Produits"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_product_product
+msgid "Product Variants"
+msgstr "Variantes d'articles"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.product_template_action
+#: model:ir.ui.menu,name:pim.main_menu_product
+#: model:ir.ui.menu,name:pim.menu_product_template
+msgid "Products"
+msgstr "Articles"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "Reader"
+msgstr "Consultation"
+
+#. module: pim
+#: model:ir.model.fields,help:pim.field_pim_config_settings_pim_default_product_attribute_set_id
+msgid "Set the default attribute set that will be used as default fornew products."
+msgstr "Choisissez le set d'attributs qui sera utilisé par défaut pour les nouveaux produits."
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_pim_settings
+msgid "Settings"
+msgstr "Configuration"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_variant_attribute
+#: model:ir.ui.menu,name:pim.menu_variant_attribute
+msgid "Variants Attributes"
+msgstr "Attributs de Variantes"
+
+#. module: pim
+#: model:ir.model,name:pim.model_pim_config_settings
+msgid "pim.config.settings"
+msgstr "pim.config.settings"
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_manager
+msgid "the user will be able to modify products and create attributes"
+msgstr "l'utilisateur sera capable de modifier des produits et créer des attributs"
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_user
+msgid "the user will be able to modify products but will not be authorized to create attributes"
+msgstr "l'utilisateur sera capable de modifier des produits mais pas de créer des attributs"
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_reader
+msgid "the user will have only the right to consult the products catalogue"
+msgstr "l'utilisateur aura capable de modifier des produits et créer des attributs have only the right to consult the products catalogue"
+
