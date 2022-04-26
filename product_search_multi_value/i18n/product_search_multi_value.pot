@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_search_multi_value
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-26 14:22+0000\n"
+"PO-Revision-Date: 2022-04-26 14:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_search_multi_value
+#: model:ir.model.fields,field_description:product_search_multi_value.field_delivery_carrier_search_multi
+#: model:ir.model.fields,field_description:product_search_multi_value.field_product_product_search_multi
+#: model:ir.model.fields,field_description:product_search_multi_value.field_product_template_search_multi
+msgid "Multiple search"
+msgstr ""
+
+#. module: product_search_multi_value
+#: model:ir.model,name:product_search_multi_value.model_product_template
+msgid "Product Template"
+msgstr ""
+
