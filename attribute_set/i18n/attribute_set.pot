@@ -1,0 +1,693 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* attribute_set
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-26 14:14+0000\n"
+"PO-Revision-Date: 2022-04-26 14:14+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:251
+#, python-format
+msgid " \"{}\" is an unvalid Domain name.\n"
+"\n"
+"                        Specify a Python expression defining a list of triplets.                        For example : \"[('color', '=', 'red')]\" "
+msgstr ""
+
+#. module: attribute_set
+#: model:res.groups,name:attribute_set.group_advanced_attribute_set
+msgid "Advanced Attribute Set settings"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_attribute
+#: model:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+#: model:ir.ui.view,arch_db:attribute_set.attribute_attribute_tree_view
+msgid "Attribute"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_group
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_attribute_group_id
+#: model:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
+#: model:ir.ui.view,arch_db:attribute_set.attribute_group_tree_view
+msgid "Attribute Group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_nature
+msgid "Attribute Nature"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_option
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_tree_view
+msgid "Attribute Option"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.actions.act_window,name:attribute_set.attribute_option_form_action
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_option_ids
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_option_action
+#: model:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+msgid "Attribute Options"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin_attribute_set_id
+#: model:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+#: model:ir.ui.view,arch_db:attribute_set.attribute_set_tree_view
+msgid "Attribute Set"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.actions.act_window,name:attribute_set.attribute_set_form_action
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_attribute_set_ids
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_set_action
+msgid "Attribute Sets"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_set_owner_mixin
+msgid "Attribute set owner mixin"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_attribute_type
+msgid "Attribute type"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.actions.act_window,name:attribute_set.attribute_attribute_form_action
+#: model:ir.actions.act_window,name:attribute_set.attribute_attribute_sort_action
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_attribute_ids
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_attribute_ids
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_attribute_action
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
+#: model:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Binary"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Boolean"
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:421
+#, python-format
+msgid "Can't change the attribute's Relational Model in order to\n"
+"                        avoid conflicts with existing objects using this attribute.\n"
+"                        Please create a new one."
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:403
+#, python-format
+msgid "Can't change the type of an attribute. Please create a new one."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Char"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_compute
+msgid "Code to compute the value of the field.\n"
+"Iterate on the recordset 'self' and assign the field's value:\n"
+"\n"
+"    for record in self:\n"
+"        record['size'] = len(record.name)\n"
+"\n"
+"Modules time, datetime, dateutil are available."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_column1
+msgid "Column 1"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_column2
+msgid "Column 2"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_column2
+msgid "Column referring to the record in the comodel table"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_column1
+msgid "Column referring to the record in the model table"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_complete_name
+msgid "Complete name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_compute
+msgid "Compute"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_copy
+msgid "Copy"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_gist_index
+msgid "Create gist index"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_create_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_create_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_create_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_create_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_create_date
+msgid "Created date"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_create_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_create_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_create_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,nature:0
+msgid "Custom"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_option_wizard
+msgid "Custom Attributes Option"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Date"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Datetime"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_depends
+msgid "Dependencies"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_depends
+msgid "Dependencies of compute method; a list of comma-separated field names, like\n"
+"\n"
+"    name, partner_id.name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_domain
+msgid "Domain"
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_option.py:43
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_help
+msgid "Field Help"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_field_description
+msgid "Field Label"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_name
+msgid "Field Name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_ttype
+msgid "Field Type"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Float"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_relation_field
+msgid "For one2many fields, the field on the target model that implement the opposite many2one relationship"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_relation
+msgid "For relationship fields, the technical name of the target model"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
+msgid "Group name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_groups
+msgid "Groups"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin_id
+msgid "ID"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_required_on_views
+msgid "If activated, the attribute will be mandatory on the views, but not in the database"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_serialized
+msgid "If serialized, the attribute's field will be stored in the\n"
+"            serialization field 'x_custom_json_attrs' (i.e. a JSON containing\n"
+"            all the serialized fields values) instead of creating a new SQL\n"
+"            column for this attribute's field. Useful to increase speed\n"
+"            requests if creating a high number of attributes."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_serialization_field_id
+msgid "If set, this field will be stored in the sparse structure of the serialization field, instead of having its own database column. This cannot be changed after creation."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_modules
+msgid "In Apps"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_index
+msgid "Indexed"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Integer"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_field_id
+msgid "Ir Model Fields"
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_set_owner.py:67
+#, python-format
+msgid "It is impossible to add Attributes on \"{}\" xml view as there is\n"
+"                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
+"                    "
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:433
+#, python-format
+msgid "It is not allowed to change the boolean 'Serialized'.\n"
+"                        A serialized field can not be change to non-serialized                         and vice versa."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute___last_update
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group___last_update
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option___last_update
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard___last_update
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set___last_update
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_write_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_write_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_write_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_write_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_write_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_write_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_write_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_write_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_modules
+msgid "List of modules in which the field is defined"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_selection
+msgid "List of options for a selection field, specified as a Python expression defining a list of (key, label) pairs. For example: [('blue','Blue'),('yellow','Yellow')]"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+msgid "Load Attribute Options"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_model_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_model_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_model_id
+msgid "Model"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Multiselect"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_name
+msgid "Name"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,nature:0
+msgid "Native"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_model
+msgid "Object Name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_relation
+msgid "Object Relation"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_on_delete
+msgid "On Delete"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_on_delete
+msgid "On delete property for many2one fields"
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_attribute.py:271
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+#, python-format
+msgid "Options Wizard"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_dim
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_geo_type
+msgid "PostGIs type"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_attribute_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard_attribute_id
+msgid "Product Attribute"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_readonly
+msgid "Readonly"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_value_ref
+msgid "Reference"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_related
+msgid "Related Field"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+msgid "Related native field"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_relation_field
+msgid "Relation field"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_relation_table
+msgid "Relation table"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_relation_model_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_relation_model_id
+msgid "Relational Model"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_required
+msgid "Required"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_required_on_views
+msgid "Required (on views)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.view_attribute_option_search
+msgid "Search Attribute Options"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.view_attribute_set_search
+msgid "Search Attribute Sets"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_group_search_view
+#: model:ir.ui.view,arch_db:attribute_set.view_attribute_attribute_search
+msgid "Search Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Select"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_selectable
+msgid "Selectable"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_selection
+msgid "Selection Options"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_sequence
+msgid "Sequence in Group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_group_sequence
+msgid "Sequence in Set"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_sequence_group
+msgid "Sequence of the Group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_serialization_field_id
+msgid "Serialization Field"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_serialized
+msgid "Serialized"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_size
+msgid "Size"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_group_tree_view
+msgid "Sort Attribute"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_store
+msgid "Stored"
+msgstr ""
+
+#. module: attribute_set
+#: selection:attribute.attribute,attribute_type:0
+msgid "Text"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_group_sequence
+msgid "The Group order in his attribute's Set"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_sequence
+msgid "The attribute's order in his group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_related
+msgid "The corresponding related field, if any. This must be a dot-separated list of field names."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_model_id
+msgid "The model this field belongs to"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_domain
+msgid "The optional domain to restrict possible values for relationship fields, specified as a Python expression defining a list of triplets. For example: [('color','=','red')]"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_sequence_group
+msgid "The sequence of the group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_model
+msgid "The technical name of the model this field belongs to"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_translate
+msgid "Translatable"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_state
+msgid "Type"
+msgstr ""
+
+#. module: attribute_set
+#: code:addons/attribute_set/models/attribute_option.py:44
+#, python-format
+msgid "Use the 'Load Attribute Options' button or specify a Domain\n"
+"                    in order to define the available Options linked to the Relational                    Model.\n"
+"\n"
+"                    If the button is not visible, you need to erase the Domain value                    and Save first."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_relation_table
+msgid "Used for custom many2many fields to define a custom relation table name"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "Validate"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_store
+msgid "Whether the value is stored in the database."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute_translate
+msgid "Whether values for this field can be translated (enables the translation mechanism for that field)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "options_placeholder"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "or"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute_srid
+msgid "srid"
+msgstr ""
+
