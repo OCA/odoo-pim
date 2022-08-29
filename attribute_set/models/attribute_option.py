@@ -17,7 +17,7 @@ class AttributeOption(models.Model):
         models = self.env["ir.model"].search([])
         return [(m.model, m.name) for m in models]
 
-    name = fields.Char("Name", translate=True, required=True)
+    name = fields.Char(translate=True, required=True)
 
     value_ref = fields.Reference(_get_model_list, "Reference")
 
@@ -35,7 +35,7 @@ class AttributeOption(models.Model):
         ondelete="cascade",
     )
 
-    sequence = fields.Integer("Sequence")
+    sequence = fields.Integer()
 
     @api.onchange("name")
     def name_change(self):
