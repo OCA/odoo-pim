@@ -11,7 +11,7 @@ class AttributeSet(models.Model):
     _name = "attribute.set"
     _description = "Attribute Set"
 
-    name = fields.Char("Name", required=True, translate=True)
+    name = fields.Char(required=True, translate=True)
 
     attribute_ids = fields.Many2many(
         comodel_name="attribute.attribute",
