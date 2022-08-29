@@ -65,7 +65,6 @@ class AttributeAttribute(models.Model):
     )
 
     serialized = fields.Boolean(
-        "Serialized",
         help="""If serialized, the attribute's field will be stored in the serialization
             field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized
             fields values) instead of creating a new SQL column for this
@@ -249,11 +248,9 @@ class AttributeAttribute(models.Model):
                     _(
                         """ "{}" is an unvalid Domain name.\n
                         Specify a Python expression defining a list of triplets.\
-                        For example : "[('color', '=', 'red')]" """.format(
-                            self.domain
-                        )
-                    )
-                )
+                        For example : "[('color', '=', 'red')]" """
+                    ).format(self.domain)
+                ) from ValueError
             # Remove selected options as the domain will predominate on actual options
             if self.domain != "[]":
                 self.option_ids = [(5, 0)]
@@ -357,7 +354,7 @@ class AttributeAttribute(models.Model):
                 }
 
                 vals["serialization_field_id"] = (
-                    field_obj.with_context({"manual": True}).create(f_vals).id
+                    field_obj.with_context(manual=True).create(f_vals).id
                 )
 
         vals["state"] = "manual"

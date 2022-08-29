@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -30,7 +30,6 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_attribute
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_tree_view
 msgid "Attribute"
 msgstr ""
 
@@ -38,7 +37,6 @@ msgstr ""
 #: model:ir.model,name:attribute_set.model_attribute_group
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_group_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_tree_view
 msgid "Attribute Group"
 msgstr ""
 
@@ -51,7 +49,6 @@ msgstr ""
 #: model:ir.model,name:attribute_set.model_attribute_option
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_tree_view
 msgid "Attribute Option"
 msgstr ""
 
@@ -67,7 +64,6 @@ msgstr ""
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_tree_view
 msgid "Attribute Set"
 msgstr ""
 
@@ -242,18 +238,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__domain
 msgid "Domain"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
-msgid "Enable Ordered Tracking"
 msgstr ""
 
 #. module: attribute_set
@@ -320,7 +310,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
 msgid "ID"
 msgstr ""
 
@@ -349,13 +338,6 @@ msgid ""
 "            fields values) instead of creating a new SQL column for this\n"
 "            attribute's field. Useful to increase speed requests if creating a\n"
 "            high number of attributes."
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__tracking
-msgid ""
-"If set every modification done to this field is tracked in the chatter. "
-"Value is used to order tracking values."
 msgstr ""
 
 #. module: attribute_set
@@ -390,7 +372,8 @@ msgstr ""
 #: code:addons/attribute_set/models/attribute_set_owner.py:0
 #, python-format
 msgid ""
-"It is impossible to add Attributes on \"{}\" xml view as there is\n"
+"It is impossible to add Attributes on \"{}\" xml\n"
+"                    view as there is\n"
 "                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
 "                    "
 msgstr ""
@@ -409,7 +392,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin____last_update
 msgid "Last Modified on"
 msgstr ""
 

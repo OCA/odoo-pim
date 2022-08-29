@@ -21,7 +21,7 @@
                         domain="[('model_id', '=', model_id)]"
                         nolabel="1"
                     >
-                        <tree string="Attributes">
+                        <tree>
                             <field name="name" />
                             <field name="field_description" />
                             <field name="attribute_type" />
@@ -38,7 +38,7 @@
         <field name="name">attribute.set.tree</field>
         <field name="model">attribute.set</field>
         <field name="arch" type="xml">
-            <tree string="Attribute Set">
+            <tree>
                 <field name="name" />
                 <field name="model_id" />
             </tree>

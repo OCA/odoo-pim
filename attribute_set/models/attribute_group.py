@@ -12,7 +12,7 @@ class AttributeGroup(models.Model):
     _description = "Attribute Group"
     _order = "sequence"
 
-    name = fields.Char("Name", size=128, required=True, translate=True)
+    name = fields.Char(size=128, required=True, translate=True)
 
     sequence = fields.Integer(
         "Sequence in Set", help="The Group order in his attribute's Set"
