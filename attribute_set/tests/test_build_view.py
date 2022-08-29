@@ -8,10 +8,10 @@ import ast
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class BuildViewCase(SavepointCase):
+class BuildViewCase(TransactionCase):
     @classmethod
     def _create_set(cls, name):
         return cls.env["attribute.set"].create({"name": name, "model_id": cls.model_id})
@@ -129,7 +129,7 @@ class BuildViewCase(SavepointCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        super(BuildViewCase, cls).tearDownClass()
+        return super(BuildViewCase, cls).tearDownClass()
 
     # TEST write on attributes
     def test_write_attribute_values_text(self):
@@ -253,7 +253,7 @@ class BuildViewCase(SavepointCase):
     def _get_eview_from_fields_view_get(self, include_native_attribute=True):
         fields_view = (
             self.env["res.partner"]
-            .with_context({"include_native_attribute": include_native_attribute})
+            .with_context(include_native_attribute=include_native_attribute)
             .fields_view_get(
                 view_id=self.view.id, view_type="form", toolbar=False, submenu=False
             )
