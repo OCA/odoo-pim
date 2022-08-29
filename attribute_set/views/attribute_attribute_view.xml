@@ -139,7 +139,7 @@
         <field name="name">attribute.attribute.tree</field>
         <field name="model">attribute.attribute</field>
         <field name="arch" type="xml">
-            <tree string="Attribute">
+            <tree>
                 <field
                     name="sequence"
                     widget="handle"
