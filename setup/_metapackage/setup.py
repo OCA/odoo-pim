@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-pim',
         'odoo14-addon-product_attribute_set',
         'odoo14-addon-product_attribute_set_completeness',
+        'odoo14-addon-product_search_multi_value',
     ],
     classifiers=[
         'Programming Language :: Python',
