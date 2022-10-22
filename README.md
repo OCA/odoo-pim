@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [pim](pim/) | 14.0.1.0.2 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 14.0.1.0.2 |  | Product Attribute Set
 [product_attribute_set_completeness](product_attribute_set_completeness/) | 14.0.2.0.0 |  | Product Attribute Set Completeness
-[product_search_multi_value](product_search_multi_value/) | 14.0.1.0.0 |  | Product Search Multi Value
+[product_search_multi_value](product_search_multi_value/) | 14.0.1.0.1 |  | Product Search Multi Value
 
 [//]: # (end addons)
 
