@@ -16,12 +16,11 @@ class ProductCategory(models.Model):
 
     def write(self, vals):
         """Fill Category's products with Category's default attribute_set_id if empty"""
-        super().write(vals)
+        res = super().write(vals)
         if vals.get("attribute_set_id"):
-            product_ids = self.env["product.template"].search(
-                [("categ_id", "=", self.id), ("attribute_set_id", "=", False)]
-            )
-            for product_id in product_ids:
-                product_id.attribute_set_id = self.attribute_set_id
-
-        return True
+            for category in self:
+                template_ids = self.env["product.template"].search(
+                    [("categ_id", "=", category.id), ("attribute_set_id", "=", False)]
+                )
+                template_ids.write({"attribute_set_id": category.attribute_set_id.id})
+        return res
