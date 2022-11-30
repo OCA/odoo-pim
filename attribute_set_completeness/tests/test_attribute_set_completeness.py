@@ -5,10 +5,10 @@ from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import ValidationError
 
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import TransactionComponentCase
 
 
-class TestAttributeSetCompleteness(SavepointComponentCase):
+class TestAttributeSetCompleteness(TransactionComponentCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -53,7 +53,7 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        super().tearDownClass()
+        return super().tearDownClass()
 
     def test_completion_rate_constrains_create(self):
         vals = {
