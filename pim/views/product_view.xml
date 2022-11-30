@@ -7,7 +7,7 @@
         <field name="model">product.template</field>
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <tree string="Product">
+            <tree>
                 <field
                     name="image_512"
                     widget='image'
