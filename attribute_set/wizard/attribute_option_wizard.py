@@ -44,10 +44,16 @@ class AttributeOptionWizard(models.TransientModel):
                     "value_ref": "{},{}".format(attr.relation_model_id.model, op_id),
                 }
             )
+        if vals.get("option_ids"):
+            del vals["option_ids"]
+        return super().create(vals)
 
-        res = super().create(vals)
-
-        return res
+    # Hack to circumvent the fact that option_ids never actually exists in the DB,
+    # thus crashing when read is called after create
+    def read(self, fields=None, load="_classic_read"):
+        if "option_ids" in fields:
+            fields.remove("option_ids")
+        return super().read(fields, load)
 
     @api.model
     def fields_view_get(
