@@ -8,6 +8,7 @@
         <field name="priority">90</field>
         <field name="arch" type="xml">
             <tree string="Product">
+                <field name="sequence" widget="handle" />
                 <field
                     name="image_512"
                     widget='image'
