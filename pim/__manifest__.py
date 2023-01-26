@@ -3,7 +3,7 @@
 
 {
     "name": "Product Information Management",
-    "version": "14.0.1.0.3",
+    "version": "14.0.1.1.0",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
