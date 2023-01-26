@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [attribute_set_completeness](attribute_set_completeness/) | 14.0.2.0.0 |  | Attribute Set Completeness
 [attribute_set_mass_edit](attribute_set_mass_edit/) | 14.0.1.1.0 |  | Attribute Set Mass Edit
 [attribute_set_searchable](attribute_set_searchable/) | 14.0.1.0.1 |  | Attribute Set Searchable
-[pim](pim/) | 14.0.1.0.3 |  | Product Information Management
+[pim](pim/) | 14.0.1.1.0 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 14.0.1.0.2 |  | Product Attribute Set
 [product_attribute_set_completeness](product_attribute_set_completeness/) | 14.0.2.0.0 |  | Product Attribute Set Completeness
 [product_search_multi_value](product_search_multi_value/) | 14.0.1.0.1 |  | Product Search Multi Value
