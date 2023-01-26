@@ -43,6 +43,12 @@ msgid "Attribute Group"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.actions.act_window,name:attribute_set.attribute_group_form_action
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_group_action
+msgid "Attribute Groups"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__nature
 msgid "Attribute Nature"
 msgstr ""
