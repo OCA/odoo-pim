@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attribute_set](attribute_set/) | 14.0.1.1.0 |  | Attribute Set
+[attribute_set](attribute_set/) | 14.0.1.2.0 |  | Attribute Set
 [attribute_set_completeness](attribute_set_completeness/) | 14.0.2.0.0 |  | Attribute Set Completeness
 [attribute_set_mass_edit](attribute_set_mass_edit/) | 14.0.1.1.0 |  | Attribute Set Mass Edit
 [attribute_set_searchable](attribute_set_searchable/) | 14.0.1.0.1 |  | Attribute Set Searchable
