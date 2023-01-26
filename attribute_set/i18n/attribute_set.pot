@@ -167,6 +167,11 @@ msgid "Column referring to the record in the model table"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__company_dependent
+msgid "Company Dependent"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
 msgid "Complete Name"
 msgstr ""
@@ -243,6 +248,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_ir_model_fields__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -288,6 +294,11 @@ msgid "Field Type"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model,name:attribute_set.model_ir_model_fields
+msgid "Fields"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__float
 msgid "Float"
 msgstr ""
@@ -321,6 +332,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
+#: model:ir.model.fields,field_description:attribute_set.field_ir_model_fields__id
 msgid "ID"
 msgstr ""
 
@@ -410,6 +422,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin____last_update
+#: model:ir.model.fields,field_description:attribute_set.field_ir_model_fields____last_update
 msgid "Last Modified on"
 msgstr ""
 
