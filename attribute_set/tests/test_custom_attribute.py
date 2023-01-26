@@ -62,3 +62,12 @@ class TestAttributeSet(common.TransactionCase):
 
         self.assertEqual(attribute.ttype, "many2many")
         self.assertEqual(attribute.relation, "attribute.option")
+
+    def test_create_attribute_company_dependent(self):
+        attribute = self._create_attribute(
+            {"attribute_type": "char", "company_dependent": True}
+        )
+        self.assertTrue(attribute.company_dependent)
+        self.assertTrue(
+            self.env["res.partner"]._fields[attribute.name].company_dependent
+        )
