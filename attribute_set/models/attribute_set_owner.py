@@ -10,7 +10,7 @@ from odoo.exceptions import ValidationError
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
-    """Override the '_inheriting' model's fields_view_get() and replace
+    """Override the '_inheriting' model's get_views() and replace
     the 'attributes_placeholder' by the fields related to the '_inheriting' model's
     Attributes.
     Each Attribute's field will have a conditional invisibility depending on its
@@ -77,15 +77,14 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         return etree.tostring(eview, pretty_print=True)
 
     @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        result = super().fields_view_get(
-            view_id=view_id,
-            view_type=view_type,
-            toolbar=toolbar,
-            submenu=submenu,
-        )
-        if view_type == "form":
-            result["arch"] = self._insert_attribute(result["arch"])
+    def get_views(self, views, options=None):
+        result = super().get_views(views, options=options)
+        if (
+            "views" in result
+            and "form" in result["views"]
+            and "arch" in result["views"]["form"]
+        ):
+            result["views"]["form"]["arch"] = self._insert_attribute(
+                result["views"]["form"]["arch"]
+            )
         return result
