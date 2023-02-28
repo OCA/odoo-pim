@@ -147,6 +147,7 @@ class AttributeAttribute(models.Model):
                     domain = ast.literal_eval(self.domain)
                 except ValueError:
                     domain = None
+
                 if domain:
                     kwargs["domain"] = self.domain
                 else:
@@ -163,6 +164,8 @@ class AttributeAttribute(models.Model):
                 # Attribute Options search and creation
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
                 kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+            elif self.nature != "custom":
+                kwargs["context"] = self._get_native_field_context()
 
         if self.ttype == "text":
             # Display field label above his value
@@ -175,6 +178,9 @@ class AttributeAttribute(models.Model):
             setup_modifiers(field_title)
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
         setup_modifiers(efield)
+
+    def _get_native_field_context(self):
+        return str(self.env[self.field_id.model]._fields[self.field_id.name].context)
 
     def _build_attribute_eview(self):
         """Return an 'attribute_eview' including all the Attributes (in the current
