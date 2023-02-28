@@ -32,12 +32,14 @@ class ProductTemplate(models.Model):
             )
             return default_categ_id.attribute_set_id.id
 
-    @api.model
-    def create(self, vals):
-        if not vals.get("attribute_set_id") and vals.get("categ_id"):
-            category = self.env["product.category"].browse(vals["categ_id"])
-            vals["attribute_set_id"] = category.attribute_set_id.id
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        category_model = self.env["product.category"]
+        for vals in vals_list:
+            if not vals.get("attribute_set_id") and vals.get("categ_id"):
+                category = category_model.browse(vals["categ_id"])
+                vals["attribute_set_id"] = category.attribute_set_id.id
+        return super().create(vals_list)
 
     def write(self, vals):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
