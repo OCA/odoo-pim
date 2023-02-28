@@ -250,18 +250,16 @@ class BuildViewCase(TransactionCase):
                 self.assertFalse(attr.get("nolabel", False))
 
     # TEST on NATIVE ATTRIBUTES
-    def _get_eview_from_fields_view_get(self, include_native_attribute=True):
-        fields_view = (
+    def _get_eview_from_get_views(self, include_native_attribute=True):
+        result = (
             self.env["res.partner"]
             .with_context(include_native_attribute=include_native_attribute)
-            .fields_view_get(
-                view_id=self.view.id, view_type="form", toolbar=False, submenu=False
-            )
+            .get_views([(self.view.id, "form")])
         )
-        return etree.fromstring(fields_view["arch"])
+        return etree.fromstring(result["views"]["form"]["arch"])
 
     def test_include_native_attr(self):
-        eview = self._get_eview_from_fields_view_get()
+        eview = self._get_eview_from_get_views()
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name
@@ -274,13 +272,13 @@ class BuildViewCase(TransactionCase):
         )
 
     def test_native_readonly(self):
-        eview = self._get_eview_from_fields_view_get()
+        eview = self._get_eview_from_get_views()
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native_readonly.name))
         self.assertTrue(attr[0].get("readonly"))
 
     def test_no_include_native_attr(self):
-        # Run fields_view_get on the test view with no "include_native_attribute"
-        eview = self._get_eview_from_fields_view_get(include_native_attribute=False)
+        # Run get_views on the test view with no "include_native_attribute"
+        eview = self._get_eview_from_get_views(include_native_attribute=False)
         attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
 
         # Only one field with this name

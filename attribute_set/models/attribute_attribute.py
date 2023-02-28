@@ -274,8 +274,8 @@ class AttributeAttribute(models.Model):
             "target": "new",
         }
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Create an attribute.attribute
 
         - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
@@ -289,76 +289,77 @@ class AttributeAttribute(models.Model):
         from `vals` before creating our new 'attribute.attribute'.
 
         """
-        if vals.get("nature") == "native":
-            # Remove all the values that can modify the related native field
-            # before creating the new 'attribute.attribute'
-            for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
-                del vals[key]
-            return super().create(vals)
+        for vals in vals_list:
+            if vals.get("nature") == "native":
+                # Remove all the values that can modify the related native field
+                # before creating the new 'attribute.attribute'
+                for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
+                    del vals[key]
+                continue
 
-        if vals.get("relation_model_id"):
-            model = self.env["ir.model"].browse(vals["relation_model_id"])
-            relation = model.model
-        else:
-            relation = "attribute.option"
+            if vals.get("relation_model_id"):
+                model = self.env["ir.model"].browse(vals["relation_model_id"])
+                relation = model.model
+            else:
+                relation = "attribute.option"
 
-        attr_type = vals.get("attribute_type")
+            attr_type = vals.get("attribute_type")
 
-        if attr_type == "select":
-            vals["ttype"] = "many2one"
-            vals["relation"] = relation
+            if attr_type == "select":
+                vals["ttype"] = "many2one"
+                vals["relation"] = relation
 
-        elif attr_type == "multiselect":
-            vals["ttype"] = "many2many"
-            vals["relation"] = relation
-            # Specify the relation_table's name in case of m2m not serialized
-            # to avoid creating the same default relation_table name for any attribute
-            # linked to the same attribute.option or relation_model_id's model.
-            if not vals.get("serialized"):
-                att_model_id = self.env["ir.model"].browse(vals["model_id"])
-                table_name = (
-                    "x_"
-                    + att_model_id.model.replace(".", "_")
-                    + "_"
-                    + vals["name"]
-                    + "_"
-                    + relation.replace(".", "_")
-                    + "_rel"
-                )
-                # avoid too long relation_table names
-                vals["relation_table"] = table_name[0:60]
-
-        else:
-            vals["ttype"] = attr_type
-
-        if vals.get("serialized"):
-            field_obj = self.env["ir.model.fields"]
-
-            serialized_fields = field_obj.search(
-                [
-                    ("ttype", "=", "serialized"),
-                    ("model_id", "=", vals["model_id"]),
-                    ("name", "=", "x_custom_json_attrs"),
-                ]
-            )
-
-            if serialized_fields:
-                vals["serialization_field_id"] = serialized_fields[0].id
+            elif attr_type == "multiselect":
+                vals["ttype"] = "many2many"
+                vals["relation"] = relation
+                # Specify the relation_table's name in case of m2m not serialized
+                # to avoid creating the same default relation_table name for any attribute
+                # linked to the same attribute.option or relation_model_id's model.
+                if not vals.get("serialized"):
+                    att_model_id = self.env["ir.model"].browse(vals["model_id"])
+                    table_name = (
+                        "x_"
+                        + att_model_id.model.replace(".", "_")
+                        + "_"
+                        + vals["name"]
+                        + "_"
+                        + relation.replace(".", "_")
+                        + "_rel"
+                    )
+                    # avoid too long relation_table names
+                    vals["relation_table"] = table_name[0:60]
 
             else:
-                f_vals = {
-                    "name": "x_custom_json_attrs",
-                    "field_description": "Serialized JSON Attributes",
-                    "ttype": "serialized",
-                    "model_id": vals["model_id"],
-                }
+                vals["ttype"] = attr_type
 
-                vals["serialization_field_id"] = (
-                    field_obj.with_context(manual=True).create(f_vals).id
+            if vals.get("serialized"):
+                field_obj = self.env["ir.model.fields"]
+
+                serialized_fields = field_obj.search(
+                    [
+                        ("ttype", "=", "serialized"),
+                        ("model_id", "=", vals["model_id"]),
+                        ("name", "=", "x_custom_json_attrs"),
+                    ]
                 )
 
-        vals["state"] = "manual"
-        return super().create(vals)
+                if serialized_fields:
+                    vals["serialization_field_id"] = serialized_fields[0].id
+
+                else:
+                    f_vals = {
+                        "name": "x_custom_json_attrs",
+                        "field_description": "Serialized JSON Attributes",
+                        "ttype": "serialized",
+                        "model_id": vals["model_id"],
+                    }
+
+                    vals["serialization_field_id"] = (
+                        field_obj.with_context(manual=True).create(f_vals).id
+                    )
+
+            vals["state"] = "manual"
+        return super().create(vals_list)
 
     def _delete_related_option_wizard(self, option_vals):
         """Delete the attribute's options wizards related to the attribute's options
