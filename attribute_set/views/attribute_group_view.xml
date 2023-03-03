@@ -35,4 +35,18 @@
             </search>
         </field>
     </record>
+    <record id="attribute_group_action" model="ir.actions.act_window">
+        <field name="name">Attribute Groups</field>
+        <field name="res_model">attribute.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="attribute_group_search_view" />
+        <field name="context">{}</field>
+        <field name="help" />
+    </record>
+    <menuitem
+        action="attribute_group_action"
+        id="menu_attribute_group_action"
+        parent="menu_attribute_in_admin"
+        sequence="50"
+    />
 </odoo>
