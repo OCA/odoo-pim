@@ -10,7 +10,7 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']/.." position="after">
+            <xpath expr="//field[@name='name']/../.." position="after">
                 <div>
                     <label for="attribute_set_id" class="oe_edit_only" />
                     <field
