@@ -11,7 +11,8 @@ class IrModelFields(models.Model):
     def _instanciate_attrs(self, field_data):
         attrs = super()._instanciate_attrs(field_data)
         name = field_data.get("name")
-        if name.startswith("x_"):
+        model = field_data.get("model")
+        if name.startswith("x_") and model == "attribute.attribute":
             field_id = field_data.get("id")
 
             self.env.cr.execute(
