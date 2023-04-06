@@ -26,15 +26,19 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     def _build_attribute_eview(self):
         """Override Attribute's method _build_attribute_eview() to build an
         attribute eview with the mixin model's attributes"""
+        domain = self._get_domain_attribute_eview()
+        attributes = self.env["attribute.attribute"].search(domain)
+        return attributes._build_attribute_eview()
+
+    @api.model
+    def _get_domain_attribute_eview(self):
         domain = [
             ("model_id.model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
         if not self._context.get("include_native_attribute"):
             domain.append(("nature", "=", "custom"))
-
-        attributes = self.env["attribute.attribute"].search(domain)
-        return attributes._build_attribute_eview()
+        return domain
 
     @api.model
     def remove_native_fields(self, eview):
@@ -57,7 +61,6 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         eview = etree.fromstring(arch)
         form_name = eview.get("string")
         placeholder = eview.xpath("//separator[@name='attributes_placeholder']")
-
         if len(placeholder) != 1:
             raise ValidationError(
                 _(
