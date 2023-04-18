@@ -211,6 +211,7 @@ class PimMixin(models.AbstractModel):
         operator: Domain operator
         value: value to search
         """
+
         if operator in ("in", "not in"):
             search = tuple(value)
         elif operator in ("like", "ilike", "not like", "not ilike") and value:
