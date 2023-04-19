@@ -11,16 +11,20 @@ class IrModelFields(models.Model):
     def _instanciate_attrs(self, field_data):
         attrs = super()._instanciate_attrs(field_data)
         name = field_data.get("name")
-        model = field_data.get("model")
-        if name.startswith("x_") and model == "attribute.attribute":
-            field_id = field_data.get("id")
-
+        if name.startswith("x_"):
             self.env.cr.execute(
-                "SELECT company_dependent FROM attribute_attribute"
-                " WHERE field_id=%s",
-                (field_id,),
+                "SELECT COUNT(*) FROM pg_class WHERE relname = %s",
+                ("attribute_attribute",),
             )
-            result = self.env.cr.fetchone()
-            if result and result[0]:
-                attrs["company_dependent"] = True
+            attribute_table_exists = self.env.cr.fetchone()
+            if attribute_table_exists[0]:
+                field_id = field_data.get("id")
+                self.env.cr.execute(
+                    "SELECT company_dependent FROM attribute_attribute"
+                    " WHERE field_id=%s",
+                    (field_id,),
+                )
+                result = self.env.cr.fetchone()
+                if result and result[0]:
+                    attrs["company_dependent"] = True
         return attrs
