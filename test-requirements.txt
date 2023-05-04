@@ -1,0 +1,2 @@
+odoo-addon-attribute-set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/145/head#subdirectory=setup/attribute_set
+odoo-addon-attribute-json @ git+https://github.com/OCA/odoo-pim.git@refs/pull/146/head#subdirectory=setup/attribute_json
