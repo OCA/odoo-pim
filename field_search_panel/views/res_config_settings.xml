@@ -1,0 +1,29 @@
+<odoo>
+<record id="res_config_settings_view_form" model="ir.ui.view">
+   <field name="name">
+       res.config.settings.view.form.inherit.rental
+   </field>
+   <field name="model">res.config.settings</field>
+   <field name="inherit_id" ref="base.res_config_settings_view_form" />
+   <field name="arch" type="xml">
+       <xpath expr="//div[hasclass('settings')]" position="inside">
+           <div
+                    class="app_settings_block"
+                    data-string="Search Panel"
+                    data-key="searchpanel"
+                    string="Search panel fields"
+                >
+               <h2>Notify Customer</h2>
+               <div class="row o_settings_container" id="searchpanel">
+                   <label for="searchpanel_field_ids">
+                       Searchpanel fields
+                   </label>
+                   <div class="col-12 o_setting_box" id="searchpanel_field_ids">
+                       <field name="searchpanel_field_ids" />
+                   </div>
+               </div>
+           </div>
+       </xpath>
+   </field>
+</record>
+</odoo>
