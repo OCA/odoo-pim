@@ -10,7 +10,7 @@ from odoo.exceptions import ValidationError
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
-    """Override the '_inheriting' model's fields_view_get() and replace
+    """Override the '_inheriting' model's get_views() and replace
     the 'attributes_placeholder' by the fields related to the '_inheriting' model's
     Attributes.
     Each Attribute's field will have a conditional invisibility depending on its
@@ -26,15 +26,19 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     def _build_attribute_eview(self):
         """Override Attribute's method _build_attribute_eview() to build an
         attribute eview with the mixin model's attributes"""
+        domain = self._get_domain_attribute_eview()
+        attributes = self.env["attribute.attribute"].search(domain)
+        return attributes._build_attribute_eview()
+
+    @api.model
+    def _get_domain_attribute_eview(self):
         domain = [
             ("model_id.model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
         if not self._context.get("include_native_attribute"):
             domain.append(("nature", "=", "custom"))
-
-        attributes = self.env["attribute.attribute"].search(domain)
-        return attributes._build_attribute_eview()
+        return domain
 
     @api.model
     def remove_native_fields(self, eview):
@@ -57,16 +61,14 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         eview = etree.fromstring(arch)
         form_name = eview.get("string")
         placeholder = eview.xpath("//separator[@name='attributes_placeholder']")
-
         if len(placeholder) != 1:
             raise ValidationError(
                 _(
-                    """It is impossible to add Attributes on "{}" xml view as there is
+                    """It is impossible to add Attributes on "{}" xml
+                    view as there is
                     not one "<separator name="attributes_placeholder" />" in it.
-                    """.format(
-                        form_name
-                    )
-                )
+                    """
+                ).format(form_name)
             )
 
         if self._context.get("include_native_attribute"):

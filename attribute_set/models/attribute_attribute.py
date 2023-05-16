@@ -165,6 +165,8 @@ class AttributeAttribute(models.Model):
                 # Attribute Options search and creation
                 kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
                 kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+            elif self.nature == "nature":
+                kwargs["context"] = self._get_native_field_context()
 
         if self.ttype == "text":
             # Display field label above his value
@@ -177,6 +179,9 @@ class AttributeAttribute(models.Model):
             setup_modifiers(field_title)
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
         setup_modifiers(efield)
+
+    def _get_native_field_context(self):
+        return str(self.env[self.field_id.model]._fields[self.field_id.name].context)
 
     def _build_attribute_eview(self):
         """Return an 'attribute_eview' including all the Attributes (in the current
@@ -281,37 +286,52 @@ class AttributeAttribute(models.Model):
     @api.model
     def create(self, vals):
         """Create an attribute.attribute
-
         - In case of a new "custom" attribute, a new field object 'ir.model.fields' will
         be created as this model "_inherits" 'ir.model.fields'.
         So we need to add here the mandatory 'ir.model.fields' instance's attributes to
         the new 'attribute.attribute'.
-
         - In case of a new "native" attribute, it will be linked to an existing
         field object 'ir.model.fields' (through "field_id") that cannot be modified.
         That's why we remove all the 'ir.model.fields' instance's attributes values
         from `vals` before creating our new 'attribute.attribute'.
-
         """
+        vals = self._update_field_vals_by_nature(vals)
+
+        attr = super().create(vals)
+        if attr.company_dependent:
+            self.flush()
+            self.pool.setup_models(self._cr)
+            # update database schema of model and its descendant models
+            models = self.pool.descendants([attr.model_id._name], "_inherits")
+            self.pool.init_models(
+                self._cr, models, dict(self._context, update_custom_fields=True)
+            )
+        return attr
+
+    @api.model
+    def _update_field_vals_by_nature(self, vals):
         if vals.get("nature") == "native":
             # Remove all the values that can modify the related native field
             # before creating the new 'attribute.attribute'
             for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
                 del vals[key]
-            return super().create(vals)
+            return vals
 
-        if vals.get("relation_model_id"):
-            model = self.env["ir.model"].browse(vals["relation_model_id"])
-            relation = model.model
-        else:
-            relation = "attribute.option"
+        vals = self._handle_relation_field(vals)
 
+        vals = self._handle_serialized(vals)
+
+        vals["state"] = "manual"
+
+        return vals
+
+    @api.model
+    def _handle_relation_field(self, vals):
         attr_type = vals.get("attribute_type")
-
+        relation = self._get_relation_model(vals)
         if attr_type == "select":
             vals["ttype"] = "many2one"
             vals["relation"] = relation
-
         elif attr_type == "multiselect":
             vals["ttype"] = "many2many"
             vals["relation"] = relation
@@ -331,10 +351,21 @@ class AttributeAttribute(models.Model):
                 )
                 # avoid too long relation_table names
                 vals["relation_table"] = table_name[0:60]
-
         else:
             vals["ttype"] = attr_type
+        return vals
 
+    @api.model
+    def _get_relation_model(self, vals):
+        if vals.get("relation_model_id"):
+            model = self.env["ir.model"].browse(vals["relation_model_id"])
+            relation = model.model
+        else:
+            relation = "attribute.option"
+        return relation
+
+    @api.model
+    def _handle_serialized(self, vals):
         if vals.get("serialized"):
             field_obj = self.env["ir.model.fields"]
 
@@ -358,20 +389,9 @@ class AttributeAttribute(models.Model):
                 }
 
                 vals["serialization_field_id"] = (
-                    field_obj.with_context({"manual": True}).create(f_vals).id
+                    field_obj.with_context(manual=True).create(f_vals).id
                 )
-
-        vals["state"] = "manual"
-        attr = super().create(vals)
-        if attr.company_dependent:
-            self.flush()
-            self.pool.setup_models(self._cr)
-            # update database schema of model and its descendant models
-            models = self.pool.descendants([attr.model_id._name], "_inherits")
-            self.pool.init_models(
-                self._cr, models, dict(self._context, update_custom_fields=True)
-            )
-        return attr
+        return vals
 
     def _delete_related_option_wizard(self, option_vals):
         """Delete the attribute's options wizards related to the attribute's options
