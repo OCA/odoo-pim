@@ -7,16 +7,18 @@
         <field name="model">attribute.set</field>
         <field name="inherit_id" ref="attribute_set.attribute_set_form_view" />
         <field name="arch" type="xml">
-            <group name="attributes" position="after">
-                <group name="completeness" string="Completeness">
+             <xpath expr="//group[@name='attributes']" position="after">
+                <label for="attribute_set_completeness_ids" string="COMPLETNESS" />
+                <hr />
+                <div>
                     <field
                         name="attribute_set_completeness_ids"
                         context="{'default_attribute_set_id': active_id}"
                         widget="one2many"
                         nolabel="1"
                     />
-                </group>
-            </group>
+                </div>
+            </xpath>
         </field>
     </record>
 </odoo>
