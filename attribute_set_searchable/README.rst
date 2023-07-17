@@ -35,7 +35,7 @@ This module allows the user to make an attribute searchable directly from the se
 Usage
 =====
 
-On the attribute, thick the check box 'Searchable' and refresh your browser.
+On the attribute, tick the check box 'Searchable' and refresh your browser.
 Open the search view linked to the related model and begin to type, the attribute is now available.
 
 Bug Tracker
@@ -60,6 +60,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Cédric PIGEON <cedric.pigeon@acsone.eu>
+* Dhara Solanki <dhara.solanki@initos.com>
 
 Maintainers
 ~~~~~~~~~~~
