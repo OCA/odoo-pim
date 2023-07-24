@@ -9,7 +9,7 @@ class AttributeAttribute(models.Model):
 
     allow_mass_editing = fields.Boolean()
     mass_editing_line_ids = fields.One2many(
-        comodel_name="mass.editing.line", inverse_name="attribute_id"
+        comodel_name="ir.actions.server.mass.edit.line", inverse_name="attribute_id"
     )
 
     def _get_mass_editing_ids(self):
