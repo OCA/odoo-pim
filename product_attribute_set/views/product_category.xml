@@ -8,7 +8,8 @@
             <field name="parent_id" position="after">
                 <field
                     name="attribute_set_id"
-                    domain="[('model_id', '=', 'product.template')]"
+                    domain="[('model_id.model', '=', 'product.template')]"
+                    context="{'default_model_id': %(product.model_product_template)d}"
                     class="oe_inline"
                 />
             </field>

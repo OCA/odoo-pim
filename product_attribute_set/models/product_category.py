@@ -11,7 +11,6 @@ class ProductCategory(models.Model):
     attribute_set_id = fields.Many2one(
         "attribute.set",
         "Default Attribute Set",
-        context={"default_model_id": "product.template"},
     )
 
     def write(self, vals):
