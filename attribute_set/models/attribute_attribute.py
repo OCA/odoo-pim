@@ -278,6 +278,16 @@ class AttributeAttribute(models.Model):
             "target": "new",
         }
 
+    def set_domain(self):
+        for record in self:
+            if not record.relation_model_id and record.attribute_type in [
+                "select",
+                "multiselect",
+            ]:
+                domain = f"[('attribute_id', '=', {record.id})]"
+                if record.domain != domain:
+                    record.field_id.domain = domain
+
     @api.model
     def create(self, vals):
         """Create an attribute.attribute
@@ -362,6 +372,7 @@ class AttributeAttribute(models.Model):
                 )
 
         vals["state"] = "manual"
+
         attr = super().create(vals)
         if attr.company_dependent:
             self.flush()
@@ -371,6 +382,7 @@ class AttributeAttribute(models.Model):
             self.pool.init_models(
                 self._cr, models, dict(self._context, update_custom_fields=True)
             )
+        attr.set_domain()
         return attr
 
     def _delete_related_option_wizard(self, option_vals):
@@ -473,6 +485,8 @@ class AttributeAttribute(models.Model):
             # as a field, if these values are not in the new Domain or Options list
             if {"option_ids", "domain"} & set(vals.keys()):
                 att._delete_old_fields_options(options)
+
+        self.set_domain()
 
         return res
 
