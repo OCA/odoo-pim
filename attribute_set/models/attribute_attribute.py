@@ -125,9 +125,10 @@ class AttributeAttribute(models.Model):
 
     @api.model
     def _build_attribute_field(self, attribute_egroup):
-        """Add an etree 'field' subelement (related to the current attribute 'self')
-        to attribute_egroup, with a conditional invisibility based on its
-        attribute sets."""
+        """Add field into given attribute group.
+
+        Conditional invisibility based on its attribute sets.
+        """
         self.ensure_one()
         kwargs = {"name": "%s" % self.name}
         kwargs["attrs"] = str(self._get_attrs())
@@ -183,7 +184,9 @@ class AttributeAttribute(models.Model):
         return str(self.env[self.field_id.model]._fields[self.field_id.name].context)
 
     def _build_attribute_eview(self):
-        """Return an 'attribute_eview' including all the Attributes (in the current
+        """Generate group element for all attributes in the current recordset.
+
+        Return an 'attribute_eview' including all the Attributes (in the current
         recorset 'self') distributed in different 'attribute_egroup' for each
         Attribute's group.
         """
@@ -240,22 +243,23 @@ class AttributeAttribute(models.Model):
             self.widget = "many2many_tags"
 
     @api.onchange("relation_model_id")
-    def relation_model_id_change(self):
-        "Remove selected options as they would be inconsistent"
+    def _onchange_relation_model_id(self):
+        """Remove selected options as they would be inconsistent"""
         self.option_ids = [(5, 0)]
 
     @api.onchange("domain")
-    def domain_change(self):
+    def _onchange_domain(self):
         if self.domain not in ["", False]:
             try:
                 ast.literal_eval(self.domain)
             except ValueError:
                 raise ValidationError(
                     _(
-                        """ "{}" is an unvalid Domain name.\n
-                        Specify a Python expression defining a list of triplets.\
-                        For example : "[('color', '=', 'red')]" """
-                    ).format(self.domain)
+                        "`%(domain)s` is an invalid Domain name.\n"
+                        "Specify a Python expression defining a list of triplets.\n"
+                        "For example : `[('color', '=', 'red')]`",
+                        domain=self.domain,
+                    )
                 ) from ValueError
             # Remove selected options as the domain will predominate on actual options
             if self.domain != "[]":
@@ -271,7 +275,7 @@ class AttributeAttribute(models.Model):
         # Then open the Options Wizard which will display an 'opt_ids' m2m field related
         # to the 'relation_model_id' model
         return {
-            "context": "{'attribute_id': %s}" % (self.id),
+            "context": dict(self.env.context, attribute_id=self.id),
             "name": _("Options Wizard"),
             "view_type": "form",
             "view_mode": "form",
@@ -368,19 +372,17 @@ class AttributeAttribute(models.Model):
         return super().create(vals_list)
 
     def _delete_related_option_wizard(self, option_vals):
-        """Delete the attribute's options wizards related to the attribute's options
-        deleted after the write"""
+        """Delete related attribute's options wizards."""
         self.ensure_one()
         for option_change in option_vals:
             if option_change[0] == 2:
                 self.env["attribute.option.wizard"].search(
                     [("attribute_id", "=", self.id)]
                 ).unlink()
+                break
 
     def _delete_old_fields_options(self, options):
-        """Delete attribute's field values in the objects using our attribute
-        as a field, if these values are not in the new Domain or Options list
-        """
+        """Delete outdated attribute's field values on existing records."""
         self.ensure_one()
         custom_field = self.name
         for obj in self.env[self.model].search([]):
@@ -395,7 +397,7 @@ class AttributeAttribute(models.Model):
     def write(self, vals):
         # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
-            if self.search(
+            if self.search_count(
                 [
                     ("attribute_type", "!=", vals["attribute_type"]),
                     ("id", "in", self.ids),
@@ -413,7 +415,7 @@ class AttributeAttribute(models.Model):
         # as the values of the existing many2many Attribute fields won't be
         # deleted if changing relation_model_id
         if "relation_model_id" in list(vals.keys()):
-            if self.search(
+            if self.search_count(
                 [
                     ("relation_model_id", "!=", vals["relation_model_id"]),
                     ("id", "in", self.ids),
@@ -428,7 +430,7 @@ class AttributeAttribute(models.Model):
                 )
         # Prevent from changing 'Serialized'
         if "serialized" in list(vals.keys()):
-            if self.search(
+            if self.search_count(
                 [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
             ):
                 raise ValidationError(
@@ -443,7 +445,7 @@ class AttributeAttribute(models.Model):
 
         for att in self:
             options = att.option_ids
-            if self.relation_model_id:
+            if att.relation_model_id:
                 options = self.env[att.relation_model_id.model]
                 if "option_ids" in list(vals.keys()):
                     # Delete related attribute.option.wizard if an attribute.option

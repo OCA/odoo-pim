@@ -4,20 +4,21 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import mock
+from unittest import mock
 
 from odoo.tests import common
 
 
 class TestAttributeSet(common.TransactionCase):
-    def setUp(self):
-        super(TestAttributeSet, self).setUp()
-        self.model_id = self.env.ref("base.model_res_partner").id
-        self.group = self.env["attribute.group"].create(
-            {"name": "My Group", "model_id": self.model_id}
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.model_id = cls.env.ref("base.model_res_partner").id
+        cls.group = cls.env["attribute.group"].create(
+            {"name": "My Group", "model_id": cls.model_id}
         )
         # Do not commit
-        self.env.cr.commit = mock.Mock()
+        cls.env.cr.commit = mock.Mock()
 
     def _create_attribute(self, vals):
         vals.update(
