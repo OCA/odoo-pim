@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,15 +12,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: attribute_set
-#: code:addons/attribute_set/models/attribute_attribute.py:0
-#, python-format
-msgid ""
-" \"{}\" is an unvalid Domain name.\n"
-"\n"
-"                        Specify a Python expression defining a list of triplets.                        For example : \"[('color', '=', 'red')]\" "
-msgstr ""
 
 #. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
@@ -38,6 +29,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_group_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
 msgid "Attribute Group"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.actions.act_window,name:attribute_set.attribute_group_action
+#: model:ir.ui.menu,name:attribute_set.menu_attribute_group_action
+msgid "Attribute Groups"
 msgstr ""
 
 #. module: attribute_set
@@ -106,6 +103,7 @@ msgid "Boolean"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #, python-format
 msgid ""
@@ -115,6 +113,7 @@ msgid ""
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #, python-format
 msgid "Can't change the type of an attribute. Please create a new one."
@@ -247,6 +246,7 @@ msgid "Domain"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 #, python-format
 msgid "Error!"
@@ -369,16 +369,18 @@ msgid "Ir Model Fields"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_set_owner.py:0
 #, python-format
 msgid ""
-"It is impossible to add Attributes on \"{}\" xml\n"
+"It is impossible to add Attributes on \"%(name)s\" xml\n"
 "                    view as there is\n"
 "                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
 "                    "
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #, python-format
 msgid ""
@@ -463,6 +465,7 @@ msgid "On delete property for many2one fields"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 #, python-format
@@ -678,6 +681,7 @@ msgid "Type"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 #, python-format
 msgid ""
@@ -718,6 +722,16 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
 msgid "Widget"
+msgstr ""
+
+#. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+#, python-format
+msgid ""
+"`%(domain)s` is an invalid Domain name.\n"
+"Specify a Python expression defining a list of triplets.\n"
+"For example : `[('color', '=', 'red')]`"
 msgstr ""
 
 #. module: attribute_set
