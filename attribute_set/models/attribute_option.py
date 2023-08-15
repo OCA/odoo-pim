@@ -13,13 +13,13 @@ class AttributeOption(models.Model):
     _order = "sequence"
 
     @api.model
-    def _get_model_list(self):
+    def _selection_model_list(self):
         models = self.env["ir.model"].search([])
         return [(m.model, m.name) for m in models]
 
     name = fields.Char(translate=True, required=True)
 
-    value_ref = fields.Reference(_get_model_list, "Reference")
+    value_ref = fields.Reference(selection="_selection_model_list", string="Reference")
 
     attribute_id = fields.Many2one(
         "attribute.attribute",
@@ -38,9 +38,12 @@ class AttributeOption(models.Model):
     sequence = fields.Integer()
 
     @api.onchange("name")
-    def name_change(self):
-        """Prevent the user from adding manually an option to m2o or m2m Attributes
-        linked to another model (through 'relation_model_id')"""
+    def _onchange_name(self):
+        """Prevent improper linking of attributes.
+
+        The user could add manually an option to m2o or m2m Attributes
+        linked to another model (through 'relation_model_id').
+        """
         if self.attribute_id.relation_model_id:
             warning = {
                 "title": _("Error!"),
