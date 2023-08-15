@@ -69,8 +69,7 @@ def transfer_modifiers_to_node(modifiers, node):
 
 
 def setup_modifiers(node, field=None, context=None, in_tree_view=False):
-    """Processes node attributes and field descriptors to generate
-    the ``modifiers`` node attribute and set it on the provided node.
+    """Generate ``modifiers``  from node attributes and fields descriptors.
     Alters its first argument in-place.
     :param node: ``field`` node from an OpenERP view
     :type node: lxml.etree._Element
@@ -84,7 +83,7 @@ def setup_modifiers(node, field=None, context=None, in_tree_view=False):
                               displayed) with ``invisible`` and column
                               invisibility (the whole column is
                               hidden) with ``column_invisible``.
-    :returns: nothing
+    :returns: None
     """
     modifiers = {}
     if field is not None:
