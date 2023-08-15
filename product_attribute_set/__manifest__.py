@@ -3,7 +3,7 @@
 {
     "name": "Product Attribute Set",
     "version": "16.0.1.0.0",
-    "category": "Generic Modules/Others",
+    "category": "PIM",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
