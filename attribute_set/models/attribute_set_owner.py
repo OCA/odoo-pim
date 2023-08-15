@@ -10,12 +10,7 @@ from odoo.exceptions import ValidationError
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
-    """Override the '_inheriting' model's get_views() and replace
-    the 'attributes_placeholder' by the fields related to the '_inheriting' model's
-    Attributes.
-    Each Attribute's field will have a conditional invisibility depending on its
-    Attribute Sets.
-    """
+    """Mixin for consumers of attribute sets."""
 
     _name = "attribute.set.owner.mixin"
     _description = "Attribute set owner mixin"
@@ -52,8 +47,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                 efield[0].getparent().remove(efield[0])
 
     def _insert_attribute(self, arch):
-        """Insert the model's Attributes related fields into the arch's view form
-        at the placeholder's place."""
+        """Replace attributes' placeholders with real fields in form view arch."""
         eview = etree.fromstring(arch)
         form_name = eview.get("string")
         placeholder = eview.xpath("//separator[@name='attributes_placeholder']")
@@ -61,11 +55,12 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         if len(placeholder) != 1:
             raise ValidationError(
                 _(
-                    """It is impossible to add Attributes on "{}" xml
+                    """It is impossible to add Attributes on "%(name)s" xml
                     view as there is
                     not one "<separator name="attributes_placeholder" />" in it.
-                    """
-                ).format(form_name)
+                    """,
+                    name=form_name,
+                )
             )
 
         if self._context.get("include_native_attribute"):
@@ -79,11 +74,8 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     @api.model
     def get_views(self, views, options=None):
         result = super().get_views(views, options=options)
-        if (
-            "views" in result
-            and "form" in result["views"]
-            and "arch" in result["views"]["form"]
-        ):
+        form_arch = result.get("views", {}).get("form", {}).get("arch")
+        if form_arch:
             result["views"]["form"]["arch"] = self._insert_attribute(
                 result["views"]["form"]["arch"]
             )
