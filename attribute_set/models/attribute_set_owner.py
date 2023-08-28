@@ -80,3 +80,17 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                 result["views"]["form"]["arch"]
             )
         return result
+
+    @api.model
+    def _get_view_fields(self, view_type, models):
+        models = super()._get_view_fields(view_type, models)
+        if self._name in models and view_type == "form":
+            # we must ensure that the fields defined in the attributes set
+            # are declared into the list of fields to load for the form view
+            domain = [
+                ("model_id.model", "=", self._name),
+                ("attribute_set_ids", "!=", False),
+            ]
+            attributes = self.env["attribute.attribute"].search(domain)
+            models[self._name].update(attributes.mapped("name"))
+        return models
