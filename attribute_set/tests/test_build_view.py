@@ -360,3 +360,13 @@ class BuildViewCase(TransactionCase):
         with Form(partner.x_multi_attribute):
             pass
 
+    def test_models_fields_for_get_views(self):
+        # this test is here to ensure that attributes defined in attribute_set
+        # and added to the view are correctly added to the list of fields
+        # to load for the view
+        result = self.env["res.partner"].get_views([(self.view.id, "form")])
+        fields = result["models"].get("res.partner")
+        self.assertIn("x_attr_1", fields)
+        self.assertIn("x_attr_2", fields)
+        self.assertIn("x_attr_3", fields)
+        self.assertIn("x_attr_4", fields)
