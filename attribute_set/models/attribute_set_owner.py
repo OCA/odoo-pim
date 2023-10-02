@@ -22,7 +22,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         """Override Attribute's method _build_attribute_eview() to build an
         attribute eview with the mixin model's attributes"""
         domain = [
-            ("model_id.model", "=", self._name),
+            ("model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
         if not self._context.get("include_native_attribute"):
@@ -36,7 +36,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         """Remove native fields related to native attributes from eview"""
         native_attrs = self.env["attribute.attribute"].search(
             [
-                ("model_id.model", "=", self._name),
+                ("model", "=", self._name),
                 ("attribute_set_ids", "!=", False),
                 ("nature", "=", "native"),
             ]
@@ -88,9 +88,9 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             # we must ensure that the fields defined in the attributes set
             # are declared into the list of fields to load for the form view
             domain = [
-                ("model_id.model", "=", self._name),
+                ("model", "=", self._name),
                 ("attribute_set_ids", "!=", False),
             ]
             attributes = self.env["attribute.attribute"].search(domain)
-            models[self._name].update(attributes.mapped("name"))
+            models[self._name].update(attributes.sudo().mapped("name"))
         return models
