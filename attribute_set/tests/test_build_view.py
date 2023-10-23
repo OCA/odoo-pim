@@ -8,7 +8,7 @@ import ast
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class BuildViewCase(TransactionCase):
@@ -44,6 +44,7 @@ class BuildViewCase(TransactionCase):
                 "arch": """
                     <xpath expr="//notebook" position="inside">
                         <page name="partner_attributes">
+                            <field name="attribute_set_id"/>
                             <separator name="attributes_placeholder" />
                         </page>
                     </xpath>
@@ -304,3 +305,12 @@ class BuildViewCase(TransactionCase):
         self.assertTrue(
             self.env["ir.model.fields"].browse([attr_native_field_id]).exists()
         )
+
+    # TEST form views rendering
+    def test_model_form(self):
+        # Test attributes modifications through form
+        self.assertFalse(self.partner.x_attr_3)
+        with Form(self.partner) as partner_form:
+            partner_form.attribute_set_id = self.set_1
+            partner_form.x_attr_3 = True
+        self.assertTrue(self.partner.x_attr_3)
