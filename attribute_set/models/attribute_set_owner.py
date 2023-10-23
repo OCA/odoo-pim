@@ -71,12 +71,10 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         placeholder[0].getparent().replace(placeholder[0], attribute_eview)
         return etree.tostring(eview, pretty_print=True)
 
-    @api.model
-    def get_views(self, views, options=None):
-        result = super().get_views(views, options=options)
-        form_arch = result.get("views", {}).get("form", {}).get("arch")
-        if form_arch:
-            result["views"]["form"]["arch"] = self._insert_attribute(
-                result["views"]["form"]["arch"]
-            )
+    def get_view(self, view_id=None, view_type="form", **options):
+        result = super().get_view(view_id=view_id, view_type=view_type, **options)
+        if view_type == "form":
+            form_arch = result.get("arch")
+            if form_arch:
+                result["arch"] = self._insert_attribute(result["arch"])
         return result
