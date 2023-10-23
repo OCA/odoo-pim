@@ -20,5 +20,11 @@ class AttributeSet(models.Model):
         column1="attribute_set_id",
         column2="attribute_id",
     )
-
     model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
+    model = fields.Char(
+        related="model_id.model",
+        string="Model Name",
+        store=True,
+        help="This is a technical field in order to build filters on this one to avoid"
+        "access on ir.model",
+    )

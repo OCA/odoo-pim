@@ -192,7 +192,6 @@ class AttributeAttribute(models.Model):
         """
         attribute_eview = etree.Element("group", name="attributes_group", col="4")
         groups = []
-
         for attribute in self:
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
