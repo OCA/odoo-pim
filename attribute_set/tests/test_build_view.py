@@ -45,9 +45,9 @@ class BuildViewCase(TransactionCase):
 
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
-        from .models import ResPartner
+        from .models import ResCountry, ResPartner
 
-        cls.loader.update_registry((ResPartner,))
+        cls.loader.update_registry((ResPartner, ResCountry))
 
         # Create a new inherited view with the 'attributes' placeholder.
         cls.view = cls.env["ir.ui.view"].create(
@@ -370,3 +370,11 @@ class BuildViewCase(TransactionCase):
         self.assertIn("x_attr_2", fields)
         self.assertIn("x_attr_3", fields)
         self.assertIn("x_attr_4", fields)
+
+    @users("demo")
+    def test_model_form_domain(self):
+        # Test attributes modifications through form
+        partner = self.partner.with_user(self.env.user)
+        self.assertFalse(partner.x_attr_3)
+        sets = partner.attribute_set_id.search(partner._get_attribute_set_owner_model())
+        self.assertEqual(self.set_1 | self.set_2, sets)
