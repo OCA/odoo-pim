@@ -261,7 +261,7 @@ class BuildViewCase(TransactionCase):
         attrs = self._get_attr_element("x_attr_1").get("attrs")
         self._check_attrset_required(attrs, [self.set_1.id])
 
-    @users("demo")
+    @users("attribute_manager")
     def test_render_all_field_type(self):
         field = self.env["attribute.attribute"]._fields["attribute_type"]
         for attr_type, _name in field.selection:
@@ -276,7 +276,9 @@ class BuildViewCase(TransactionCase):
                     "attribute_set_ids": [(6, 0, [self.set_1.id])],
                 }
             )
-            attr = self._get_attr_element(name)
+            new_self = self
+            new_self.env = self.env(user=self.demo, su=False)
+            attr = new_self._get_attr_element(name)
             self.assertIsNotNone(attr)
             if attr_type == "text":
                 self.assertTrue(attr.get("nolabel"))
@@ -346,7 +348,9 @@ class BuildViewCase(TransactionCase):
     def test_model_form(self):
         # Test attributes modifications through form
         self.assertFalse(self.partner.x_attr_3)
-        with Form(self.partner.with_user(self.demo)) as partner_form:
+        with Form(
+            self.partner.with_user(self.demo).with_context(load_all_views=True)
+        ) as partner_form:
             partner_form.attribute_set_id = self.set_1
             partner_form.x_attr_3 = True
             partner_form.x_attr_select = self.attr_select_option
