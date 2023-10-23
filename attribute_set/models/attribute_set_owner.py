@@ -15,7 +15,15 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     _name = "attribute.set.owner.mixin"
     _description = "Attribute set owner mixin"
 
-    attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
+    attribute_set_id = fields.Many2one(
+        "attribute.set",
+        "Attribute Set",
+        domain=lambda self: self._get_attribute_set_owner_model(),
+    )
+
+    @api.model
+    def _get_attribute_set_owner_model(self):
+        return [("model", "=", self._name)]
 
     @api.model
     def _build_attribute_eview(self):
