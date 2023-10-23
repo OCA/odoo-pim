@@ -217,7 +217,10 @@ class AttributeAttribute(models.Model):
                 groups.append(att_group)
 
             setup_modifiers(attribute_egroup)
-            attribute._build_attribute_field(attribute_egroup)
+            attribute_with_env = (
+                attribute.sudo() if attribute.check_access_rights("read") else self
+            )
+            attribute_with_env._build_attribute_field(attribute_egroup)
 
         return attribute_eview
 
