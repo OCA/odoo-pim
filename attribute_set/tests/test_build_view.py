@@ -8,7 +8,7 @@ import ast
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form, TransactionCase, users
 
 
 class BuildViewCase(TransactionCase):
@@ -29,6 +29,20 @@ class BuildViewCase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # Demo user will be a base user to read model
+        cls.demo = cls.env.ref("base.user_demo")
+
+        # This user will have access to
+        cls.attribute_manager_user = cls.env["res.users"].create(
+            {
+                "name": "Attribute Manager",
+                "login": "attribute_manager",
+                "email": "attribute.manager@test.odoo.com",
+            }
+        )
+        cls.attribute_manager_user.groups_id |= cls.env.ref("base.group_erp_manager")
+
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from .models import ResPartner
@@ -127,12 +141,32 @@ class BuildViewCase(TransactionCase):
             }
         )
 
+        cls.multi_attribute = cls._create_attribute(
+            {
+                "attribute_type": "multiselect",
+                "name": "x_multi_attribute",
+                "option_ids": [
+                    (0, 0, {"name": "Value 1"}),
+                    (0, 0, {"name": "Value 2"}),
+                ],
+                "attribute_set_ids": [(6, 0, [cls.set_1.id])],
+                "attribute_group_id": cls.group_1.id,
+            }
+        )
+
+        # Add attributes for country
+        cls.model_id = cls.env.ref("base.model_res_country").id
+        cls.be = cls.env.ref("base.be")
+        cls.set_country = cls._create_set("Set Country")
+        cls.model_id = cls.env.ref("base.model_res_partner").id
+
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
         return super(BuildViewCase, cls).tearDownClass()
 
     # TEST write on attributes
+    @users("demo")
     def test_write_attribute_values_text(self):
         self.partner.write({"x_attr_2": "abcd"})
         self.assertEqual(self.partner.x_attr_2, "abcd")
@@ -199,7 +233,7 @@ class BuildViewCase(TransactionCase):
             for item in eview.getchildren()[0].getchildren()
             if item.tag == "field"
         ]
-        self.assertEqual(attrs, ["x_attr_1", "x_attr_2"])
+        self.assertEqual(attrs, ["x_attr_1", "x_attr_2", "x_multi_attribute"])
 
         self.attr_1.sequence = 3
         eview = self.env["res.partner"]._build_attribute_eview()
@@ -208,7 +242,7 @@ class BuildViewCase(TransactionCase):
             for item in eview.getchildren()[0].getchildren()
             if item.tag == "field"
         ]
-        self.assertEqual(attrs, ["x_attr_2", "x_attr_1"])
+        self.assertEqual(attrs, ["x_attr_2", "x_attr_1", "x_multi_attribute"])
 
     def test_attr_visibility(self):
         attrs = self._get_attr_element("x_attr_1").get("attrs")
@@ -227,6 +261,7 @@ class BuildViewCase(TransactionCase):
         attrs = self._get_attr_element("x_attr_1").get("attrs")
         self._check_attrset_required(attrs, [self.set_1.id])
 
+    @users("demo")
     def test_render_all_field_type(self):
         field = self.env["attribute.attribute"]._fields["attribute_type"]
         for attr_type, _name in field.selection:
@@ -307,10 +342,21 @@ class BuildViewCase(TransactionCase):
         )
 
     # TEST form views rendering
+    @users("demo")
     def test_model_form(self):
         # Test attributes modifications through form
         self.assertFalse(self.partner.x_attr_3)
-        with Form(self.partner) as partner_form:
+        with Form(self.partner.with_user(self.demo)) as partner_form:
             partner_form.attribute_set_id = self.set_1
             partner_form.x_attr_3 = True
-        self.assertTrue(self.partner.x_attr_3)
+            partner_form.x_attr_select = self.attr_select_option
+            partner_form.x_multi_attribute.add(self.multi_attribute.option_ids[0])
+        partner = partner_form.save().with_user(self.demo)
+        self.assertTrue(partner.x_attr_3)
+        self.assertTrue(partner.x_attr_select)
+        # As options are Many2many, Form() is not able to render the sub form
+        # This should pass, checking fields are rendered without error with
+        # demo user
+        with Form(partner.x_multi_attribute):
+            pass
+
