@@ -17,7 +17,6 @@
                         name="attribute_set_id"
                         nolabel="1"
                         context="{'default_model_id': %(product.model_product_template)d}"
-                        domain="[('model_id.model', '=', 'product.template')]"
                     />
                 </div>
             </xpath>
