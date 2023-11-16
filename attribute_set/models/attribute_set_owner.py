@@ -15,14 +15,22 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     _name = "attribute.set.owner.mixin"
     _description = "Attribute set owner mixin"
 
-    attribute_set_id = fields.Many2one("attribute.set", "Attribute Set")
+    attribute_set_id = fields.Many2one(
+        "attribute.set",
+        "Attribute Set",
+        domain=lambda self: self._get_attribute_set_owner_model(),
+    )
+
+    @api.model
+    def _get_attribute_set_owner_model(self):
+        return [("model", "=", self._name)]
 
     @api.model
     def _build_attribute_eview(self):
         """Override Attribute's method _build_attribute_eview() to build an
         attribute eview with the mixin model's attributes"""
         domain = [
-            ("model_id.model", "=", self._name),
+            ("model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
         if not self._context.get("include_native_attribute"):
@@ -36,7 +44,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         """Remove native fields related to native attributes from eview"""
         native_attrs = self.env["attribute.attribute"].search(
             [
-                ("model_id.model", "=", self._name),
+                ("model", "=", self._name),
                 ("attribute_set_ids", "!=", False),
                 ("nature", "=", "native"),
             ]
@@ -71,12 +79,24 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         placeholder[0].getparent().replace(placeholder[0], attribute_eview)
         return etree.tostring(eview, pretty_print=True)
 
-    @api.model
-    def get_views(self, views, options=None):
-        result = super().get_views(views, options=options)
-        form_arch = result.get("views", {}).get("form", {}).get("arch")
-        if form_arch:
-            result["views"]["form"]["arch"] = self._insert_attribute(
-                result["views"]["form"]["arch"]
-            )
+    def get_view(self, view_id=None, view_type="form", **options):
+        result = super().get_view(view_id=view_id, view_type=view_type, **options)
+        if view_type == "form":
+            form_arch = result.get("arch")
+            if form_arch:
+                result["arch"] = self._insert_attribute(result["arch"])
         return result
+
+    @api.model
+    def _get_view_fields(self, view_type, models):
+        models = super()._get_view_fields(view_type, models)
+        if self._name in models and view_type == "form":
+            # we must ensure that the fields defined in the attributes set
+            # are declared into the list of fields to load for the form view
+            domain = [
+                ("model", "=", self._name),
+                ("attribute_set_ids", "!=", False),
+            ]
+            attributes = self.env["attribute.attribute"].search(domain)
+            models[self._name].update(attributes.sudo().mapped("name"))
+        return models

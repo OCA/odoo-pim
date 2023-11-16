@@ -192,7 +192,6 @@ class AttributeAttribute(models.Model):
         """
         attribute_eview = etree.Element("group", name="attributes_group", col="4")
         groups = []
-
         for attribute in self:
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
@@ -218,7 +217,10 @@ class AttributeAttribute(models.Model):
                 groups.append(att_group)
 
             setup_modifiers(attribute_egroup)
-            attribute._build_attribute_field(attribute_egroup)
+            attribute_with_env = (
+                attribute.sudo() if attribute.check_access_rights("read") else self
+            )
+            attribute_with_env._build_attribute_field(attribute_egroup)
 
         return attribute_eview
 
