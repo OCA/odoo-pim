@@ -434,6 +434,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__model
 msgid "Model Name"
 msgstr ""
 
@@ -668,6 +669,13 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__model
 msgid "The technical name of the model this field belongs to"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_set__model
+msgid ""
+"This is a technical field in order to build filters on this one to "
+"avoidaccess on ir.model"
 msgstr ""
 
 #. module: attribute_set
