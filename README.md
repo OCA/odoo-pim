@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attribute_set](attribute_set/) | 16.0.1.0.0 |  | Attribute Set
+[attribute_set](attribute_set/) | 16.0.1.1.0 |  | Attribute Set
 
 [//]: # (end addons)
 
