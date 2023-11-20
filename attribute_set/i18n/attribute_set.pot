@@ -246,6 +246,11 @@ msgid "Domain"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
+msgid "Enable Ordered Tracking"
+msgstr ""
+
+#. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 #, python-format
@@ -338,6 +343,13 @@ msgid ""
 "            fields values) instead of creating a new SQL column for this\n"
 "            attribute's field. Useful to increase speed requests if creating a\n"
 "            high number of attributes."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__tracking
+msgid ""
+"If set every modification done to this field is tracked in the chatter. "
+"Value is used to order tracking values."
 msgstr ""
 
 #. module: attribute_set
