@@ -50,7 +50,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ]
         )
         for attr in native_attrs:
-            efield = eview.xpath("//field[@name='{}']".format(attr.name))
+            efield = eview.xpath(f"//field[@name='{attr.name}']")
             if len(efield):
                 efield[0].getparent().remove(efield[0])
 

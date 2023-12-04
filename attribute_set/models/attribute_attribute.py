@@ -196,7 +196,7 @@ class AttributeAttribute(models.Model):
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
             if att_group in groups:
-                xpath = ".//group[@string='{}']".format(att_group_name)
+                xpath = f".//group[@string='{att_group_name}']"
                 attribute_egroup = attribute_eview.find(xpath)
             else:
                 att_set_ids = []
@@ -212,7 +212,7 @@ class AttributeAttribute(models.Model):
                     "group",
                     string=att_group_name,
                     colspan="2",
-                    attrs="{{'invisible' : {} }}".format(hide_domain),
+                    attrs=f"{{'invisible' : {hide_domain} }}",
                 )
                 groups.append(att_group)
 
