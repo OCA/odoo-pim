@@ -163,7 +163,7 @@ class BuildViewCase(TransactionCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        return super(BuildViewCase, cls).tearDownClass()
+        return super().tearDownClass()
 
     # TEST write on attributes
     @users("demo")

@@ -13,7 +13,7 @@
                         name="value_ref"
                         colspan="2"
                         groups="attribute_set.group_advanced_attribute_set"
-                        attrs="{'invisible':[('relation_model_id', '=', False)]}"
+                        invisible="not relation_model_id"
                     />
                     <field name="sequence" colspan="2" />
                 </group>
@@ -32,7 +32,7 @@
                         name="value_ref"
                         colspan="2"
                         groups="attribute_set.group_advanced_attribute_set"
-                        attrs="{'invisible':[('relation_model_id', '=', False)]}"
+                        invisible="not relation_model_id"
                     />
                     <field name="sequence" colspan="2" />
                     <field name="attribute_id" colspan="2" />
