@@ -120,11 +120,6 @@ msgid "Can't change the type of an attribute. Please create a new one."
 msgstr ""
 
 #. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "Cancel"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
 msgstr ""
@@ -180,7 +175,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_uid
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_uid
 msgid "Created by"
 msgstr ""
@@ -193,7 +187,6 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_date
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_date
 msgid "Created on"
 msgstr ""
@@ -201,11 +194,6 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
 msgid "Custom"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model,name:attribute_set.model_attribute_option_wizard
-msgid "Custom Attributes Option"
 msgstr ""
 
 #. module: attribute_set
@@ -235,7 +223,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 msgid "Display Name"
 msgstr ""
@@ -313,7 +300,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 msgid "ID"
 msgstr ""
@@ -404,7 +390,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -413,7 +398,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_uid
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -422,7 +406,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_date
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -478,16 +461,7 @@ msgid "On delete property for many2one fields"
 msgstr ""
 
 #. module: attribute_set
-#. odoo-python
-#: code:addons/attribute_set/models/attribute_attribute.py:0
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-#, python-format
-msgid "Options Wizard"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__attribute_id
 msgid "Product Attribute"
 msgstr ""
 
@@ -718,11 +692,6 @@ msgid ""
 msgstr ""
 
 #. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "Validate"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__copied
 msgid "Whether the value is copied when duplicating a record."
 msgstr ""
@@ -752,14 +721,4 @@ msgid ""
 "`%(domain)s` is an invalid Domain name.\n"
 "Specify a Python expression defining a list of triplets.\n"
 "For example : `[('color', '=', 'red')]`"
-msgstr ""
-
-#. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "options_placeholder"
-msgstr ""
-
-#. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "or"
 msgstr ""
