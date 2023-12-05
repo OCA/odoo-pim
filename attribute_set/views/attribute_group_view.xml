@@ -17,7 +17,7 @@
             <tree editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
-                <field name="model_id" invisible="context.get('default_model_id')" />
+                <field name="model_id" column_invisible="context.get('default_model_id')" />
                 <button
                     string="Sort Attribute"
                     name="%(attribute_attribute_sort_action)d"

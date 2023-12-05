@@ -10,7 +10,8 @@ import re
 
 from lxml import etree
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, Command
+from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import ValidationError
 
 from ..utils.orm import setup_modifiers
@@ -80,6 +81,11 @@ class AttributeAttribute(models.Model):
 
     relation_model_id = fields.Many2one(
         "ir.model", "Relational Model", ondelete="cascade"
+    )
+
+    relation_model_name = fields.Char(
+        "Relational Model Name",
+        related="relation_model_id.model"
     )
 
     widget = fields.Char(help="Specify widget to add to the field on the views.")
@@ -269,22 +275,18 @@ class AttributeAttribute(models.Model):
 
     def button_add_options(self):
         self.ensure_one()
-        # Before adding another option delete the ones which are linked
-        # to a deleted object
-        for option in self.option_ids:
-            if not option.value_ref:
-                option.unlink()
-        # Then open the Options Wizard which will display an 'opt_ids' m2m field related
-        # to the 'relation_model_id' model
-        return {
-            "context": dict(self.env.context, attribute_id=self.id),
-            "name": _("Options Wizard"),
-            "view_type": "form",
-            "view_mode": "form",
-            "res_model": "attribute.option.wizard",
-            "type": "ir.actions.act_window",
-            "target": "new",
-        }
+        values = self.env[self.relation_model_id.model].search(
+            safe_eval(self.domain)
+        )
+        options = []
+        for value in values:
+            options.append(Command.create(
+                {
+                    "name": value.display_name,
+                    "value_ref": f"{value._name},{value.id}",
+                }
+            ))
+        self.option_ids = options
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -373,16 +375,6 @@ class AttributeAttribute(models.Model):
             vals["state"] = "manual"
         return super().create(vals_list)
 
-    def _delete_related_option_wizard(self, option_vals):
-        """Delete related attribute's options wizards."""
-        self.ensure_one()
-        for option_change in option_vals:
-            if option_change[0] == 2:
-                self.env["attribute.option.wizard"].search(
-                    [("attribute_id", "=", self.id)]
-                ).unlink()
-                break
-
     def _delete_old_fields_options(self, options):
         """Delete outdated attribute's field values on existing records."""
         self.ensure_one()
@@ -450,9 +442,6 @@ class AttributeAttribute(models.Model):
             if att.relation_model_id:
                 options = self.env[att.relation_model_id.model]
                 if "option_ids" in list(vals.keys()):
-                    # Delete related attribute.option.wizard if an attribute.option
-                    # has been deleted
-                    att._delete_related_option_wizard(vals["option_ids"])
                     # If there is still some attribute.option available, override
                     # 'options' with the objects they are refering to.
                     options = options.search(

@@ -127,11 +127,6 @@ msgid "Can't change the type of an attribute. Please create a new one."
 msgstr "No se puede cambiar el tipo de un atributo. Por favor, cree uno nuevo."
 
 #. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
 msgstr "Car"
@@ -194,7 +189,6 @@ msgstr "Copiado"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_uid
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -207,7 +201,6 @@ msgstr "Fecha de creación"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_date
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -216,11 +209,6 @@ msgstr "Creado el"
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
 msgid "Custom"
 msgstr "Personalizar"
-
-#. module: attribute_set
-#: model:ir.model,name:attribute_set.model_attribute_option_wizard
-msgid "Custom Attributes Option"
-msgstr "Opción Atributos personalizados"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__date
@@ -253,7 +241,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
@@ -333,7 +320,6 @@ msgstr "Grupos"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 msgid "ID"
 msgstr "ID"
@@ -455,7 +441,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
 msgid "Last Modified on"
 msgstr "Última actualización el"
@@ -464,7 +449,6 @@ msgstr "Última actualización el"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_uid
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -473,7 +457,6 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_date
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_date
 msgid "Last Updated on"
 msgstr "Última Actualización el"
@@ -529,16 +512,7 @@ msgid "On delete property for many2one fields"
 msgstr "En la propiedad eliminar para campos many2one"
 
 #. module: attribute_set
-#. odoo-python
-#: code:addons/attribute_set/models/attribute_attribute.py:0
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-#, python-format
-msgid "Options Wizard"
-msgstr "Asistente para Opciones"
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__attribute_id
 msgid "Product Attribute"
 msgstr "Atributo de Producto"
 
@@ -785,11 +759,6 @@ msgstr ""
 "tabla de relación personalizado"
 
 #. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "Validate"
-msgstr "Validar"
-
-#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__copied
 msgid "Whether the value is copied when duplicating a record."
 msgstr "Si el valor se copia al duplicar un registro."
@@ -825,13 +794,3 @@ msgstr ""
 "`%(domain)s` es un nombre de dominio inválido.\n"
 "Especifica una expresión Python que define una lista de tripletas.\n"
 "Por ejemplo: `[('color', '=', 'red')]`"
-
-#. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "options_placeholder"
-msgstr "options_placeholder"
-
-#. module: attribute_set
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
-msgid "or"
-msgstr "o"
