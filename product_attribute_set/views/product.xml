@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- Product Template -->
     <record id="product.product_template_action" model="ir.actions.act_window">
         <field name="context">
             {"include_native_attribute": 1, "search_default_filter_to_sell": 1}
@@ -46,6 +47,17 @@
                     context="{'group_by': 'attribute_set_id'}"
                 />
             </xpath>
+        </field>
+    </record>
+    <!-- Product Variant -->
+    <record id="product.product_normal_action" model="ir.actions.act_window">
+        <field name="context">
+            {"include_native_attribute": 1}
+        </field>
+    </record>
+    <record id="product.product_normal_action_sell" model="ir.actions.act_window">
+        <field name="context">
+            {"include_native_attribute": 1, "search_default_filter_to_sell": 1}
         </field>
     </record>
     <!-- Do not display all the attributes in the easy edit view -->
