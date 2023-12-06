@@ -97,6 +97,10 @@ class AttributeAttribute(models.Model):
         column1="attribute_id",
         column2="attribute_set_id",
     )
+    allowed_attribute_set_ids = fields.Many2many(
+        comodel_name="attribute.set",
+        compute="_compute_allowed_attribute_set_ids",
+    )
 
     attribute_group_id = fields.Many2one(
         "attribute.group", "Attribute Group", required=True, ondelete="cascade"
@@ -223,6 +227,18 @@ class AttributeAttribute(models.Model):
             attribute_with_env._build_attribute_field(attribute_egroup)
 
         return attribute_eview
+
+    def _get_attribute_set_allowed_model(self):
+        return self.model_id
+
+    @api.depends("model_id")
+    def _compute_allowed_attribute_set_ids(self):
+        AttributeSet = self.env["attribute.set"]
+        for record in self:
+            allowed_models = record._get_attribute_set_allowed_model()
+            record.allowed_attribute_set_ids = AttributeSet.search(
+                [("model_id", "in", allowed_models.ids)]
+            )
 
     @api.onchange("model_id")
     def onchange_model_id(self):
