@@ -6,49 +6,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-01-08 23:45+0000\n"
+"Last-Translator: kbentaleb <k.bentaleb@gmail.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
 msgid "Advanced Attribute Set settings"
-msgstr ""
+msgstr "Paramètres avancés de l'Ensemble d'attributs"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_attribute
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute"
-msgstr ""
+msgstr "Attribut"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_group
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_group_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
 msgid "Attribute Group"
-msgstr ""
+msgstr "Groupe d'attributs"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_group_action
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_group_action
 msgid "Attribute Groups"
-msgstr ""
+msgstr "Groupes d'attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__nature
 msgid "Attribute Nature"
-msgstr ""
+msgstr "Nature de l'attribut"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
 msgid "Attribute Option"
-msgstr ""
+msgstr "Option d'attributs"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_option_form_action
@@ -56,31 +58,31 @@ msgstr ""
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_option_action
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute Options"
-msgstr ""
+msgstr "Options d'attributs"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
-msgstr ""
+msgstr "Ensemble d'attributs"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_set_form_action
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_set_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_set_action
 msgid "Attribute Sets"
-msgstr ""
+msgstr "Ensembles d'attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_type
 msgid "Attribute Type"
-msgstr ""
+msgstr "Type d'attribut"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Propriétaire de l'ensemble d'attributs"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_attribute_form_action
@@ -91,17 +93,17 @@ msgstr ""
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attributes"
-msgstr ""
+msgstr "Attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__binary
 msgid "Binary"
-msgstr ""
+msgstr "Binaire"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__boolean
 msgid "Boolean"
-msgstr ""
+msgstr "Booléen"
 
 #. module: attribute_set
 #. odoo-python
@@ -112,6 +114,10 @@ msgid ""
 "                        avoid conflicts with existing objects using this attribute.\n"
 "                        Please create a new one."
 msgstr ""
+"Impossible de changer le modèle relationnel de l'attribut pour\n"
+"                        éviter les conflits avec les objets existants "
+"utilisant cet attribut.\n"
+"                        Merci d'en créer un nouveau."
 
 #. module: attribute_set
 #. odoo-python
@@ -119,16 +125,17 @@ msgstr ""
 #, python-format
 msgid "Can't change the type of an attribute. Please create a new one."
 msgstr ""
+"Impossible de changer le type d'un attribut. Merci d'en créer un nouveau."
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
-msgstr ""
+msgstr "Char"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__compute
@@ -145,37 +152,37 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__column1
 msgid "Column 1"
-msgstr ""
+msgstr "Colonne 1"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__column2
 msgid "Column 2"
-msgstr ""
+msgstr "Colonne 2"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__column2
 msgid "Column referring to the record in the comodel table"
-msgstr ""
+msgstr "Colonne de référence de l'enregistrement dans la table du co-modèle"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__column1
 msgid "Column referring to the record in the model table"
-msgstr ""
+msgstr "Colonne de référence de l'enregistrement dans la table du modèle"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Nom complet"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__compute
 msgid "Compute"
-msgstr ""
+msgstr "Calculer"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
-msgstr ""
+msgstr "Copié"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
@@ -184,12 +191,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_date
 msgid "Created date"
-msgstr ""
+msgstr "Date de création"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_date
@@ -197,22 +204,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option_wizard
 msgid "Custom Attributes Option"
-msgstr ""
+msgstr "Option des attributs personnalisés"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__date
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__datetime
@@ -222,7 +229,7 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__depends
 msgid "Dependencies"
-msgstr ""
+msgstr "Dépendances"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__depends
@@ -231,6 +238,10 @@ msgid ""
 "\n"
 "    name, partner_id.name"
 msgstr ""
+"Dépendance de la fonction de calcul ; une liste de noms de champs séparé par "
+"une virgule, comme\n"
+"\n"
+"    name, partner_id.name"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__display_name
@@ -239,76 +250,79 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__domain
 msgid "Domain"
-msgstr ""
+msgstr "Domaine"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
 msgid "Enable Ordered Tracking"
-msgstr ""
+msgstr "Activer le suivi des valeurs"
 
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Erreur !"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__group_expand
 msgid "Expand Groups"
-msgstr ""
+msgstr "Étendre les groupes"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__help
 msgid "Field Help"
-msgstr ""
+msgstr "Aide du champ"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_description
 msgid "Field Label"
-msgstr ""
+msgstr "Libellé du champ"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__name
 msgid "Field Name"
-msgstr ""
+msgstr "Nom du champ"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__ttype
 msgid "Field Type"
-msgstr ""
+msgstr "Type du champ"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__float
 msgid "Float"
-msgstr ""
+msgstr "Nombre"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_field
+#, fuzzy
 msgid ""
 "For one2many fields, the field on the target model that implement the "
 "opposite many2one relationship"
 msgstr ""
+"Pour les champs one2many, le champ du modèle cible qui exécute la relation "
+"many2one opposée"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation
 msgid "For relationship fields, the technical name of the target model"
-msgstr ""
+msgstr "Pour les champs de relation, le nom technique du modèle cible"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
 msgid "Group name"
-msgstr ""
+msgstr "Nom du groupe"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__groups
 msgid "Groups"
-msgstr ""
+msgstr "Groupes"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__id
@@ -317,7 +331,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__required_on_views
@@ -325,6 +339,8 @@ msgid ""
 "If activated, the attribute will be mandatory on the views, but not in the "
 "database"
 msgstr ""
+"Si activé, l'attribut sera obligatoire sur les vues, mais pas dans la base "
+"de données"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__group_expand
@@ -352,6 +368,8 @@ msgid ""
 "If set every modification done to this field is tracked in the chatter. "
 "Value is used to order tracking values."
 msgstr ""
+"Activez pour suivre les modifications de ce champ dans le chatter. La valeur "
+"est utilisée pour ordonner les valeurs du suivi."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialization_field_id
@@ -360,6 +378,10 @@ msgid ""
 "serialization field, instead of having its own database column. This cannot "
 "be changed after creation."
 msgstr ""
+"L'activation de cette option indique que ce champ sera stocké dans la "
+"structure de sérialisation \"creuse\", plutôt que d'avoir une colonne dédiée "
+"dans la base de données. On ne peut pas changer cette option après la "
+"création."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__modules
@@ -369,12 +391,12 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__index
 msgid "Indexed"
-msgstr ""
+msgstr "Indexé"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__integer
 msgid "Integer"
-msgstr ""
+msgstr "Entier"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_id
@@ -408,7 +430,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_uid
@@ -417,7 +439,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_date
@@ -426,57 +448,57 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__modules
 msgid "List of modules in which the field is defined"
-msgstr ""
+msgstr "Liste des modules dans lesquels le champ est défini"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Load Attribute Options"
-msgstr ""
+msgstr "Charger les Options d'attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__model_id
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__model
 msgid "Model Name"
-msgstr ""
+msgstr "Nom du modèle"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__multiselect
 msgid "Multiselect"
-msgstr ""
+msgstr "Multi sélection"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__native
 msgid "Native"
-msgstr ""
+msgstr "Natif"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__on_delete
 msgid "On Delete"
-msgstr ""
+msgstr "Lors de la suppression"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__on_delete
 msgid "On delete property for many2one fields"
-msgstr ""
+msgstr "Propriété lors de la suppression pour les champs many2one"
 
 #. module: attribute_set
 #. odoo-python
@@ -484,175 +506,177 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 #, python-format
 msgid "Options Wizard"
-msgstr ""
+msgstr "Assistant d'options"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__attribute_id
 msgid "Product Attribute"
-msgstr ""
+msgstr "Attributs de produits"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Lecture seule"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__value_ref
 msgid "Reference"
-msgstr ""
+msgstr "Référence"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related
 msgid "Related Field"
-msgstr ""
+msgstr "Champ associé"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation
 msgid "Related Model"
-msgstr ""
+msgstr "Modèle associé"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related_field_id
 msgid "Related field"
-msgstr ""
+msgstr "Champ associé"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Related native field"
-msgstr ""
+msgstr "Champ natif associé"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_field
+#, fuzzy
 msgid "Relation Field"
-msgstr ""
+msgstr "Champ de relation"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_table
+#, fuzzy
 msgid "Relation Table"
-msgstr ""
+msgstr "Table de relation"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_field_id
 msgid "Relation field"
-msgstr ""
+msgstr "Champ de relation"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__relation_model_id
 msgid "Relational Model"
-msgstr ""
+msgstr "Modèle relationnel"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__required
 msgid "Required"
-msgstr ""
+msgstr "Requis"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__required_on_views
 msgid "Required (on views)"
-msgstr ""
+msgstr "Requis (sur les vues)"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_option_search
 msgid "Search Attribute Options"
-msgstr ""
+msgstr "Rechercher Options d'attributs"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_set_search
 msgid "Search Attribute Sets"
-msgstr ""
+msgstr "Rechercher Ensembles d'attributs"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_search_view
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_attribute_search
 msgid "Search Attributes"
-msgstr ""
+msgstr "Rechercher Attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__select
 msgid "Select"
-msgstr ""
+msgstr "Sélection"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selectable
 msgid "Selectable"
-msgstr ""
+msgstr "Sélectionnable"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selection_ids
 msgid "Selection Options"
-msgstr ""
+msgstr "Options de sélection"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selection
 msgid "Selection Options (Deprecated)"
-msgstr ""
+msgstr "Options de sélection (Obsolète)"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Séquence"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sequence
 msgid "Sequence in Group"
-msgstr ""
+msgstr "Séquence dans le Groupe"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__sequence
 msgid "Sequence in Set"
-msgstr ""
+msgstr "Séquence dans l'Ensemble"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sequence_group
 msgid "Sequence of the Group"
-msgstr ""
+msgstr "Séquence du Groupe"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__serialization_field_id
 msgid "Serialization Field"
-msgstr ""
+msgstr "Champ de sérialisation"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__serialized
 msgid "Serialized"
-msgstr ""
+msgstr "Sérialisé"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__size
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_tree_view
 msgid "Sort Attribute"
-msgstr ""
+msgstr "Trier Attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__widget
 msgid "Specify widget to add to the field on the views."
-msgstr ""
+msgstr "Spécifier le widget à ajouter au champ sur les vues."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__store
 msgid "Stored"
-msgstr ""
+msgstr "Enregistré"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__text
 msgid "Text"
-msgstr ""
+msgstr "Texte"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_group__sequence
 msgid "The Group order in his attribute's Set"
-msgstr ""
+msgstr "L'ordre du Groupe dans son Ensemble d'attributs"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence
 msgid "The attribute's order in his group"
-msgstr ""
+msgstr "L'ordre de l'attribut dans son groupe"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__related
@@ -660,11 +684,13 @@ msgid ""
 "The corresponding related field, if any. This must be a dot-separated list "
 "of field names."
 msgstr ""
+"Le champ associé correspondant, le cas échéant. Il doit être une liste de "
+"noms de champ séparés par des points."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__model_id
 msgid "The model this field belongs to"
-msgstr ""
+msgstr "Le modèle auquel le champ appartient"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__domain
@@ -677,12 +703,12 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence_group
 msgid "The sequence of the group"
-msgstr ""
+msgstr "La séquence du groupe"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__model
 msgid "The technical name of the model this field belongs to"
-msgstr ""
+msgstr "Le nom technique du modèle auquel le champ appartient"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_set__model
@@ -694,12 +720,12 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__translate
 msgid "Translatable"
-msgstr ""
+msgstr "Traduisible"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__state
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #. module: attribute_set
 #. odoo-python
@@ -717,21 +743,24 @@ msgstr ""
 msgid ""
 "Used for custom many2many fields to define a custom relation table name"
 msgstr ""
+"Utilisé pour les champs many2many personnalisés afin de définir un nom de "
+"table de relation personnalisé"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+#, fuzzy
 msgid "Validate"
-msgstr ""
+msgstr "Confirmer"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__copied
 msgid "Whether the value is copied when duplicating a record."
-msgstr ""
+msgstr "Si la valeur est copiée lors de la duplication d'un enregistrement."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__store
 msgid "Whether the value is stored in the database."
-msgstr ""
+msgstr "Indique si la valeur est sauvegardée dans la base de données."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__translate
@@ -739,6 +768,8 @@ msgid ""
 "Whether values for this field can be translated (enables the translation "
 "mechanism for that field)"
 msgstr ""
+"Indique si les valeurs de ce champ peuvent être traduites (active le "
+"mécanisme de traduction pour ce champ)"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
@@ -763,4 +794,4 @@ msgstr ""
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "or"
-msgstr ""
+msgstr "ou"
