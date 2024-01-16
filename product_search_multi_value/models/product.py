@@ -11,9 +11,9 @@ from odoo.tools.safe_eval import safe_eval
 _logger = logging.getLogger(__name__)
 
 
-class ProductTemplate(models.Model):
-
-    _inherit = "product.template"
+class ProductSearchMultiMixin(models.AbstractModel):
+    _name = "product.search.multi.mixin"
+    _description = "Product search multi value mixin"
 
     search_multi = fields.Char(
         "Multiple search",
@@ -52,3 +52,13 @@ class ProductTemplate(models.Model):
             domain_search_field = [(search_field, operator, tuple(value_list))]
             domain_list.append(domain_search_field)
         return comparator(domain_list)
+
+
+class ProductTemplate(models.Model):
+    _inherit = ["product.template", "product.search.multi.mixin"]
+    _name = "product.template"
+
+
+class ProductProduct(models.Model):
+    _inherit = ["product.product", "product.search.multi.mixin"]
+    _name = "product.product"
