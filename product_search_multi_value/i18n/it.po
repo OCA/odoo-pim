@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_search_multi_value
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: product_search_multi_value
+#: model:ir.model.fields,field_description:product_search_multi_value.field_product_product__search_multi
+#: model:ir.model.fields,field_description:product_search_multi_value.field_product_template__search_multi
+msgid "Multiple search"
+msgstr ""
+
+#. module: product_search_multi_value
+#. odoo-python
+#: code:addons/product_search_multi_value/models/product_template.py:0
+#, python-format
+msgid "Operator %s is not usable with multisearch"
+msgstr ""
+
+#. module: product_search_multi_value
+#: model:ir.model,name:product_search_multi_value.model_product_template
+msgid "Product"
+msgstr ""
