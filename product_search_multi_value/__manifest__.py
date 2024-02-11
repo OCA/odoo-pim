@@ -3,7 +3,7 @@
 
 {
     "name": "Product Search Multi Value",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
