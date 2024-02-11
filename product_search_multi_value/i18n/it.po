@@ -18,13 +18,14 @@ msgstr ""
 
 #. module: product_search_multi_value
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_product__search_multi
+#: model:ir.model.fields,field_description:product_search_multi_value.field_product_search_multi_mixin__search_multi
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_template__search_multi
 msgid "Multiple search"
 msgstr "Ricerca multipla"
 
 #. module: product_search_multi_value
 #. odoo-python
-#: code:addons/product_search_multi_value/models/product_template.py:0
+#: code:addons/product_search_multi_value/models/product.py:0
 #, python-format
 msgid "Operator %s is not usable with multisearch"
 msgstr "L'operatore %s non è utilizzabile con la ricerca multipla"
@@ -33,3 +34,13 @@ msgstr "L'operatore %s non è utilizzabile con la ricerca multipla"
 #: model:ir.model,name:product_search_multi_value.model_product_template
 msgid "Product"
 msgstr "Prodotto"
+
+#. module: product_search_multi_value
+#: model:ir.model,name:product_search_multi_value.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: product_search_multi_value
+#: model:ir.model,name:product_search_multi_value.model_product_search_multi_mixin
+msgid "Product search multi value mixin"
+msgstr ""
