@@ -6,49 +6,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-06 17:36+0000\n"
+"Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
 msgid "Advanced Attribute Set settings"
-msgstr ""
+msgstr "Gelişmiş Nitelik Seti Ayarları"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_attribute
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute"
-msgstr ""
+msgstr "Nitelik"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_group
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_group_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
 msgid "Attribute Group"
-msgstr ""
+msgstr "Nitelik Grubu"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_group_action
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_group_action
 msgid "Attribute Groups"
-msgstr ""
+msgstr "Nitelik Grupları"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__nature
 msgid "Attribute Nature"
-msgstr ""
+msgstr "Nitelik Türü"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
 msgid "Attribute Option"
-msgstr ""
+msgstr "Nitelik Seçeneği"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_option_form_action
@@ -56,31 +58,31 @@ msgstr ""
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_option_action
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute Options"
-msgstr ""
+msgstr "Nitelik Seçenekleri"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
-msgstr ""
+msgstr "Nitelik Seti"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_set_form_action
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_set_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_set_action
 msgid "Attribute Sets"
-msgstr ""
+msgstr "Nitelik Setleri"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__attribute_type
 msgid "Attribute Type"
-msgstr ""
+msgstr "Nitelik Türü"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Nitelik seti sahip katmanı"
 
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_attribute_form_action
@@ -91,17 +93,17 @@ msgstr ""
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attributes"
-msgstr ""
+msgstr "Nitelikler"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__binary
 msgid "Binary"
-msgstr ""
+msgstr "Binary"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__boolean
 msgid "Boolean"
-msgstr ""
+msgstr "Mantıksal"
 
 #. module: attribute_set
 #. odoo-python
@@ -112,23 +114,26 @@ msgid ""
 "                        avoid conflicts with existing objects using this attribute.\n"
 "                        Please create a new one."
 msgstr ""
+"Bu özelliği kullanan mevcut nesnelerle çakışmaları önlemek için\n"
+"                        özelliğin İlişkisel Modeli değiştirilemez..\n"
+"                        Lütfen yeni bir tane oluşturun."
 
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #, python-format
 msgid "Can't change the type of an attribute. Please create a new one."
-msgstr ""
+msgstr "Bir niteliğin türü değiştirilemez. Lütfen yeni bir tane oluşturun."
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
-msgstr ""
+msgstr "Yazı"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__compute
@@ -141,41 +146,48 @@ msgid ""
 "\n"
 "Modules time, datetime, dateutil are available."
 msgstr ""
+"Alanın değerini hesaplamak için kod.\n"
+"'self' içerisindeki kayıtlarda gezerek field'a değer atamak:\n"
+"\n"
+"    for record in self:\n"
+"        record['size'] = len(record.name)\n"
+"\n"
+"Modüler time, datetime, dateutil kullanılabilir.."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__column1
 msgid "Column 1"
-msgstr ""
+msgstr "Sütun 1"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__column2
 msgid "Column 2"
-msgstr ""
+msgstr "Sütun 2"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__column2
 msgid "Column referring to the record in the comodel table"
-msgstr ""
+msgstr "Comodel tablosundaki kayda karşılık gelen kayıt"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__column1
 msgid "Column referring to the record in the model table"
-msgstr ""
+msgstr "Model tablosundaki kayda karşılık gelen kayıt"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Tam Adı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__compute
 msgid "Compute"
-msgstr ""
+msgstr "Hesapla"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
-msgstr ""
+msgstr "Kopyalandı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
@@ -184,12 +196,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oluşturan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_date
 msgid "Created date"
-msgstr ""
+msgstr "Oluşturulma"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_date
@@ -197,32 +209,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturulma"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
 msgid "Custom"
-msgstr ""
+msgstr "Özel"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option_wizard
 msgid "Custom Attributes Option"
-msgstr ""
+msgstr "Özel Nitelik Seçeneği"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__date
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__datetime
 msgid "Datetime"
-msgstr ""
+msgstr "Süre"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__depends
 msgid "Dependencies"
-msgstr ""
+msgstr "Bağımlılıklar"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__depends
@@ -231,6 +243,9 @@ msgid ""
 "\n"
 "    name, partner_id.name"
 msgstr ""
+"Hesaplama methodu için bağımlı olan alanların virgülle ayrılmış listesi\n"
+"\n"
+"    name, partner_id.name"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__display_name
@@ -239,12 +254,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Görünen Ad"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__domain
 msgid "Domain"
-msgstr ""
+msgstr "Domain"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
