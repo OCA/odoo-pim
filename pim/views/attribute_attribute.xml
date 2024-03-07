@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="attribute_attribute_form_action" model="ir.actions.act_window">
+        <field name="name">Product Attribute</field>
+        <field name="res_model">attribute.attribute</field>
+        <field name="view_mode">tree,form</field>
+        <field
+            name="search_view_id"
+            ref="attribute_set.view_attribute_attribute_search"
+        />
+        <field
+            name="context"
+            eval="{'default_model_id': ref('product.model_product_template')}"
+        />
+        <field
+            name="domain"
+            eval="[('model_id', '=', ref('product.model_product_template'))]"
+        />
+        <field name="help" />
+    </record>
+    <menuitem
+        action="attribute_attribute_form_action"
+        id="menu_attribute_attribute_action"
+        parent="main_menu_attribute"
+        sequence="2"
+    />
+</odoo>
