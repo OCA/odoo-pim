@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-06 17:36+0000\n"
+"PO-Revision-Date: 2024-03-07 08:36+0000\n"
 "Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -264,66 +264,66 @@ msgstr "Domain"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
 msgid "Enable Ordered Tracking"
-msgstr ""
+msgstr "Sıralı Takibi Etkinleştir"
 
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Hata!"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__group_expand
 msgid "Expand Groups"
-msgstr ""
+msgstr "Grupları Genişlet"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__help
 msgid "Field Help"
-msgstr ""
+msgstr "Yardım Alanı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_description
 msgid "Field Label"
-msgstr ""
+msgstr "Alan Etiketi"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__name
 msgid "Field Name"
-msgstr ""
+msgstr "Alan Adı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__ttype
 msgid "Field Type"
-msgstr ""
+msgstr "Alan Türü"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__float
 msgid "Float"
-msgstr ""
+msgstr "Sayısal"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_field
 msgid ""
 "For one2many fields, the field on the target model that implement the "
 "opposite many2one relationship"
-msgstr ""
+msgstr "One2many alanları için, hedef modelde karşılık gelen many2one alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation
 msgid "For relationship fields, the technical name of the target model"
-msgstr ""
+msgstr "İlişkili alanlar için hedef modelin teknik adı"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_form_view
 msgid "Group name"
-msgstr ""
+msgstr "Grup adı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__groups
 msgid "Groups"
-msgstr ""
+msgstr "Gruplar"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__id
@@ -332,7 +332,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__required_on_views
@@ -340,6 +340,8 @@ msgid ""
 "If activated, the attribute will be mandatory on the views, but not in the "
 "database"
 msgstr ""
+"Eğer seçilirse nitelik viewlarda zorunlu olacak, fakat veritabanında zorunlu "
+"olmayacak"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__group_expand
@@ -350,6 +352,13 @@ msgid ""
 "of the field contains a lot of records; usually used on models with\n"
 "few records (e.g. Stages, Job Positions, Event Types, etc.)."
 msgstr ""
+"İşaretlenirse, hedef modelin tüm kayıtları gruplandırılmış bir sonuca\n"
+"dahil edilecektir (örneğin 'Gruplandırma Ölçütü' filtreleri, Kanban "
+"sütunları vb.).\n"
+"Alanın hedef modeli çok sayıda kayıt içeriyorsa performansı önemli ölçüde\n"
+"azaltabileceğini unutmayın; genellikle az sayıda kaydı olan modellerde "
+"kullanılır \n"
+"(örneğin Aşamalar, İş Pozisyonları, Etkinlik Türleri vb.)."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialized
@@ -360,6 +369,15 @@ msgid ""
 "            attribute's field. Useful to increase speed requests if creating a\n"
 "            high number of attributes."
 msgstr ""
+"Eğer serialized seçiliyse özniteliğin alanı, bu özniteliğin alanı için yeni "
+"bir SQL\n"
+"            sütunu oluşturmak yerine 'x_custom_json_attrs' serileştirme "
+"alanında\n"
+"            (yani serileştirilmiş alanların tüm değerlerini içeren bir JSON) "
+"depolanır.\n"
+"            Çok sayıda öznitelik oluşturuluyorsa hız isteklerini artırmak "
+"için\n"
+"            kullanışlıdır."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__tracking
@@ -367,6 +385,8 @@ msgid ""
 "If set every modification done to this field is tracked in the chatter. "
 "Value is used to order tracking values."
 msgstr ""
+"İşaretliyse bu alanda yapılan her değişiklik sohbette izlenir. Değer, izleme "
+"değerlerini sıralamak için kullanılır."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialization_field_id
@@ -375,26 +395,29 @@ msgid ""
 "serialization field, instead of having its own database column. This cannot "
 "be changed after creation."
 msgstr ""
+"İşaretliyse bu alan, veritabanında sütuna sahip olmak yerine serileştirme "
+"alanının seyrek yapısında depolanacaktır. Bu, oluşturulduktan sonra "
+"değiştirilemez."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__modules
 msgid "In Apps"
-msgstr ""
+msgstr "Uygulamalarda"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__index
 msgid "Indexed"
-msgstr ""
+msgstr "İndekslendi"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__integer
 msgid "Integer"
-msgstr ""
+msgstr "Tam Sayı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_id
 msgid "Ir Model Fields"
-msgstr ""
+msgstr "Ir Model Alanları"
 
 #. module: attribute_set
 #. odoo-python
@@ -406,6 +429,10 @@ msgid ""
 "                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
 "                    "
 msgstr ""
+"İçinde bir tane \"<separator name=\"attributes_placeholder\" />\"\n"
+"                    olmadığından \"%(name)s\"\n"
+"                    xml görünümüne Nitelikler eklemek imkansızdır.\n"
+"                    "
 
 #. module: attribute_set
 #. odoo-python
@@ -415,6 +442,9 @@ msgid ""
 "It is not allowed to change the boolean 'Serialized'.\n"
 "                        A serialized field can not be change to non-serialized                         and vice versa."
 msgstr ""
+"'Serialized' booleanının değiştirilmesine izin verilmiyor.\n"
+"                        Serileştirilmiş bir alan, serileştirilmemiş olarak "
+"değiştirilemez (veya bunun tersi de geçerlidir).."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute____last_update
@@ -423,7 +453,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard____last_update
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son Değiştirilme"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_uid
@@ -432,7 +462,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_date
@@ -441,57 +471,57 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__modules
 msgid "List of modules in which the field is defined"
-msgstr ""
+msgstr "Alanın tanımlandığı modüllerin listesi"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Load Attribute Options"
-msgstr ""
+msgstr "Nitelik Seçeneklerini Yükle"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__model_id
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__model
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__model
 msgid "Model Name"
-msgstr ""
+msgstr "Model Adı"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__multiselect
 msgid "Multiselect"
-msgstr ""
+msgstr "Çoklu Seçim"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__name
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__native
 msgid "Native"
-msgstr ""
+msgstr "Asıl (Native)"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__on_delete
 msgid "On Delete"
-msgstr ""
+msgstr "Silindiğinde"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__on_delete
 msgid "On delete property for many2one fields"
-msgstr ""
+msgstr "Many2one alanları silindiğinde"
 
 #. module: attribute_set
 #. odoo-python
@@ -499,175 +529,175 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 #, python-format
 msgid "Options Wizard"
-msgstr ""
+msgstr "Seçenekler Wizardı"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__attribute_id
 msgid "Product Attribute"
-msgstr ""
+msgstr "Ürün Özelliği"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Readonly"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__value_ref
 msgid "Reference"
-msgstr ""
+msgstr "Referans"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related
 msgid "Related Field"
-msgstr ""
+msgstr "İlişkili Alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation
 msgid "Related Model"
-msgstr ""
+msgstr "İlişkili Model"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related_field_id
 msgid "Related field"
-msgstr ""
+msgstr "İlişkili alan"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Related native field"
-msgstr ""
+msgstr "İlişkili native alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_field
 msgid "Relation Field"
-msgstr ""
+msgstr "İlişkili Alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_table
 msgid "Relation Table"
-msgstr ""
+msgstr "İlişki Tablosu"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_field_id
 msgid "Relation field"
-msgstr ""
+msgstr "İlişkili alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation_model_id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__relation_model_id
 msgid "Relational Model"
-msgstr ""
+msgstr "İlişkili Model"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__required
 msgid "Required"
-msgstr ""
+msgstr "Zorunlu"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__required_on_views
 msgid "Required (on views)"
-msgstr ""
+msgstr "Zorunlu (viewlarda)"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_option_search
 msgid "Search Attribute Options"
-msgstr ""
+msgstr "Nitelik Seçenekleri Ara"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_set_search
 msgid "Search Attribute Sets"
-msgstr ""
+msgstr "Nitelik Setleri Ara"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_search_view
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_attribute_search
 msgid "Search Attributes"
-msgstr ""
+msgstr "Nitelikleri Ara"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__select
 msgid "Select"
-msgstr ""
+msgstr "Seçim"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selectable
 msgid "Selectable"
-msgstr ""
+msgstr "Seçilebilir"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selection_ids
 msgid "Selection Options"
-msgstr ""
+msgstr "Seçenekler"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__selection
 msgid "Selection Options (Deprecated)"
-msgstr ""
+msgstr "Seçenekler (Deprecated)"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sıra"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sequence
 msgid "Sequence in Group"
-msgstr ""
+msgstr "Grup içi Sıra"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__sequence
 msgid "Sequence in Set"
-msgstr ""
+msgstr "Set içi Sıra"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sequence_group
 msgid "Sequence of the Group"
-msgstr ""
+msgstr "Grubun Sırası"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__serialization_field_id
 msgid "Serialization Field"
-msgstr ""
+msgstr "Seralize Alan"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__serialized
 msgid "Serialized"
-msgstr ""
+msgstr "Serialized"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__size
 msgid "Size"
-msgstr ""
+msgstr "Boyut"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_group_tree_view
 msgid "Sort Attribute"
-msgstr ""
+msgstr "Nitelik Sırala"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__widget
 msgid "Specify widget to add to the field on the views."
-msgstr ""
+msgstr "Görünümlerdeki alana eklenecek widget'ı belirtin."
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__store
 msgid "Stored"
-msgstr ""
+msgstr "Saklanmış (Stored)"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__text
 msgid "Text"
-msgstr ""
+msgstr "Yazı"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_group__sequence
 msgid "The Group order in his attribute's Set"
-msgstr ""
+msgstr "Niteliğin setindeki grup sırası"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence
 msgid "The attribute's order in his group"
-msgstr ""
+msgstr "Niteliğin gurubundaki sırası"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__related
@@ -675,11 +705,13 @@ msgid ""
 "The corresponding related field, if any. This must be a dot-separated list "
 "of field names."
 msgstr ""
+"Eğer eşleşen (corresponding) ilişkili alan varsa, isimlerinin arasını nokta "
+"ile ayırarak yazın."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__model_id
 msgid "The model this field belongs to"
-msgstr ""
+msgstr "Bu alanın ait olduğu model"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__domain
@@ -688,16 +720,18 @@ msgid ""
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
 msgstr ""
+"İlişkli alanlar için muhtemel değerleri sınırlayan domain ifadesi, Python "
+"ifadesi ile üç kısım şeklinde yazılır. Örnek olarak: [('color','=','red')]"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence_group
 msgid "The sequence of the group"
-msgstr ""
+msgstr "Grup sırası"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__model
 msgid "The technical name of the model this field belongs to"
-msgstr ""
+msgstr "Bu alanın ait olduğu modelin teknik adı"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_set__model
@@ -705,16 +739,18 @@ msgid ""
 "This is a technical field in order to build filters on this one to "
 "avoidaccess on ir.model"
 msgstr ""
+"Bu teknik alan, ir.model'e erişimi önlemek amacıyla filtreler oluşturmak "
+"için kullanılır"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__translate
 msgid "Translatable"
-msgstr ""
+msgstr "Çevrilebilir"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__state
 msgid "Type"
-msgstr ""
+msgstr "Türü"
 
 #. module: attribute_set
 #. odoo-python
@@ -726,27 +762,35 @@ msgid ""
 "\n"
 "                    If the button is not visible, you need to erase the Domain value                    and Save first."
 msgstr ""
+"İlişkisel Modele bağlı mevcut Seçenekleri tanımlamak için\n"
+"                    'Öznitelik Seçeneklerini Yükle' düğmesini kullanın veya "
+"bir Etki Alanı belirtin.\n"
+"\n"
+"                   Düğme görünmüyorsa, önce Etki Alanı değerini silmeniz ve "
+"Kaydetmeniz gerekir."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_table
 msgid ""
 "Used for custom many2many fields to define a custom relation table name"
 msgstr ""
+"Özel bir ilişki tablosu adı tanımlamak amacıyla many2many alanları için "
+"kullanılır"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Validate"
-msgstr ""
+msgstr "Doğrula"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__copied
 msgid "Whether the value is copied when duplicating a record."
-msgstr ""
+msgstr "Bir kayıt çoğaltılırken değerin kopyalanıp kopyalanmayacağı."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__store
 msgid "Whether the value is stored in the database."
-msgstr ""
+msgstr "Değerin veritabanında saklanıp saklanmadığı."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__translate
@@ -754,11 +798,13 @@ msgid ""
 "Whether values for this field can be translated (enables the translation "
 "mechanism for that field)"
 msgstr ""
+"Bu alanın değerlerinin çevrilip çevrilemeyeceği (bu alan için çeviri "
+"mekanizmasını etkinleştirir)"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
 msgid "Widget"
-msgstr ""
+msgstr "Widget"
 
 #. module: attribute_set
 #. odoo-python
@@ -769,13 +815,16 @@ msgid ""
 "Specify a Python expression defining a list of triplets.\n"
 "For example : `[('color', '=', 'red')]`"
 msgstr ""
+"`%(domain)s` geçersiz bir Alan adıdır.\n"
+"Üç kısımdan oluşan dizi içerisinde bir Python ifadesi belirtin.\n"
+"Örneğin : `[('color', '=', 'red')]`"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "options_placeholder"
-msgstr ""
+msgstr "options_placeholder"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "or"
-msgstr ""
+msgstr "ya da"
