@@ -6,39 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-07 08:36+0000\n"
+"Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_search_multi_value
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_product__search_multi
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_search_multi_mixin__search_multi
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_template__search_multi
 msgid "Multiple search"
-msgstr ""
+msgstr "Çoklu arama"
 
 #. module: product_search_multi_value
 #. odoo-python
 #: code:addons/product_search_multi_value/models/product.py:0
 #, python-format
 msgid "Operator %s is not usable with multisearch"
-msgstr ""
+msgstr "%s operatörü çoklu aramayla kullanılamıyor"
 
 #. module: product_search_multi_value
 #: model:ir.model,name:product_search_multi_value.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Ürün"
 
 #. module: product_search_multi_value
 #: model:ir.model,name:product_search_multi_value.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Ürün Varyantı"
 
 #. module: product_search_multi_value
 #: model:ir.model,name:product_search_multi_value.model_product_search_multi_mixin
 msgid "Product search multi value mixin"
-msgstr ""
+msgstr "Ürün arama çoklu değer katmanı"
