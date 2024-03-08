@@ -18,4 +18,5 @@
     ],
     "external_dependencies": {"python": ["unidecode"]},
     "installable": True,
+    "post_load": "post_load_hook",
 }
