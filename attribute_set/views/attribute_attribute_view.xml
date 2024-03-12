@@ -33,6 +33,7 @@
                         name="field_description"
                         attrs="{'required': [('nature', '=', 'custom')]}"
                     />
+                    <field name="help" />
                     <field
                         name="name"
                         attrs="{'readonly': [('create_date', '!=', False)], 'required': [('nature', '=', 'custom')]}"
