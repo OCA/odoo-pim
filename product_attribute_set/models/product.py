@@ -40,10 +40,17 @@ class ProductTemplate(models.Model):
         return super().create(vals)
 
     def write(self, vals):
-        if not vals.get("attribute_set_id") and vals.get("categ_id"):
+        ret = super().write(vals)
+
+        if not vals.get("categ_id"):
+            return ret
+
+        recs = self.filtered_domain([("attribute_set_id", "=", False)])
+        if recs:
             category = self.env["product.category"].browse(vals["categ_id"])
-            vals["attribute_set_id"] = category.attribute_set_id.id
-        return super().write(vals)
+            recs.write({"attribute_set_id": category.attribute_set_id.id})
+
+        return ret
 
     @api.onchange("categ_id")
     def update_att_set_onchange_categ_id(self):
