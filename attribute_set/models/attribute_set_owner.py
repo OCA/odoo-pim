@@ -3,10 +3,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
+from lxml import etree
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from lxml import etree
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):

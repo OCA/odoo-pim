@@ -7,20 +7,17 @@
 import ast
 import logging
 import re
+from lxml import etree
+from unidecode import unidecode
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..utils.orm import setup_modifiers
 
-from lxml import etree
-
 _logger = logging.getLogger(__name__)
 
-try:
-    from unidecode import unidecode
-except ImportError as err:
-    _logger.debug(err)
+
 
 
 def safe_column_name(string):
