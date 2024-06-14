@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Carlos Dauden
-  - Pedro M. Baeza
-- [Amitaujas](https://www.amitaujas.com):
