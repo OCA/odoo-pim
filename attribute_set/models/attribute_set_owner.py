@@ -100,3 +100,4 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             attributes = self.env["attribute.attribute"].search(domain)
             models[self._name].update(attributes.sudo().mapped("name"))
         return models
+
