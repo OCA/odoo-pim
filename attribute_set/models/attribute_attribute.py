@@ -165,7 +165,6 @@ class AttributeAttribute(models.Model):
                 "b",
                 colspan="2",
                 invisible=kwargs["invisible"],
-                required=kwargs["required"],
             )
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
