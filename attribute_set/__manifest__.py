@@ -3,7 +3,7 @@
     "version": "17.0.1.1.0",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
-    "author": "Akretion,Odoo Community Association (OCA)",
+    "author": "OnurUgur,Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": ["base", "base_sparse_field"],
     "data": [

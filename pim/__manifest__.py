@@ -5,7 +5,7 @@
     "name": "Product Information Management",
     "version": "17.0.1.1.0",
     "license": "AGPL-3",
-    "author": "Akretion,Odoo Community Association (OCA)",
+    "author": "OnurUgur,Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": [
         "product",

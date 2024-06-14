@@ -113,15 +113,6 @@ class AttributeAttribute(models.Model):
         "Sequence in Group", help="The attribute's order in his group"
     )
 
-    # def _get_attrs(self):
-    #     attrs = {
-    #         "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
-    #     }
-    #     if self.required or self.required_on_views:
-    #         attrs.update(
-    #             {"required": [("attribute_set_id", "in", self.attribute_set_ids.ids)]}
-    #         )
-    #     return attrs
 
     @api.model
     def _build_attribute_field(self, attribute_egroup):

@@ -5,7 +5,7 @@
     "version": "17.0.1.1.0",
     "category": "PIM",
     "license": "AGPL-3",
-    "author": "Akretion,Odoo Community Association (OCA)",
+    "author": "OnurUgur,Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": ["product", "attribute_set"],
     "data": ["views/product.xml", "views/product_category.xml"],

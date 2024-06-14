@@ -5,7 +5,7 @@
     "name": "Product Attribute Set Completeness",
     "version": "17.0.1.1.0",
     "license": "AGPL-3",
-    "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
+    "author": "OnurUgur,ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": ["product_attribute_set", "attribute_set_completeness"],
     "data": ["views/product_template_view.xml"],
