@@ -1,2 +1,3 @@
-from . import models, utils, wizard
-from . import tests
+from . import models
+from . import utils
+from . import wizard
