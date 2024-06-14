@@ -28,7 +28,7 @@ class BuildViewCase(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(BuildViewCase,cls).setUpClass()
 
         # Demo user will be a base user to read model
         cls.demo = cls.env.ref("base.user_demo")

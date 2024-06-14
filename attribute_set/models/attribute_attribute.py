@@ -322,7 +322,8 @@ class AttributeAttribute(models.Model):
 
             elif attr_type == "multiselect":
                 vals["ttype"] = "many2many"
-                vals["relation"] = relation
+                vals["relation"] = \
+                    relation
                 # Specify the relation_table's name in case of m2m not serialized
                 # to avoid creating the same default relation_table name for any attribute
                 # linked to the same attribute.option or relation_model_id's model.
