@@ -5,9 +5,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from lxml import etree
-
 from odoo import api, fields, models
+
+from lxml import etree
 
 
 class AttributeOptionWizard(models.TransientModel):
@@ -42,9 +42,7 @@ class AttributeOptionWizard(models.TransientModel):
                     {
                         "attribute_id": vals["attribute_id"],
                         "name": name,
-                        "value_ref": "{},{}".format(
-                            attr.relation_model_id.model, op_id
-                        ),
+                        "value_ref": f"{attr.relation_model_id.model},{op_id}",
                     }
                 )
             if vals.get("option_ids"):

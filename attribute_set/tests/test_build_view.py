@@ -5,10 +5,10 @@
 
 import ast
 
+from odoo.tests import Form, TransactionCase, users
+
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
-
-from odoo.tests import Form, TransactionCase, users
 
 
 class BuildViewCase(TransactionCase):
@@ -185,7 +185,7 @@ class BuildViewCase(TransactionCase):
         self.assertEqual(
             set(set_ids),
             set(domain[2]),
-            "Expected {}, get {}".format(set(set_ids), set(domain[2])),
+            f"Expected {set(set_ids)}, get {set(domain[2])}",
         )
 
     def _check_attrset_required(self, attrs, set_ids):
@@ -197,12 +197,12 @@ class BuildViewCase(TransactionCase):
         self.assertEqual(
             set(set_ids),
             set(domain[2]),
-            "Expected {}, get {}".format(set(set_ids), set(domain[2])),
+            f"Expected {set(set_ids)}, get {set(domain[2])}",
         )
 
     def _get_attr_element(self, name):
         eview = self.env["res.partner"]._build_attribute_eview()
-        return eview.find("group/field[@name='{}']".format(name))
+        return eview.find(f"group/field[@name='{name}']")
 
     def test_group_order(self):
         eview = self.env["res.partner"]._build_attribute_eview()
@@ -265,7 +265,7 @@ class BuildViewCase(TransactionCase):
     def test_render_all_field_type(self):
         field = self.env["attribute.attribute"]._fields["attribute_type"]
         for attr_type, _name in field.selection:
-            name = "x_test_render_{}".format(attr_type)
+            name = f"x_test_render_{attr_type}"
             self._create_attribute(
                 {
                     "nature": "custom",
@@ -298,7 +298,7 @@ class BuildViewCase(TransactionCase):
 
     def test_include_native_attr(self):
         eview = self._get_eview_from_get_views()
-        attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
+        attr = eview.xpath(f"//field[@name='{self.attr_native.name}']")
 
         # Only one field with this name
         self.assertEqual(len(attr), 1)
@@ -311,22 +311,20 @@ class BuildViewCase(TransactionCase):
 
     def test_native_readonly(self):
         eview = self._get_eview_from_get_views()
-        attr = eview.xpath("//field[@name='{}']".format(self.attr_native_readonly.name))
+        attr = eview.xpath(f"//field[@name='{self.attr_native_readonly.name}']")
         self.assertTrue(attr[0].get("readonly"))
 
     def test_no_include_native_attr(self):
         # Run get_views on the test view with no "include_native_attribute"
         eview = self._get_eview_from_get_views(include_native_attribute=False)
-        attr = eview.xpath("//field[@name='{}']".format(self.attr_native.name))
+        attr = eview.xpath(f"//field[@name='{self.attr_native.name}']")
 
         # Only one field with this name
         self.assertEqual(len(attr), 1)
         # And it is not in page "partner_attributes"
         self.assertFalse(
             eview.xpath(
-                "//page[@name='partner_attributes']//field[@name='{}']".format(
-                    self.attr_native.name
-                )
+                f"//page[@name='partner_attributes']//field[@name='{self.attr_native.name}']"
             )
         )
 

@@ -8,12 +8,12 @@ import ast
 import logging
 import re
 
-from lxml import etree
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..utils.orm import setup_modifiers
+
+from lxml import etree
 
 _logger = logging.getLogger(__name__)
 
@@ -195,7 +195,7 @@ class AttributeAttribute(models.Model):
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
             if att_group in groups:
-                xpath = ".//group[@string='{}']".format(att_group_name)
+                xpath = f".//group[@string='{att_group_name}']"
                 attribute_egroup = attribute_eview.find(xpath)
             else:
                 att_set_ids = []
@@ -203,15 +203,13 @@ class AttributeAttribute(models.Model):
                     att_set_ids += att.attribute_set_ids.ids
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_domain = "attribute_set_id not in {}".format(
-                    list(set(att_set_ids))
-                )
+                hide_domain = f"attribute_set_id not in {list(set(att_set_ids))}"
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
                     "group",
                     string=att_group_name,
                     colspan="2",
-                 invisible="{}".format(hide_domain),
+                 invisible=f"{hide_domain}",
                 )
                 groups.append(att_group)
 

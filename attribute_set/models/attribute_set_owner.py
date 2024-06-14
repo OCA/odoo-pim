@@ -3,10 +3,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from lxml import etree
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+from lxml import etree
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
@@ -50,7 +50,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ]
         )
         for attr in native_attrs:
-            efield = eview.xpath("//field[@name='{}']".format(attr.name))
+            efield = eview.xpath(f"//field[@name='{attr.name}']")
             if len(efield):
                 efield[0].getparent().remove(efield[0])
 

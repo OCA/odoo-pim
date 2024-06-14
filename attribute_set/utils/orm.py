@@ -3,7 +3,6 @@
 import json
 
 
-
 def transfer_field_to_modifiers(field, modifiers):
     default_values = {}
     state_exceptions = {}
