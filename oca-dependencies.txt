@@ -1,4 +1,4 @@
 # See https://github.com/OCA/odoo-community.org/blob/master/website/Contribution/CONTRIBUTING.rst#oca_dependencies-txt
-server-tools
-server-ux
-connector
+server-tools https://github.com/OCA/server-tools 17.0
+server-ux https://github.com/OCA/server-ux 17.0
+connector https://github.com/OCA/connectorgi 17.0
