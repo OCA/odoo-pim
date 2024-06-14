@@ -18,7 +18,7 @@
     ],
     "external_dependencies":
         {"python":
-             ["unidecode"]
+             ["Unidecode"]
         },
     "installable": True,
 }
