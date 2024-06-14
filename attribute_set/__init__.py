@@ -1,6 +1,4 @@
 
 
 
-from . import models
-from . import wizard
-from . import utils
+from . import models, utils, wizard

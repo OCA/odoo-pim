@@ -7,11 +7,11 @@
 import ast
 import logging
 import re
-from lxml import etree
-from unidecode import unidecode
 
+from lxml import etree
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from unidecode import unidecode
 
 from ..utils.orm import setup_modifiers
 

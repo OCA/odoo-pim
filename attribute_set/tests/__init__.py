@@ -1,6 +1,4 @@
 
 
 
-from . import test_custom_attribute
-from . import test_build_view
-from . import models
+from . import models, test_build_view, test_custom_attribute
