@@ -179,7 +179,7 @@ class BuildViewCase(TransactionCase):
     def _check_attrset_visiblility(self, attrs, set_ids):
         attrs = ast.literal_eval(attrs)
         self.assertIn("invisible", attrs)
-        domain = attrs["invisible"][0]
+        domain = attrs
         self.assertEqual("attribute_set_id", domain[0])
         self.assertEqual("not in", domain[1])
         self.assertEqual(
@@ -191,7 +191,7 @@ class BuildViewCase(TransactionCase):
     def _check_attrset_required(self, attrs, set_ids):
         attrs = ast.literal_eval(attrs)
         self.assertIn("required", attrs)
-        domain = attrs["required"][0]
+        domain = attrs
         self.assertEqual("attribute_set_id", domain[0])
         self.assertEqual("in", domain[1])
         self.assertEqual(
