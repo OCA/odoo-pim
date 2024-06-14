@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import json
 
-from odoo.tools.safe_eval import safe_eval
 
 
 def transfer_field_to_modifiers(field, modifiers):
@@ -39,28 +38,6 @@ def transfer_node_to_modifiers(node, modifiers, context=None, in_tree_view=False
     if node.get("column_invisible"):
         modifiers['column_invisible'] = node.get("column_invisible")
 
-    # if node.get("states"):
-    #     if "invisible" in modifiers and isinstance(modifiers["invisible"], list):
-    #         # TODO combine with AND or OR, use implicit AND for now.
-    #         modifiers["invisible"].append(
-    #             ("state", "not in", node.get("states").split(","))
-    #         )
-    #     else:
-    #         modifiers["invisible"] = [
-    #             ("state", "not in", node.get("states").split(","))
-    #         ]
-
-    # for a in ("invisible", "readonly", "required","column_invisible"):
-    #     if node.get(a):
-    #         #v = bool(safe_eval(node.get(a), {"context": context or {}}))
-    #         if in_tree_view and a == "column_invisible" and node.get(a)==True:
-    #             # Invisible in a tree view has a specific meaning, make it a
-    #             # new key in the modifiers attribute.
-    #             modifiers["column_invisible"] = True
-    #         # elif (a not in modifiers or not isinstance(modifiers[a], list)):
-    #         #     # Don't set the attribute to False if a dynamic value was
-    #         #     # provided (i.e. a domain from attrs or states).
-            #     modifiers[a] = v
 
 
 def simplify_modifiers(modifiers):

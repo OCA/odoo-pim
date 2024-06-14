@@ -1,6 +1,6 @@
 {
     "name": "Attribute Set",
-    "version": "17.0.1.1.0",
+    "version": "17.0.1.0.0",
     "category": "Generic Modules/Others",
     "license": "AGPL-3",
     "author": "OnurUgur,Akretion,Odoo Community Association (OCA)",
@@ -16,6 +16,9 @@
         "views/attribute_set_view.xml",
         "wizard/attribute_option_wizard_view.xml",
     ],
-    "external_dependencies": {"python": ["unidecode"]},
+    "external_dependencies":
+        {"python":
+             ["unidecode"]
+        },
     "installable": True,
 }
