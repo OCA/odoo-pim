@@ -7,9 +7,9 @@ import json
 def transfer_field_to_modifiers(field, modifiers):
     default_values = {}
     state_exceptions = {}
-    for attr in ("invisible", "readonly", "required","column_invisible"):
+    for attr in ("invisible", "readonly", "required", "column_invisible"):
         state_exceptions[attr] = []
-        default_values[attr] = (field.get(attr))
+        default_values[attr] = field.get(attr)
     for state, modifs in field.get("states", {}).items():
         for modif in modifs:
             if default_values[modif[0]] != modif[1]:
@@ -28,20 +28,18 @@ def transfer_field_to_modifiers(field, modifiers):
 # Need the context to evaluate the invisible attribute on tree views.
 # For non-tree views, the context shouldn't be given.
 def transfer_node_to_modifiers(node, modifiers, context=None, in_tree_view=False):
-
     if node.get("required"):
-        modifiers['required']= node.get("required")
+        modifiers["required"] = node.get("required")
     if node.get("invisible"):
-        modifiers['invisible']= node.get("invisible")
+        modifiers["invisible"] = node.get("invisible")
     if node.get("readonly"):
-        modifiers['readonly']= node.get("readonly")
+        modifiers["readonly"] = node.get("readonly")
     if node.get("column_invisible"):
-        modifiers['column_invisible'] = node.get("column_invisible")
-
+        modifiers["column_invisible"] = node.get("column_invisible")
 
 
 def simplify_modifiers(modifiers):
-    for a in ("invisible", "readonly", "required","column_invisible"):
+    for a in ("invisible", "readonly", "required", "column_invisible"):
         if a in modifiers and not modifiers[a]:
             del modifiers[a]
 

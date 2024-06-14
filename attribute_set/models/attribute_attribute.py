@@ -9,15 +9,14 @@ import logging
 import re
 
 from lxml import etree
+from unidecode import unidecode
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from unidecode import unidecode
 
 from ..utils.orm import setup_modifiers
 
 _logger = logging.getLogger(__name__)
-
-
 
 
 def safe_column_name(string):
@@ -110,7 +109,6 @@ class AttributeAttribute(models.Model):
         "Sequence in Group", help="The attribute's order in his group"
     )
 
-
     @api.model
     def _build_attribute_field(self, attribute_egroup):
         """Add field into given attribute group.
@@ -123,7 +121,7 @@ class AttributeAttribute(models.Model):
             attribute_sets = self.attribute_set_ids.ids
             kwargs["invisible"] = f"attribute_set_id not in {attribute_sets}"
             if self.required or self.required_on_views:
-                kwargs['required'] = f"attribute_set_id in {attribute_sets}"
+                kwargs["required"] = f"attribute_set_id in {attribute_sets}"
         if self.widget:
             kwargs["widget"] = self.widget
 
@@ -167,7 +165,7 @@ class AttributeAttribute(models.Model):
                 "b",
                 colspan="2",
                 invisible=kwargs["invisible"],
-                required=kwargs["required"]
+                required=kwargs["required"],
             )
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
@@ -206,7 +204,7 @@ class AttributeAttribute(models.Model):
                     "group",
                     string=att_group_name,
                     colspan="2",
-                 invisible=f"{hide_domain}",
+                    invisible=f"{hide_domain}",
                 )
                 groups.append(att_group)
 
@@ -317,16 +315,14 @@ class AttributeAttribute(models.Model):
 
             elif attr_type == "multiselect":
                 vals["ttype"] = "many2many"
-                vals["relation"] = \
-                    relation
+                vals["relation"] = relation
                 # Specify the relation_table's name in case of m2m not serialized
                 # to avoid creating the same default relation_table name
                 # for any attribute
                 # linked to the same attribute.option
                 # or relation_model_id's model.
                 if not vals.get("serialized"):
-                    att_model_id = self.env["ir.model"].browse(
-                        vals["model_id"])
+                    att_model_id = self.env["ir.model"].browse(vals["model_id"])
                     table_name = (
                         "x_"
                         + att_model_id.model.replace(".", "_")

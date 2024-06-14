@@ -28,4 +28,3 @@ class AttributeSet(models.Model):
         help="This is a technical field in order to build filters on this one to avoid"
         "access on ir.model",
     )
-

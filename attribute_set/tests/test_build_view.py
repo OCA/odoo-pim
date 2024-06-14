@@ -6,8 +6,9 @@
 import ast
 
 from lxml import etree
-from odoo.tests import Form, TransactionCase, users
 from odoo_test_helper import FakeModelLoader
+
+from odoo.tests import Form, TransactionCase, users
 
 
 class BuildViewCase(TransactionCase):

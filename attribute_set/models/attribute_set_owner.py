@@ -4,6 +4,7 @@
 
 
 from lxml import etree
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -99,4 +100,3 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             attributes = self.env["attribute.attribute"].search(domain)
             models[self._name].update(attributes.sudo().mapped("name"))
         return models
-
