@@ -166,7 +166,11 @@ class AttributeAttribute(models.Model):
         if self.ttype == "text":
             # Display field label above his value
             field_title = etree.SubElement(
-                attribute_egroup, "b", colspan="2", invisible=kwargs["invisible"],required=kwargs["required"]
+                attribute_egroup,
+                "b",
+                colspan="2",
+                invisible=kwargs["invisible"],
+                required=kwargs["required"]
             )
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
