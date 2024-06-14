@@ -15,16 +15,16 @@ exclude = ["setup/*"]
 [format]
 exclude = ["setup/*"]
 
-[lint.per-file-ignores]
+[per-file-ignores]
 "__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py
 "__manifest__.py" = ["B018"]  # useless expression
 
-[lint.isort]
+[isort]
 section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
 
-[lint.isort.sections]
+[isort.sections]
 "odoo" = ["odoo"]
 "odoo-addons" = ["odoo.addons"]
 
-[lint.mccabe]
+[mccabe]
 max-complexity = 16
