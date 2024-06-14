@@ -121,12 +121,12 @@ class AttributeAttribute(models.Model):
         Conditional invisibility based on its attribute sets.
         """
         self.ensure_one()
-        kwargs = {"name": "%s" % self.name}
+        kwargs = {"name": f"{self.name}"}
         if self.attribute_set_ids:
             attribute_sets = self.attribute_set_ids.ids
-            kwargs["invisible"] = "attribute_set_id not in %s"%attribute_sets
+            kwargs["invisible"] = f"attribute_set_id not in {attribute_sets}"
             if self.required or self.required_on_views:
-                kwargs['required'] = "attribute_set_id in %s"%attribute_sets
+                kwargs['required'] = f"attribute_set_id in {attribute_sets}"
         if self.widget:
             kwargs["widget"] = self.widget
 
@@ -149,7 +149,7 @@ class AttributeAttribute(models.Model):
                 else:
                     # Display only options linked to an existing object
                     ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
-                    kwargs["domain"] = "[('id', 'in', %s)]" % ids
+                    kwargs["domain"] = f"[('id', 'in', {ids})]"
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
@@ -158,8 +158,8 @@ class AttributeAttribute(models.Model):
             elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
-                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
-                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+                kwargs["domain"] = f"[('attribute_id', '=', {self.id})]"
+                kwargs["context"] = f"{{'default_attribute_id': {self.id}}}"
             elif self.nature != "custom":
                 kwargs["context"] = self._get_native_field_context()
 
@@ -234,7 +234,7 @@ class AttributeAttribute(models.Model):
     def onchange_name(self):
         name = self.name
         if not name.startswith("x_"):
-            self.name = "x_%s" % name
+            self.name = f"x_{name}"
 
     @api.onchange("attribute_type")
     def onchange_attribute_type(self):

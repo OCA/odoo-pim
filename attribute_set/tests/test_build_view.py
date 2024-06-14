@@ -28,7 +28,7 @@ class BuildViewCase(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
-        super(BuildViewCase,cls).setUpClass()
+        super().setUpClass()
 
         # Demo user will be a base user to read model
         cls.demo = cls.env.ref("base.user_demo")
@@ -163,7 +163,7 @@ class BuildViewCase(TransactionCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        return super(BuildViewCase, cls).tearDownClass()
+        return super().tearDownClass()
 
     # TEST write on attributes
     @users("demo")

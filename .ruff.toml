@@ -20,7 +20,7 @@ exclude = ["setup/*"]
 "__manifest__.py" = ["B018"]  # useless expression
 
 [lint.isort]
-section-order = ["future", "standard-library", "third-  party", "odoo", "odoo-addons", "first-party", "local-folder"]
+section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
 
 [lint.isort.sections]
 "odoo" = ["odoo"]
