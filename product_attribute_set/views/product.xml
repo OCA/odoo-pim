@@ -12,7 +12,8 @@
             <xpath expr="//field[@name='name']/../.." position="after">
                 <div>
                     <label class="oe_edit_only" for="attribute_set_id"/>
-                    <field context="{'default_model_id': %(product.model_product_template)d}" name="attribute_set_id" nolabel="1"/>
+                    <field context="{'default_model_id': %(product.model_product_template)d}" name="attribute_set_id"
+                           nolabel="1"/>
                 </div>
             </xpath>
             <!-- Add the 'attributes_placeholder' in an 'Attributes' page -->
@@ -20,7 +21,8 @@
                 <page invisible="attribute_set_id == False" name="product_attributes" string="Attributes">
                     <separator name="attributes_placeholder"/>
                 </page>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
     <record id="product_template_search_view" model="ir.ui.view">
         <field name="model">product.template</field>

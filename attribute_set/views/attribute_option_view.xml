@@ -9,7 +9,8 @@
                 <group>
                     <field colspan="2" name="name"/>
                     <field invisible="1" name="relation_model_id"/>
-                    <field colspan="2" groups="attribute_set.group_advanced_attribute_set" invisible="relation_model_id == False" name="value_ref"/>
+                    <field colspan="2" groups="attribute_set.group_advanced_attribute_set"
+                           invisible="relation_model_id == False" name="value_ref"/>
                     <field colspan="2" name="sequence"/>
                 </group>
             </form></field>
@@ -22,7 +23,8 @@
                 <group>
                     <field colspan="2" name="name"/>
                     <field invisible="1" name="relation_model_id"/>
-                    <field colspan="2" groups="attribute_set.group_advanced_attribute_set" invisible="relation_model_id == False" name="value_ref"/>
+                    <field colspan="2" groups="attribute_set.group_advanced_attribute_set"
+                           invisible="relation_model_id == False" name="value_ref"/>
                     <field colspan="2" name="sequence"/>
                     <field colspan="2" name="attribute_id"/>
                 </group>
@@ -56,7 +58,7 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="attribute_option_tree_view"/>
         <field name="search_view_id" ref="view_attribute_option_search"/>
-        <field name="context">{"search_default_user_id":uid}</field>
+        <field name="context">{"search_default_user_id": uid}</field>
         <field name="help"/>
     </record>
     <record id="attribute_option_form_action_tree" model="ir.actions.act_window.view">
@@ -71,5 +73,6 @@
         <field name="view_id" ref="attribute_option_form_view"/>
         <field name="view_mode">form</field>
     </record>
-    <menuitem action="attribute_option_form_action" id="menu_attribute_option_action" parent="menu_attribute_in_admin" sequence="40"/>
+    <menuitem action="attribute_option_form_action" id="menu_attribute_option_action" parent="menu_attribute_in_admin"
+              sequence="40"/>
 </odoo>
