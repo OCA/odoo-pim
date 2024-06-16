@@ -217,13 +217,13 @@ class BuildViewCase(TransactionCase):
     def test_group_visibility(self):
         eview = self.env["res.partner"]._build_attribute_eview()
         group = eview.getchildren()[0]
-        self._check_attrset_visiblility(group.get("attrs"), [self.set_1.id])
+        self._check_attrset_visiblility(group.get("invisible"), [self.set_1.id])
 
         self.attr_1.attribute_set_ids += self.set_2
         eview = self.env["res.partner"]._build_attribute_eview()
         group = eview.getchildren()[0]
         self._check_attrset_visiblility(
-            group.get("attrs"), [self.set_1.id, self.set_2.id]
+            group.get("invisible"), [self.set_1.id, self.set_2.id]
         )
 
     def test_attribute_order(self):
@@ -245,20 +245,20 @@ class BuildViewCase(TransactionCase):
         self.assertEqual(attrs, ["x_attr_2", "x_attr_1", "x_multi_attribute"])
 
     def test_attr_visibility(self):
-        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        attrs = self._get_attr_element("x_attr_1").get("invisible")
         self._check_attrset_visiblility(attrs, [self.set_1.id])
 
         self.attr_1.attribute_set_ids += self.set_2
-        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        attrs = self._get_attr_element("x_attr_1").get("invisible")
         self._check_attrset_visiblility(attrs, [self.set_1.id, self.set_2.id])
 
     def test_attr_required(self):
-        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        attrs = self._get_attr_element("x_attr_1").get("required")
         attrs = ast.literal_eval(attrs)
         self.assertNotIn("required", attrs)
 
         self.attr_1.required_on_views = True
-        attrs = self._get_attr_element("x_attr_1").get("attrs")
+        attrs = self._get_attr_element("x_attr_1").get("required")
         self._check_attrset_required(attrs, [self.set_1.id])
 
     @users("attribute_manager")
@@ -306,7 +306,7 @@ class BuildViewCase(TransactionCase):
         self.assertEqual(attr[0].xpath("../../..")[0].get("name"), "partner_attributes")
         # It has the given visibility by its related attribute sets.
         self._check_attrset_visiblility(
-            attr[0].get("attrs"), [self.set_1.id, self.set_2.id]
+            attr[0].get("invisible"), [self.set_1.id, self.set_2.id]
         )
 
     def test_native_readonly(self):
