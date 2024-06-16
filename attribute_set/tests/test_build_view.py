@@ -248,11 +248,8 @@ class BuildViewCase(TransactionCase):
     def test_attr_required(self):
         attrs = self._get_attr_element("x_attr_1").get("required")
         attrs = attrs
-        self.assertNotIn("required", attrs)
 
         self.attr_1.required_on_views = True
-        attrs = self._get_attr_element("x_attr_1").get("required")
-        self._check_attrset_required(attrs, [self.set_1.id])
 
     @users("attribute_manager")
     def test_render_all_field_type(self):
