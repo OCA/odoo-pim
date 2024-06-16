@@ -177,7 +177,7 @@ class BuildViewCase(TransactionCase):
 
     # TEST render partner's view with attribute's place_holder
     def _check_attrset_visiblility(self, attrs, set_ids):
-        attrs = ast.literal_eval(attrs)
+        attrs = attrs
         self.assertIn("invisible", attrs)
         domain = attrs
         self.assertEqual("attribute_set_id", domain[0])
@@ -189,7 +189,7 @@ class BuildViewCase(TransactionCase):
         )
 
     def _check_attrset_required(self, attrs, set_ids):
-        attrs = ast.literal_eval(attrs)
+        attrs = attrs
         self.assertIn("required", attrs)
         domain = attrs
         self.assertEqual("attribute_set_id", domain[0])
@@ -254,7 +254,7 @@ class BuildViewCase(TransactionCase):
 
     def test_attr_required(self):
         attrs = self._get_attr_element("x_attr_1").get("required")
-        attrs = ast.literal_eval(attrs)
+        attrs = attrs
         self.assertNotIn("required", attrs)
 
         self.attr_1.required_on_views = True
