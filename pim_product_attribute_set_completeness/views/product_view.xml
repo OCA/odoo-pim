@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pim_product_template_completeness_tree_view" model="ir.ui.view">
+        <field name="name">pim.product.template.completeness.tree</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="pim.pim_product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="attribute_set_id" position="after">
+                <field
+                    widget="label_selection"
+                    name="attribute_set_completion_state"
+                    options="{'classes': {'complete': 'success', 'not_complete': 'danger'}}"
+                    attrs="{'invisible': [('attribute_set_id', '=', False)]}"
+                />
+                <field
+                    name="attribute_set_completion_rate"
+                    attrs="{
+                        'invisible': [
+                            '|',
+                            ('attribute_set_id', '=', False),
+                            ('attribute_set_completion_state', '=', 'complete'),
+                        ],
+                    }"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
