@@ -19,6 +19,11 @@ msgid "Advanced Attribute Set settings"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
+msgid "Allowed Attribute Set"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_attribute
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute"
