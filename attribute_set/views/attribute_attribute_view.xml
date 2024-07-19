@@ -73,10 +73,11 @@
                         domain="[('model_id', '=', model_id)]"
                     />
                     <field name="sequence" />
+                    <field name="allowed_attribute_set_ids" invisible="1" />
                     <field
                         name="attribute_set_ids"
                         widget="many2many_tags"
-                        domain="[('model_id', '=', model_id)]"
+                        domain="[('id', 'in', allowed_attribute_set_ids)]"
                         options="{'no_create': 1}"
                         invisible="context.get('from_attribute_set')"
                     />

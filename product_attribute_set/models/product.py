@@ -48,5 +48,15 @@ class ProductTemplate(models.Model):
             self.attribute_set_id = self.categ_id.attribute_set_id
 
 
-# TODO : add the 'attribute.set.owner.mixin' to product.product in order to display
-# Attributes in Variants.
+class ProductProduct(models.Model):
+
+    _inherit = ["product.product", "attribute.set.owner.mixin"]
+    _name = "product.product"
+
+    attribute_set_id = fields.Many2one(
+        related="product_tmpl_id.attribute_set_id", store=True
+    )
+
+    @api.model
+    def _get_attribute_set_owner_model(self):
+        return [("model", "in", ("product.product", "product.template"))]
