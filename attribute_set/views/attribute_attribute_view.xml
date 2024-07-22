@@ -105,9 +105,7 @@
                                 <field column_invisible="1" name="value_ref" />
                                 <field column_invisible="1" name="sequence" />
                                 <field
-                                    column_invisible="relation_model_id != False and value_ref in [False, '']"
-                                    name="name"
-                                />
+                                       name="name"/>
                             </tree></field>
                     </group>
                 </group>
