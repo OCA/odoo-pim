@@ -104,8 +104,7 @@
                                 <field column_invisible="1" name="relation_model_id" />
                                 <field column_invisible="1" name="value_ref" />
                                 <field column_invisible="1" name="sequence" />
-                                <field
-                                       name="name"/>
+                                <field name="name"/>
                             </tree></field>
                     </group>
                 </group>
