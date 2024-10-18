@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="attribute_group_form_action" model="ir.actions.act_window">
+        <field name="name">Attribute Groups</field>
+        <field name="res_model">attribute.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="attribute_set.attribute_group_search_view" />
+        <field
+            name="context"
+            eval="{'default_model_id': ref('product.model_product_template')}"
+        />
+        <field name="help" />
+    </record>
+    <menuitem
+        action="attribute_group_form_action"
+        id="menu_attribute_group_action"
+        parent="main_menu_attribute"
+        sequence="1"
+    />
+</odoo>
