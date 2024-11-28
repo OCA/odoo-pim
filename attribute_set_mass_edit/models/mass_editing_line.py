@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class MassEditingLine(models.Model):
-    _inherit = "mass.editing.line"
+    _inherit = "ir.actions.server.mass.edit.line"
 
     attribute_id = fields.Many2one(
         "attribute.attribute",

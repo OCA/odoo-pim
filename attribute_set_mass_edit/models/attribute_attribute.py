@@ -9,7 +9,7 @@ class AttributeAttribute(models.Model):
 
     allow_mass_editing = fields.Boolean()
     mass_editing_line_ids = fields.One2many(
-        comodel_name="mass.editing.line", inverse_name="attribute_id"
+        comodel_name="ir.actions.server.mass.edit.line", inverse_name="attribute_id"
     )
 
     def _get_mass_editing_ids(self):
@@ -96,7 +96,8 @@ class AttributeAttribute(models.Model):
 
     @api.model_create_multi
     @api.returns("self", lambda value: value.id)
-    def create(self, vals):
-        attributes = super(AttributeAttribute, self).create(vals)
-        attributes._manage_mass_editings()
+    def create(self, vals_list):
+        attributes = super(AttributeAttribute, self).create(vals_list)
+        for rec in attributes:
+            rec._manage_mass_editings()
         return attributes
