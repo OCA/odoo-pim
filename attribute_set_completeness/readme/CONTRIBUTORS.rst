@@ -3,3 +3,8 @@
 * `Camptocamp <https://www.camptocamp.com>`_
 
      * Iván Todorovich <ivan.todorovich@gmail.com>
+
+* Dhara Solanki <dhara.solanki@initos.com>
+* `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`_
+
+    * Bhavesh Heliconia
