@@ -5,10 +5,10 @@ from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import ValidationError
 
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import TransactionComponentCase
 
 
-class TestAttributeSetCompleteness(SavepointComponentCase):
+class TestAttributeSetCompleteness(TransactionComponentCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -105,16 +105,16 @@ class TestAttributeSetCompleteness(SavepointComponentCase):
         self.assertEqual(partner.attribute_set_completion_rate, 0.0)
         # Case 2: Set an attribute set
         partner.write({"attribute_set_id": self.attr_set.id})
-        partner.invalidate_cache()
+        partner.invalidate_model()
         self.assertEqual(partner.attribute_set_completion_state, "not_complete")
         self.assertEqual(partner.attribute_set_completion_rate, 0.0)
         # Case 3: Set a field (50% completion)
         partner.write({"x_test": "test"})
-        partner.invalidate_cache()
+        partner.invalidate_model()
         self.assertEqual(partner.attribute_set_completion_state, "not_complete")
         self.assertEqual(partner.attribute_set_completion_rate, 50.0)
         # Case 4: Set another field (100% completion)
         partner.write({"x_test2": "test"})
-        partner.invalidate_cache()
+        partner.invalidate_model()
         self.assertEqual(partner.attribute_set_completion_state, "complete")
         self.assertEqual(partner.attribute_set_completion_rate, 100.0)
