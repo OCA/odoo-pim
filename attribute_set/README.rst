@@ -90,10 +90,10 @@ Attributes :
 2. You need to **add a placeholder**
    ``<separator name="attributes_placeholder" />`` at the desired
    location in the model's form view.
-3. Finally, **add a context** ``{"include_native_attribute": True}`` on
-   the action leading to this form view if the model's view needs to
-   display attributes related to native fields together with the other
-   "custom" attributes.
+3. Finally, **add a context**
+   ``{"include_native_attribute_view_ref": True}`` on the action leading
+   to this form view if the model's view needs to display attributes
+   related to native fields together with the other "custom" attributes.
 
 Known issues / Roadmap
 ======================
@@ -127,6 +127,7 @@ Contributors
 - Akretion Raphaël VALYI <raphael.valyi@akretion.com>
 - David Dufresne <david.dufresne@savoirfairelinux.com>
 - Denis Roussel <denis.roussel@acsone.eu>
+- Mohamed Alkobrosli <malkobrosly@kencove.com>
 
 Maintainers
 -----------

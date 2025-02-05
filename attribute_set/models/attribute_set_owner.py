@@ -33,7 +33,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ("model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
-        if not self._context.get("include_native_attribute"):
+        if not self._context.get("include_native_attribute_view_ref"):
             domain.append(("nature", "=", "custom"))
 
         attributes = self.env["attribute.attribute"].search(domain)
@@ -71,7 +71,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                 )
             )
 
-        if self._context.get("include_native_attribute"):
+        if self._context.get("include_native_attribute_view_ref"):
             self.remove_native_fields(eview)
         attribute_eview = self._build_attribute_eview()
 

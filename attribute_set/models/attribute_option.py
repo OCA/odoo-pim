@@ -22,7 +22,6 @@ class AttributeOption(models.Model):
     value_ref = fields.Reference(
         selection="_selection_model_list",
         string="Reference",
-        groups="base.group_erp_manager",
     )
 
     attribute_id = fields.Many2one(
