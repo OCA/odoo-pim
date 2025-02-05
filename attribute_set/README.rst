@@ -68,17 +68,17 @@ Attributes**.
 An Attribute is related to both an Attribute Group and an Attribute Set
 :
 
--  The **Attribute Set** is related to the *"model's category"*, i.e.
-   all the model's instances which will display the same Attributes.
+- The **Attribute Set** is related to the *"model's category"*, i.e. all
+  the model's instances which will display the same Attributes.
 
--  The **Attribute Group** is related to the *"attribute's category"*.
-   All the attributes from the same Attribute Set and Attribute Group
-   will be displayed under the same field's Group in the model's view.
+- The **Attribute Group** is related to the *"attribute's category"*.
+  All the attributes from the same Attribute Set and Attribute Group
+  will be displayed under the same field's Group in the model's view.
 
-      🔎 In order to create a custom Attribute many2one or many2many
-      related to **other Odoo model**, you need to activate the
-      Technical Setting **"Advanced Attribute Set settings"**
-      (``group_advanced_attribute_set``).
+     🔎 In order to create a custom Attribute many2one or many2many
+     related to **other Odoo model**, you need to activate the Technical
+     Setting **"Advanced Attribute Set settings"**
+     (``group_advanced_attribute_set``).
 
 --------------
 
@@ -121,12 +121,12 @@ Authors
 Contributors
 ------------
 
--  Sébastien BEAU <sebastien.beau@akretion.com>
--  Clément Mombereau <clement.mombereau@akretion.com.br>
--  Benoît Guillot <benoit.guillot@akretion.com>
--  Akretion Raphaël VALYI <raphael.valyi@akretion.com>
--  David Dufresne <david.dufresne@savoirfairelinux.com>
--  Denis Roussel <denis.roussel@acsone.eu>
+- Sébastien BEAU <sebastien.beau@akretion.com>
+- Clément Mombereau <clement.mombereau@akretion.com.br>
+- Benoît Guillot <benoit.guillot@akretion.com>
+- Akretion Raphaël VALYI <raphael.valyi@akretion.com>
+- David Dufresne <david.dufresne@savoirfairelinux.com>
+- Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainers
 -----------
