@@ -17,13 +17,13 @@ Attribute Set
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-pim/tree/17.0/attribute_set
+    :target: https://github.com/OCA/odoo-pim/tree/18.0/attribute_set
     :alt: OCA/odoo-pim
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-pim-17-0/odoo-pim-17-0-attribute_set
+    :target: https://translation.odoo-community.org/projects/odoo-pim-18-0/odoo-pim-18-0-attribute_set
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=17.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -68,17 +68,17 @@ Attributes**.
 An Attribute is related to both an Attribute Group and an Attribute Set
 :
 
--  The **Attribute Set** is related to the *"model's category"*, i.e.
-   all the model's instances which will display the same Attributes.
+- The **Attribute Set** is related to the *"model's category"*, i.e. all
+  the model's instances which will display the same Attributes.
 
--  The **Attribute Group** is related to the *"attribute's category"*.
-   All the attributes from the same Attribute Set and Attribute Group
-   will be displayed under the same field's Group in the model's view.
+- The **Attribute Group** is related to the *"attribute's category"*.
+  All the attributes from the same Attribute Set and Attribute Group
+  will be displayed under the same field's Group in the model's view.
 
-      🔎 In order to create a custom Attribute many2one or many2many
-      related to **other Odoo model**, you need to activate the
-      Technical Setting **"Advanced Attribute Set settings"**
-      (``group_advanced_attribute_set``).
+     🔎 In order to create a custom Attribute many2one or many2many
+     related to **other Odoo model**, you need to activate the Technical
+     Setting **"Advanced Attribute Set settings"**
+     (``group_advanced_attribute_set``).
 
 --------------
 
@@ -106,7 +106,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-pim/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20attribute_set%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20attribute_set%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -121,12 +121,12 @@ Authors
 Contributors
 ------------
 
--  Sébastien BEAU <sebastien.beau@akretion.com>
--  Clément Mombereau <clement.mombereau@akretion.com.br>
--  Benoît Guillot <benoit.guillot@akretion.com>
--  Akretion Raphaël VALYI <raphael.valyi@akretion.com>
--  David Dufresne <david.dufresne@savoirfairelinux.com>
--  Denis Roussel <denis.roussel@acsone.eu>
+- Sébastien BEAU <sebastien.beau@akretion.com>
+- Clément Mombereau <clement.mombereau@akretion.com.br>
+- Benoît Guillot <benoit.guillot@akretion.com>
+- Akretion Raphaël VALYI <raphael.valyi@akretion.com>
+- David Dufresne <david.dufresne@savoirfairelinux.com>
+- Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainers
 -----------
@@ -141,6 +141,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/17.0/attribute_set>`_ project on GitHub.
+This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/18.0/attribute_set>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
