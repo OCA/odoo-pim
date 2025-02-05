@@ -10,9 +10,8 @@ import re
 
 from lxml import etree
 
-from odoo import Command, _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.safe_eval import safe_eval
 
 from ..utils.orm import setup_modifiers
 
@@ -47,7 +46,6 @@ class AttributeAttribute(models.Model):
         string="Attribute Nature",
         required=True,
         default="custom",
-        store=True,
     )
 
     attribute_type = fields.Selection(
@@ -83,10 +81,6 @@ class AttributeAttribute(models.Model):
         "ir.model", "Relational Model", ondelete="cascade"
     )
 
-    relation_model_name = fields.Char(
-        "Relational Model Name", related="relation_model_id.model"
-    )
-
     widget = fields.Char(help="Specify widget to add to the field on the views.")
 
     required_on_views = fields.Boolean(
@@ -101,6 +95,10 @@ class AttributeAttribute(models.Model):
         relation="rel_attribute_set",
         column1="attribute_id",
         column2="attribute_set_id",
+    )
+    allowed_attribute_set_ids = fields.Many2many(
+        comodel_name="attribute.set",
+        compute="_compute_allowed_attribute_set_ids",
     )
 
     attribute_group_id = fields.Many2one(
@@ -119,12 +117,10 @@ class AttributeAttribute(models.Model):
     )
 
     def _get_attrs(self):
-        attrs = {
-            "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
-        }
+        attrs = {"invisible": f"attribute_set_id not in {self.attribute_set_ids.ids}"}
         if self.required or self.required_on_views:
             attrs.update(
-                {"required": [("attribute_set_id", "in", self.attribute_set_ids.ids)]}
+                {"required": f"attribute_set_id in {self.attribute_set_ids.ids}"}
             )
         return attrs
 
@@ -136,7 +132,7 @@ class AttributeAttribute(models.Model):
         """
         self.ensure_one()
         kwargs = {"name": f"{self.name}"}
-        kwargs["attrs"] = str(self._get_attrs())
+        attrs = self._get_attrs()
         if self.widget:
             kwargs["widget"] = self.widget
 
@@ -175,13 +171,17 @@ class AttributeAttribute(models.Model):
 
         if self.ttype == "text":
             # Display field label above his value
-            field_title = etree.SubElement(
-                attribute_egroup, "b", colspan="2", attrs=kwargs["attrs"]
-            )
+            field_title = etree.SubElement(attribute_egroup, "b", colspan="2")
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
             kwargs["colspan"] = "2"
             setup_modifiers(field_title)
+        if "invisible" in attrs:
+            kwargs["invisible"] = attrs["invisible"]
+            if "field_title" in locals():
+                field_title.set("invisible", attrs["invisible"])
+        if "required" in attrs:
+            kwargs["required"] = attrs["required"]
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
         setup_modifiers(efield)
 
@@ -209,25 +209,34 @@ class AttributeAttribute(models.Model):
                     att_set_ids += att.attribute_set_ids.ids
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_domain = (
-                    f"[('attribute_set_id', 'not in', {list(set(att_set_ids))})]"
-                )
+                hide_condition = f"attribute_set_id not in {list(set(att_set_ids))}"
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
                     "group",
                     string=att_group_name,
                     colspan="2",
-                    attrs=f"{{'invisible' : {hide_domain} }}",
+                    invisible=hide_condition,
                 )
                 groups.append(att_group)
-
             setup_modifiers(attribute_egroup)
             attribute_with_env = (
-                attribute.sudo() if attribute.check_access_rights("read") else self
+                attribute.sudo() if not attribute.check_access("read") else attribute
             )
             attribute_with_env._build_attribute_field(attribute_egroup)
 
         return attribute_eview
+
+    def _get_attribute_set_allowed_model(self):
+        return self.model_id
+
+    @api.depends("model_id")
+    def _compute_allowed_attribute_set_ids(self):
+        AttributeSet = self.env["attribute.set"]
+        for record in self:
+            allowed_models = record._get_attribute_set_allowed_model()
+            record.allowed_attribute_set_ids = AttributeSet.search(
+                [("model_id", "in", allowed_models.ids)]
+            )
 
     @api.onchange("model_id")
     def onchange_model_id(self):
@@ -261,7 +270,7 @@ class AttributeAttribute(models.Model):
                 ast.literal_eval(self.domain)
             except ValueError:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "`%(domain)s` is an invalid Domain name.\n"
                         "Specify a Python expression defining a list of triplets.\n"
                         "For example : `[('color', '=', 'red')]`",
@@ -274,18 +283,23 @@ class AttributeAttribute(models.Model):
 
     def button_add_options(self):
         self.ensure_one()
-        values = self.env[self.relation_model_id.model].search(safe_eval(self.domain))
-        options = []
-        for value in values:
-            options.append(
-                Command.create(
-                    {
-                        "name": value.display_name,
-                        "value_ref": f"{value._name},{value.id}",
-                    }
-                )
-            )
-        self.option_ids = options
+        # Before adding another option delete the ones which are linked
+        # to a deleted object
+        for option in self.option_ids:
+            if not option.value_ref:
+                option.unlink()
+        # Then open the Options Wizard which will display an 'opt_ids' m2m field related
+        # to the 'relation_model_id' model
+        return {
+            # context since 17.0 will be dropped in views
+            # unless we suffix it's key with _view_ref
+            "context": {"attribute_id_view_ref": self.id},
+            "name": self.env._("Options Wizard"),
+            "view_mode": "form",
+            "res_model": "attribute.option.wizard",
+            "type": "ir.actions.act_window",
+            "target": "new",
+        }
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -325,8 +339,9 @@ class AttributeAttribute(models.Model):
             elif attr_type == "multiselect":
                 vals["ttype"] = "many2many"
                 vals["relation"] = relation
-                # Specify the relation_table's name in case of m2m not serialized to
-                # avoid creating the same default relation_table name for any attribute
+                # Specify the relation_table's name in case of m2m not serialized
+                # to avoid creating the same default
+                # relation_table name for any attribute
                 # linked to the same attribute.option or relation_model_id's model.
                 if not vals.get("serialized"):
                     att_model_id = self.env["ir.model"].browse(vals["model_id"])
@@ -374,6 +389,16 @@ class AttributeAttribute(models.Model):
             vals["state"] = "manual"
         return super().create(vals_list)
 
+    def _delete_related_option_wizard(self, option_vals):
+        """Delete related attribute's options wizards."""
+        self.ensure_one()
+        for option_change in option_vals:
+            if option_change[0] == 2:
+                self.env["attribute.option.wizard"].search(
+                    [("attribute_id", "=", self.id)]
+                ).unlink()
+                break
+
     def _delete_old_fields_options(self, options):
         """Delete outdated attribute's field values on existing records."""
         self.ensure_one()
@@ -397,7 +422,7 @@ class AttributeAttribute(models.Model):
                 ]
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Can't change the type of an attribute. "
                         "Please create a new one."
                     )
@@ -415,7 +440,7 @@ class AttributeAttribute(models.Model):
                 ]
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         """Can't change the attribute's Relational Model in order to
                         avoid conflicts with existing objects using this attribute.
                         Please create a new one."""
@@ -427,7 +452,7 @@ class AttributeAttribute(models.Model):
                 [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         """It is not allowed to change the boolean 'Serialized'.
                         A serialized field can not be change to non-serialized \
                         and vice versa."""
