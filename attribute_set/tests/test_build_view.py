@@ -324,9 +324,7 @@ class BuildViewCase(TransactionCase):
         # And it is not in page "partner_attributes"
         self.assertFalse(
             eview.xpath(
-                "//page[@name='partner_attributes']//field[@name='{}']".format(
-                    self.attr_native.name
-                )
+                f"//page[@name='partner_attributes']//field[@name='{self.attr_native.name}']"
             )
         )
 

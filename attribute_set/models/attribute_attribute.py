@@ -135,7 +135,7 @@ class AttributeAttribute(models.Model):
         Conditional invisibility based on its attribute sets.
         """
         self.ensure_one()
-        kwargs = {"name": "%s" % self.name}
+        kwargs = {"name": f"{self.name}"}
         kwargs["attrs"] = str(self._get_attrs())
         if self.widget:
             kwargs["widget"] = self.widget
@@ -159,7 +159,7 @@ class AttributeAttribute(models.Model):
                 else:
                     # Display only options linked to an existing object
                     ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
-                    kwargs["domain"] = "[('id', 'in', %s)]" % ids
+                    kwargs["domain"] = f"[('id', 'in', {ids})]"
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
@@ -168,8 +168,8 @@ class AttributeAttribute(models.Model):
             elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
-                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
-                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+                kwargs["domain"] = f"[('attribute_id', '=', {self.id})]"
+                kwargs["context"] = f"{{'default_attribute_id': {self.id}}}"
             elif self.nature != "custom":
                 kwargs["context"] = self._get_native_field_context()
 
@@ -209,8 +209,8 @@ class AttributeAttribute(models.Model):
                     att_set_ids += att.attribute_set_ids.ids
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_domain = "[('attribute_set_id', 'not in', {})]".format(
-                    list(set(att_set_ids))
+                hide_domain = (
+                    f"[('attribute_set_id', 'not in', {list(set(att_set_ids))})]"
                 )
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
@@ -242,7 +242,7 @@ class AttributeAttribute(models.Model):
     def onchange_name(self):
         name = self.name
         if not name.startswith("x_"):
-            self.name = "x_%s" % name
+            self.name = f"x_{name}"
 
     @api.onchange("attribute_type")
     def onchange_attribute_type(self):
