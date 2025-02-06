@@ -3,3 +3,4 @@
 * Cédric PIGEON <cedric.pigeon@acsone.eu>
 * Denis Roussel <denis.roussel@acsone.eu>
 * Dhara Solanki <dhara.solanki@initos.com>
+* Mohamed Alkobrosli <malkobrosly@kencove.com>
