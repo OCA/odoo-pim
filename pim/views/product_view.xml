@@ -26,22 +26,6 @@
                     groups="uom.group_uom"
                 />
                 <field name="attribute_set_id" />
-                <field
-                    widget="label_selection"
-                    name="attribute_set_completion_state"
-                    options="{'classes': {'complete': 'success', 'not_complete': 'danger'}}"
-                    attrs="{'invisible': [('attribute_set_id', '=', False)]}"
-                />
-                <field
-                    name="attribute_set_completion_rate"
-                    attrs="{
-                        'invisible': [
-                            '|',
-                            ('attribute_set_id', '=', False),
-                            ('attribute_set_completion_state', '=', 'complete'),
-                        ],
-                    }"
-                />
             </tree>
         </field>
     </record>
