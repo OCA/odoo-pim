@@ -57,7 +57,7 @@
         </field>
     </record>
     <record id="view_attribute_option_search" model="ir.ui.view">
-        <field name="name">attribute.option.list</field>
+        <field name="name">attribute.option.tree</field>
         <field name="model">attribute.option</field>
         <field name="arch" type="xml">
             <search string="Search Attribute Options">
