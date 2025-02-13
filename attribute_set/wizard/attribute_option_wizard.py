@@ -22,6 +22,9 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id", False),
         ondelete="cascade",
     )
+    option_ids = fields.One2many(
+        "attribute.option", "attribute_id", "Attribute Options"
+    )
 
     def validate(self):
         return True
@@ -37,6 +40,8 @@ class AttributeOptionWizard(models.TransientModel):
             model = attr.relation_model_id.model
 
             name = self.env[model].browse(op_id).name_get()[0][1]
+            vals["option_ids"][0][1] = name
+            vals["option_ids"][0][0] = [vals["attribute_id"]]
             opt_obj.create(
                 {
                     "attribute_id": vals["attribute_id"],
