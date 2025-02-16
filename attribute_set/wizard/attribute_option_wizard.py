@@ -22,8 +22,9 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id", False),
         ondelete="cascade",
     )
-    option_ids = fields.One2many(
-        "attribute.option", "attribute_id", "Attribute Options"
+    option_ids = fields.Many2many(
+        "attribute.option",
+        string="Attribute Options",
     )
 
     def validate(self):
@@ -87,7 +88,7 @@ class AttributeOptionWizard(models.TransientModel):
             )
 
             eview = etree.fromstring(res["arch"])
-            options = etree.Element("field", name="option_ids", nolabel="1")
+            options = etree.Element("field", name="option_ids", widget="many2many_tags")
             placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["arch"] = etree.tostring(eview, pretty_print=True)
