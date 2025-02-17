@@ -42,9 +42,7 @@ class AttributeOptionWizard(models.TransientModel):
                     {
                         "attribute_id": vals["attribute_id"],
                         "name": name,
-                        "value_ref": "{},{}".format(
-                            attr.relation_model_id.model, op_id
-                        ),
+                        "value_ref": f"{attr.relation_model_id.model},{op_id}",
                     }
                 )
             if vals.get("option_ids"):
