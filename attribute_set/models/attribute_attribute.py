@@ -134,7 +134,7 @@ class AttributeAttribute(models.Model):
         Conditional invisibility based on its attribute sets.
         """
         self.ensure_one()
-        kwargs = {"name": "%s" % self.name}
+        kwargs = {"name": f"{self.name}"}
         kwargs["attrs"] = str(self._get_attrs())
         if self.widget:
             kwargs["widget"] = self.widget
@@ -158,7 +158,7 @@ class AttributeAttribute(models.Model):
                 else:
                     # Display only options linked to an existing object
                     ids = [op.value_ref.id for op in self.option_ids if op.value_ref]
-                    kwargs["domain"] = "[('id', 'in', %s)]" % ids
+                    kwargs["domain"] = f"[('id', 'in', {ids})]"
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
@@ -167,8 +167,8 @@ class AttributeAttribute(models.Model):
             elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
                 # Attribute Options search and creation
-                kwargs["domain"] = "[('attribute_id', '=', %s)]" % (self.id)
-                kwargs["context"] = "{'default_attribute_id': %s}" % (self.id)
+                kwargs["domain"] = f"[('attribute_id', '=', {self.id})]"
+                kwargs["context"] = f"{{'default_attribute_id': {self.id}}}"
             elif self.nature != "custom":
                 kwargs["context"] = self._get_native_field_context()
 
@@ -219,10 +219,11 @@ class AttributeAttribute(models.Model):
                     attrs=f"{{'invisible' : {hide_domain} }}",
                 )
                 groups.append(att_group)
-
             setup_modifiers(attribute_egroup)
             attribute_with_env = (
-                attribute.sudo() if attribute.check_access_rights("read") else self
+                attribute.sudo()
+                if not attribute.check_access_rights("read")
+                else attribute
             )
             attribute_with_env._build_attribute_field(attribute_egroup)
 
@@ -253,7 +254,7 @@ class AttributeAttribute(models.Model):
     def onchange_name(self):
         name = self.name
         if not name.startswith("x_"):
-            self.name = "x_%s" % name
+            self.name = f"x_{name}"
 
     @api.onchange("attribute_type")
     def onchange_attribute_type(self):
@@ -293,7 +294,7 @@ class AttributeAttribute(models.Model):
         # Then open the Options Wizard which will display an 'opt_ids' m2m field related
         # to the 'relation_model_id' model
         return {
-            "context": dict(self.env.context, attribute_id=self.id),
+            "context": {"default_attribute_id": self.id},
             "name": _("Options Wizard"),
             "view_type": "form",
             "view_mode": "form",
@@ -341,7 +342,8 @@ class AttributeAttribute(models.Model):
                 vals["ttype"] = "many2many"
                 vals["relation"] = relation
                 # Specify the relation_table's name in case of m2m not serialized
-                # to avoid creating the same default relation_table name for any attribute
+                # to avoid creating the same default
+                # relation_table name for any attribute
                 # linked to the same attribute.option or relation_model_id's model.
                 if not vals.get("serialized"):
                     att_model_id = self.env["ir.model"].browse(vals["model_id"])
@@ -466,9 +468,6 @@ class AttributeAttribute(models.Model):
             if att.relation_model_id:
                 options = self.env[att.relation_model_id.model]
                 if "option_ids" in list(vals.keys()):
-                    # Delete related attribute.option.wizard if an attribute.option
-                    # has been deleted
-                    att._delete_related_option_wizard(vals["option_ids"])
                     # If there is still some attribute.option available, override
                     # 'options' with the objects they are refering to.
                     options = options.search(

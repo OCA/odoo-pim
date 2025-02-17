@@ -34,7 +34,8 @@ class BuildViewCase(TransactionCase):
         cls.demo = cls.env.ref("base.user_demo")
 
         # This user will have access to
-        cls.attribute_manager_user = cls.env["res.users"].create(
+        cls.attribute_manager_user = cls.env.ref("base.user_admin")
+        cls.attribute_manager_user.write(
             {
                 "name": "Attribute Manager",
                 "login": "attribute_manager",
@@ -276,9 +277,7 @@ class BuildViewCase(TransactionCase):
                     "attribute_set_ids": [(6, 0, [self.set_1.id])],
                 }
             )
-            new_self = self
-            new_self.env = self.env(user=self.demo, su=False)
-            attr = new_self._get_attr_element(name)
+            attr = self._get_attr_element(name)
             self.assertIsNotNone(attr)
             if attr_type == "text":
                 self.assertTrue(attr.get("nolabel"))
@@ -344,18 +343,20 @@ class BuildViewCase(TransactionCase):
         )
 
     # TEST form views rendering
-    @users("demo")
+    @users("attribute_manager")
     def test_model_form(self):
         # Test attributes modifications through form
         self.assertFalse(self.partner.x_attr_3)
         with Form(
-            self.partner.with_user(self.demo).with_context(load_all_views=True)
+            self.partner.with_user(self.attribute_manager_user).with_context(
+                load_all_views=True
+            )
         ) as partner_form:
             partner_form.attribute_set_id = self.set_1
             partner_form.x_attr_3 = True
             partner_form.x_attr_select = self.attr_select_option
             partner_form.x_multi_attribute.add(self.multi_attribute.option_ids[0])
-        partner = partner_form.save().with_user(self.demo)
+        partner = partner_form.save().with_user(self.attribute_manager_user)
         self.assertTrue(partner.x_attr_3)
         self.assertTrue(partner.x_attr_select)
         # As options are Many2many, Form() is not able to render the sub form

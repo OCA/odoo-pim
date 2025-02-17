@@ -49,12 +49,14 @@ class AttributeOptionWizard(models.TransientModel):
                 del vals["option_ids"]
         return super().create(vals_list)
 
-    # Hack to circumvent the fact that option_ids never actually exists in the DB,
-    # thus crashing when read is called after create
-    def read(self, fields=None, load="_classic_read"):
-        if "option_ids" in fields:
-            fields.remove("option_ids")
-        return super().read(fields, load)
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        view_id = self.env.ref("attribute_set.attribute_option_wizard_form_view").id
+        view = self.get_views([(view_id, "form")], {})
+        view.get("models")
+        self.env["ir.ui.view"].clear_caches()
+        return res
 
     @api.model
     def get_views(self, views, options=None):
@@ -64,15 +66,13 @@ class AttributeOptionWizard(models.TransientModel):
             "views" in res
             and "form" in res["views"]
             and context
-            and context.get("attribute_id")
+            and context.get("default_attribute_id")
         ):
             attr_obj = self.env["attribute.attribute"]
-            attr = attr_obj.browse(context.get("attribute_id"))
+            attr = attr_obj.browse(context.get("default_attribute_id"))
             model = attr.relation_model_id
-
             relation = model.model
             domain_ids = [op.value_ref.id for op in attr.option_ids if op.value_ref]
-
             res["models"][self._name].update(
                 {
                     "option_ids": {
@@ -84,11 +84,11 @@ class AttributeOptionWizard(models.TransientModel):
                     }
                 }
             )
-
             eview = etree.fromstring(res["views"]["form"]["arch"])
-            options = etree.Element("field", name="option_ids", nolabel="1")
+            options = etree.Element("field", name="option_ids")
             placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["views"]["form"]["arch"] = etree.tostring(eview, pretty_print=True)
+            self.env["ir.ui.view"].clear_caches()
 
         return res

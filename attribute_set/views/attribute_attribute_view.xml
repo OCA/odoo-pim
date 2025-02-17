@@ -7,7 +7,7 @@
             <form string="Attribute">
                 <field
                     name="nature"
-                    attrs="{'readonly': [('create_date', '!=', False)]}"
+                    readonly="create_date"
                     options="{'horizontal': true}"
                     class="oe_edit_only col-12"
                     widget="radio"
@@ -23,37 +23,22 @@
                        by 'default_model_id' through the menu's context that led to this view -->
                     <field name="model_id" />
                 </group>
-                <separator attrs="{'invisible': [('nature', '=', 'native')]}" />
-                <group
-                    col="2"
-                    class="col-6"
-                    attrs="{'invisible': [('nature', '=', 'native')]}"
-                >
-                    <field
-                        name="field_description"
-                        attrs="{'required': [('nature', '=', 'custom')]}"
-                    />
+                <separator invisible="nature == 'native'" />
+                <group col="2" class="col-6" invisible="nature == 'native'">
+                    <field name="field_description" required="nature == 'custom'" />
                     <field name="help" />
                     <field
                         name="name"
-                        attrs="{'readonly': [('create_date', '!=', False)], 'required': [('nature', '=', 'custom')]}"
+                        readonly="create_date"
+                        required="nature == 'custom'"
                     />
-                    <field
-                        name="attribute_type"
-                        attrs="{'required': [('nature', '=', 'custom')]}"
-                    />
-                    <field
-                        name="size"
-                        attrs="{'invisible': [('attribute_type', '!=', 'char')]}"
-                    />
+                    <field name="attribute_type" required="nature == 'custom'" />
+                    <field name="size" invisible="attribute_type != 'char'" />
                     <field
                         name="translate"
-                        attrs="{'invisible': [('attribute_type', 'not in', ('char', 'text'))]}"
+                        invisible="attribute_type not in ['char', 'text']"
                     />
-                    <field
-                        name="serialized"
-                        attrs="{'readonly': [('create_date', '!=', False)]}"
-                    />
+                    <field name="serialized" readonly="create_date" />
                 </group>
                 <separator />
                 <group col="2" class="col-6">
@@ -61,11 +46,9 @@
                         name="field_id"
                         string="Related native field"
                         options="{'no_create_edit': 1}"
-                        attrs="{
-                                    'required': [('nature', '=', 'native')],
-                                    'invisible': [('nature', '=', 'custom')],
-                                    'readonly': [('model_id', '=', False)],
-                                }"
+                        required="nature == 'native'"
+                        invisible="nature == 'custom'"
+                        readonly="not model_id"
                     />
                     <field
                         name="attribute_group_id"
@@ -73,11 +56,10 @@
                         domain="[('model_id', '=', model_id)]"
                     />
                     <field name="sequence" />
-                    <field name="allowed_attribute_set_ids" invisible="1" />
                     <field
                         name="attribute_set_ids"
                         widget="many2many_tags"
-                        domain="[('id', 'in', allowed_attribute_set_ids)]"
+                        domain="[('model_id', '=', model_id)]"
                         options="{'no_create': 1}"
                         invisible="context.get('from_attribute_set')"
                     />
@@ -86,7 +68,7 @@
                     <field name="create_date" invisible="1" />
                 </group>
                 <group
-                    attrs="{'invisible': ['|', ('attribute_type', 'not in', ['select', 'multiselect']), ('nature', '=', 'native')]}"
+                    invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
                     col="4"
                     colspan="4"
                 >
@@ -96,23 +78,14 @@
                         col="4"
                     >
                         <group colspan="2">
-                            <field
-                                name="relation_model_id"
-                                attrs="{'readonly': [('create_date', '!=', False)]}"
-                            />
-                            <field
-                                name="domain"
-                                attrs="{'invisible': [('relation_model_id', '=', False)]}"
-                            />
+                            <field name="relation_model_id" readonly="create_date" />
+                            <field name="domain" invisible="not relation_model_id" />
                         </group>
                         <newline />
-                        <group
-                            colspan="2"
-                            attrs="{'invisible': [('relation_model_id', '=', False)]}"
-                        >
+                        <group colspan="2" invisible="not relation_model_id">
                             <button
                                 name="button_add_options"
-                                attrs="{'invisible': [('domain', 'not in', [False, '[]'] )]}"
+                                invisible="domain not in [False, '[]']"
                                 type="object"
                                 string="Load Attribute Options"
                                 class="oe_highlight"
@@ -123,13 +96,10 @@
                     <group colspan="4">
                         <field name="option_ids" string="Attribute Options" colspan="4">
                             <tree editable="top">
-                                <field name="relation_model_id" invisible="1" />
-                                <field name="value_ref" invisible="1" />
-                                <field name="sequence" invisible="1" />
-                                <field
-                                    name="name"
-                                    attrs="{'invisible': [('relation_model_id', '!=', False), ('value_ref', 'in', [False, ''])]}"
-                                />
+                                <field name="relation_model_id" readonly="True" />
+                                <field name="value_ref" />
+                                <field name="sequence" />
+                                <field name="name" groups="base.group_erp_manager" />
                             </tree>
                         </field>
                     </group>
@@ -145,7 +115,7 @@
                 <field
                     name="sequence"
                     widget="handle"
-                    invisible="not context.get('active_attribute_sort')"
+                    column_invisible="not context.get('active_attribute_sort')"
                 />
                 <field name="field_description" />
                 <field name="attribute_type" />
@@ -156,7 +126,7 @@
         </field>
     </record>
     <record id="view_attribute_attribute_search" model="ir.ui.view">
-        <field name="name">attribute.attribute.list</field>
+        <field name="name">attribute.attribute.tree</field>
         <field name="model">attribute.attribute</field>
         <field name="arch" type="xml">
             <search string="Search Attributes">
@@ -179,7 +149,7 @@
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_attribute_attribute_search" />
         <field name="context">
-            {"search_default_attribute_group_id": active_id, "active_attribute_sort":
+            {"search_default_attribute_group_id": [active_id], "active_attribute_sort":
             True}
         </field>
         <field name="help" />

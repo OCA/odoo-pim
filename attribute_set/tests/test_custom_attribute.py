@@ -25,8 +25,10 @@ class TestAttributeSet(common.TransactionCase):
             {
                 "nature": "custom",
                 "model_id": self.model_id,
-                "field_description": "Attribute %s" % vals["attribute_type"],
-                "name": "x_%s" % vals["attribute_type"],
+                "field_description": "Attribute {key}".format(
+                    key=vals["attribute_type"]
+                ),
+                "name": "x_{key}".format(key=vals["attribute_type"]),
                 "attribute_group_id": self.group.id,
             }
         )

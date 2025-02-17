@@ -45,7 +45,7 @@
         </field>
     </record>
     <record id="view_attribute_set_search" model="ir.ui.view">
-        <field name="name">attribute.set.list</field>
+        <field name="name">attribute.set.tree</field>
         <field name="model">attribute.set</field>
         <field name="arch" type="xml">
             <search string="Search Attribute Sets">
