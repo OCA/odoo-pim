@@ -94,10 +94,15 @@
                         </group>
                     </group>
                     <group colspan="4">
-                        <field name="option_ids" string="Attribute Options" colspan="4">
+                        <field
+                            name="option_ids"
+                            widget="one2many"
+                            mode="tree"
+                            string="Attribute Options"
+                        >
                             <tree editable="top">
                                 <field name="relation_model_id" readonly="True" />
-                                <field name="value_ref" />
+                                <field name="value_ref" column_invisible="1" />
                                 <field name="sequence" />
                                 <field name="name" groups="base.group_erp_manager" />
                             </tree>

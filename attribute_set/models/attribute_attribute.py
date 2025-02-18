@@ -294,7 +294,9 @@ class AttributeAttribute(models.Model):
         # Then open the Options Wizard which will display an 'opt_ids' m2m field related
         # to the 'relation_model_id' model
         return {
-            "context": {"default_attribute_id": self.id},
+            # context since 17.0 will be dropped in views
+            # unless we suffix it's key with _view_ref
+            "context": {"attribute_id_view_ref": self.id},
             "name": _("Options Wizard"),
             "view_type": "form",
             "view_mode": "form",

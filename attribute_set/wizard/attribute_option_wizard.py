@@ -22,6 +22,9 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id", False),
         ondelete="cascade",
     )
+    option_ids = fields.One2many(
+        "attribute.option", "attribute_id", "Attribute Options"
+    )
 
     def validate(self):
         return True
@@ -34,10 +37,10 @@ class AttributeOptionWizard(models.TransientModel):
 
             opt_obj = self.env["attribute.option"]
 
-            for op_id in vals.get("option_ids") and vals["option_ids"][0][2] or []:
+            for op_id in [val[1] for val in vals.get("option_ids", [])]:
                 model = attr.relation_model_id.model
 
-                name = self.env[model].browse(op_id).name_get()[0][1]
+                name = self.env[model].browse(op_id).display_name
                 opt_obj.create(
                     {
                         "attribute_id": vals["attribute_id"],
@@ -52,10 +55,10 @@ class AttributeOptionWizard(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
-        view_id = self.env.ref("attribute_set.attribute_option_wizard_form_view").id
-        view = self.get_views([(view_id, "form")], {})
-        view.get("models")
-        self.env["ir.ui.view"].clear_caches()
+        # Retrieve attribute_id_view_ref from context
+        context = self.env.context
+        if context.get("attribute_id_view_ref"):
+            res["attribute_id"] = context.get("attribute_id_view_ref")
         return res
 
     @api.model
@@ -66,10 +69,10 @@ class AttributeOptionWizard(models.TransientModel):
             "views" in res
             and "form" in res["views"]
             and context
-            and context.get("default_attribute_id")
+            and context.get("attribute_id_view_ref")
         ):
             attr_obj = self.env["attribute.attribute"]
-            attr = attr_obj.browse(context.get("default_attribute_id"))
+            attr = attr_obj.browse(context.get("attribute_id_view_ref"))
             model = attr.relation_model_id
             relation = model.model
             domain_ids = [op.value_ref.id for op in attr.option_ids if op.value_ref]
@@ -85,10 +88,9 @@ class AttributeOptionWizard(models.TransientModel):
                 }
             )
             eview = etree.fromstring(res["views"]["form"]["arch"])
-            options = etree.Element("field", name="option_ids")
+            options = etree.Element("field", name="option_ids", widget="many2many_tags")
             placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["views"]["form"]["arch"] = etree.tostring(eview, pretty_print=True)
-            self.env["ir.ui.view"].clear_caches()
 
         return res
