@@ -19,7 +19,9 @@ class AttributeOptionWizard(models.TransientModel):
         "attribute.attribute",
         "Product Attribute",
         required=True,
-        default=lambda self: self.env.context.get("attribute_id", False),
+        # if the context is passed in correctly by suffixing it with _view_ref
+        # we will no longer need default_get method to assign attribute_id a value
+        default=lambda self: self.env.context.get("attribute_id_view_ref", False),
         ondelete="cascade",
     )
     option_ids = fields.One2many(
@@ -51,15 +53,6 @@ class AttributeOptionWizard(models.TransientModel):
             if vals.get("option_ids"):
                 del vals["option_ids"]
         return super().create(vals_list)
-
-    @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
-        # Retrieve attribute_id_view_ref from context
-        context = self.env.context
-        if context.get("attribute_id_view_ref"):
-            res["attribute_id"] = context.get("attribute_id_view_ref")
-        return res
 
     @api.model
     def get_views(self, views, options=None):
