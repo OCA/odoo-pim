@@ -38,6 +38,6 @@
         <field name="view_id" ref="pim.pim_product_template_tree_view" />
         <field
             name="context"
-        >{"include_native_attribute": 1, "search_default_filter_to_sell": 1}</field>
+        >{"include_native_attribute_view_ref": 1, "search_default_filter_to_sell": 1}</field>
     </record>
 </odoo>
