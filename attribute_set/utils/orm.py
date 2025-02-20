@@ -45,15 +45,23 @@ def transfer_node_to_modifiers(node, modifiers, context=None, in_tree_view=False
 
     for a in ("invisible", "readonly", "required"):
         if node.get(a):
-            v = bool(safe_eval(node.get(a), {"context": context or {}}))
-            if in_tree_view and a == "invisible":
-                # Invisible in a tree view has a specific meaning, make it a
-                # new key in the modifiers attribute.
-                modifiers["column_invisible"] = v
-            elif v or (a not in modifiers or not isinstance(modifiers[a], list)):
-                # Don't set the attribute to False if a dynamic value was
-                # provided (i.e. a domain from attrs or states).
-                modifiers[a] = v
+            try:
+                v = bool(safe_eval(node.get(a), {"context": context or {}}))
+                if in_tree_view and a == "invisible":
+                    # Invisible in a tree view has a specific meaning, make it a
+                    # new key in the modifiers attribute.
+                    modifiers["column_invisible"] = v
+                elif v or (a not in modifiers or not isinstance(modifiers[a], list)):
+                    # Don't set the attribute to False if a dynamic value was
+                    # provided (i.e. a domain from attrs or states).
+                    modifiers[a] = v
+            except ValueError:
+                if a == "invisible" and node.get(a) not in ["1", "0", "True", "False"]:
+                    modifiers["invisible"] = node.get(a)
+                if a == "required" and node.get(a) not in ["1", "0", "True", "False"]:
+                    modifiers["required"] = node.get(a)
+                if a == "readonly" and node.get(a) not in ["1", "0", "True", "False"]:
+                    modifiers["readonly"] = node.get(a)
 
 
 def simplify_modifiers(modifiers):

@@ -118,12 +118,10 @@ class AttributeAttribute(models.Model):
     )
 
     def _get_attrs(self):
-        attrs = {
-            "invisible": [("attribute_set_id", "not in", self.attribute_set_ids.ids)]
-        }
+        attrs = {"invisible": f"attribute_set_id not in {self.attribute_set_ids.ids}"}
         if self.required or self.required_on_views:
             attrs.update(
-                {"required": [("attribute_set_id", "in", self.attribute_set_ids.ids)]}
+                {"required": f"attribute_set_id in {self.attribute_set_ids.ids}"}
             )
         return attrs
 
@@ -135,7 +133,7 @@ class AttributeAttribute(models.Model):
         """
         self.ensure_one()
         kwargs = {"name": f"{self.name}"}
-        kwargs["attrs"] = str(self._get_attrs())
+        attrs = self._get_attrs()
         if self.widget:
             kwargs["widget"] = self.widget
 
@@ -174,13 +172,15 @@ class AttributeAttribute(models.Model):
 
         if self.ttype == "text":
             # Display field label above his value
-            field_title = etree.SubElement(
-                attribute_egroup, "b", colspan="2", attrs=kwargs["attrs"]
-            )
+            field_title = etree.SubElement(attribute_egroup, "b", colspan="2")
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
             kwargs["colspan"] = "2"
             setup_modifiers(field_title)
+        if "invisible" in attrs:
+            kwargs["invisible"] = attrs["invisible"]
+        if "required" in attrs:
+            kwargs["required"] = attrs["required"]
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
         setup_modifiers(efield)
 
@@ -208,15 +208,15 @@ class AttributeAttribute(models.Model):
                     att_set_ids += att.attribute_set_ids.ids
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_domain = "[('attribute_set_id', 'not in', {})]".format(
-                    list(set(att_set_ids))
+                hide_condition = (
+                    f"attribute_set_id not in {attribute.attribute_set_ids.ids}"
                 )
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
                     "group",
                     string=att_group_name,
                     colspan="2",
-                    attrs=f"{{'invisible' : {hide_domain} }}",
+                    invisible=hide_condition,
                 )
                 groups.append(att_group)
             setup_modifiers(attribute_egroup)
