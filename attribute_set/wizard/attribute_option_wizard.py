@@ -24,8 +24,9 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id_view_ref", False),
         ondelete="cascade",
     )
-    option_ids = fields.One2many(
-        "attribute.option", "attribute_id", "Attribute Options"
+    option_ids = fields.Many2many(
+        "attribute.option",
+        string="Attribute Options",
     )
 
     def validate(self):

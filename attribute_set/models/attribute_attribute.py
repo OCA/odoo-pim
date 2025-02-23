@@ -179,6 +179,8 @@ class AttributeAttribute(models.Model):
             setup_modifiers(field_title)
         if "invisible" in attrs:
             kwargs["invisible"] = attrs["invisible"]
+            if "field_title" in locals():
+                field_title.set("invisible", attrs["invisible"])
         if "required" in attrs:
             kwargs["required"] = attrs["required"]
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
@@ -208,9 +210,7 @@ class AttributeAttribute(models.Model):
                     att_set_ids += att.attribute_set_ids.ids
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_condition = (
-                    f"attribute_set_id not in {attribute.attribute_set_ids.ids}"
-                )
+                hide_condition = f"attribute_set_id not in {list(set(att_set_ids))}"
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
                     "group",
