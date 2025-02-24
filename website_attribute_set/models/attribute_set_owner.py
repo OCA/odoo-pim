@@ -1,0 +1,31 @@
+# Copyright 2011 Kencove (http://www.kencove.com).
+# @author Mohamed Alkobrosli <malkobrosly@kencove.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo import models
+
+
+class AttributeSetOwnerMixin(models.AbstractModel):
+    """Mixin for consumers of attribute sets."""
+
+    _inherit = "attribute.set.owner.mixin"
+
+    def get_extra_attributes(self):
+        """Get extra product's attribute."""
+        self.ensure_one()
+        domain = [
+            ("model", "=", self._name),
+            ("attribute_set_ids", "!=", False),
+        ]
+        if not self._context.get("include_native_attribute_view_ref"):
+            domain.append(("nature", "=", "custom"))
+        attribute = self.env["attribute.attribute"]
+        if self.attribute_set_id:
+            attributes = attribute.search(domain)
+            attribute_set_id = self.attribute_set_id
+            filtered_attributes = attributes.filtered(
+                lambda rec: attribute_set_id.id in rec.attribute_set_ids.ids
+            )
+            return filtered_attributes
+        else:
+            return attribute
