@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="variants" inherit_id="website_sale.variants">
+        <xpath expr="//ul" position="after">
+            <t t-set="additional_attributes" t-value="product.get_extra_attributes()" />
+            <ul t-attf-class="list-unstyled js_add_cart_variants mb-0 #{ul_class}">
+                <t t-foreach="additional_attributes" t-as="attribute">
+                    <li
+                        t-att-data-attribute_id="attribute.id"
+                        t-att-data-attribute_name="attribute.name"
+                        t-att-data-attribute_display_type="attribute.attribute_type"
+                        t-attf-class="variant_attribute"
+                    >
+                        <strong
+                            t-field="attribute.field_description"
+                            class="attribute_name"
+                        />
+
+                        <t t-if="attribute.attribute_type == 'select'">
+                            <select
+                                t-att-data-attribute_id="attribute.id"
+                                t-attf-class="form-select css_attribute_select o_wsale_product_attribute"
+                                t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                            />
+                        </t>
+                    </li>
+                </t>
+            </ul>
+        </xpath>
+    </template>
+</odoo>
