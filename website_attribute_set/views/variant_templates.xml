@@ -2,9 +2,13 @@
 <odoo>
     <template id="variants" inherit_id="website_sale.variants">
         <xpath expr="//ul" position="after">
-            <t t-set="additional_attributes" t-value="product.get_extra_attributes()" />
             <ul t-attf-class="list-unstyled js_add_cart_variants mb-0 #{ul_class}">
-                <t t-foreach="additional_attributes" t-as="attribute">
+                <t t-foreach="additional_attributes" t-as="attribute_dict">
+                    <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
+                    <t
+                        t-set="attribute_values"
+                        t-value="attribute_dict.get('attribute_values')"
+                    />
                     <li
                         t-att-data-attribute_id="attribute.id"
                         t-att-data-attribute_name="attribute.name"
@@ -21,7 +25,99 @@
                                 t-att-data-attribute_id="attribute.id"
                                 t-attf-class="form-select css_attribute_select o_wsale_product_attribute"
                                 t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                            />
+                                disabled=""
+                            >
+                                <t t-foreach="attribute_values" t-as="slecet_option">
+                                    <option
+                                        t-att-value="slecet_option.id"
+                                        t-att-data-attribute-value-id="attribute.id"
+                                        t-att-data-value_id="slecet_option.id"
+                                        t-att-data-value_name="slecet_option.name"
+                                        t-att-data-attribute_name="attribute.name"
+                                        t-att-data-nature="attribute.nature"
+                                    >
+                                        <span t-field="slecet_option.name" />
+                                        <t t-call="website_sale.badge_extra_price" />
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+                        <t t-elif="attribute.attribute_type == 'multiselect'">
+                            <!-- will create css_attribute_multiselect class and its related JS -->
+                            <select
+                                t-att-data-attribute_id="attribute.id"
+                                t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
+                                t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
+                                disabled=""
+                                multiple=""
+                            >
+                                <t
+                                    t-foreach="attribute_values"
+                                    t-as="multi_selecet_option"
+                                >
+                                    <option
+                                        t-att-value="multi_selecet_option.id"
+                                        t-att-data-attribute-value-id="attribute.id"
+                                        t-att-data-value_id="multi_selecet_option.id"
+                                        t-att-data-value_name="multi_selecet_option.name"
+                                        t-att-data-attribute_name="attribute.name"
+                                        t-att-data-nature="attribute.nature"
+                                    >
+                                        <span t-field="multi_selecet_option.name" />
+                                        <t t-call="website_sale.badge_extra_price" />
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+                        <t t-elif="attribute.attribute_type == 'boolean'">
+                            <ul
+                                t-att-data-attribute_id="attribute.id"
+                                t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
+                            >
+                                <li class="list-inline-item mb-3" style="margin: 0;">
+                                    <label class="col-form-label">
+                                        <div class="form-check">
+                                            <input
+                                                t-att-type="'checkbox'"
+                                                t-attf-class="form-check-input"
+                                                t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                                t-att-value="attribute_values"
+                                                t-att-data-attribute_name="attribute.name"
+                                                t-att-data-nature="attribute.nature"
+                                                checked=""
+                                                disabled=""
+                                            />
+                                            <div
+                                                class="radio_input_value form-check-label"
+                                            >
+                                                <span
+                                                    t-field="attribute.field_description"
+                                                />
+                                                <span t-out="attribute_values" />
+                                                <t
+                                                    t-call="website_sale.badge_extra_price"
+                                                />
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+                            </ul>
+                        </t>
+                        <t t-else="">
+                            <label class="col-form-label">
+                                <input
+                                    t-att-type="'text'"
+                                    t-attf-class="form-control"
+                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                    t-att-value="attribute_values"
+                                    t-att-data-attribute_name="attribute.name"
+                                    t-att-data-nature="attribute.nature"
+                                    readonly=""
+                                />
+                                <div class="text_input_value">
+                                    <t t-call="website_sale.badge_extra_price" />
+                                </div>
+                            </label>
                         </t>
                     </li>
                 </t>

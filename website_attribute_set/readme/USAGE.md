@@ -1,1 +1,6 @@
-This module allows the user to display and select custom attribute created by attribute_set module in website and e-commerce apps.
+## Steps to Enable Attributes in E-Commerce
+
+1. Open the attribute view for a target record.
+2. Check the field **`E-Commerce Visibility`**.
+3. Assign values to the attribute in the product view, and make sure that the product is linked with an **`attribute_set`**.
+4. Open the E-Commerce app and navigate to the product page. You should see the additional attributes displayed there.

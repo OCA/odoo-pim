@@ -17,8 +17,12 @@
         "website_sale",
     ],
     "data": [
+        "views/attribute_attribute_view.xml",
         "views/variant_templates.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [],
+    },
     "installable": True,
     "application": True,
 }

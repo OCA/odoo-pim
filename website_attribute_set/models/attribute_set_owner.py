@@ -11,7 +11,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     _inherit = "attribute.set.owner.mixin"
 
     def get_extra_attributes(self):
-        """Get extra product's attribute."""
+        """Get extra product's attribute for e-commerce website."""
         self.ensure_one()
         domain = [
             ("model", "=", self._name),
@@ -25,6 +25,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             attribute_set_id = self.attribute_set_id
             filtered_attributes = attributes.filtered(
                 lambda rec: attribute_set_id.id in rec.attribute_set_ids.ids
+                and rec.e_com_visibility
             )
             return filtered_attributes
         else:

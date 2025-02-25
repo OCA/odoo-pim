@@ -36,7 +36,12 @@ class WebsiteSale(main.WebsiteSale):
         # this will pass the attributes related to it's attribute_set_id
         # and then to be rendered in the website
         vals = super()._prepare_product_values(product, category, search, **kwargs)
-        # additional_attributes = product.get_extra_attributes()
-        # if additional_attributes:
-        #     vals.update({"additional_attributes": additional_attributes})
+        additional_attributes = product.sudo().get_extra_attributes()
+        if additional_attributes:
+            vals.update({"additional_attributes": []})
+            for attribute in additional_attributes:
+                attribute_values = product.sudo().get_extra_attribute_values(attribute)
+                vals["additional_attributes"].append(
+                    {"attribute": attribute, "attribute_values": attribute_values}
+                )
         return vals
