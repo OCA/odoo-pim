@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class IrUiCustomFieldFilter(models.Model):
-
     _inherit = "ir.ui.custom.field.filter"
 
     attribute_id = fields.Many2one("attribute.attribute", ondelete="cascade")

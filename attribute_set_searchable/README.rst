@@ -17,18 +17,19 @@ Attribute Set Searchable
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-pim/tree/16.0/attribute_set_searchable
+    :target: https://github.com/OCA/odoo-pim/tree/17.0/attribute_set_searchable
     :alt: OCA/odoo-pim
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-pim-16-0/odoo-pim-16-0-attribute_set_searchable
+    :target: https://translation.odoo-community.org/projects/odoo-pim-17-0/odoo-pim-17-0-attribute_set_searchable
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows the user to make an attribute searchable directly from the search view of the related model.
+This module allows the user to make an attribute searchable directly
+from the search view of the related model.
 
 **Table of contents**
 
@@ -38,8 +39,9 @@ This module allows the user to make an attribute searchable directly from the se
 Usage
 =====
 
-On the attribute, thick the check box 'Searchable' and refresh your browser.
-Open the search view linked to the related model and begin to type, the attribute is now available.
+On the attribute, thick the check box 'Searchable' and refresh your
+browser. Open the search view linked to the related model and begin to
+type, the attribute is now available.
 
 Bug Tracker
 ===========
@@ -47,7 +49,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-pim/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20attribute_set_searchable%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20attribute_set_searchable%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -55,18 +57,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Cédric PIGEON <cedric.pigeon@acsone.eu>
-* Mohamed Alkobrosli <malkobrosly@kencove.com>
+- Cédric PIGEON <cedric.pigeon@acsone.eu>
+- Mohamed Alkobrosli <malkobrosly@kencove.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -78,6 +80,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/16.0/attribute_set_searchable>`_ project on GitHub.
+This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/17.0/attribute_set_searchable>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
