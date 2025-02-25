@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class AttributeAttribute(models.Model):
-
     _inherit = "attribute.attribute"
 
     searchable = fields.Boolean(default=False)
@@ -44,7 +43,7 @@ class AttributeAttribute(models.Model):
             custom_filter.write(data)
 
     def write(self, vals):
-        res = super(AttributeAttribute, self).write(vals)
+        res = super().write(vals)
         for attribute in self:
             custom_filter = self._get_custom_filter()
             if attribute.searchable:
@@ -59,7 +58,7 @@ class AttributeAttribute(models.Model):
     @api.model_create_multi
     @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
-        attributes = super(AttributeAttribute, self).create(vals_list)
+        attributes = super().create(vals_list)
         search_attributes = attributes.filtered(lambda att: att.searchable)
         for attribute in search_attributes:
             attribute._create_custom_filter()
