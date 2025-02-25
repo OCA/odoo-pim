@@ -5,22 +5,23 @@ from odoo.tests.common import TransactionCase
 
 
 class TestAttributeSetSearchable(TransactionCase):
-    def setUp(self):
-        super(TestAttributeSetSearchable, self).setUp()
-        self.model_id = self.env.ref("base.model_res_partner").id
-        self.group = self.env["attribute.group"].create(
-            {"name": "My Group", "model_id": self.model_id}
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.model_id = cls.env.ref("base.model_res_partner").id
+        cls.group = cls.env["attribute.group"].create(
+            {"name": "My Group", "model_id": cls.model_id}
         )
-        self.vals = {
+        cls.vals = {
             "nature": "custom",
-            "model_id": self.model_id,
+            "model_id": cls.model_id,
             "attribute_type": "char",
             "field_description": "Attribute test",
             "name": "x_test",
-            "attribute_group_id": self.group.id,
+            "attribute_group_id": cls.group.id,
         }
 
-        self.attr = self.env["attribute.attribute"].create(self.vals)
+        cls.attr = cls.env["attribute.attribute"].create(cls.vals)
 
     def _get_filter(self, forced_attr=False):
         attr = forced_attr or self.attr
