@@ -1,0 +1,2 @@
+odoo-addon-base_custom_filter @ git+https://github.com/OCA/server-ux.git@refs/pull/1029/head#subdirectory=base_custom_filter
+
