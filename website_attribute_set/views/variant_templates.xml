@@ -32,7 +32,7 @@
                                         t-att-value="slecet_option.id"
                                         t-att-data-attribute-value-id="attribute.id"
                                         t-att-data-value_id="slecet_option.id"
-                                        t-att-data-value_name="slecet_option.name"
+                                        t-att-data-value_name="slecet_option._name"
                                         t-att-data-attribute_name="attribute.name"
                                         t-att-data-nature="attribute.nature"
                                     >
@@ -47,6 +47,7 @@
                                 t-att-data-attribute_id="attribute.id"
                                 t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
                                 t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
+                                t-att-size="len(attribute_values)"
                                 disabled=""
                                 multiple=""
                             >
@@ -58,7 +59,7 @@
                                         t-att-value="multi_selecet_option.id"
                                         t-att-data-attribute-value-id="attribute.id"
                                         t-att-data-value_id="multi_selecet_option.id"
-                                        t-att-data-value_name="multi_selecet_option.name"
+                                        t-att-data-value_name="multi_selecet_option._name"
                                         t-att-data-attribute_name="attribute.name"
                                         t-att-data-nature="attribute.nature"
                                     >
@@ -99,17 +100,24 @@
                             </ul>
                         </t>
                         <t t-else="">
-                            <label class="col-form-label">
-                                <input
-                                    t-att-type="'text'"
-                                    t-attf-class="form-control"
-                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                                    t-att-value="attribute_values"
+                            <select
+                                t-att-data-attribute_id="attribute.id"
+                                t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
+                                t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
+                                size="1"
+                                disabled=""
+                                multiple=""
+                            >
+                                <option
+                                    t-att-value="'%s-%s' % (attribute.id,attribute_values)"
+                                    t-att-data-attribute-value-id="attribute.id"
+                                    t-att-data-value="attribute_values"
                                     t-att-data-attribute_name="attribute.name"
                                     t-att-data-nature="attribute.nature"
-                                    readonly=""
-                                />
-                            </label>
+                                >
+                                    <span t-out="attribute_values" />
+                                </option>
+                            </select>
                         </t>
                     </li>
                 </t>

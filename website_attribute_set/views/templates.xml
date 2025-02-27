@@ -1,61 +1,123 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="products_additional_attributes" inherit_id="website_sale.products_attributes" active="True" name="Attributes &amp; Variants filters">
-        <xpath expr="//t[@t-if='opt_wsale_filter_tags and opt_wsale_attributes']" position="before">
+    <template
+        id="products_additional_attributes"
+        inherit_id="website_sale.products_attributes"
+        active="True"
+        name="Attributes &amp; Variants filters"
+    >
+        <xpath
+            expr="//t[@t-if='opt_wsale_filter_tags and opt_wsale_attributes']"
+            position="before"
+        >
             <!-- will create js_additional_attributes class and its related JS -->
             <t t-foreach="additional_attributes" t-as="attribute_dict">
-                <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
-                <t t-set="all_attribute_values" t-value="attribute_dict.get('all_attribute_values')" />
-                <div class="accordion-item nav-item mb-1 rounded-0" >
-                    <h6 class="mb-3">
-                        <b class="d-none d-lg-block" t-field="attribute.field_description"/>
-                    </h6>
-                    <div t-attf-id="o_products_attributes_{{attribute.id}}" class="">
-                        <t t-if="attribute.attribute_type == 'select'">
-                            <!-- will create css_additional_attribute_select class and its related JS -->
-                            <select class="form-select mb-2" name="attribute_value">
-                                <option value="" selected="true">All <t t-out="attribute.field_description"/></option>
-                                <t t-foreach="all_attribute_values" t-as="item">
-                                    <t t-foreach="item" t-as="value">
-                                        <option t-att-value="'%s-%s' % (attribute.id,value.id)" t-esc="value.name" />
+                <t t-cache="attribute_dict,additional_attrib_set">
+                    <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
+                    <t
+                        t-set="all_attribute_values"
+                        t-value="attribute_dict.get('all_attribute_values')"
+                    />
+                    <div class="accordion-item nav-item mb-1 rounded-0">
+                        <h6 class="mb-3">
+                            <b
+                                class="d-none d-lg-block"
+                                t-field="attribute.field_description"
+                            />
+                        </h6>
+                        <div
+                            t-attf-id="o_products_attributes_{{attribute.id}}"
+                            class=""
+                        >
+                            <t t-if="attribute.attribute_type == 'select'">
+                                <!-- will create css_additional_attribute_select class and its related JS -->
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                >
+                                    <option value="" selected="true">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
+                                    <t t-foreach="all_attribute_values" t-as="item">
+                                        <t t-foreach="item" t-as="value">
+                                            <t
+                                                t-set="option_code"
+                                                t-value="'name-%s-id-%s' % (value._name,value.id)"
+                                            />
+                                            <option
+                                                t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
+                                                t-esc="value.name"
+                                                t-att-selected="(attribute.id, option_code) in additional_attrib_set"
+                                            />
+                                        </t>
                                     </t>
-                                </t>
-                            </select>
-                        </t>
-                        <t t-elif="attribute.attribute_type == 'multiselect'">
-                            <!-- will create css_additional_attribute_select class and its related JS -->
-                            <select class="form-select mb-2" name="attribute_value" multiple="">
-                                <option value="" selected="true">All <t t-out="attribute.field_description"/></option>
-                                <t t-foreach="all_attribute_values" t-as="item">
-                                    <t t-foreach="item" t-as="value">
-                                        <option t-att-value="'%s-%s' % (attribute.id,value.id)" t-esc="value.name" />
+                                </select>
+                            </t>
+                            <t t-elif="attribute.attribute_type == 'multiselect'">
+                                <!-- will create css_additional_attribute_select class and its related JS -->
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                    t-att-size="sum(len(records) for records in all_attribute_values)"
+                                    multiple=""
+                                >
+                                    <t t-foreach="all_attribute_values" t-as="item">
+                                        <t t-foreach="item" t-as="value">
+                                            <t
+                                                t-set="option_code"
+                                                t-value="'name-%s-id-%s' % (value._name,value.id)"
+                                            />
+                                            <option
+                                                t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
+                                                t-esc="value.name"
+                                                t-att-selected="(attribute.id, option_code) in additional_attrib_set"
+                                            />
+                                        </t>
                                     </t>
-                                </t>
-                            </select>
-                        </t>
-                        <div t-elif="attribute.attribute_type == 'boolean'" class="flex-column mb-3">
-                            <t t-foreach="all_attribute_values" t-as="value">
-                                <div class="form-check mb-1">
-                                    <input type="checkbox"
-                                            name="attribute_value"
+                                </select>
+                            </t>
+                            <div
+                                t-elif="attribute.attribute_type == 'boolean'"
+                                class="flex-column mb-3"
+                            >
+                                <t t-foreach="all_attribute_values" t-as="value">
+                                    <div class="form-check mb-1">
+                                        <input
+                                            type="checkbox"
+                                            name="additional_attribute_value"
                                             class="form-check-input"
                                             t-att-id="'%s-%s' % (attribute.id,value)"
                                             t-att-value="'%s-%s' % (attribute.id,value)"
-                                            t-att-checked="'checked' if value else None"/>
-                                    <label class="form-check-label fw-normal" t-att-for="'%s-%s' % (attribute.id,value)" t-field="attribute.field_description"/>
-                                </div>
+                                            t-att-checked="'checked' if (attribute.id, str(value or '')) in additional_attrib_set else None"
+                                        />
+                                        <label
+                                            class="form-check-label fw-normal"
+                                            t-att-for="'%s-%s' % (attribute.id,value)"
+                                            t-field="attribute.field_description"
+                                        />
+                                    </div>
+                                </t>
+                            </div>
+                            <t t-else="">
+                                <!-- will create css_additional_attribute_select class and its related JS -->
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                    t-att-size="len(all_attribute_values)"
+                                    multiple=""
+                                >
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <option
+                                            t-att-value="'%s-%s' % (attribute.id,value)"
+                                            t-esc="value"
+                                            t-att-selected="(attribute.id, value) in additional_attrib_set"
+                                        />
+                                    </t>
+                                </select>
                             </t>
                         </div>
-                        <t t-else="">
-                            <!-- will create css_additional_attribute_select class and its related JS -->
-                            <select class="form-select mb-2" name="attribute_value" multiple="">
-                                <t t-foreach="all_attribute_values" t-as="value">
-                                    <option t-att-value="'%s-%s' % (attribute.id,value)" t-esc="value" />
-                                </t>
-                            </select>
-                        </t>
                     </div>
-                </div>
+                </t>
             </t>
         </xpath>
     </template>

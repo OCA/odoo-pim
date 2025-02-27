@@ -35,8 +35,8 @@ class WebsiteSale(main.WebsiteSale):
         products = values.get("products")
         all_additional_attributes = request.env["attribute.attribute"].sudo()
         if products:
-            # loop to get all attributes that can be displayed
-            # in website that only haves assigned values
+            # loop to get all attributes that only haves values
+            # that can be displayed in e-commerce website
             for product in products:
                 additional_attributes = product.sudo().get_extra_attributes()
                 if additional_attributes:
@@ -58,6 +58,19 @@ class WebsiteSale(main.WebsiteSale):
                             "all_attribute_values": list(all_attribute_values),
                         }
                     )
+        # anyalyze the url args to be used in filter and search
+        request_args = request.httprequest.args
+        additional_attrib_list = request_args.getlist("additional_attribute_value")
+        additional_attrib_values = [
+            [x for x in v.split("-", maxsplit=1)] for v in additional_attrib_list if v
+        ]
+        additional_attrib_values = [
+            [int(sublist[0]), sublist[1]] for sublist in additional_attrib_values
+        ]
+        additional_attrib_set = set(
+            (item[0], item[1]) for item in additional_attrib_values
+        )
+        values["additional_attrib_set"] = additional_attrib_set
         return extra_values
 
     def product(self, product, category="", search="", **kwargs):
