@@ -2,6 +2,8 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.http import request
+
 from odoo.addons.website_sale.controllers import main
 
 
@@ -25,6 +27,37 @@ class WebsiteSale(main.WebsiteSale):
         # Can be used to search & filter products depending on their custom attributes
         """Hook to update values used for rendering website_sale.products template"""
         extra_values = super()._get_additional_shop_values(values)
+        extra_values.update(
+            {
+                "additional_attributes": [],
+            }
+        )
+        products = values.get("products")
+        all_additional_attributes = request.env["attribute.attribute"].sudo()
+        if products:
+            # loop to get all attributes that can be displayed
+            # in website that only haves assigned values
+            for product in products:
+                additional_attributes = product.sudo().get_extra_attributes()
+                if additional_attributes:
+                    all_additional_attributes |= additional_attributes
+
+            if all_additional_attributes:
+                # loop to get all assigned attribute values for all related products
+                for attribute in all_additional_attributes:
+                    all_attribute_values = set()
+                    for product in products:
+                        attribute_values = product.sudo().get_extra_attribute_values(
+                            attribute
+                        )
+                        if attribute_values:
+                            all_attribute_values.add(attribute_values)
+                    extra_values["additional_attributes"].append(
+                        {
+                            "attribute": attribute,
+                            "all_attribute_values": list(all_attribute_values),
+                        }
+                    )
         return extra_values
 
     def product(self, product, category="", search="", **kwargs):

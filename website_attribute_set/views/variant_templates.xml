@@ -37,7 +37,6 @@
                                         t-att-data-nature="attribute.nature"
                                     >
                                         <span t-field="slecet_option.name" />
-                                        <t t-call="website_sale.badge_extra_price" />
                                     </option>
                                 </t>
                             </select>
@@ -64,7 +63,6 @@
                                         t-att-data-nature="attribute.nature"
                                     >
                                         <span t-field="multi_selecet_option.name" />
-                                        <t t-call="website_sale.badge_extra_price" />
                                     </option>
                                 </t>
                             </select>
@@ -94,9 +92,6 @@
                                                     t-field="attribute.field_description"
                                                 />
                                                 <span t-out="attribute_values" />
-                                                <t
-                                                    t-call="website_sale.badge_extra_price"
-                                                />
                                             </div>
                                         </div>
                                     </label>
@@ -114,9 +109,6 @@
                                     t-att-data-nature="attribute.nature"
                                     readonly=""
                                 />
-                                <div class="text_input_value">
-                                    <t t-call="website_sale.badge_extra_price" />
-                                </div>
                             </label>
                         </t>
                     </li>
