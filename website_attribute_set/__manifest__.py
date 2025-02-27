@@ -19,6 +19,7 @@
     "data": [
         "views/attribute_attribute_view.xml",
         "views/variant_templates.xml",
+        "views/templates.xml",
     ],
     "assets": {
         "web.assets_frontend": [],
