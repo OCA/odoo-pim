@@ -6,6 +6,11 @@
         active="True"
         name="Attributes &amp; Variants filters"
     >
+        <xpath expr="//div[@t-if='attrib_values or tags']" position="attributes">
+            <attribute
+                name="t-if"
+            >attrib_values or tags or additional_attrib_set</attribute>
+        </xpath>
         <xpath
             expr="//t[@t-if='opt_wsale_filter_tags and opt_wsale_attributes']"
             position="before"
@@ -58,9 +63,10 @@
                                 <select
                                     class="form-select mb-2"
                                     name="additional_attribute_value"
-                                    t-att-size="sum(len(records) for records in all_attribute_values)"
-                                    multiple=""
                                 >
+                                    <option value="" selected="true">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
                                     <t t-foreach="all_attribute_values" t-as="item">
                                         <t t-foreach="item" t-as="value">
                                             <t
@@ -103,14 +109,15 @@
                                 <select
                                     class="form-select mb-2"
                                     name="additional_attribute_value"
-                                    t-att-size="len(all_attribute_values)"
-                                    multiple=""
                                 >
+                                    <option value="" selected="true">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
                                     <t t-foreach="all_attribute_values" t-as="value">
                                         <option
                                             t-att-value="'%s-%s' % (attribute.id,value)"
                                             t-esc="value"
-                                            t-att-selected="(attribute.id, value) in additional_attrib_set"
+                                            t-att-selected="(attribute.id, str(value or '')) in additional_attrib_set"
                                         />
                                     </t>
                                 </select>

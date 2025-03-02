@@ -14,6 +14,7 @@
         "attribute_set",
         "product_attribute_set",
         "pim",
+        "website",
         "website_sale",
     ],
     "data": [
