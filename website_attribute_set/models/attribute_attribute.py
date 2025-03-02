@@ -28,17 +28,3 @@ class AttributeAttribute(models.Model):
                     return True
                 except Exception as e:
                     raise ValidationError(f"Invalid domain: {str(e)}") from e
-
-    # def get_options_for_selectable_types(self):
-    #     self.ensure_one()
-    #     if (
-    #         self.attribute_type in ["select", "multiselect"]
-    #         and self.relation_model_id
-    #     ):
-    #         if self.option_ids:
-    #             return self.option_ids.mapped("value_ref")
-    #         elif self.domain:
-    #             domain = safe_eval(self.domain)
-    #             options = self.env[self.relation_model_id.model].search(domain)
-    #             return list(options)
-    #     return []
