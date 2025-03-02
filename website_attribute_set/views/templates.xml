@@ -6,15 +6,20 @@
         active="True"
         name="Attributes &amp; Variants filters"
     >
+        <xpath
+            expr="//div[@id='wsale_products_attributes_collapse']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >attributes or all_tags or additional_attributes</attribute>
+        </xpath>
         <xpath expr="//div[@t-if='attrib_values or tags']" position="attributes">
             <attribute
                 name="t-if"
             >attrib_values or tags or additional_attrib_set</attribute>
         </xpath>
-        <xpath
-            expr="//t[@t-if='opt_wsale_filter_tags and opt_wsale_attributes']"
-            position="before"
-        >
+        <xpath expr="//form" position="inside">
             <!-- will create js_additional_attributes class and its related JS -->
             <t t-foreach="additional_attributes" t-as="attribute_dict">
                 <t t-cache="attribute_dict,additional_attrib_set">

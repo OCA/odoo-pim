@@ -8,6 +8,7 @@ from werkzeug.exceptions import NotFound
 
 from odoo import fields
 from odoo.http import request, route
+from odoo.models import BaseModel
 from odoo.osv import expression
 from odoo.tools import SQL, float_round, groupby, lazy
 
@@ -93,6 +94,7 @@ class WebsiteSale(main.WebsiteSale):
             (item[0], item[1]) for item in additional_attrib_values
         )
         post["additional_attrib_set"] = additional_attrib_set
+        post["additional_attrib_values"] = additional_attrib_values
 
         filter_by_tags_enabled = website.is_view_active(
             "website_sale.filter_products_tags"
@@ -154,7 +156,6 @@ class WebsiteSale(main.WebsiteSale):
             max_price=max_price,
             conversion_rate=conversion_rate,
             display_currency=website.currency_id,
-            additional_attrib_values=additional_attrib_values,
             **post,
         )
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(
@@ -384,7 +385,17 @@ class WebsiteSale(main.WebsiteSale):
                             attribute
                         )
                         if attribute_values:
-                            all_attribute_values.add(attribute_values)
+                            # To avoid repeatition of select options in the template
+                            # We make sure if the attribute_values is a single value or
+                            # if it is a recordset we loop through it
+                            if (
+                                isinstance(attribute_values, BaseModel)
+                                and len(attribute_values) > 1
+                            ):
+                                for rec in attribute_values:
+                                    all_attribute_values.add(rec)
+                            else:
+                                all_attribute_values.add(attribute_values)
                     extra_values["additional_attributes"].append(
                         {
                             "attribute": attribute,

@@ -9,117 +9,124 @@
                         t-set="attribute_values"
                         t-value="attribute_dict.get('attribute_values')"
                     />
-                    <li
-                        t-att-data-attribute_id="attribute.id"
-                        t-att-data-attribute_name="attribute.name"
-                        t-att-data-attribute_display_type="attribute.attribute_type"
-                        t-attf-class="variant_attribute"
-                    >
-                        <strong
-                            t-field="attribute.field_description"
-                            class="attribute_name"
-                        />
+                    <t t-if="attribute_values">
+                        <li
+                            t-att-data-attribute_id="attribute.id"
+                            t-att-data-attribute_name="attribute.name"
+                            t-att-data-attribute_display_type="attribute.attribute_type"
+                            t-attf-class="variant_attribute"
+                        >
+                            <strong
+                                t-field="attribute.field_description"
+                                class="attribute_name"
+                            />
 
-                        <t t-if="attribute.attribute_type == 'select'">
-                            <select
-                                t-att-data-attribute_id="attribute.id"
-                                t-attf-class="form-select css_attribute_select o_wsale_product_attribute"
-                                t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                                disabled=""
-                            >
-                                <t t-foreach="attribute_values" t-as="slecet_option">
-                                    <option
-                                        t-att-value="slecet_option.id"
-                                        t-att-data-attribute-value-id="attribute.id"
-                                        t-att-data-value_id="slecet_option.id"
-                                        t-att-data-value_name="slecet_option._name"
-                                        t-att-data-attribute_name="attribute.name"
-                                        t-att-data-nature="attribute.nature"
-                                    >
-                                        <span t-field="slecet_option.name" />
-                                    </option>
-                                </t>
-                            </select>
-                        </t>
-                        <t t-elif="attribute.attribute_type == 'multiselect'">
-                            <!-- will create css_attribute_multiselect class and its related JS -->
-                            <select
-                                t-att-data-attribute_id="attribute.id"
-                                t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
-                                t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
-                                t-att-size="len(attribute_values)"
-                                disabled=""
-                                multiple=""
-                            >
-                                <t
-                                    t-foreach="attribute_values"
-                                    t-as="multi_selecet_option"
+                            <t t-if="attribute.attribute_type == 'select'">
+                                <select
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="form-select css_attribute_select o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                    disabled=""
                                 >
-                                    <option
-                                        t-att-value="multi_selecet_option.id"
-                                        t-att-data-attribute-value-id="attribute.id"
-                                        t-att-data-value_id="multi_selecet_option.id"
-                                        t-att-data-value_name="multi_selecet_option._name"
-                                        t-att-data-attribute_name="attribute.name"
-                                        t-att-data-nature="attribute.nature"
+                                    <t
+                                        t-foreach="attribute_values"
+                                        t-as="slecet_option"
                                     >
-                                        <span t-field="multi_selecet_option.name" />
-                                    </option>
-                                </t>
-                            </select>
-                        </t>
-                        <t t-elif="attribute.attribute_type == 'boolean'">
-                            <ul
-                                t-att-data-attribute_id="attribute.id"
-                                t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
-                            >
-                                <li class="list-inline-item mb-3" style="margin: 0;">
-                                    <label class="col-form-label">
-                                        <div class="form-check">
-                                            <input
-                                                t-att-type="'checkbox'"
-                                                t-attf-class="form-check-input"
-                                                t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                                                t-att-value="attribute_values"
-                                                t-att-data-attribute_name="attribute.name"
-                                                t-att-data-nature="attribute.nature"
-                                                checked=""
-                                                disabled=""
-                                            />
-                                            <div
-                                                class="radio_input_value form-check-label"
-                                            >
-                                                <span
-                                                    t-field="attribute.field_description"
+                                        <option
+                                            t-att-value="slecet_option.id"
+                                            t-att-data-attribute-value-id="attribute.id"
+                                            t-att-data-value_id="slecet_option.id"
+                                            t-att-data-value_name="slecet_option._name"
+                                            t-att-data-attribute_name="attribute.name"
+                                            t-att-data-nature="attribute.nature"
+                                        >
+                                            <span t-field="slecet_option.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                            <t t-elif="attribute.attribute_type == 'multiselect'">
+                                <!-- will create css_attribute_multiselect class and its related JS -->
+                                <select
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
+                                    t-att-size="len(attribute_values)"
+                                    disabled=""
+                                    multiple=""
+                                >
+                                    <t
+                                        t-foreach="attribute_values"
+                                        t-as="multi_selecet_option"
+                                    >
+                                        <option
+                                            t-att-value="multi_selecet_option.id"
+                                            t-att-data-attribute-value-id="attribute.id"
+                                            t-att-data-value_id="multi_selecet_option.id"
+                                            t-att-data-value_name="multi_selecet_option._name"
+                                            t-att-data-attribute_name="attribute.name"
+                                            t-att-data-nature="attribute.nature"
+                                        >
+                                            <span t-field="multi_selecet_option.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                            <t t-elif="attribute.attribute_type == 'boolean'">
+                                <ul
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
+                                >
+                                    <li
+                                        class="list-inline-item mb-3"
+                                        style="margin: 0;"
+                                    >
+                                        <label class="col-form-label">
+                                            <div class="form-check">
+                                                <input
+                                                    t-att-type="'checkbox'"
+                                                    t-attf-class="form-check-input"
+                                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                                    t-att-value="attribute_values"
+                                                    t-att-data-attribute_name="attribute.name"
+                                                    t-att-data-nature="attribute.nature"
+                                                    checked=""
+                                                    disabled=""
                                                 />
-                                                <span t-out="attribute_values" />
+                                                <div
+                                                    class="radio_input_value form-check-label"
+                                                >
+                                                    <span
+                                                        t-field="attribute.field_description"
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </label>
-                                </li>
-                            </ul>
-                        </t>
-                        <t t-else="">
-                            <select
-                                t-att-data-attribute_id="attribute.id"
-                                t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
-                                t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
-                                size="1"
-                                disabled=""
-                                multiple=""
-                            >
-                                <option
-                                    t-att-value="'%s-%s' % (attribute.id,attribute_values)"
-                                    t-att-data-attribute-value-id="attribute.id"
-                                    t-att-data-value="attribute_values"
-                                    t-att-data-attribute_name="attribute.name"
-                                    t-att-data-nature="attribute.nature"
+                                        </label>
+                                    </li>
+                                </ul>
+                            </t>
+                            <t t-else="">
+                                <select
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
+                                    size="1"
+                                    disabled=""
+                                    multiple=""
                                 >
-                                    <span t-out="attribute_values" />
-                                </option>
-                            </select>
-                        </t>
-                    </li>
+                                    <option
+                                        t-att-value="'%s-%s' % (attribute.id,attribute_values)"
+                                        t-att-data-attribute-value-id="attribute.id"
+                                        t-att-data-value="attribute_values"
+                                        t-att-data-attribute_name="attribute.name"
+                                        t-att-data-nature="attribute.nature"
+                                    >
+                                        <span t-out="attribute_values" />
+                                    </option>
+                                </select>
+                            </t>
+                        </li>
+                    </t>
                 </t>
             </ul>
         </xpath>
