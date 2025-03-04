@@ -16,11 +16,13 @@
         "pim",
         "website",
         "website_sale",
+        "website_sale_comparison",
     ],
     "data": [
         "views/attribute_attribute_view.xml",
         "views/variant_templates.xml",
         "views/templates.xml",
+        "views/website_sale_comparison_template.xml",
     ],
     "assets": {
         "web.assets_frontend": [],
