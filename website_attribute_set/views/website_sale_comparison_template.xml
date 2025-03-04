@@ -77,6 +77,37 @@
                             </td>
                         </tr>
                     </t>
+                    <!-- reference section -->
+                    <tr
+                        class="clickable"
+                        data-bs-toggle="collapse"
+                        t-att-data-bs-target="'.o_ws_group_default_code'"
+                    >
+                        <th class="text-start" t-att-colspan="len(products) + 1">
+                            <i
+                                class="fa fa-chevron-circle-down o_product_comparison_collpase"
+                                role="img"
+                                aria-label="Collapse"
+                                title="Collapse"
+                            />
+                            <span>Reference Codes</span>
+                        </th>
+                    </tr>
+                    <tr
+                        class="collapse show o_ws_group_default_code"
+                        data-bs-toggle="collapse"
+                    >
+                        <td>
+                            <span>Code</span>
+                        </td>
+                        <t t-foreach="products" t-as="product">
+                            <td>
+                                <t t-if="product.default_code">
+                                    <span t-field="product.default_code" />
+                                </t>
+                            </td>
+                        </t>
+                    </tr>
                 </tbody>
             </table>
         </xpath>
