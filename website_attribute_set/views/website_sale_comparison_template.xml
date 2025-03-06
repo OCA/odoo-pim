@@ -12,7 +12,7 @@
             >
                 <t
                     t-set="attrib_groups"
-                    t-value="products._prepare_additional_attributes_for_display()"
+                    t-value="products.sudo()._prepare_additional_attributes_for_display()"
                 />
                 <tbody>
                     <t t-foreach="attrib_groups" t-as="group">

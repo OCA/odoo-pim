@@ -67,6 +67,5 @@ class WebsiteSearchableMixin(models.AbstractModel):
                 domain, limit=limit, order=search_detail.get("order", order)
             )
             count = model.search_count(domain)
-            return results, count
 
         return results, count

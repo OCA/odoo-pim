@@ -17,18 +17,7 @@ from odoo.addons.website_sale.controllers import main
 
 
 class WebsiteSale(main.WebsiteSale):
-    @route(
-        [
-            "/shop",
-            "/shop/page/<int:page>",
-            '/shop/category/<model("product.public.category"):category>',
-            '/shop/category/<model("product.public.category"):category>/page/<int:page>',
-        ],
-        type="http",
-        auth="public",
-        website=True,
-        sitemap=main.WebsiteSale.sitemap_shop,
-    )
+    @route()
     def shop(
         self,
         page=0,
@@ -350,12 +339,6 @@ class WebsiteSale(main.WebsiteSale):
         if post.get("additional_attrib_values"):
             values["additional_attrib_values"] = post.get("additional_attrib_values")
         return values
-
-    def _shop_lookup_products(self, attrib_set, options, post, search, website):
-        fuzzy_search_term, product_count, search_result = super()._shop_lookup_products(
-            attrib_set, options, post, search, website
-        )
-        return fuzzy_search_term, product_count, search_result
 
     def _get_additional_shop_values(self, values):
         # Can be used to search & filter products depending on their custom attributes
