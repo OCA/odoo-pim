@@ -121,7 +121,7 @@
                                     <t t-foreach="all_attribute_values" t-as="value">
                                         <option
                                             t-att-value="'%s-%s' % (attribute.id,value)"
-                                            t-esc="value"
+                                            t-out="value"
                                             t-att-selected="(attribute.id, str(value or '')) in additional_attrib_set"
                                         />
                                     </t>

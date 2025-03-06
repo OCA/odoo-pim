@@ -45,7 +45,7 @@ Usage
 Steps to Enable Attributes in E-Commerce
 ----------------------------------------
 
-1. Open the attribute view for a target record.
+1. Go to PIM → Attributes → Product Attribute and select one
 2. Check the field **``E-Commerce Visibility``**.
 3. Assign values to the attribute in the product view, and make sure
    that the product is linked with an **``attribute_set``**.
