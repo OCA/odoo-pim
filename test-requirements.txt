@@ -1,4 +1,1 @@
 odoo_test_helper
-odoo-addon-attribute_set_completeness @ git+https://github.com/OCA/odoo-pim.git@refs/pull/189/head#subdirectory=setup/attribute_set_completeness
-odoo-addon-attribute_set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/207/head#subdirectory=setup/attribute_set
-odoo-addon-product_attribute_set_completeness @ git+https://github.com/OCA/odoo-pim.git@refs/pull/206/head#subdirectory=setup/product_attribute_set_completeness
