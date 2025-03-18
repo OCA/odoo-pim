@@ -21,109 +21,152 @@
                                 class="attribute_name"
                             />
 
-                            <t t-if="attribute.attribute_type == 'select'">
-                                <select
+                            <t
+                                t-if="attribute.attribute_type in ['select', 'multiselect']"
+                            >
+                                <ul
                                     t-att-data-attribute_id="attribute.id"
-                                    t-attf-class="form-select css_attribute_select o_wsale_product_attribute"
+                                    t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
                                     t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                                    disabled=""
                                 >
                                     <t
                                         t-foreach="attribute_values"
                                         t-as="slecet_option"
                                     >
-                                        <option
+                                        <li
                                             t-att-value="slecet_option.id"
                                             t-att-data-attribute-value-id="attribute.id"
                                             t-att-data-value_id="slecet_option.id"
                                             t-att-data-value_name="slecet_option._name"
                                             t-att-data-attribute_name="attribute.name"
                                             t-att-data-nature="attribute.nature"
+                                            class="list-inline-item mb-3"
+                                            style="margin: 0;"
                                         >
-                                            <span t-field="slecet_option.name" />
-                                        </option>
+                                            <span class="badge text-bg-info border">
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="'+'"
+                                                />
+                                                <span
+                                                    t-out="slecet_option.name"
+                                                    class="variant_price_extra text-muted fst-italic"
+                                                    style="white-space: nowrap;"
+                                                />
+                                            </span>
+                                        </li>
                                     </t>
-                                </select>
+                                </ul>
                             </t>
-                            <t t-elif="attribute.attribute_type == 'multiselect'">
-                                <!-- will create css_attribute_multiselect class and its related JS -->
-                                <select
-                                    t-att-data-attribute_id="attribute.id"
-                                    t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
-                                    t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
-                                    t-att-size="len(attribute_values)"
-                                    disabled=""
-                                    multiple=""
-                                >
-                                    <t
-                                        t-foreach="attribute_values"
-                                        t-as="multi_selecet_option"
-                                    >
-                                        <option
-                                            t-att-value="multi_selecet_option.id"
-                                            t-att-data-attribute-value-id="attribute.id"
-                                            t-att-data-value_id="multi_selecet_option.id"
-                                            t-att-data-value_name="multi_selecet_option._name"
-                                            t-att-data-attribute_name="attribute.name"
-                                            t-att-data-nature="attribute.nature"
-                                        >
-                                            <span t-field="multi_selecet_option.name" />
-                                        </option>
-                                    </t>
-                                </select>
-                            </t>
-                            <t t-elif="attribute.attribute_type == 'boolean'">
+                            <t
+                                t-if="attribute.attribute_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float']"
+                            >
                                 <ul
                                     t-att-data-attribute_id="attribute.id"
                                     t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
                                 >
                                     <li
-                                        class="list-inline-item mb-3"
-                                        style="margin: 0;"
-                                    >
-                                        <label class="col-form-label">
-                                            <div class="form-check">
-                                                <input
-                                                    t-att-type="'checkbox'"
-                                                    t-attf-class="form-check-input"
-                                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
-                                                    t-att-value="attribute_values"
-                                                    t-att-data-attribute_name="attribute.name"
-                                                    t-att-data-nature="attribute.nature"
-                                                    checked=""
-                                                    disabled=""
-                                                />
-                                                <div
-                                                    class="radio_input_value form-check-label"
-                                                >
-                                                    <span
-                                                        t-field="attribute.field_description"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </t>
-                            <t t-else="">
-                                <select
-                                    t-att-data-attribute_id="attribute.id"
-                                    t-attf-class="form-select css_attribute_multiselect o_wsale_product_attribute"
-                                    t-att-name="'set-%s-attr-%s[]' % (product.attribute_set_id.id, attribute.id)"
-                                    size="1"
-                                    disabled=""
-                                    multiple=""
-                                >
-                                    <option
                                         t-att-value="'%s-%s' % (attribute.id,attribute_values)"
                                         t-att-data-attribute-value-id="attribute.id"
                                         t-att-data-value="attribute_values"
                                         t-att-data-attribute_name="attribute.name"
                                         t-att-data-nature="attribute.nature"
+                                        class="list-inline-item mb-3"
+                                        style="margin: 0;"
                                     >
-                                        <span t-out="attribute_values" />
-                                    </option>
-                                </select>
+                                        <span class="badge text-bg-info border">
+                                            <t
+                                                t-if="attribute.attribute_type == 'boolean'"
+                                            >
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                >✓</span>
+                                                <span
+                                                    t-out="'Yes'"
+                                                    class="variant_price_extra text-muted fst-italic"
+                                                    style="white-space: nowrap;"
+                                                />
+                                            </t>
+                                            <t
+                                                t-elif="attribute.attribute_type in ['integer', 'float']"
+                                            >
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="attribute_values > 0 and '+' or '-'"
+                                                />
+                                                <t
+                                                    t-if="attribute.attribute_type == 'integer'"
+                                                >
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "integer",
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t
+                                                    t-elif="attribute.attribute_type == 'float'"
+                                                >
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "float",
+                                                            "precision": 2
+                                                        }'
+                                                    />
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="'+'"
+                                                />
+                                                <t
+                                                    t-if="attribute.attribute_type == 'date'"
+                                                >
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "date",
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t
+                                                    t-elif="attribute.attribute_type == 'datetime'"
+                                                >
+                                                    <t
+                                                        t-set="tz_value"
+                                                        t-value="request.env.user.tz or 'UTC'"
+                                                    />
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "datetime",
+                                                            "tz_name": tz_value,
+                                                            "format": "short"
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t t-else="">
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                    />
+                                                </t>
+                                            </t>
+                                        </span>
+                                    </li>
+                                </ul>
                             </t>
                         </li>
                     </t>
