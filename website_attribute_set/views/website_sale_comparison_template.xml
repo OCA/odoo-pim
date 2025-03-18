@@ -59,20 +59,42 @@
                                         <t t-if="not value_last">, </t>
                                     </t>
                                 </t>
-                                <t t-elif="attribute.attribute_type == 'boolean'">
-                                    <input
-                                        t-if="values"
-                                        t-att-type="'checkbox'"
-                                        t-attf-class="form-check-input"
-                                        t-att-value="values"
-                                        t-att-data-attribute_name="attribute.name"
-                                        t-att-data-nature="attribute.nature"
-                                        checked=""
-                                        disabled=""
-                                    />
-                                </t>
-                                <t t-else="">
-                                    <span t-out="values" />
+                                <t
+                                    t-if="attribute.attribute_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float']"
+                                >
+                                    <t t-if="attribute.attribute_type == 'boolean'">
+                                        <span t-out="'Yes'" />
+                                    </t>
+                                    <t t-elif="attribute.attribute_type == 'integer'">
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "integer"}'
+                                        />
+                                    </t>
+                                    <t t-elif="attribute.attribute_type == 'float'">
+                                        <span t-out="values" />
+                                    </t>
+                                    <t t-if="attribute.attribute_type == 'date'">
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "date"}'
+                                        />
+                                    </t>
+                                    <t t-if="attribute.attribute_type == 'datetime'">
+                                        <t
+                                            t-set="tz_value"
+                                            t-value="request.env.user.tz or 'UTC'"
+                                        />
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "datetime", "tz_name": tz_value, "format": "short"}'
+                                        />
+                                    </t>
+                                    <t
+                                        t-if="attribute.attribute_type in ['char', 'text', 'select']"
+                                    >
+                                        <span t-out="values" />
+                                    </t>
                                 </t>
                             </td>
                         </tr>
@@ -158,10 +180,7 @@
                                     />
                                 </t>
                                 <t t-elif="attribute.attribute_type == 'float'">
-                                    <span
-                                        t-out="attribute_values"
-                                        t-options='{"widget": "float", "precision": 2}'
-                                    />
+                                    <span t-out="attribute_values" />
                                 </t>
                                 <t t-if="attribute.attribute_type == 'date'">
                                     <span
