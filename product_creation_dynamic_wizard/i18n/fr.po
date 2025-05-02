@@ -1,0 +1,690 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_creation_dynamic_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_product_creation_dynamic_wizard
+msgid ""
+"A dynamic wizard that helps user to create product based on business "
+"configuration"
+msgstr ""
+"Assistant dynamique qui aide l'utilisateur à créer des produits en fonction "
+"de la configuration de son entreprise"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_needaction
+msgid "Action Needed"
+msgstr "Action requise"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__answer_ids
+msgid "Answer"
+msgstr "Réponse"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__answer_required
+msgid "Answer Required"
+msgstr "Réponse requise"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__answer_ids
+msgid "Answers for the question"
+msgstr "Réponses pour la question"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "Apply if"
+msgstr "Condition"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_search
+msgid "Archived"
+msgstr "Archivé"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_creation_dynamic_wizard_view_form
+msgid "Cancel"
+msgstr "Annuler                                                                                                                                                                                                                            "
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__child_ids
+msgid "Child questions"
+msgstr "Question enfant"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "Children questions"
+msgstr "Questions enfants"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__complete_name
+msgid "Complete Name"
+msgstr "Nom complet"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__conditional_operator
+msgid "Conditional Operator"
+msgstr "Opérateur"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_template_form_view
+msgid "Create (Wizard)"
+msgstr "Créer (Assistant)"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.actions.server,name:product_creation_dynamic_wizard.product_creation_dynamic_wizard_action
+#: model:ir.ui.menu,name:product_creation_dynamic_wizard.menu_product_creation_dynamic_wizard
+msgid "Create new product"
+msgstr "Créer un produit"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_template_form_view
+msgid "Create product using wizard"
+msgstr "Creation d'un produit avec l'assistant"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__create_uid
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__create_uid
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__create_uid
+msgid "Created by"
+msgstr "Creé par"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__create_date
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__create_date
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: product_creation_dynamic_wizard
+#: code:addons/product_creation_dynamic_wizard/wizards/product_creation_dynamic_wizard.py:0
+#, python-format
+msgid "Creating %(product_name)s..."
+msgstr "Creation de %(product_name)s..."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__current_company_id
+msgid "Current Company"
+msgstr "Entreprise courante"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__current_complete_name
+msgid "Current Complete Name"
+msgstr "Nom complet courant"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__current_question
+msgid "Current Question"
+msgstr "Question courante"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__current_step
+msgid "Current Step"
+msgstr "Etape courante"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields.selection,name:product_creation_dynamic_wizard.selection__product_creation_question__question_type__custom
+msgid "Custom"
+msgstr "Personnalisé"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__custom_view
+msgid "Custom View"
+msgstr "Vue personnalisée"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "Custom response"
+msgstr "Réponses personnalisées"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__default_answer_id
+msgid "Default answer"
+msgstr "Réponse par défaut"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__default_field_value
+msgid "Default value"
+msgstr "Valeur par défaut"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__default_field_value
+msgid "Default value for the field"
+msgstr "Valeur par défaut pour le champ"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__logical_default_values
+msgid ""
+"Default values are used only if values are not set. Expected a valid json "
+"format, before parsing json special variables are replaced (ie: "
+"current_company_id)"
+msgstr ""
+"Valeur par défaut est utilisée seulement si aucune valeur n'est définie. "
+"Valeur attendue au format json, avant de la parser les variables spéciales "
+"sont remplacées (ex: current_company_id)"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_res_config_settings__disable_create_product_button
+msgid "Disable create product button"
+msgstr "Désactiver le bouton de création de produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__display_field_name
+msgid "Display Field Name"
+msgstr "Afficher le nom du champ"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__display_name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__display_name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__display_name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_template__display_name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Libellé"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__answer_required
+msgid "Does a response is required on the current question?"
+msgstr "La réponse est-elle requise sur la question courante?"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__conditional_expected_result_answer_id
+msgid "Expected answer on parent question"
+msgstr "Réponse attendue sur la question parente"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__conditional_expected_result
+msgid "Expected result on parent question"
+msgstr "Résultat attendu sur la question parente"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__field_id
+#: model:ir.model.fields.selection,name:product_creation_dynamic_wizard.selection__product_creation_question__question_type__field
+msgid "Field"
+msgstr "Champ"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_search
+msgid "Group By"
+msgstr "Groupé par"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_product__id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_template__id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__display_field_name
+msgid "If check, display the label field in the wizard."
+msgstr "Si coché, affiche le nom du champ dans l'assistant."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_needaction
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si coché, les nouveaus messages nécessitent votre attention."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_has_error
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si coché, certains messages ont une erreur de livraison."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__is_automatic
+msgid ""
+"If checked, the question will be automatically processed with the given "
+"default value without asking the user for a value."
+msgstr ""
+"Si coché, la question sera automatiquement traitée avec la valeur par défaut "
+"sans demander à l'utilisateur de la saisir."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__conditional_expected_result
+msgid "If parent response is match run the current node and childs"
+msgstr ""
+"Si la réponse à la question parente correspond, éxécute le noeud courant et "
+"ses enfants"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__custom_view
+msgid "If set use the definition as it."
+msgstr "Si défini, utilise la définition de vue telle quelle."
+
+#. module: product_creation_dynamic_wizard
+#: code:addons/product_creation_dynamic_wizard/models/product_creation_question.py:0
+#, python-format
+msgid ""
+"Incorrect JSON data - field; '%(field_name)s':\n"
+"Error:\n"
+"%(error)s\n"
+"Incorrect data: \n"
+"%(data)s"
+msgstr ""
+"Données JSON incorrectes - champ '%(field_name)s':\n"
+"Erreur:\n"
+"%(error)s\n"
+"Données incorrectes:\n"
+"%(data)s"
+
+#. module: product_creation_dynamic_wizard
+#: code:addons/product_creation_dynamic_wizard/models/product_creation_question.py:0
+#, python-format
+msgid ""
+"Incorrect XML data - field '%(field_name)s':\n"
+"Error:\n"
+"%(error)s\n"
+"Incorrect data: \n"
+"%(data)s"
+msgstr ""
+"Données XML incorrectes - champ '%(field_name)s':\n"
+"Erreur:\n"
+"%(error)s\n"
+"Données incorrectes:\n"
+"%(data)s"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__is_automatic
+msgid "Is Automatic"
+msgstr "Est automatique"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__conditional_question
+msgid "Is conditional"
+msgstr "Est conditionnelle"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_custom
+msgid "Is this product active?"
+msgstr "Le produit est-il actif ?"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__parent_question_type
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__question_type
+msgid ""
+"Kind of questions: \n"
+"* **field**: Used to set a product field value (can be a node as well)\n"
+"* **custom**: Usefull for nodes to ask question not related to product "
+"field\n"
+"* **logical**: Logical nodes that allows to set multiple values as default "
+"value or as new value\n"
+msgstr ""
+"Type de question\n"
+"* **Champ**: Utilisé pour les questions relatives au champ d'un produit\n"
+"* **Personalisée**: Utilisé pour les questions personnalisées qui ne sont "
+"pas liées à un champ de l'article\n"
+"* **Logique**: Permet d'organiser les question dans des noeuds logique et "
+"définir plusieurs valeurs en même temps\n"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer____last_update
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard____last_update
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question____last_update
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_template____last_update
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr "Date de dernière modification"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__write_uid
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__write_uid
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__write_date
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__write_date
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields.selection,name:product_creation_dynamic_wizard.selection__product_creation_question__question_type__logical
+msgid "Logical"
+msgstr "Logique"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__logical_default_values
+msgid "Logical Default Values"
+msgstr "Valeurs par défaut"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__logical_values
+msgid "Logical Values"
+msgstr "Valeurs"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__name
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_creation_dynamic_wizard_view_form
+msgid "Next"
+msgstr "Suivant"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__conditional_operator
+msgid "Operator to use"
+msgstr "Opérateur à utiliser"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__parent_id
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_search
+msgid "Parent"
+msgstr "Parent"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__parent_path
+msgid "Parent Path"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__parent_question_type
+msgid "Parent type"
+msgstr "Type de question parent"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_creation_dynamic_wizard_view_form
+msgid "Previous"
+msgstr "Précédent"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_product_product
+msgid "Product"
+msgstr "Produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__product_data
+msgid "Product Data"
+msgstr "Données du produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_product_template
+msgid "Product Template"
+msgstr "Modèle de produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.ui.menu,name:product_creation_dynamic_wizard.menu_product_dynamic_wizard_settings
+msgid "Product Wizard Settings"
+msgstr "Configuration de l'assistant de produit"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "Product attribute"
+msgstr "Attribut produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_product_creation_answer
+msgid "Product creation answer"
+msgstr "Réponse aux questions personnalisées"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model,name:product_creation_dynamic_wizard.model_product_creation_question
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_tree_view
+msgid "Product creation question"
+msgstr "Questions"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.product_creation_dynamic_wizard_view_form
+msgid "Product creation wizard"
+msgstr "Assistant de création de produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_category
+msgid "Product type?"
+msgstr "Type de produit ?"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__question_id
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__question
+msgid "Question"
+msgstr "Question"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__question_type
+msgid "Question Type"
+msgstr "Type de question"
+
+#. module: product_creation_dynamic_wizard
+#: code:addons/product_creation_dynamic_wizard/models/product_creation_question.py:0
+#: model:ir.model.constraint,message:product_creation_dynamic_wizard.constraint_product_creation_question_question_set
+#, python-format
+msgid "Question is required if step is not automatic"
+msgstr "La question est obligatoire si le step n'est pas automatique"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.actions.act_window,name:product_creation_dynamic_wizard.product_creation_question_action
+#: model:ir.ui.menu,name:product_creation_dynamic_wizard.menu_product_creation_question_action
+msgid "Questions"
+msgstr "Questions"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__current_company_id
+msgid ""
+"Related to the current company_id that will be set on productwhich can be "
+"used in: \n"
+"* custom view while creating x2m object (ie: "
+"`contex=\"{'default_company_id': current_company_id}\"`)\n"
+"* in default values while creating x2m objects \n"
+"(ie: [[6,0,{'company_id': current_company_id}]])"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_sale_consu
+msgid "Sale consumable product?"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_search
+msgid "Search Product creation question"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_answer__sequence
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_sale_consu_packaging_custom_view
+msgid "Setup packaging?"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__name
+msgid "Technical name used to help organized questions."
+msgstr "Nom technique utilisé pour organiser les questions."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__question
+msgid "The question displayed to the end user"
+msgstr "Question affichée à l'utilisateur"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid ""
+"This question and its children will be applied only if response to the\n"
+"                                parent questions satisfy the following "
+"operator and value."
+msgstr ""
+"Cette question et ses enfants seront appliqués seulement si la réponse à la\n"
+" question parente satisfait l'opérateur et la valeur suivante."
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__logical_values
+msgid ""
+"Those values will erase existing values. Expected a valid json format, "
+"before parsing json special variables are replaced (ie: current_company_id)"
+msgstr ""
+"Ces valeurs effaceront les valeurs existantes. Attention, la valeur doit "
+"être au format valide json, avant de la parser les variables spéciales sont "
+"remplacées (ex: current_company_id)"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_question__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "Values"
+msgstr "Valeurs"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,help:product_creation_dynamic_wizard.field_product_creation_question__conditional_question
+msgid "What ever the question depends on a previous fields value"
+msgstr "La question dépend de la réponse à la question précédente."
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_name
+msgid "What would be the product template name?"
+msgstr "Qu'est le nom du produit ?"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_sale_consu_color
+msgid "What's the color?"
+msgstr "Quelle est la couleur?"
+
+#. module: product_creation_dynamic_wizard
+#: model:ir.model.fields,field_description:product_creation_dynamic_wizard.field_product_creation_dynamic_wizard__wizard_steps
+msgid "Wizard Steps"
+msgstr "étapes de l'assistant"
+
+#. module: product_creation_dynamic_wizard
+#: model_terms:ir.ui.view,arch_db:product_creation_dynamic_wizard.view_product_creation_question_from_view
+msgid "you need to save the question before you can set the default answer."
+msgstr ""
+"Vous devez sauvegarder la question avant de pouvoir définir la réponse par "
+"défaut."
+
+#. module: product_creation_dynamic_wizard
+#: code:addons/product_creation_dynamic_wizard/wizards/product_creation_dynamic_wizard.py:0
+#, python-format
+msgid "a new product"
+msgstr "un nouveau produit"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_active
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_active_yes
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_default_active_yes
+msgid "automatic step: active"
+msgstr "étape automatique: actif"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_purchase_service
+msgid "automatic step: purchase ok"
+msgstr "étape automatique: achat ok"
+
+#. module: product_creation_dynamic_wizard
+#: model:product.creation.question,question:product_creation_dynamic_wizard.product_creation_question_sale_service
+msgid "automatic step: sale ok"
+msgstr "étape automatique: vente ok"
