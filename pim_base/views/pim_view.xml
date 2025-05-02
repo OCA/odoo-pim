@@ -11,8 +11,8 @@
         id="root_menu_pim"
         name="PIM"
         sequence="6"
-        web_icon="pim,static/description/icon.png"
-        groups="pim.group_pim_reader"
+        web_icon="pim_base,static/description/icon.png"
+        groups="pim_base.group_pim_reader"
     />
     <!-- Main Menus -->
     <menuitem
@@ -38,7 +38,7 @@
     <menuitem
         id="menu_product_template"
         name="Products"
-        action="pim.product_template_action"
+        action="pim_base.product_template_action"
         parent="main_menu_product"
         sequence="0"
     />
@@ -60,8 +60,15 @@
     <menuitem
         id="menu_variant_attribute_value"
         name="Attributes Values"
-        action="pim.product_attribute_value_action"
+        action="pim_base.product_attribute_value_action"
         parent="main_menu_variant_attribute"
         sequence="1"
+    />
+    <!-- Un-categorized settings menu placeholder -->
+    <menuitem
+        id="menu_pim_settings"
+        name="Settings"
+        parent="root_menu_pim"
+        sequence="99"
     />
 </odoo>

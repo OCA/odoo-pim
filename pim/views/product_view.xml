@@ -5,26 +5,10 @@
     <record id="pim_product_template_tree_view" model="ir.ui.view">
         <field name="name">pim.product.template.product.tree</field>
         <field name="model">product.template</field>
+        <field name="inherit_id" ref="pim_base.pim_product_template_tree_view" />
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <tree string="Product">
-                <field name="sequence" widget="handle" />
-                <field
-                    name="image_512"
-                    widget='image'
-                    class="oe_avatar"
-                    options='{"preview_image": "image_512", "size": [40, 40]}'
-                    readonly="1"
-                />
-                <field name="default_code" />
-                <field name="barcode" />
-                <field name="name" />
-                <field name="categ_id" />
-                <field
-                    name="uom_id"
-                    options="{'no_open': True, 'no_create': True}"
-                    groups="uom.group_uom"
-                />
+            <field name="uom_id" position="after">
                 <field name="attribute_set_id" />
                 <field
                     widget="label_selection"
@@ -42,18 +26,8 @@
                         ],
                     }"
                 />
-            </tree>
+            </field>
         </field>
     </record>
 
-    <!-- Display Products in tree view first -->
-    <record id="product_template_action" model="ir.actions.act_window">
-        <field name="name">Products</field>
-        <field name="res_model">product.template</field>
-        <field name="view_mode">tree,kanban,form</field>
-        <field name="view_id" ref="pim.pim_product_template_tree_view" />
-        <field
-            name="context"
-        >{"include_native_attribute": 1, "search_default_filter_to_sell": 1}</field>
-    </record>
 </odoo>
