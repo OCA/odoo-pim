@@ -13,6 +13,7 @@ class AttributeAttribute(models.Model):
 
     e_com_visibility = fields.Boolean(
         string="E-Commerce Visibility",
+        default=False,
         help="""If selected the attribute will be shown in e-commerce website app.""",
     )
 
