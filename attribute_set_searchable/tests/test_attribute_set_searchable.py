@@ -53,7 +53,13 @@ class TestAttributeSetSearchable(TransactionCase):
 
     def test_attr_create(self):
         vals = self.vals.copy()
-        vals.update({"searchable": True, "name": "x_test2"})
+        vals.update(
+            {
+                "searchable": True,
+                "name": "x_test2",
+                "field_description": "Attribute test 2",
+            }
+        )
         attr = self.env["attribute.attribute"].create(vals)
         custom_filter = self._get_filter(forced_attr=attr)
         self.assertTrue(custom_filter)

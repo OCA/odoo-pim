@@ -45,21 +45,20 @@ class AttributeAttribute(models.Model):
     def write(self, vals):
         res = super().write(vals)
         for attribute in self:
-            custom_filter = self._get_custom_filter()
+            custom_filter = attribute._get_custom_filter()
             if attribute.searchable:
                 if not custom_filter:
-                    self._create_custom_filter()
+                    attribute._create_custom_filter()
                 else:
-                    self._update_custom_filter(custom_filter)
+                    attribute._update_custom_filter(custom_filter)
             elif custom_filter:
                 custom_filter.unlink()
         return res
 
     @api.model_create_multi
-    @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
         attributes = super().create(vals_list)
-        search_attributes = attributes.filtered(lambda att: att.searchable)
+        search_attributes = attributes.filtered("searchable")
         for attribute in search_attributes:
             attribute._create_custom_filter()
         return attributes
