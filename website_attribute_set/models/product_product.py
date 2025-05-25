@@ -1,4 +1,4 @@
-# Copyright 2011 Kencove (http://www.kencove.com).
+# Copyright 2025 Kencove (http://www.kencove.com).
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -48,5 +48,4 @@ class ProductProduct(models.Model):
                         groups[attribute.attribute_group_id][attribute][product] = (
                             values.mapped("name")
                         )
-
         return groups

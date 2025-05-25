@@ -1,4 +1,4 @@
-# Copyright 2011 Kencove (http://www.kencove.com).
+# Copyright 2025 Kencove (http://www.kencove.com).
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -13,7 +13,6 @@ class Website(models.Model):
     @api.model
     def _search_get_details(self, search_type, order, options):
         additional_attrib_values = options.get("additional_attrib_values")
-
         values = super()._search_get_details(
             search_type=search_type, order=order, options=options
         )
@@ -44,5 +43,4 @@ class Website(models.Model):
                             (attribute_field, "=", additional_attrib_value)
                         ]
                         base_domain.append(additional_attrib_domain)
-
         return values

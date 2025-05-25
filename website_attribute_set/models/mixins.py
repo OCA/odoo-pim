@@ -1,4 +1,4 @@
-# Copyright 2011 Kencove (http://www.kencove.com).
+# Copyright 2025 Kencove (http://www.kencove.com).
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -44,7 +44,6 @@ def search_extra(env, search_term):
             if similarity > 80:
                 extra_domain = [(attribute.name, "!=", False)]
                 extra_domains.append(extra_domain)
-
     return expression.OR(extra_domains)
 
 
@@ -67,5 +66,4 @@ class WebsiteSearchableMixin(models.AbstractModel):
                 domain, limit=limit, order=search_detail.get("order", order)
             )
             count = model.search_count(domain)
-
         return results, count
