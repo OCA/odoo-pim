@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-20 17:26+0000\n"
+"PO-Revision-Date: 2025-06-09 14:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -20,18 +20,18 @@ msgstr ""
 #: model:ir.model,name:attribute_set_searchable.model_attribute_attribute
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_ir_ui_custom_field_filter__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Attributo"
 
 #. module: attribute_set_searchable
 #: model:ir.model,name:attribute_set_searchable.model_ir_ui_custom_field_filter
 msgid "Custom UI field filter"
-msgstr ""
+msgstr "Filtro campo UI personalizzato"
 
 #. module: attribute_set_searchable
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_attribute_attribute__display_name
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_ir_ui_custom_field_filter__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: attribute_set_searchable
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_attribute_attribute__id
@@ -43,9 +43,9 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_attribute_attribute____last_update
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_ir_ui_custom_field_filter____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: attribute_set_searchable
 #: model:ir.model.fields,field_description:attribute_set_searchable.field_attribute_attribute__searchable
 msgid "Searchable"
-msgstr ""
+msgstr "Ricercabile"
