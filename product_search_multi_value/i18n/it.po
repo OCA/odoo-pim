@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-27 14:26+0000\n"
+"PO-Revision-Date: 2025-06-09 14:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -29,21 +29,21 @@ msgstr "ID"
 #. module: product_search_multi_value
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_template____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: product_search_multi_value
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_product__search_multi
 #: model:ir.model.fields,field_description:product_search_multi_value.field_product_template__search_multi
 msgid "Multiple search"
-msgstr ""
+msgstr "Ricerca multipla"
 
 #. module: product_search_multi_value
 #: code:addons/product_search_multi_value/models/product_template.py:0
 #, python-format
 msgid "Operator %s is not usable with multisearch"
-msgstr ""
+msgstr "L'operatore %s non è utilizzabile con la ricerca multipla"
 
 #. module: product_search_multi_value
 #: model:ir.model,name:product_search_multi_value.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modello prodotto"
