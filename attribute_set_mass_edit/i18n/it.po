@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-20 17:26+0000\n"
+"PO-Revision-Date: 2025-06-09 14:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,18 +19,18 @@ msgstr ""
 #. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__allow_mass_editing
 msgid "Allow Mass Editing"
-msgstr ""
+msgstr "Consenti modifica di massa"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_attribute_attribute
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing_line__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Attributo"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_attribute_group
 msgid "Attribute Group"
-msgstr ""
+msgstr "Gruppo attributo"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__display_name
@@ -39,13 +39,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing_line__display_name
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: attribute_set_mass_edit
 #: code:addons/attribute_set_mass_edit/models/attribute_group.py:0
 #, python-format
 msgid "Edit %s fields"
-msgstr ""
+msgstr "Modifica campi %s"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__id
@@ -63,31 +63,31 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing_line____last_update
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_mass_editing_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_group__mass_edit_action_ids
 msgid "Mass Edit Action"
-msgstr ""
+msgstr "Azione modifica di massa"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_actions_server__mass_edit_attribute_group_id
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_cron__mass_edit_attribute_group_id
 msgid "Mass Edit Attribute Group"
-msgstr ""
+msgstr "Gruppo modifica di massa attributo"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_mass_editing_line
 #: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__mass_editing_line_ids
 msgid "Mass Editing Line"
-msgstr ""
+msgstr "Riga modifica di massa"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Azione server"
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_mass_editing_wizard
 msgid "Wizard for mass edition"
-msgstr ""
+msgstr "Procedura guidata per le modifiche massive"
