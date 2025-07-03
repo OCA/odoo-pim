@@ -3,7 +3,7 @@
     <menuitem
         id="main_menu_attribute"
         name="Attributes"
-        parent="pim.root_menu_pim"
+        parent="pim_base.root_menu_pim"
         sequence="01"
     />
     <record id="attribute_set_form_action" model="ir.actions.act_window">
