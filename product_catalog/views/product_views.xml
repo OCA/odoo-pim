@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_view_kanban_catalog" model="ir.ui.view">
+        <field name="name">product.view.kanban.catalog</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <kanban records_draggable="0" js_class="product_kanban_catalog">
+                <field name="id" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="d-flex flex-grow-1 m-2">
+                            <div
+                                class="p-2 pt-1 d-flex flex-column m-0"
+                                t-attf-id="product-{{record.id.raw_value}}"
+                            >
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a
+                                        class="dropdown-toggle o-no-caret btn"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        aria-label="Dropdown menu"
+                                        title="Dropdown menu"
+                                    >
+                                        <span class="fa fa-ellipsis-v" />
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <a
+                                            role="menuitem"
+                                            type="open"
+                                            class="dropdown-item"
+                                        >Open</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <field
+                                        name="name"
+                                        class="fw-bolder fs-4 text-reset mb-1"
+                                    />
+                                </div>
+                                <div t-if="record.default_code.value">
+                                    [<field name="default_code" />]
+                                </div>
+                                <div
+                                    name="o_kanban_price"
+                                    t-attf-id="product-{{record.id.raw_value}}-price"
+                                />
+                                <field
+                                    name="product_template_attribute_value_ids"
+                                    widget="many2many_tags"
+                                    domain="[('id', 'in', parent.ids)]"
+                                    groups="product.group_product_variant"
+                                    options="{'color_field': 'color'}"
+                                />
+                            </div>
+                            <field
+                                name="image_128"
+                                widget="image"
+                                alt="Product"
+                                class="ms-auto"
+                                options="{'size': [55, 55]}"
+                            />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="product_view_search_catalog" model="ir.ui.view">
+        <field name="name">product.view.search.catalog</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Product">
+                <!-- Search field -->
+                <field
+                    name="name"
+                    string="Product"
+                    filter_domain="['|', '|', ('default_code', 'ilike', self), ('name', 'ilike', self), ('barcode', 'ilike', self)]"
+                />
+                <field
+                    name="categ_id"
+                    filter_domain="[('categ_id', 'child_of', raw_value)]"
+                />
+                <field
+                    name="product_template_attribute_value_ids"
+                    groups="product.group_product_variant"
+                />
+                <field name="product_tmpl_id" string="Product Template" />
+                <!-- Filter -->
+                <separator />
+                <filter
+                    string="Services"
+                    name="services"
+                    domain="[('type', '=', 'service')]"
+                />
+                <filter string="Goods" name="goods" domain="[('type', '=', 'consu')]" />
+                <!-- Group By -->
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Product Type"
+                        name="type"
+                        context="{'group_by':'type'}"
+                    />
+                    <filter
+                        string="Product Category"
+                        name="categ_id"
+                        context="{'group_by':'categ_id'}"
+                    />
+                </group>
+                <!-- searchpanel -->
+                <searchpanel>
+                    <field
+                        name="categ_id"
+                        string="Product Category"
+                        icon="fa-th-list"
+                    />
+                    <field
+                        name="product_template_attribute_value_ids"
+                        string="Attributes"
+                        icon="fa-th-list"
+                        domain="[('ptav_active', '=', True), ('product_tmpl_id.active', '=', True)]"
+                        enable_counters="1"
+                        select="multi"
+                    />
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+</odoo>
