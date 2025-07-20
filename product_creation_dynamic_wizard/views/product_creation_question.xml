@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_creation_question_tree_view" model="ir.ui.view">
+        <field name="name">product.creation.question.tree</field>
+        <field name="model">product.creation.question</field>
+        <field name="arch" type="xml">
+            <tree string="Product creation question">
+                <field name="sequence" widget="handle" />
+                <field name="parent_id" optional="show" />
+                <field name="name" optional="show" />
+                <field name="complete_name" optional="hide" />
+                <field name="question_type" optional="show" />
+                <field name="question" optional="show" />
+                <field name="answer_required" optional="show" />
+                <field name="field_id" optional="show" />
+                <field name="default_field_value" optional="show" />
+                <field name="conditional_question" optional="hide" />
+                <field name="conditional_operator" optional="hide" />
+                <field name="conditional_expected_result" optional="hide" />
+                <field name="conditional_expected_result_answer_id" optional="hide" />
+                <field name="is_automatic" optional="show" />
+                <field name="active" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_creation_question_from_view" model="ir.ui.view">
+        <field name="name">product.creation.question.form</field>
+        <field name="model">product.creation.question</field>
+        <field name="arch" type="xml">
+            <form string="Product creation question">
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                        <label for="parent_id" class="oe_edit_only" />
+                        <h2><field
+                                name="parent_id"
+                                options="{'no_create': True}"
+                            /></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1" />
+                            <field name="parent_question_type" invisible="1" />
+                            <field name="question_type" />
+                            <field
+                                name="is_automatic"
+                                attrs="{'readonly': [('question_type', '=', 'logical')]}"
+                            />
+                            <field
+                                name="conditional_question"
+                                attrs="{'invisible': ['|', ('parent_id', '=', False), ('parent_question_type', '=', 'logical')]}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="question"
+                                attrs="{'invisible': [('is_automatic', '=', True)], 'required': [('is_automatic', '!=', True)]}"
+                            />
+                            <field
+                                name="answer_required"
+                                attrs="{'invisible': [('question_type', 'in', ['logical'])]}"
+                            />
+                            <field name="sequence" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page
+                            string="Apply if"
+                            attrs="{'invisible': [('conditional_question', '=', False)]}"
+                        >
+                            <div class="alert alert-info" role="alert">
+                                This question and its children will be applied only if response to the
+                                parent questions satisfy the following operator and value.
+                            </div>
+                            <group>
+                                <field name="conditional_operator" />
+                                <field
+                                    name="conditional_expected_result"
+                                    attrs="{'invisible': [('parent_question_type', '!=', 'field')]}"
+                                />
+                                <field
+                                    name="conditional_expected_result_answer_id"
+                                    domain="[('question_id', '=', parent_id)]"
+                                    attrs="{'invisible': [('parent_question_type', '!=', 'custom')]}"
+                                />
+                            </group>
+                        </page>
+                        <page
+                            string="Product attribute"
+                            attrs="{'invisible':[('question_type','!=','field')]}"
+                        >
+                            <group>
+                                <group>
+                                    <field
+                                        name="field_id"
+                                        options="{'no_create_edit': True}"
+                                    />
+                                    <field name="display_field_name" />
+                                </group>
+                                <group>
+                                    <field name="default_field_value" widget="ace" />
+                                </group>
+                            </group>
+                            <label for="custom_view" />
+                            <field
+                                name="custom_view"
+                                widget="ace"
+                                options="{'mode': 'xml'}"
+                            />
+                        </page>
+                        <page
+                            string="Custom response"
+                            attrs="{'invisible':[('question_type','!=','custom')]}"
+                        >
+                            <field
+                                name="answer_ids"
+                                context="{'default_question_id': active_id}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="question_id" invisible="1" />
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <div
+                                        class="alert alert-info"
+                                        role="alert"
+                                        attrs="{'invisible': [('answer_ids','!=', False)]}"
+                                    >
+                                        you need to save the question before you can set the default answer.
+                                    </div>
+                                    <field
+                                        name="default_answer_id"
+                                        domain="[('question_id','=', active_id)]"
+                                    />
+                                </group>
+                            </group>
+                        </page>
+                        <page
+                            string="Values"
+                            attrs="{'invisible':[('question_type','!=','logical')]}"
+                        >
+                            <group>
+                                <group>
+                                    <label for="logical_default_values" />
+                                    <field
+                                        name="logical_default_values"
+                                        nolabel="1"
+                                        widget="ace"
+                                        colspan="4"
+                                    />
+                                </group>
+                                <group>
+                                    <label for="logical_values" />
+                                    <field
+                                        name="logical_values"
+                                        nolabel="1"
+                                        widget="ace"
+                                        colspan="4"
+                                    />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Children questions" name="children_questions">
+                            <field
+                                name="child_ids"
+                                context="{'default_parent_id': active_id,}"
+                            >
+                                <tree>
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" optional="show" />
+                                    <field name="complete_name" optional="hide" />
+                                    <field name="question_type" optional="show" />
+                                    <field name="question" optional="show" />
+                                    <field name="answer_required" optional="show" />
+                                    <field name="field_id" optional="show" />
+                                    <field name="default_field_value" optional="show" />
+                                    <field
+                                        name="conditional_question"
+                                        optional="show"
+                                    />
+                                    <field
+                                        name="conditional_operator"
+                                        optional="show"
+                                    />
+                                    <field
+                                        name="conditional_expected_result"
+                                        optional="show"
+                                    />
+                                    <field
+                                        name="conditional_expected_result_answer_id"
+                                        optional="show"
+                                    />
+                                    <field name="is_automatic" optional="show" />
+                                    <field name="active" optional="hide" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="message_ids" options="{'post_refresh': 'always'}" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_creation_question_search" model="ir.ui.view">
+        <field name="name">product.creation.question.search</field>
+        <field name="model">product.creation.question</field>
+        <field name="arch" type="xml">
+            <search string="Search Product creation question">
+                <field name="name" />
+                <field name="complete_name" />
+                <field name="parent_id" />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Parent"
+                        name="group_parent"
+                        context="{'group_by': 'parent_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="product_creation_question_action" model="ir.actions.act_window">
+        <field name="name">Questions</field>
+        <field name="res_model">product.creation.question</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_creation_question_search" />
+        <field name="context">{'search_default_group_parent': 1,}</field>
+        <field name="help" />
+    </record>
+    <menuitem
+        name="Product Wizard Settings"
+        id="menu_product_dynamic_wizard_settings"
+        parent="pim_base.root_menu_pim"
+        sequence="15"
+    />
+    <menuitem
+        action="product_creation_question_action"
+        id="menu_product_creation_question_action"
+        parent="menu_product_dynamic_wizard_settings"
+        groups="pim_base.group_pim_manager"
+        sequence="15"
+    />
+</odoo>

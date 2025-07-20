@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="product_creation_dynamic_wizard_view_form" model="ir.ui.view">
+        <field name="name">product_creation_dynamic_wizard.view.form</field>
+        <field name="model">product.creation.dynamic.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product creation wizard">
+                <h1><field name="current_question" nolabel="1" readonly="1" /></h1>
+                <group name="question">
+                    <!-- set dynamically by the wizard -->
+                </group>
+                <field name="current_company_id" invisible="1" />
+                <field name="current_step" invisible="1" />
+                <footer>
+                    <button
+                        string="Cancel"
+                        special="cancel"
+                        type="object"
+                        class="btn btn-secondary oe_inline"
+                    />
+                    <button
+                        string="Previous"
+                        type="object"
+                        name="action_open_previous"
+                        attrs="{'invisible': [('current_step', '=', 0)]}"
+                    />
+                    <button
+                        string="Next"
+                        type="object"
+                        name="action_open_next"
+                        class="oe_highlight"
+                    />
+                </footer>
+                <div name="footnote" class="mt-0 mb-0 float-right text-muted">
+                    <field name="current_complete_name" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- We are creating action server (not an ir.actions.act_window)
+    because we needs the records wizard records exists before opening
+    the wizard
+    -->
+    <record id="product_creation_dynamic_wizard_action" model="ir.actions.server">
+        <field name="name">Create new product</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="binding_model_id" ref="product.model_product_template" />
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_product_creation_dynamic_wizard()
+        </field>
+    </record>
+
+    <menuitem
+        action="product_creation_dynamic_wizard_action"
+        id="menu_product_creation_dynamic_wizard"
+        parent="pim_base.main_menu_product"
+        groups="pim_base.group_pim_user"
+        sequence="30"
+    />
+</odoo>
