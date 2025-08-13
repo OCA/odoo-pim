@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-   <t
-        t-extend="KanbanView.buttons"
-        t-name="product_creation_dynamic_wizard.buttons.kanban"
-    >
-       <t t-jquery="button.o-kanban-button-new" t-operation="after">
-           <button type="button" class="btn btn-primary o-kanban-button-new-wizard">
-               Create (Wizard)
-           </button>
+   <t t-extend="KanbanView.buttons">
+       <t t-jquery="button" t-operation="after">
+               <button
+                t-if="widget.modelName == 'product.template'"
+                class="btn btn-primary o-kanban-button-new-wizard oe_highlight"
+                type="button"
+            >
+                   Create (Wizard)
+               </button>
+               <button
+                t-if="widget.modelName == 'product.product'"
+                class="btn btn-primary o-kanban-button-new-wizard oe_highlight"
+                type="button"
+            >
+                   Create (Wizard)
+               </button>
        </t>
    </t>
 </templates>

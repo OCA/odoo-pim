@@ -4,12 +4,20 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <templates id="form_view" xml:space="preserve">
-    <t
-        t-extend="FormView.buttons"
-        t-name="product_creation_dynamic_wizard.buttons.form"
-    >
+    <t t-extend="FormView.buttons">
        <t t-jquery=".o_form_button_create" t-operation="after">
-            <button type="button" class="btn btn-secondary o_form_button_create_wizard">
+            <button
+                t-if="widget.modelName == 'product.template'"
+                type="button"
+                class="btn btn-secondary o_form_button_create_wizard"
+            >
+                Create (Wizard)
+            </button>
+            <button
+                t-if="widget.modelName == 'product.product'"
+                type="button"
+                class="btn btn-secondary o_form_button_create_wizard"
+            >
                 Create (Wizard)
             </button>
        </t>

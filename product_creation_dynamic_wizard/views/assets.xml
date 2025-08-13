@@ -2,10 +2,6 @@
  <template id="button_render_js" inherit_id="web.assets_backend">
        <xpath expr="." position="inside">
            <script
-                src="product_creation_dynamic_wizard/static/src/js/form_controller.js"
-                type="text/javascript"
-            />
-           <script
                 src="product_creation_dynamic_wizard/static/src/js/tree_button.js"
                 type="text/javascript"
             />

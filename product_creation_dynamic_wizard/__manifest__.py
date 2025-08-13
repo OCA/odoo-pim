@@ -4,7 +4,7 @@
 
 {
     "name": "Product creation dynamic wizard",
-    "version": "14.0.0.1.0",
+    "version": "14.0.0.1.1",
     "license": "AGPL-3",
     "author": "Pierre Verkest <pierre@verkest.fr>, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
@@ -20,8 +20,6 @@
     "data": [
         "wizards/product_creation_dynamic_wizard.xml",
         "views/assets.xml",
-        "views/product_template.xml",
-        "views/product_product.xml",
         "views/product_creation_question.xml",
         "security/ir.model.access.csv",
     ],
