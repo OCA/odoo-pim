@@ -3,14 +3,14 @@
    <t t-extend="ListView.buttons">
        <t t-jquery="button.o_list_button_add" t-operation="after">
            <button
-                t-if="widget.modelName == 'product.template'"
+                t-if="widget and widget.modelName == 'product.template'"
                 type="button"
                 class="btn btn-primary o_list_button_add_wizard"
             >
                Create (Wizard)
            </button>
            <button
-                t-if="widget.modelName == 'product.product'"
+                t-if="widget and widget.modelName == 'product.product'"
                 type="button"
                 class="btn btn-primary o_list_button_add_wizard"
             >
