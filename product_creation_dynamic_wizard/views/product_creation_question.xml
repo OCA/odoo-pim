@@ -19,6 +19,7 @@
                 <field name="conditional_expected_result" optional="hide" />
                 <field name="conditional_expected_result_answer_id" optional="hide" />
                 <field name="is_automatic" optional="show" />
+                <field name="automatic_save" optional="show" />
                 <field name="active" optional="hide" />
             </tree>
         </field>
@@ -56,6 +57,7 @@
                                 name="is_automatic"
                                 attrs="{'readonly': [('question_type', '=', 'logical')]}"
                             />
+                            <field name="automatic_save" />
                             <field
                                 name="conditional_question"
                                 attrs="{'invisible': ['|', ('parent_id', '=', False), ('parent_question_type', '=', 'logical')]}"

@@ -163,6 +163,11 @@ class ProductCreationQuestion(models.Model):
             "asking the user for a value."
         ),
     )
+    automatic_save = fields.Boolean(
+        string="Automatic save",
+        default=False,
+        help="If checked, the product will be saved at this step automatically.",
+    )
 
     @api.model
     def _validate_xml_view(self, xml_view, fieldname):

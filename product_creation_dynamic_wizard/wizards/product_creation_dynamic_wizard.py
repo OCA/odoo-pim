@@ -99,6 +99,8 @@ class ProductCreationDynamicWizard(models.TransientModel):
 
     wizard_steps = Serialized(default=lambda self: self._default_wizard_steps())
     product_data = Serialized(default=lambda self: self._default_product_data())
+    already_written_template_data = Serialized(default={})
+    already_written_product_data = Serialized(default={})
     current_step = fields.Integer(default=-1)
     current_question = fields.Char(compute="_compute_current_fields")
     current_complete_name = fields.Char(compute="_compute_current_fields")
@@ -113,6 +115,9 @@ class ProductCreationDynamicWizard(models.TransientModel):
             "* in default values while creating x2m objects \n"
             "(ie: [[6,0,{'company_id': current_company_id}]])"
         ),
+    )
+    product_template_id = fields.Many2one(
+        "product.template",
     )
 
     @api.model
@@ -141,6 +146,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
     def _default_product_data(self):
         return {
             "company_id": self.env.company.id,
+            "type": "consu",
         }
 
     @api.model
@@ -383,14 +389,17 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 continue
 
             self.write_serialized_data(self._prepare_product_data())
+
             if self.step.is_automatic:
                 self._save_current_step_history()
                 continue
             user_step = True
 
         if user_step:
+            self.create_or_update_product()
             return self._open_wizard_action()
-        return self.action_create()
+        self.create_or_update_product(force_save=True)
+        return self.action_open_final_product()
 
     def _save_current_step_history(self):
         wizard_data = self.steps
@@ -415,10 +424,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
         an_named_product_title = _("a new product")
         return {
             "name": _("Creating %(product_name)s...")
-            % {
-                "product_name": self.product_data.get("name", an_named_product_title)
-                or an_named_product_title
-            },
+            % {"product_name": self.product_template_id.name or an_named_product_title},
             "type": "ir.actions.act_window",
             "res_model": self._name,
             "res_id": self.id,
@@ -441,18 +447,55 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 product_values[fieldname] = value
         return template_values, product_values
 
+    def create_or_update_product(self, force_save=False):
+        if (
+            self.current_step < len(self.steps)
+            and not self.step._record.automatic_save
+            and not force_save
+        ):
+            return
+        if self.product_template_id:
+            self._action_write()
+        else:
+            self._action_create()
+
+    def _action_write(self):
+        def compute_diff(new_values, old_values):
+            return {k: v for k, v in new_values.items() if old_values.get(k) != v}
+
+        def update_dict(old_values, diff):
+            updated = old_values.copy()
+            updated.update(diff)
+            return updated
+
+        template_values, product_values = self._split_product_data()
+
+        template_diff = compute_diff(
+            template_values, self.already_written_template_data
+        )
+        self.product_template_id.write(template_diff)
+        self.already_written_template_data = update_dict(
+            self.already_written_template_data, template_diff
+        )
+
+        product_diff = compute_diff(product_values, self.already_written_product_data)
+        self.product_template_id.product_variant_ids.write(product_diff)
+        self.already_written_product_data = update_dict(
+            self.already_written_product_data, product_diff
+        )
+
     def _action_create(self):
         template_values, product_values = self._split_product_data()
-        template = self.env["product.template"].create(template_values)
-        template.product_variant_ids.write(product_values)
-        return template
+        self.product_template_id = self.env["product.template"].create(template_values)
+        self.already_written_template_data = template_values.copy()
+        self.product_template_id.product_variant_ids.write(product_values)
+        self.already_written_product_data = product_values.copy()
 
-    def action_create(self):
-        template = self._action_create()
+    def action_open_final_product(self):
         return {
             "type": "ir.actions.act_window",
             "res_model": "product.template",
             "view_mode": "form",
             "view_type": "form",
-            "res_id": template.id,
+            "res_id": self.product_template_id.id,
         }

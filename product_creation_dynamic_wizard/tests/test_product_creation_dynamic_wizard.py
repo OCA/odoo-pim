@@ -113,7 +113,8 @@ class TestProductCreationDynamicWizard(SavepointCase):
         )
 
     def test_product_creation_wizard_default(self):
-        product_template = self.product_creation_wizard._action_create()
+        self.product_creation_wizard._action_create()
+        product_template = self.product_creation_wizard.product_template_id
         self.assertEqual(product_template.name, "Product name (created from wizard)")
 
     def test_flow_step0_without_record(self):
@@ -445,6 +446,10 @@ class TestProductCreationDynamicWizardWithProductAttributeStep(SavepointCase):
                 "sequence": 5,
             }
         )
+        cls.question_name = cls.env.ref(
+            "product_creation_dynamic_wizard.product_creation_question_name"
+        )
+        cls.question_name.automatic_save = True
 
         cls.product_creation_wizard = cls.env["product.creation.dynamic.wizard"].create(
             {}
@@ -469,11 +474,9 @@ class TestProductCreationDynamicWizardWithProductAttributeStep(SavepointCase):
         )
         wizard.write({"answer_id": answer.id})
         wizard.action_open_next()
-
         wizard.write({"product_attribute": "joe"})
-        action = wizard.action_open_next()
-        product_template = self.env["product.template"].browse(action["res_id"])
+        wizard.action_open_next()
         self.assertEqual(
-            product_template.product_variant_ids.mapped("product_attribute"),
+            wizard.product_template_id.product_variant_ids.mapped("product_attribute"),
             ["joe", "joe"],
         )
