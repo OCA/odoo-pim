@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2025 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="product_vector_characteristic_form_view">
@@ -11,11 +10,28 @@
                 <header>
                 </header>
                 <sheet>
-                    <group>
+                    <group name="Product" string="Product">
                         <field name="field_id" />
-                        <field name="model_id" attrs="{'invisible': [('field_id', '=', False)]}" />
+                        <field
+                            name="model_id"
+                            attrs="{'invisible': [('field_id', '=', False)]}"
+                        />
+                        <field
+                            name="value_id"
+                            attrs="{'invisible': [('value_id_visible', '=', False)]}"
+                        />
+                        <field name="value_id_visible" invisible="1" />
+                        <field
+                            name="possible_values_string"
+                            attrs="{'invisible': [('field_id', '=', False)]}"
+                        />
+                    </group>
+                    <group name="Vector" string="Vector">
                         <field name="weight" />
-                        <field name="vector_index" attrs="{'invisible': [('id', '=', False)]}" />
+                        <field
+                            name="vector_index"
+                            attrs="{'invisible': [('id', '=', False)]}"
+                        />
                     </group>
                 </sheet>
             </form>
