@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="product_vector_characteristic_form_view">
+        <field name="model">product.vector.characteristic</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="field_id" />
+                        <field name="model_id" attrs="{'invisible': [('field_id', '=', False)]}" />
+                        <field name="weight" />
+                        <field name="vector_index" attrs="{'invisible': [('id', '=', False)]}" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record model="ir.ui.view" id="product_vector_characteristic_search_view">
+        <field name="model">product.vector.characteristic</field>
+        <field name="arch" type="xml">
+            <search>
+            </search>
+        </field>
+    </record> -->
+
+    <record model="ir.ui.view" id="product_vector_characteristic_tree_view">
+        <field name="model">product.vector.characteristic</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_id" />
+                <field name="model_id" />
+                <field name="weight" />
+                <field name="vector_index" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="product_vector_characteristic_act_window">
+        <field name="name">Product Vector Characteristic</field>
+        <field name="res_model">product.vector.characteristic</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="product_vector_characteristic_menu">
+        <field name="name">Product Vector Characteristic</field>
+        <field name="parent_id" ref="base.menu_custom" />
+        <field name="action" ref="product_vector_characteristic_act_window" />
+        <!-- <field name="sequence" eval="16"/> TODO -->
+    </record>
+
+</odoo>
