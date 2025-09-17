@@ -144,3 +144,28 @@ class ProductVectorCharacteristic(models.Model):
                 raise UserError(
                     _("The given value_id is not inside the possible value_id's")
                 )
+
+    @api.model
+    def _get_empty_index(self, already_assigned_indices=[]):
+        stored_indices = [
+            x["vector_index"] for x in self.search_read([], ["vector_index"])
+        ]
+        indices = stored_indices + already_assigned_indices
+        if not indices:
+            return 0
+        for i, index in enumerate(sorted(set(indices))):
+            if i != index:
+                return i
+        return len(indices)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Be sure to check fo an empty index BEFORE creating
+        # the record
+        already_assigned_indices = []
+        for vals in vals_list:
+            index = self.env["product.vector.characteristic"]._get_empty_index(already_assigned_indices)
+            vals["vector_index"] = index
+            already_assigned_indices.append(index)
+        res = super().create(vals_list)
+        return res
