@@ -10,8 +10,9 @@
     "website": "https://github.com/OCA/odoo-pim",
     "depends": ["product"],
     "data": [
-        "views/product_vector_characteristic.xml",
         "security/ir.model.access.csv",
+        "views/product_vector_characteristic.xml",
+        "wizards/product_field_vectorization_wizard.xml",
     ],
     "demo": [],
 }
