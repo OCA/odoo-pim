@@ -41,9 +41,10 @@ class ProductVectorCharacteristic(models.Model):
         "For example, if the characteristic's model is \"Color(0: 'red', 1: 'green', 2: "
         "'blue')\", then to represent the color 'green', you would choose `1`.",
     )
+    value_name = fields.Text(compute="_compute_value_name")
     value_id_visible = fields.Boolean(compute="_compute_value_id_visible")
-    possible_values = fields.Json(compute="_compute_possible_values")
     possible_values_string = fields.Text(compute="_compute_possible_values_string")
+    name = fields.Text(compute="_compute_name")
 
     weight = fields.Float(
         required=True,
@@ -62,13 +63,13 @@ class ProductVectorCharacteristic(models.Model):
             "unique_field_value",
             "UNIQUE(field_id, value_id)",
             "A characteristic should be uniquely determined by a product.product "
-            "field and a value.",
+            "field and a value but "
+            "the given pair (field_id, value_id) already exists.",
         ),
         (
             "unique_vector_index",
             "UNIQUE(vector_index)",
-            "There cannot be two characteristics pointing to the same index in the vector.\n"
-            "The given pair (field_id, value_id) already exists.",
+            "There cannot be two characteristics pointing to the same index in the vector.",
         ),
         (
             "check_vector_index_non_negative",
@@ -81,6 +82,30 @@ class ProductVectorCharacteristic(models.Model):
             "weight must be > 0",
         ),
     ]
+
+    @api.depends("value_id", "field_id")
+    def _compute_value_name(self):
+        for record in self:
+            if record.value_id is False or not record.field_id:
+                record.value_name = ""
+            elif record.field_id.ttype == "boolean":
+                record.value_name = record.field_id.name
+            elif record.field_id.ttype == "selection":
+                record.value_name = record.field_id.selection_ids.browse(
+                    [record.value_id]
+                ).name
+            else:
+                record.value_name = (
+                    self.env[record.model_id.model].browse([record.value_id]).name
+                )
+
+    @api.depends("field_id", "value_id")
+    def _compute_name(self):
+        for record in self:
+            if record.field_id.ttype == "boolean":
+                record.name = record.field_id.name
+            else:
+                record.name = f"{record.field_id.name} = '{record.value_name}'"
 
     @api.depends("field_id")
     def _compute_value_id_visible(self):
