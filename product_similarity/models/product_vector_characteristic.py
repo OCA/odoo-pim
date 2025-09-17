@@ -25,7 +25,7 @@ class ProductVectorCharacteristic(models.Model):
             (
                 "ttype",
                 "in",
-                ["many2one", "one2many", "many2many", "selection", "boolean"],
+                ["many2one", "many2many", "selection", "boolean"],
             ),
         ],
         help="Field inside the `product.product` model linked to the current characteristic.",

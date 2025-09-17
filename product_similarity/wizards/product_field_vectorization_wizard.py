@@ -15,7 +15,7 @@ class ProductFieldWizard(models.TransientModel):
             (
                 "ttype",
                 "in",
-                ["many2one", "one2many", "many2many", "selection", "boolean"],
+                ["many2one", "many2many", "selection", "boolean"],
             ),
         ],
     )
