@@ -62,9 +62,7 @@ class ProductVectorCharacteristic(models.Model):
         (
             "unique_field_value",
             "UNIQUE(field_id, value_id)",
-            "A characteristic should be uniquely determined by a product.product "
-            "field and a value but "
-            "the given pair (field_id, value_id) already exists.",
+            "The given pair (field_id, value_id) already exists.",
         ),
         (
             "unique_vector_index",
@@ -83,23 +81,16 @@ class ProductVectorCharacteristic(models.Model):
         ),
     ]
 
-    @api.depends("value_id", "field_id")
+    @api.depends("field_id", "value_id")
     def _compute_value_name(self):
         for record in self:
-            if record.value_id is False or not record.field_id:
+            possible_values = record.get_possible_values(record.field_id)
+            if not possible_values:
                 record.value_name = ""
-            elif record.field_id.ttype == "boolean":
-                record.value_name = record.field_id.name
-            elif record.field_id.ttype == "selection":
-                record.value_name = record.field_id.selection_ids.browse(
-                    [record.value_id]
-                ).name
             else:
-                record.value_name = (
-                    self.env[record.model_id.model].browse([record.value_id]).name
-                )
+                record.value_name = possible_values.get(record.value_id, "")
 
-    @api.depends("field_id", "value_id")
+    @api.depends("field_id", "value_name")
     def _compute_name(self):
         for record in self:
             if record.field_id.ttype == "boolean":
@@ -115,67 +106,69 @@ class ProductVectorCharacteristic(models.Model):
             else:
                 record.value_id_visible = True
 
-    @api.depends("model_id")
-    def _compute_possible_values(self):
-        for record in self:
-            if not record.field_id:
-                record.possible_values = []
+    @api.model
+    def get_possible_values(self, field):
+        if not field:
+            return {}
 
-            elif record.field_id.ttype == "boolean":
-                record.possible_values = []
-            elif record.field_id.ttype == "selection":
-                record.possible_values = [
-                    {"id": x[0], "name": x[1]}
-                    for x in record.field_id.selection_ids.name_get()
-                ]
-            else:
-                record.possible_values = [
-                    {"id": x[0], "name": x[1]}
-                    for x in self.env[record.model_id.model].search([]).name_get()
-                ]
+        elif field.ttype == "boolean":
+            return {}
+        elif field.ttype == "selection":
+            return {x[0]: x[1] for x in field.selection_ids.name_get()}
+        else:
+            model = self.get_related_model(field)
+            return {x[0]: x[1] for x in self.env[model.model].search([]).name_get()}
 
-    @api.depends("possible_values")
+    @api.depends("field_id")
     def _compute_possible_values_string(self):
         for record in self:
-            if record.possible_values:
+            possible_values = record.get_possible_values(record.field_id)
+            if possible_values:
                 record.possible_values_string = "\n".join(
-                    f"{x['id']: <4n} {x['name']}"
-                    for x in sorted(record.possible_values, key=lambda x: x["id"])
+                    f"{value_id: <4n} {value_name}"
+                    for value_id, value_name in sorted(possible_values.items())
                 )
             else:
                 record.possible_values_string = ""
 
+    @api.model
+    def get_related_model(self, field):
+        if field.ttype in ["many2one", "one2many", "many2many"]:
+            return self.env["ir.model"].search(
+                [("model", "=", field.relation)], limit=1
+            )
+        elif field.ttype in ["boolean", "selection"]:
+            return self.env["ir.model"].search(
+                [("model", "=", "product.product")], limit=1
+            )
+        else:
+            return False
+
     @api.depends("field_id")
     def _compute_model_id(self):
         for record in self:
-            if record.field_id.ttype in ["many2one", "one2many", "many2many"]:
-                record.model_id = self.env["ir.model"].search(
-                    [("model", "=", record.field_id.relation)], limit=1
-                )
-            elif record.field_id.ttype in ["boolean", "selection"]:
-                record.model_id = self.env["ir.model"].search(
-                    [("model", "=", "product.product")], limit=1
-                )
-            else:
-                record.model_id = False
+            record.model_id = record.get_related_model(record.field_id)
 
     @api.constrains("value_id")
     def _check_value_id(self):
         for record in self:
-            if not record.field_id:
+            possible_values = record.get_possible_values(record.field_id)
+            if not possible_values:
                 continue
-            possible_ids = [x["id"] for x in record.possible_values]
+            possible_ids = list(possible_values)
             if record.value_id not in possible_ids:
                 raise UserError(
                     _("The given value_id is not inside the possible value_id's")
                 )
 
     @api.model
-    def _get_empty_index(self, already_assigned_indices=[]):
+    def _get_empty_index(self, already_assigned_indices=None):
         stored_indices = [
             x["vector_index"] for x in self.search_read([], ["vector_index"])
         ]
-        indices = stored_indices + already_assigned_indices
+        indices = stored_indices + (
+            already_assigned_indices if already_assigned_indices else []
+        )
         if not indices:
             return 0
         for i, index in enumerate(sorted(set(indices))):
@@ -189,8 +182,21 @@ class ProductVectorCharacteristic(models.Model):
         # the record
         already_assigned_indices = []
         for vals in vals_list:
-            index = self.env["product.vector.characteristic"]._get_empty_index(already_assigned_indices)
+            index = self.env["product.vector.characteristic"]._get_empty_index(
+                already_assigned_indices
+            )
             vals["vector_index"] = index
             already_assigned_indices.append(index)
         res = super().create(vals_list)
         return res
+
+    def field_vectorization_wizard_action(self):
+        """
+        Returns the window action for the 'res.partner' model.
+        """
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "product.field.vectorization.wizard",
+            "views": [[False, "form"]],
+            "target": "new",
+        }
