@@ -189,14 +189,3 @@ class ProductVectorCharacteristic(models.Model):
             already_assigned_indices.append(index)
         res = super().create(vals_list)
         return res
-
-    def field_vectorization_wizard_action(self):
-        """
-        Returns the window action for the 'res.partner' model.
-        """
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "product.field.vectorization.wizard",
-            "views": [[False, "form"]],
-            "target": "new",
-        }

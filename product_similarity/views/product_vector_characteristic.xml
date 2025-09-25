@@ -49,14 +49,7 @@
     <record model="ir.ui.view" id="product_vector_characteristic_tree_view">
         <field name="model">product.vector.characteristic</field>
         <field name="arch" type="xml">
-            <header>
-                <button
-                    name="field_vectorization_wizard_action"
-                    type="object"
-                    string="Vectorize field"
-                />
-            </header>
-            <tree>
+            <tree js_class="vectorization_wizard_button_in_tree">
                 <field name="name" />
                 <field name="field_id" />
                 <field name="model_id" />
