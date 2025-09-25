@@ -8,7 +8,13 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
-    "depends": ["product"],
+    "depends": ["product", "field_vector", "queue_job"],
+    "assets": {
+        "web.assets_backend": [
+            "product_similarity/static/src/js/product_vector_characteristic_tree_extend.js",
+            "product_similarity/static/src/xml/product_vector_characteristic_button.xml",
+        ]
+    },
     "data": [
         "security/ir.model.access.csv",
         "views/product_vector_characteristic.xml",
