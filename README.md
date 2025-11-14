@@ -9,7 +9,7 @@
 
 # odoo-pim
 
-odoo-pim
+Product Information Management.
 
 <!-- /!\ do not modify below this line -->
 
