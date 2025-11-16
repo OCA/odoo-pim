@@ -250,7 +250,7 @@ class AttributeAttribute(models.Model):
     @api.onchange("name")
     def onchange_name(self):
         name = self.name
-        if not name.startswith("x_"):
+        if name and not name.startswith("x_"):
             self.name = f"x_{name}"
 
     @api.onchange("attribute_type")
@@ -409,14 +409,24 @@ class AttributeAttribute(models.Model):
         """Delete outdated attribute's field values on existing records."""
         self.ensure_one()
         custom_field = self.name
-        for obj in self.env[self.model].search([]):
-            if obj.fields_get(custom_field):
-                for value in obj[custom_field]:
-                    if value not in options:
-                        if self.attribute_type == "select":
-                            obj.write({custom_field: False})
-                        elif self.attribute_type == "multiselect":
-                            obj.write({custom_field: [(3, value.id, 0)]})
+        # Use search with batch processing to avoid performance issues
+        domain = []
+        batch_size = 1000
+        offset = 0
+
+        while True:
+            batch = self.env[self.model].search(domain, offset=offset, limit=batch_size)
+            if not batch:
+                break
+            for obj in batch:
+                if obj.fields_get(custom_field):
+                    for value in obj[custom_field]:
+                        if value not in options:
+                            if self.attribute_type == "select":
+                                obj.write({custom_field: False})
+                            elif self.attribute_type == "multiselect":
+                                obj.write({custom_field: [(3, value.id, 0)]})
+            offset += batch_size
 
     def write(self, vals):
         # Prevent from changing Attribute's type
@@ -464,6 +474,10 @@ class AttributeAttribute(models.Model):
                         and vice versa."""
                     )
                 )
+        # For native attributes, remove field-related values to prevent
+        # modification of base fields
+        self._handle_native_attribute_updates(vals)
+
         # Set the new values to self
         res = super().write(vals)
 
@@ -492,6 +506,44 @@ class AttributeAttribute(models.Model):
                 att._delete_old_fields_options(options)
 
         return res
+
+    def _handle_native_attribute_updates(self, vals):
+        """Helper method to handle field updates for native attributes."""
+        for att in self:
+            if att.nature == "native":
+                # Remove field-related keys that would modify the underlying
+                # ir.model.fields record
+                field_related_keys = {
+                    "name",
+                    "field_description",
+                    "ttype",
+                    "relation",
+                    "size",
+                    "required",
+                    "readonly",
+                    "translate",
+                    "selection",
+                    "domain",
+                }
+                for key in field_related_keys.intersection(set(vals.keys())):
+                    vals.pop(key, None)
+
+    def copy(self, default=None):
+        """Ensure unique name when duplicating attribute."""
+        default = default or {}
+        if "name" not in default:
+            # Get the original name and add a suffix to make it unique
+            original_name = self.name
+            counter = 1
+            new_name = f"{original_name}_copy{counter}"
+
+            # Keep incrementing counter until we find a unique name
+            while self.search_count([("name", "=", new_name)]) > 0:
+                counter += 1
+                new_name = f"{original_name}_copy{counter}"
+
+            default["name"] = new_name
+        return super().copy(default)
 
     def unlink(self):
         """Delete the Attribute's related field when deleting a custom Attribute"""
