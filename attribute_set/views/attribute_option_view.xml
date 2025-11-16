@@ -5,7 +5,7 @@
         <field name="model">attribute.option</field>
         <field name="priority" eval="6" />
         <field name="arch" type="xml">
-            <form string="Attribute Option" col="6">
+            <form>
                 <group>
                     <field name="name" colspan="2" />
                     <field name="relation_model_id" invisible="1" />
@@ -24,7 +24,7 @@
         <field name="name">attribute.option.form</field>
         <field name="model">attribute.option</field>
         <field name="arch" type="xml">
-            <form string="Attribute Option" col="6">
+            <form>
                 <group>
                     <field name="name" colspan="2" />
                     <field name="relation_model_id" invisible="1" />

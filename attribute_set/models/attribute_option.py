@@ -4,7 +4,7 @@
 # Copyright 2015 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class AttributeOption(models.Model):
@@ -14,7 +14,7 @@ class AttributeOption(models.Model):
 
     @api.model
     def _selection_model_list(self):
-        models = self.env["ir.model"].search([])
+        models = self.env["ir.model"].search([("transient", "=", False)])
         return [(m.model, m.name) for m in models]
 
     name = fields.Char(translate=True, required=True)
@@ -49,8 +49,8 @@ class AttributeOption(models.Model):
         """
         if self.attribute_id.relation_model_id:
             warning = {
-                "title": _("Error!"),
-                "message": _(
+                "title": self.env._("Error!"),
+                "message": self.env._(
                     """Use the 'Load Attribute Options' button or specify a Domain
                     in order to define the available Options linked to the Relational\
                     Model.

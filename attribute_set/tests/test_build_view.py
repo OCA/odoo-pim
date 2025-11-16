@@ -132,7 +132,7 @@ class BuildViewCase(TransactionCase):
         cls.attr_native = cls._create_attribute(
             {
                 "nature": "native",
-                "field_id": cls.env.ref("base.field_res_partner__category_id").id,
+                "field_id": cls.env.ref("base.field_res_partner__email").id,
                 "attribute_group_id": cls.group_2.id,
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
