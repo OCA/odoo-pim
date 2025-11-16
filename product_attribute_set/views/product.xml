@@ -68,12 +68,10 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='packaging']/.." position="after">
-                <group>
-                    <group name="product_attributes" string="Attributes" invisible="1">
-                        <field name="attribute_set_id" />
-                        <separator name="attributes_placeholder" />
-                    </group>
+            <xpath expr="//field[@name='barcode']" position="after">
+                <group name="product_attributes" string="Attributes" invisible="1">
+                    <field name="attribute_set_id" />
+                    <separator name="attributes_placeholder" />
                 </group>
             </xpath>
         </field>
