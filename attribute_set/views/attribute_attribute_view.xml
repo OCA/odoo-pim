@@ -42,8 +42,7 @@
                             />
                             <field name="serialized" readonly="create_date" />
                         </group>
-                    </group>
-                    <group>
+                        <newline />
                         <group>
                             <field
                                 name="field_id"
@@ -77,7 +76,7 @@
                     <page
                         name="attribute_options"
                         string="Attribute Options"
-                        invisible="nature == 'native'"
+                        invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
                     >
                         <group
                             invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
@@ -106,9 +105,8 @@
                         </group>
                         <field
                             name="option_ids"
-                            groups="attribute_set.group_advanced_attribute_set"
                             widget="one2many"
-                            readonly="1"
+                            invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
                         >
                             <list>
                                 <field name="relation_model_id" column_invisible="1" />
