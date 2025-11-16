@@ -318,10 +318,16 @@ class AttributeAttribute(models.Model):
         """
         for vals in vals_list:
             if vals.get("nature") == "native":
-                # Remove all the values that can modify the related native field
-                # before creating the new 'attribute.attribute'
-                for key in set(vals).intersection(self.env["ir.model.fields"]._fields):
-                    del vals[key]
+                # For native attributes, remove modifying values while keeping essential
+                ir_model_fields = self.env["ir.model.fields"]
+                # Remove fields that modify ir.model.fields characteristics
+                # Keep field_id for linking, remove others
+                fields_to_remove = set(vals).intersection(
+                    set(ir_model_fields._fields.keys())
+                )
+                for key in fields_to_remove:
+                    if key != "field_id":  # Preserve linking field_id
+                        vals.pop(key, None)
                 continue
 
             if vals.get("relation_model_id"):
