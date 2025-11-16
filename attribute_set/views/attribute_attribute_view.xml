@@ -19,8 +19,8 @@
                 <field name="model_id" invisible="context.get('default_model_id')" />
                 <separator invisible="nature == 'native'" />
                 <group>
-                    <group invisible="nature == 'native'">
-                        <group>
+                    <group colspan="2">
+                        <group invisible="nature == 'native'">
                             <field
                                 name="field_description"
                                 required="nature == 'custom'"
@@ -57,8 +57,9 @@
                                 name="attribute_group_id"
                                 options="{'no_create': 1}"
                                 domain="[('model_id', '=', model_id)]"
+                                invisible="False"
                             />
-                            <field name="sequence" />
+                            <field name="sequence" invisible="False" />
                             <field
                                 name="attribute_set_ids"
                                 widget="many2many_tags"
@@ -66,8 +67,8 @@
                                 options="{'no_create': 1}"
                                 invisible="context.get('from_attribute_set')"
                             />
-                            <field name="widget" />
-                            <field name="required_on_views" />
+                            <field name="widget" invisible="False" />
+                            <field name="required_on_views" invisible="False" />
                             <field name="create_date" invisible="1" />
                         </group>
                     </group>
