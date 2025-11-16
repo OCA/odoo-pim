@@ -4,7 +4,6 @@
 
 
 from lxml import etree
-from odoo_test_helper import FakeModelLoader
 
 from odoo.tests import Form, TransactionCase, users
 
@@ -47,12 +46,6 @@ class BuildViewCase(TransactionCase):
         )
         # Add the ERP manager group to the user using the original pattern
         cls.attribute_manager_user.group_ids |= cls.env.ref("base.group_erp_manager")
-
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        from .models import ResCountry, ResPartner
-
-        cls.loader.update_registry((ResPartner, ResCountry))
 
         # Create a new inherited view with the 'attributes' placeholder.
         cls.view = cls.env["ir.ui.view"].create(
@@ -169,7 +162,6 @@ class BuildViewCase(TransactionCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.loader.restore_registry()
         return super().tearDownClass()
 
     # TEST write on attributes
