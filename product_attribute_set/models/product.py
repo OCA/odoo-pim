@@ -18,12 +18,9 @@ class ProductTemplate(models.Model):
 
     def _get_default_att_set(self):
         """Get default product's attribute_set by category."""
-        default_categ_id_id = self._get_default_category_id()
-        if default_categ_id_id:
-            default_categ_id = self.env["product.category"].search(
-                [("id", "=", default_categ_id_id.id)], limit=1
-            )
-            return default_categ_id.attribute_set_id.id
+        # Use the current product's category to determine default attribute set
+        if self.categ_id:
+            return self.categ_id.attribute_set_id.id
 
     @api.model_create_multi
     def create(self, vals_list):
