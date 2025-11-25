@@ -17,19 +17,19 @@ Product Search Multi Value
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-pim/tree/16.0/product_search_multi_value
+    :target: https://github.com/OCA/odoo-pim/tree/18.0/product_search_multi_value
     :alt: OCA/odoo-pim
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-pim-16-0/odoo-pim-16-0-product_search_multi_value
+    :target: https://translation.odoo-community.org/projects/odoo-pim-18-0/odoo-pim-18-0-product_search_multi_value
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows users to search products based on a list of default codes or barcodes.
-It can be extended to other values if needed.
+This module allows users to search products based on a list of default
+codes or barcodes. It can be extended to other values if needed.
 
 **Table of contents**
 
@@ -39,20 +39,24 @@ It can be extended to other values if needed.
 Configuration
 =============
 
-By default, the multi value search looks on default_code and barcode properties.
-If you need to extend to other property, you just need to adapt the related system parameter: 'product_search_multi_value.search_field'.
+By default, the multi value search looks on default_code and barcode
+properties. If you need to extend to other property, you just need to
+adapt the related system parameter:
+'product_search_multi_value.search_field'.
 
 Usage
 =====
 
-Go on the product search view and search on a list of default_code separated by a space.
-The search must be based on "Multiple search" field.
+Go on the product search view and search on a list of default_code
+separated by a space. The search must be based on "Multiple search"
+field.
 
 Known issues / Roadmap
 ======================
 
-* The searched fields should not be related non stored ones where the target
-  model has an 'active' field as it can leads to not found records.
+- The searched fields should not be related non stored ones where the
+  target model has an 'active' field as it can leads to not found
+  records.
 
 Bug Tracker
 ===========
@@ -60,7 +64,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-pim/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_search_multi_value%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_search_multi_value%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -68,18 +72,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Cédric PIGEON <cedric.pigeon@acsone.eu>
-* Xavier Bouquiaux <xavier.bouquiaux@acsone.eu>
+- Cédric PIGEON <cedric.pigeon@acsone.eu>
+- Xavier Bouquiaux <xavier.bouquiaux@acsone.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -91,6 +95,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/16.0/product_search_multi_value>`_ project on GitHub.
+This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/18.0/product_search_multi_value>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
