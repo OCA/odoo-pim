@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestProductSearchMultiValue(TransactionCase):
     def setUp(self):
-        super(TestProductSearchMultiValue, self).setUp()
+        super().setUp()
         self.default_code_list = ["E-COM08", "E-COM10", "E-COM06"]
 
     def test_search_multi_value(self):
