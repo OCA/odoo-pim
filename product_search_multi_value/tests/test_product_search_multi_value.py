@@ -29,7 +29,7 @@ class TestProductSearchMultiValue(TransactionCase):
             self.env["product.template"].search_count(domain)
 
     def test_variant_search_multi_value(self):
-        default_code_values = " FURN_0096 FURN_0097 FURN_0098"
+        default_code_values = "FURN_0096 FURN_0097 FURN_0098"
         domain = [("search_multi", "ilike", default_code_values)]
         res = self.env["product.product"].search_count(domain)
         self.assertEqual(res, 3)
