@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -22,4 +22,6 @@ class AttributeSet(models.Model):
             if completion_config:
                 total = sum([rule.completion_rate for rule in completion_config])
                 if total != 100.0:
-                    raise ValidationError(_("Total of completion rate must be 100 %"))
+                    raise ValidationError(
+                        self.env._("Total of completion rate must be 100 %")
+                    )

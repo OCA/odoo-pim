@@ -23,15 +23,12 @@ class AttributeSetCompleteness(models.Model):
     )
     field_description = fields.Char(
         related="field_id.field_description",
-        string="Field Description",
-        store=True,
-        readonly=True,
     )
     completion_rate = fields.Float()
     completion_rate_progress = fields.Float(
-        string="Completion Rate Progress", related="completion_rate", readonly=True
+        string="Completion Rate Progress", related="completion_rate"
     )
-    model_id = fields.Many2one(related="attribute_set_id.model_id", readonly=True)
+    model_id = fields.Many2one(related="attribute_set_id.model_id")
 
     @api.depends("attribute_set_id")
     def _compute_available_field_ids(self):
@@ -41,5 +38,7 @@ class AttributeSetCompleteness(models.Model):
             choosen_field_ids = att_set_complete_ids.mapped("field_id")
             rec.available_field_ids = att_set_field_ids - choosen_field_ids
 
-    def name_get(self):
-        return [(rec.id, rec.field_id.field_description) for rec in self]
+    @api.depends("field_id.field_description")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.field_id.field_description or ""
