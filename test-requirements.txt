@@ -1,0 +1,3 @@
+odoo-addon-base_custom_filter @ git+https://github.com/OCA/server-ux.git@refs/pull/1030/head#subdirectory=base_custom_filter
+odoo-addon-base_search_custom_field_filter @ git+https://github.com/OCA/server-ux.git@refs/pull/1017/head#subdirectory=base_search_custom_field_filter
+odoo-addon-attribute_set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/192/head#subdirectory=attribute_set
