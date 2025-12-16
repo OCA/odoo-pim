@@ -3,6 +3,7 @@
 
 from odoo_test_helper import FakeModelLoader
 
+from odoo import Command
 from odoo.exceptions import ValidationError
 
 from odoo.addons.component.tests.common import TransactionComponentCase
@@ -32,10 +33,14 @@ class TestAttributeSetCompleteness(TransactionComponentCase):
         vals = {
             "name": "My attribute Set",
             "model_id": cls.model_id,
-            "attribute_ids": [(4, cls.attr1.id), (4, cls.attr2.id)],
+            "attribute_ids": [Command.link(cls.attr1.id), Command.link(cls.attr2.id)],
             "attribute_set_completeness_ids": [
-                (0, 0, {"field_id": cls.attr1.field_id.id, "completion_rate": 50.0}),
-                (0, 0, {"field_id": cls.attr2.field_id.id, "completion_rate": 50.0}),
+                Command.create(
+                    {"field_id": cls.attr1.field_id.id, "completion_rate": 50.0}
+                ),
+                Command.create(
+                    {"field_id": cls.attr2.field_id.id, "completion_rate": 50.0}
+                ),
             ],
         }
         cls.attr_set = cls.env["attribute.set"].create(vals)
@@ -59,10 +64,14 @@ class TestAttributeSetCompleteness(TransactionComponentCase):
         vals = {
             "name": "My attribute Set Test",
             "model_id": self.model_id,
-            "attribute_ids": [(4, self.attr1.id), (4, self.attr2.id)],
+            "attribute_ids": [Command.link(self.attr1.id), Command.link(self.attr2.id)],
             "attribute_set_completeness_ids": [
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 50.0}),
-                (0, 0, {"field_id": self.attr2.field_id.id, "completion_rate": 10.0}),
+                Command.create(
+                    {"field_id": self.attr1.field_id.id, "completion_rate": 50.0}
+                ),
+                Command.create(
+                    {"field_id": self.attr2.field_id.id, "completion_rate": 10.0}
+                ),
             ],
         }
         error_msg = "Total of completion rate must be 100 %"
@@ -73,8 +82,10 @@ class TestAttributeSetCompleteness(TransactionComponentCase):
         completion_rules = self.attr_set.attribute_set_completeness_ids
         vals = {
             "attribute_set_completeness_ids": [
-                (2, completion_rules[0].id),
-                (0, 0, {"field_id": self.attr1.field_id.id, "completion_rate": 10.0}),
+                Command.delete(completion_rules[0].id),
+                Command.create(
+                    {"field_id": self.attr1.field_id.id, "completion_rate": 10.0}
+                ),
             ]
         }
         error_msg = "Total of completion rate must be 100 %"
@@ -85,11 +96,9 @@ class TestAttributeSetCompleteness(TransactionComponentCase):
         completion_rules = self.attr_set.attribute_set_completeness_ids
         vals = {
             "attribute_set_completeness_ids": [
-                (2, completion_rules[0].id),
-                (
-                    0,
-                    0,
-                    {"field_id": self.attr1.field_id.id, "completion_rate": 200.0},
+                Command.delete(completion_rules[0].id),
+                Command.create(
+                    {"field_id": self.attr1.field_id.id, "completion_rate": 200.0}
                 ),
             ]
         }
