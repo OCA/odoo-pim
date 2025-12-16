@@ -40,7 +40,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         for rec in self:
             rec.attribute_set_completed_ids = (
                 rec.attribute_set_completeness_ids.filtered(
-                    lambda c: bool(rec[c.field_id.name])
+                    lambda c, rec=rec: bool(rec[c.field_id.name])
                 )
             )
 
