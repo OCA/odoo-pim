@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,6 +16,11 @@ msgstr ""
 #. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
 msgid "Advanced Attribute Set settings"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
+msgid "Allowed Attribute Set"
 msgstr ""
 
 #. module: attribute_set
@@ -52,6 +57,7 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.actions.act_window,name:attribute_set.attribute_option_form_action
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__option_ids
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__option_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_option_action
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
 msgid "Attribute Options"
@@ -105,7 +111,6 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#, python-format
 msgid ""
 "Can't change the attribute's Relational Model in order to\n"
 "                        avoid conflicts with existing objects using this attribute.\n"
@@ -115,8 +120,12 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#, python-format
 msgid "Can't change the type of an attribute. Please create a new one."
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "Cancel"
 msgstr ""
 
 #. module: attribute_set
@@ -157,6 +166,11 @@ msgid "Column referring to the record in the model table"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__company_dependent
+msgid "Company Dependent"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
 msgid "Complete Name"
 msgstr ""
@@ -175,6 +189,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_uid
 msgid "Created by"
 msgstr ""
@@ -187,13 +202,24 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__create_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__create_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__currency_field
+msgid "Currency field"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
 msgid "Custom"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_attribute_option_wizard
+msgid "Custom Attributes Option"
 msgstr ""
 
 #. module: attribute_set
@@ -223,6 +249,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 msgid "Display Name"
 msgstr ""
@@ -233,14 +260,8 @@ msgid "Domain"
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
-msgid "Enable Ordered Tracking"
-msgstr ""
-
-#. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
-#, python-format
 msgid "Error!"
 msgstr ""
 
@@ -300,6 +321,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 msgid "ID"
 msgstr ""
@@ -329,13 +351,6 @@ msgid ""
 "            fields values) instead of creating a new SQL column for this\n"
 "            attribute's field. Useful to increase speed requests if creating a\n"
 "            high number of attributes."
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__tracking
-msgid ""
-"If set every modification done to this field is tracked in the chatter. "
-"Value is used to order tracking values."
 msgstr ""
 
 #. module: attribute_set
@@ -369,7 +384,6 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_set_owner.py:0
-#, python-format
 msgid ""
 "It is impossible to add Attributes on \"%(name)s\" xml\n"
 "                    view as there is\n"
@@ -380,24 +394,16 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#, python-format
 msgid ""
 "It is not allowed to change the boolean 'Serialized'.\n"
 "                        A serialized field can not be change to non-serialized                         and vice versa."
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_group____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_option____last_update
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_set____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_uid
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_uid
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -406,6 +412,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_group__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__write_date
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__write_date
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -446,6 +453,11 @@ msgid "Name"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__currency_field
+msgid "Name of the Many2one field holding the res.currency"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__native
 msgid "Native"
 msgstr ""
@@ -461,7 +473,15 @@ msgid "On delete property for many2one fields"
 msgstr ""
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "Options Wizard"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__attribute_id
 msgid "Product Attribute"
 msgstr ""
 
@@ -476,18 +496,18 @@ msgid "Reference"
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related_field_id
 msgid "Related Field"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related
+msgid "Related Field Definition"
 msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation
 msgid "Related Model"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related_field_id
-msgid "Related field"
 msgstr ""
 
 #. module: attribute_set
@@ -524,6 +544,36 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__required_on_views
 msgid "Required (on views)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize
+msgid "Sanitize HTML"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_attributes
+msgid "Sanitize HTML Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_form
+msgid "Sanitize HTML Form"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_style
+msgid "Sanitize HTML Style"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_tags
+msgid "Sanitize HTML Tags"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_overridable
+msgid "Sanitize HTML overridable"
 msgstr ""
 
 #. module: attribute_set
@@ -613,6 +663,16 @@ msgid "Stored"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__strip_classes
+msgid "Strip Class Attribute"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__strip_style
+msgid "Strip Style Attribute"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__text
 msgid "Text"
 msgstr ""
@@ -677,7 +737,6 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
-#, python-format
 msgid ""
 "Use the 'Load Attribute Options' button or specify a Domain\n"
 "                    in order to define the available Options linked to the Relational                    Model.\n"
@@ -689,6 +748,11 @@ msgstr ""
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_table
 msgid ""
 "Used for custom many2many fields to define a custom relation table name"
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "Validate"
 msgstr ""
 
 #. module: attribute_set
@@ -709,6 +773,11 @@ msgid ""
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__company_dependent
+msgid "Whether values for this field is company dependent"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
 msgid "Widget"
 msgstr ""
@@ -716,9 +785,18 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#, python-format
 msgid ""
 "`%(domain)s` is an invalid Domain name.\n"
 "Specify a Python expression defining a list of triplets.\n"
 "For example : `[('color', '=', 'red')]`"
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "options_placeholder"
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
+msgid "or"
 msgstr ""
