@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-odoo-pim"
+version = "18.0.20251220.0"
+dependencies = [
+    "odoo-addon-attribute_set==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
