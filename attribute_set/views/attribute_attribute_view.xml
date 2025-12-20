@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="attribute_attribute_form_view" model="ir.ui.view">
+        <field name="name">attribute.attribute.form</field>
+        <field name="model">attribute.attribute</field>
+        <field name="arch" type="xml">
+            <form string="Attribute">
+                <field
+                    name="nature"
+                    readonly="create_date"
+                    options="{'horizontal': true}"
+                    class="oe_edit_only col-12"
+                    widget="radio"
+                    nolabel="1"
+                    required="1"
+                />
+                <!-- The field created by this Attribute will be related to the model given
+                    by 'default_model_id' through the menu's context that led to this view -->
+                <field name="model_id" invisible="context.get('default_model_id')" />
+                <separator invisible="nature == 'native'" />
+                <group>
+                    <group invisible="nature == 'native'">
+                        <group>
+                            <field
+                                name="field_description"
+                                required="nature == 'custom'"
+                            />
+                            <field name="help" />
+                            <field
+                                name="name"
+                                readonly="create_date"
+                                required="nature == 'custom'"
+                            />
+                            <field
+                                name="attribute_type"
+                                required="nature == 'custom'"
+                            />
+                            <field name="size" invisible="attribute_type != 'char'" />
+                            <field
+                                name="translate"
+                                invisible="attribute_type not in ['char', 'text']"
+                            />
+                            <field name="serialized" readonly="create_date" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field
+                                name="field_id"
+                                string="Related native field"
+                                options="{'no_create_edit': 1}"
+                                required="nature == 'native'"
+                                invisible="nature == 'custom'"
+                                readonly="not model_id"
+                            />
+                            <field
+                                name="attribute_group_id"
+                                options="{'no_create': 1}"
+                                domain="[('model_id', '=', model_id)]"
+                            />
+                            <field name="sequence" />
+                            <field
+                                name="attribute_set_ids"
+                                widget="many2many_tags"
+                                domain="[('model_id', '=', model_id)]"
+                                options="{'no_create': 1}"
+                                invisible="context.get('from_attribute_set')"
+                            />
+                            <field name="widget" />
+                            <field name="required_on_views" />
+                            <field name="create_date" invisible="1" />
+                        </group>
+                    </group>
+                </group>
+                <notebook>
+                    <page
+                        name="attribute_options"
+                        string="Attribute Options"
+                        invisible="nature == 'native'"
+                    >
+                        <group
+                            invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
+                            groups="attribute_set.group_advanced_attribute_set"
+                        >
+                            <group>
+                                <field
+                                    name="relation_model_id"
+                                    readonly="create_date"
+                                />
+                                <field
+                                    name="domain"
+                                    invisible="not relation_model_id"
+                                />
+                            </group>
+                            <group invisible="not relation_model_id">
+                                <button
+                                    name="button_add_options"
+                                    invisible="domain not in [False, '[]', '']"
+                                    type="object"
+                                    string="Load Attribute Options"
+                                    class="oe_highlight"
+                                    colspan="1"
+                                />
+                            </group>
+                        </group>
+                        <field
+                            name="option_ids"
+                            groups="attribute_set.group_advanced_attribute_set"
+                            widget="one2many"
+                            readonly="1"
+                        >
+                            <list>
+                                <field name="relation_model_id" column_invisible="1" />
+                                <field name="value_ref" column_invisible="1" />
+                                <field name="sequence" column_invisible="1" />
+                                <field name="name" />
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record id="attribute_attribute_tree_view" model="ir.ui.view">
+        <field name="name">attribute.attribute.list</field>
+        <field name="model">attribute.attribute</field>
+        <field name="arch" type="xml">
+            <list>
+                <field
+                    name="sequence"
+                    widget="handle"
+                    column_invisible="not context.get('active_attribute_sort_view_ref')"
+                />
+                <field name="field_description" />
+                <field name="attribute_type" />
+                <field name="attribute_group_id" />
+                <field name="attribute_set_ids" widget="many2many_tags" />
+                <field name="nature" />
+            </list>
+        </field>
+    </record>
+    <record id="view_attribute_attribute_search" model="ir.ui.view">
+        <field name="name">attribute.attribute.list</field>
+        <field name="model">attribute.attribute</field>
+        <field name="arch" type="xml">
+            <search string="Search Attributes">
+                <field name="name" />
+                <field name="attribute_group_id" />
+            </search>
+        </field>
+    </record>
+    <record id="attribute_attribute_form_action" model="ir.actions.act_window">
+        <field name="name">Attributes</field>
+        <field name="res_model">attribute.attribute</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_attribute_attribute_search" />
+        <field name="context">{}</field>
+        <field name="help" />
+    </record>
+    <record id="attribute_attribute_sort_action" model="ir.actions.act_window">
+        <field name="name">Attributes</field>
+        <field name="res_model">attribute.attribute</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_attribute_attribute_search" />
+        <field name="context">
+            {"search_default_attribute_group_id": [active_id], "active_attribute_sort_view_ref":
+            True}
+        </field>
+        <field name="help" />
+    </record>
+    <menuitem
+        action="attribute_attribute_form_action"
+        id="menu_attribute_attribute_action"
+        parent="menu_attribute_in_admin"
+        sequence="30"
+    />
+</odoo>
