@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-odoo-pim"
-version = "18.0.20251220.0"
+version = "18.0.20251220.1"
 dependencies = [
     "odoo-addon-attribute_set==18.0.*",
+    "odoo-addon-product_attribute_set==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
