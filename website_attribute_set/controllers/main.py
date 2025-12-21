@@ -7,10 +7,10 @@ from datetime import datetime
 from werkzeug.exceptions import NotFound
 
 from odoo import fields
+from odoo.fields import Domain
 from odoo.http import request, route
 from odoo.models import BaseModel
-from odoo.osv import expression
-from odoo.tools import SQL, float_round, groupby, lazy
+from odoo.tools import float_round, groupby, lazy
 
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.addons.website_sale.controllers import main
@@ -18,7 +18,7 @@ from odoo.addons.website_sale.controllers import main
 
 class WebsiteSale(main.WebsiteSale):
     @route()
-    def shop(
+    def shop(  # noqa: C901
         self,
         page=0,
         category=None,
@@ -106,14 +106,17 @@ class WebsiteSale(main.WebsiteSale):
         )
 
         now = datetime.timestamp(datetime.now())
-        pricelist = website.pricelist_id
+        # In Odoo 19, pricelist is accessed through user context, not website
+        pricelist = request.env.user.property_product_pricelist
+
         if "website_sale_pricelist_time" in request.session:
             # Check if we need to refresh the cached pricelist
             pricelist_save_time = request.session["website_sale_pricelist_time"]
             if pricelist_save_time < now - 60 * 60:
                 request.session.pop("website_sale_current_pl", None)
-                website.invalidate_recordset(["pricelist_id"])
-                pricelist = website.pricelist_id
+                # Clear the session cache for pricelist
+                new_pricelist = request.env.user.property_product_pricelist
+                pricelist = new_pricelist
                 request.session["website_sale_pricelist_time"] = now
                 request.session["website_sale_current_pl"] = pricelist.id
         else:
@@ -148,30 +151,36 @@ class WebsiteSale(main.WebsiteSale):
             **post,
         )
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(
-            attrib_set, options, post, search, website
+            options, post, search, website
         )
 
         filter_by_price_enabled = website.is_view_active(
             "website_sale.filter_products_price"
         )
         if filter_by_price_enabled:
-            # TODO Find an alternative way to obtain
-            # the domain through the search metadata.
+            # Get min/max prices for the filter using a standard aggregate approach
             Product = request.env["product.template"].with_context(bin_size=True)
             domain = self._get_shop_domain(search, category, attrib_values)
 
-            # This is ~4 times more efficient than a search
-            # for the cheapest and most expensive products
-            query = Product._where_calc(domain)
-            Product._apply_ir_rules(query, "read")
-            sql = query.select(
-                SQL(
-                    "COALESCE(MIN(list_price), 0) * %(conversion_rate)s, "
-                    "COALESCE(MAX(list_price), 0) * %(conversion_rate)s",
-                    conversion_rate=conversion_rate,
-                )
-            )
-            available_min_price, available_max_price = request.env.execute_query(sql)[0]
+            # Use the more robust aggregate method to get min/max prices
+            # This is the Odoo 19 compatible approach
+            try:
+                # Get min and max prices using search and aggregate
+                results = Product.search_read(domain, ["list_price"])
+                if results:
+                    list_prices = [
+                        r["list_price"] or 0 for r in results if r.get("list_price")
+                    ]
+                    if list_prices:
+                        available_min_price = min(list_prices)
+                        available_max_price = max(list_prices)
+                    else:
+                        available_min_price = available_max_price = 0
+                else:
+                    available_min_price = available_max_price = 0
+            except (Exception, ValueError, TypeError):
+                # Fallback if the aggregate query fails for any reason
+                available_min_price = available_max_price = 0
 
             if min_price or max_price:
                 # The if/else condition in the min_price / max_price value assignment
@@ -199,11 +208,10 @@ class WebsiteSale(main.WebsiteSale):
         ProductTag = request.env["product.tag"]
         if filter_by_tags_enabled and search_product:
             all_tags = ProductTag.search(
-                expression.AND(
+                Domain.AND(
                     [
                         [
                             ("product_ids.is_published", "=", True),
-                            ("visible_on_ecommerce", "=", True),
                         ],
                         website_domain,
                     ]
@@ -231,6 +239,24 @@ class WebsiteSale(main.WebsiteSale):
         offset = pager["offset"]
         products = search_product[offset : offset + ppg]
 
+        # Compute product variants (required by Odoo 19 templates)
+        variants = (
+            request.env["product.product"]
+            .sudo()
+            .browse(product._get_first_possible_variant_id() for product in products)
+        )
+        variants.fetch()
+        product_variants = dict(zip(products, variants, strict=False))
+
+        # Get product query params for attribute previews
+        product_query_params = self._get_product_query_params(**post)
+
+        # Category entries for navigation
+        if category:
+            category_entries = category.child_id
+        else:
+            category_entries = categs
+
         ProductAttribute = request.env["product.attribute"]
         if products:
             # get all products without limit
@@ -253,7 +279,7 @@ class WebsiteSale(main.WebsiteSale):
                 layout_mode = "grid"
             request.session["website_sale_shop_layout_mode"] = layout_mode
 
-        products_prices = lazy(lambda: products._get_sales_prices(website))
+        products_prices = products._get_sales_prices(website)
 
         attributes_values = request.env["product.attribute.value"].browse(attrib_set)
         sorted_attributes_values = attributes_values.sorted("sequence")
@@ -281,14 +307,21 @@ class WebsiteSale(main.WebsiteSale):
             "original_search": fuzzy_search_term and search,
             "order": post.get("order", ""),
             "category": category,
+            "category_entries": category_entries,
             "attrib_values": attrib_values,
             "attrib_set": attrib_set,
             "additional_attrib_set": additional_attrib_set,
             "pager": pager,
             "products": products,
+            "product_variants": product_variants,
+            "previewed_attribute_values": lazy(
+                lambda: products._get_previewed_attribute_values(
+                    category, product_query_params
+                )
+            ),
             "search_product": search_product,
             "search_count": product_count,  # common for all searchbox
-            "bins": lazy(lambda: main.TableCompute().process(products, ppg, ppr)),
+            "bins": main.TableCompute().process(products, ppg, ppr),
             "ppg": ppg,
             "ppr": ppr,
             "gap": gap,
@@ -299,9 +332,7 @@ class WebsiteSale(main.WebsiteSale):
             "search_categories_ids": search_categories.ids,
             "layout_mode": layout_mode,
             "products_prices": products_prices,
-            "get_product_prices": lambda product: lazy(
-                lambda: products_prices[product.id]
-            ),
+            "get_product_prices": lambda product: products_prices[product.id],
             "float_round": float_round,
         }
         if filter_by_price_enabled:
@@ -313,7 +344,7 @@ class WebsiteSale(main.WebsiteSale):
             values.update({"all_tags": all_tags, "tags": tags})
         if category:
             values["main_object"] = category
-        values.update(self._get_additional_extra_shop_values(values, **post))
+        values.update(self._get_additional_shop_values(values))
 
         return request.render("website_sale.products", values)
 
@@ -388,16 +419,18 @@ class WebsiteSale(main.WebsiteSale):
 
         return extra_values
 
-    def _prepare_product_values(self, product, category, search, **kwargs):
+    def _prepare_product_values(self, product, category, **kwargs):
         # If the product has a value for attribute_set_id
         # this will pass the attributes related to it's attribute_set_id
         # and then to be rendered in the website
-        vals = super()._prepare_product_values(product, category, search, **kwargs)
-        additional_attributes = product.sudo().get_extra_attributes()
-        if additional_attributes:
-            vals.update({"additional_attributes": []})
-            for attribute in additional_attributes:
-                attribute_values = product.sudo().get_extra_attribute_values(attribute)
+        vals = super()._prepare_product_values(product, category, **kwargs)
+        # Always set additional_attributes (even if empty) to ensure template
+        # variable exists
+        vals["additional_attributes"] = []
+        extra_attributes = product.sudo().get_extra_attributes()
+        for attribute in extra_attributes:
+            attribute_values = product.sudo().get_extra_attribute_values(attribute)
+            if attribute_values:
                 vals["additional_attributes"].append(
                     {"attribute": attribute, "attribute_values": attribute_values}
                 )

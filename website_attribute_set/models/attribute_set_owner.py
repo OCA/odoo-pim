@@ -17,7 +17,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ("model", "=", self._name),
             ("attribute_set_ids", "!=", False),
         ]
-        if not self._context.get("include_native_attribute_view_ref"):
+        if not self.env.context.get("include_native_attribute_view_ref"):
             domain.append(("nature", "=", "custom"))
         attribute = self.env["attribute.attribute"]
         if self.attribute_set_id:

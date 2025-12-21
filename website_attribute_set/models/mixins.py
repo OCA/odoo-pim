@@ -6,7 +6,7 @@ import logging
 from difflib import SequenceMatcher
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ def search_extra(env, search_term):
             if similarity > 80:
                 extra_domain = [(attribute.name, "!=", False)]
                 extra_domains.append(extra_domain)
-    return expression.OR(extra_domains)
+    return Domain.OR(extra_domains)
 
 
 class WebsiteSearchableMixin(models.AbstractModel):
