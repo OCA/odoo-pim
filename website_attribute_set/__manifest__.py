@@ -4,7 +4,7 @@
 
 {
     "name": "Website Attribute Set",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Website/Website",
     "license": "AGPL-3",
     "author": "Kencove, Odoo Community Association (OCA)",
@@ -13,7 +13,7 @@
     "depends": [
         "attribute_set",
         "product_attribute_set",
-        "pim",
+        # "pim",
         "website",
         "website_sale",
         "website_sale_comparison",
