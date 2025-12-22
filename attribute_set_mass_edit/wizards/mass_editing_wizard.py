@@ -20,6 +20,6 @@ class MassEditingWizard(models.TransientModel):
                 )
             )
             if attribute:
-                res.update({"domain": "[('attribute_id', '=', %s)]" % attribute.id})
+                res.update({"domain": f"[('attribute_id', '=', {attribute.id})]"})
 
         return res

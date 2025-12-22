@@ -5,27 +5,29 @@ from odoo.tests.common import TransactionCase
 
 
 class TestAttributeSetMassEdit(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.model_id = self.env.ref("base.model_res_partner").id
-        self.group = self.env["attribute.group"].create(
-            {"name": "My Group", "model_id": self.model_id}
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.model_id = cls.env.ref("base.model_res_partner").id
+        cls.group = cls.env["attribute.group"].create(
+            {"name": "My Group", "model_id": cls.model_id}
         )
-        self.attr = self.env["attribute.attribute"].create(
-            self._prepare_attr_vals("x_test")
+        cls.attr = cls.env["attribute.attribute"].create(
+            cls._prepare_attr_vals("x_test", "Attribute test 1")
         )
-        self.attr2 = self.env["attribute.attribute"].create(
-            self._prepare_attr_vals("x_test2")
+        cls.attr2 = cls.env["attribute.attribute"].create(
+            cls._prepare_attr_vals("x_test2", "Attribute test 2")
         )
 
-    def _prepare_attr_vals(self, name):
+    @classmethod
+    def _prepare_attr_vals(cls, name, field_description):
         return {
             "nature": "custom",
-            "model_id": self.model_id,
+            "model_id": cls.model_id,
             "attribute_type": "char",
-            "field_description": "Attribute test",
+            "field_description": field_description,
             "name": name,
-            "attribute_group_id": self.group.id,
+            "attribute_group_id": cls.group.id,
         }
 
     def _get_mass_object(self):

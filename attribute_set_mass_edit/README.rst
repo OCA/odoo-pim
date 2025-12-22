@@ -71,6 +71,10 @@ Contributors
 
      - Bhavesh Heliconia
 
+- [Trobz] (https://trobz.com/):
+
+  - Khoi (Kien Kim) khoikk@trobz.com
+
 Maintainers
 -----------
 

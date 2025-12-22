@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class AttributeAttribute(models.Model):
@@ -35,12 +35,13 @@ class AttributeAttribute(models.Model):
 
         for attribute in self:
             for mass_edit in attribute_groups.mapped("mass_edit_action_ids").filtered(
-                lambda m: m.mass_edit_attribute_group_id == attribute.attribute_group_id
+                lambda m, attribute=attribute: m.mass_edit_attribute_group_id
+                == attribute.attribute_group_id
             ):
                 mass_edit.write(
                     {
                         "mass_edit_line_ids": [
-                            (0, 0, attribute._prepare_mass_editing_line())
+                            Command.create(attribute._prepare_mass_editing_line())
                         ]
                     }
                 )
@@ -95,7 +96,6 @@ class AttributeAttribute(models.Model):
         return super().unlink()
 
     @api.model_create_multi
-    @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
         attributes = super().create(vals_list)
         for rec in attributes:

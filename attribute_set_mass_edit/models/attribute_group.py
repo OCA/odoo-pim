@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class AttributeGroup(models.Model):
@@ -20,7 +20,7 @@ class AttributeGroup(models.Model):
             for group in self:
                 mass_editing = fields.first(
                     mass_editings.filtered(
-                        lambda o: o.mass_edit_attribute_group_id == group
+                        lambda o, group=group: o.mass_edit_attribute_group_id == group
                     )
                 )
                 if mass_editing:
@@ -34,6 +34,6 @@ class AttributeGroup(models.Model):
         return {
             "mass_edit_attribute_group_id": self.id,
             "model_id": self.model_id.id,
-            "name": _("Edit %s fields") % self.name,
+            "name": self.env._("Edit %s fields", self.name),
             "state": "mass_edit",
         }
