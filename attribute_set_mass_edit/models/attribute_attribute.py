@@ -86,18 +86,18 @@ class AttributeAttribute(models.Model):
         :param vals:
         :return:
         """
-        res = super(AttributeAttribute, self).write(vals)
+        res = super().write(vals)
         self._manage_mass_editings()
         return res
 
     def unlink(self):
         self._remove_attribute_from_mass_editing()
-        return super(AttributeAttribute, self).unlink()
+        return super().unlink()
 
     @api.model_create_multi
     @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
-        attributes = super(AttributeAttribute, self).create(vals_list)
+        attributes = super().create(vals_list)
         for rec in attributes:
             rec._manage_mass_editings()
         return attributes

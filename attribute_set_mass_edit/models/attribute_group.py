@@ -12,7 +12,7 @@ class AttributeGroup(models.Model):
     )
 
     def write(self, vals):
-        res = super(AttributeGroup, self).write(vals)
+        res = super().write(vals)
         if "name" in vals.keys():
             mass_editings = self.env["ir.actions.server"].search(
                 [("mass_edit_attribute_group_id", "in", self.ids)]

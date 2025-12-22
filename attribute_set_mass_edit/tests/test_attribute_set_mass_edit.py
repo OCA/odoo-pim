@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestAttributeSetMassEdit(TransactionCase):
     def setUp(self):
-        super(TestAttributeSetMassEdit, self).setUp()
+        super().setUp()
         self.model_id = self.env.ref("base.model_res_partner").id
         self.group = self.env["attribute.group"].create(
             {"name": "My Group", "model_id": self.model_id}

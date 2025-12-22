@@ -9,7 +9,7 @@ class MassEditingWizard(models.TransientModel):
 
     @api.model
     def _get_field_options(self, field):
-        res = super(MassEditingWizard, self)._get_field_options(field)
+        res = super()._get_field_options(field)
         if field.ttype in ("many2one", "many2many"):
             attributes = self.env["attribute.attribute"].search(
                 [("field_id", "=", field.id)]
