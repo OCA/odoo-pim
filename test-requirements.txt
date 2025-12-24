@@ -1,0 +1,2 @@
+odoo-addon-attribute_set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/226/head#subdirectory=attribute_set
+odoo-addon-product_attribute_set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/232/head#subdirectory=product_attribute_set
