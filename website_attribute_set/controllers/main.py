@@ -160,7 +160,12 @@ class WebsiteSale(main.WebsiteSale):
         if filter_by_price_enabled:
             # Get min/max prices for the filter using a standard aggregate approach
             Product = request.env["product.template"].with_context(bin_size=True)
-            domain = self._get_shop_domain(search, category, attrib_values, **post)
+            domain = self._get_shop_domain(
+                search,
+                category,
+                attrib_values,
+                additional_attrib_values=post.get("additional_attrib_values"),
+            )
 
             # Use the more robust aggregate method to get min/max prices
             # This is the Odoo 19 compatible approach

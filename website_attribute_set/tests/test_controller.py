@@ -467,3 +467,42 @@ class TestWebsiteAttributeController(HttpCase):
             content,
             "Product with matching select value should appear in filtered results",
         )
+
+    def test_shop_search_with_filter(self):
+        """Test that search combined with filter works without errors.
+
+        This tests the _get_shop_domain call with search parameter to ensure
+        there are no conflicts between positional and keyword arguments.
+        """
+        self.authenticate("admin", "admin")
+
+        # Create a product with attribute
+        self.env["product.template"].create(
+            {
+                "name": "Searchable Organic Product",
+                "is_published": True,
+                "website_id": self.website.id,
+                "attribute_set_id": self.attr_set.id,
+                "x_ecom_organic": True,
+            }
+        )
+
+        # Access shop with both search and filter
+        attr_id = self.attr_boolean.id
+        filter_url = f"/shop?search=Searchable&additional_attribute_value={attr_id}-True"
+        response = self.url_open(filter_url, timeout=30)
+
+        # Should return 200, not 500
+        self.assertEqual(
+            response.status_code,
+            200,
+            f"Shop page with search and filter returned {response.status_code}. "
+            "Check _get_shop_domain doesn't get duplicate 'search' argument.",
+        )
+
+        # Verify no internal server error
+        self.assertNotIn(
+            "Internal Server Error",
+            response.text,
+            "Shop page should not have internal server errors",
+        )
