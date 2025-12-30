@@ -160,7 +160,7 @@ class WebsiteSale(main.WebsiteSale):
         if filter_by_price_enabled:
             # Get min/max prices for the filter using a standard aggregate approach
             Product = request.env["product.template"].with_context(bin_size=True)
-            domain = self._get_shop_domain(search, category, attrib_values)
+            domain = self._get_shop_domain(search, category, attrib_values, **post)
 
             # Use the more robust aggregate method to get min/max prices
             # This is the Odoo 19 compatible approach
@@ -418,6 +418,61 @@ class WebsiteSale(main.WebsiteSale):
                     )
 
         return extra_values
+
+    def _get_shop_domain(self, search, category, attrib_values, **post):
+        """Extend shop domain with additional attribute filters."""
+        # Extract our custom kwargs - don't pass any post kwargs to parent
+        # as the parent _get_shop_domain only accepts (search, category, attrib_values)
+        additional_attrib_values = post.get("additional_attrib_values", [])
+
+        domain = super()._get_shop_domain(search, category, attrib_values)
+        if not additional_attrib_values:
+            return domain
+
+        # Build domain conditions for each selected attribute filter
+        Attribute = request.env["attribute.attribute"].sudo()
+        additional_conditions = []
+
+        for attr_id, attr_value in additional_attrib_values:
+            attribute = Attribute.browse(attr_id)
+            if not attribute.exists():
+                continue
+
+            field_name = attribute.name
+            attr_type = attribute.attribute_type
+
+            # Convert value based on attribute type
+            if attr_type == "boolean":
+                # Boolean values come as "True" or "False" strings
+                value = attr_value.lower() == "true"
+                additional_conditions.append((field_name, "=", value))
+            elif attr_type in ("select", "multiselect"):
+                # Select values are option IDs
+                try:
+                    option_id = int(attr_value)
+                    additional_conditions.append((field_name, "=", option_id))
+                except (ValueError, TypeError):
+                    continue
+            elif attr_type == "integer":
+                try:
+                    value = int(attr_value)
+                    additional_conditions.append((field_name, "=", value))
+                except (ValueError, TypeError):
+                    continue
+            elif attr_type == "float":
+                try:
+                    value = float(attr_value)
+                    additional_conditions.append((field_name, "=", value))
+                except (ValueError, TypeError):
+                    continue
+            else:
+                # char, text, date, datetime - use exact match
+                additional_conditions.append((field_name, "=", attr_value))
+
+        # Combine the parent domain with our additional conditions using Domain.AND
+        if additional_conditions:
+            return Domain.AND([domain, additional_conditions])
+        return domain
 
     def _prepare_product_values(self, product, category, **kwargs):
         # If the product has a value for attribute_set_id

@@ -21,11 +21,18 @@ class Website(models.Model):
                 base_domain = value.get("base_domain")
                 for additional_attrib in additional_attrib_values:
                     attribute_id = additional_attrib[0]
-                    attribute_field = (
-                        self.env["attribute.attribute"].sudo().browse(attribute_id).name
+                    attribute = (
+                        self.env["attribute.attribute"].sudo().browse(attribute_id)
                     )
+                    if not attribute.exists():
+                        continue
+                    attribute_field = attribute.name
+                    attribute_type = attribute.attribute_type
                     additional_attrib_value = additional_attrib[1]
+
+                    # Handle different attribute types appropriately
                     if additional_attrib_value.startswith("name-"):
+                        # Legacy format: name-model.name-id-123
                         pattern = r"name-(.*?)-id-(\d+)"
                         match = re.search(pattern, additional_attrib_value)
                         if match:
@@ -38,7 +45,41 @@ class Website(models.Model):
                                 (attribute_field, "in", [search_rec_value.id])
                             ]
                             base_domain.append(additional_attrib_domain)
+                    elif attribute_type == "boolean":
+                        # Boolean values come as "True" or "False" strings
+                        bool_value = additional_attrib_value.lower() == "true"
+                        additional_attrib_domain = [(attribute_field, "=", bool_value)]
+                        base_domain.append(additional_attrib_domain)
+                    elif attribute_type in ("select", "multiselect"):
+                        # Select values are option IDs (integers)
+                        try:
+                            option_id = int(additional_attrib_value)
+                            additional_attrib_domain = [
+                                (attribute_field, "=", option_id)
+                            ]
+                            base_domain.append(additional_attrib_domain)
+                        except (ValueError, TypeError):
+                            continue
+                    elif attribute_type == "integer":
+                        try:
+                            int_value = int(additional_attrib_value)
+                            additional_attrib_domain = [
+                                (attribute_field, "=", int_value)
+                            ]
+                            base_domain.append(additional_attrib_domain)
+                        except (ValueError, TypeError):
+                            continue
+                    elif attribute_type == "float":
+                        try:
+                            float_value = float(additional_attrib_value)
+                            additional_attrib_domain = [
+                                (attribute_field, "=", float_value)
+                            ]
+                            base_domain.append(additional_attrib_domain)
+                        except (ValueError, TypeError):
+                            continue
                     else:
+                        # char, text, date, datetime - use exact match
                         additional_attrib_domain = [
                             (attribute_field, "=", additional_attrib_value)
                         ]

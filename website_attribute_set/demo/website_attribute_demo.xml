@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Attribute Group for E-Commerce Demo -->
+    <record id="demo_ecom_attribute_group" model="attribute.group">
+        <field name="name">E-Commerce Specifications</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Attribute Set for E-Commerce Demo Products -->
+    <record id="demo_ecom_attribute_set" model="attribute.set">
+        <field name="name">Electronics Attribute Set</field>
+        <field name="model_id" ref="product.model_product_template" />
+    </record>
+
+    <!-- Boolean Attribute: Linux Compatible -->
+    <record id="demo_attr_linux_compatible" model="attribute.attribute">
+        <field name="nature">custom</field>
+        <field name="field_description">Linux Compatible</field>
+        <field name="name">x_linux_compatible</field>
+        <field name="attribute_type">boolean</field>
+        <field name="attribute_group_id" ref="demo_ecom_attribute_group" />
+        <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="e_com_visibility" eval="True" />
+    </record>
+
+    <!-- Char Attribute: Brand -->
+    <record id="demo_attr_brand" model="attribute.attribute">
+        <field name="nature">custom</field>
+        <field name="field_description">Brand</field>
+        <field name="name">x_demo_brand</field>
+        <field name="attribute_type">char</field>
+        <field name="attribute_group_id" ref="demo_ecom_attribute_group" />
+        <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="e_com_visibility" eval="True" />
+    </record>
+
+    <!-- Select Attribute: Category Type -->
+    <record id="demo_attr_category_type" model="attribute.attribute">
+        <field name="nature">custom</field>
+        <field name="field_description">Product Category Type</field>
+        <field name="name">x_demo_category_type</field>
+        <field name="attribute_type">select</field>
+        <field name="attribute_group_id" ref="demo_ecom_attribute_group" />
+        <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="e_com_visibility" eval="True" />
+    </record>
+
+    <!-- Options for Category Type Select -->
+    <record id="demo_option_laptop" model="attribute.option">
+        <field name="name">Laptop</field>
+        <field name="attribute_id" ref="demo_attr_category_type" />
+    </record>
+    <record id="demo_option_desktop" model="attribute.option">
+        <field name="name">Desktop</field>
+        <field name="attribute_id" ref="demo_attr_category_type" />
+    </record>
+    <record id="demo_option_accessory" model="attribute.option">
+        <field name="name">Accessory</field>
+        <field name="attribute_id" ref="demo_attr_category_type" />
+    </record>
+
+    <!-- Integer Attribute: Warranty Years -->
+    <record id="demo_attr_warranty" model="attribute.attribute">
+        <field name="nature">custom</field>
+        <field name="field_description">Warranty (Years)</field>
+        <field name="name">x_demo_warranty_years</field>
+        <field name="attribute_type">integer</field>
+        <field name="attribute_group_id" ref="demo_ecom_attribute_group" />
+        <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="e_com_visibility" eval="True" />
+    </record>
+
+    <!-- Text Attribute: Detailed Description -->
+    <record id="demo_attr_detailed_desc" model="attribute.attribute">
+        <field name="nature">custom</field>
+        <field name="field_description">Detailed Description</field>
+        <field name="name">x_demo_detailed_desc</field>
+        <field name="attribute_type">text</field>
+        <field name="attribute_group_id" ref="demo_ecom_attribute_group" />
+        <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="e_com_visibility" eval="True" />
+    </record>
+
+    <!-- Demo Product 1: Linux Laptop -->
+    <record id="demo_product_linux_laptop" model="product.template">
+        <field name="name">Linux Developer Laptop</field>
+        <field name="type">consu</field>
+        <field name="list_price">1299.00</field>
+        <field name="is_published" eval="True" />
+        <field name="attribute_set_id" ref="demo_ecom_attribute_set" />
+        <field name="x_linux_compatible" eval="True" />
+        <field name="x_demo_brand">TechPro</field>
+        <field name="x_demo_category_type" ref="demo_option_laptop" />
+        <field name="x_demo_warranty_years">3</field>
+        <field name="x_demo_detailed_desc">
+                High-performance laptop pre-installed with Ubuntu Linux.
+                Perfect for developers and open-source enthusiasts.
+                Features 16GB RAM and 512GB NVMe SSD.
+            </field>
+    </record>
+
+    <!-- Demo Product 2: Windows Desktop -->
+    <record id="demo_product_windows_desktop" model="product.template">
+        <field name="name">Office Desktop Computer</field>
+        <field name="type">consu</field>
+        <field name="list_price">899.00</field>
+        <field name="is_published" eval="True" />
+        <field name="attribute_set_id" ref="demo_ecom_attribute_set" />
+        <field name="x_linux_compatible" eval="False" />
+        <field name="x_demo_brand">OfficeMate</field>
+        <field name="x_demo_category_type" ref="demo_option_desktop" />
+        <field name="x_demo_warranty_years">2</field>
+        <field name="x_demo_detailed_desc">
+                Standard office desktop computer.
+                Pre-configured for business applications.
+                Includes 8GB RAM and 256GB SSD.
+            </field>
+    </record>
+
+    <!-- Demo Product 3: Linux Compatible Keyboard -->
+    <record id="demo_product_keyboard" model="product.template">
+        <field name="name">Mechanical Keyboard (Linux Compatible)</field>
+        <field name="type">consu</field>
+        <field name="list_price">149.00</field>
+        <field name="is_published" eval="True" />
+        <field name="attribute_set_id" ref="demo_ecom_attribute_set" />
+        <field name="x_linux_compatible" eval="True" />
+        <field name="x_demo_brand">KeyMaster</field>
+        <field name="x_demo_category_type" ref="demo_option_accessory" />
+        <field name="x_demo_warranty_years">1</field>
+        <field name="x_demo_detailed_desc">
+                Premium mechanical keyboard with Cherry MX switches.
+                Full Linux compatibility with customizable keys.
+            </field>
+    </record>
+
+    <!-- Demo Product 4: Another Linux Laptop (different brand) -->
+    <record id="demo_product_linux_laptop_2" model="product.template">
+        <field name="name">Budget Linux Laptop</field>
+        <field name="type">consu</field>
+        <field name="list_price">599.00</field>
+        <field name="is_published" eval="True" />
+        <field name="attribute_set_id" ref="demo_ecom_attribute_set" />
+        <field name="x_linux_compatible" eval="True" />
+        <field name="x_demo_brand">ValueTech</field>
+        <field name="x_demo_category_type" ref="demo_option_laptop" />
+        <field name="x_demo_warranty_years">1</field>
+        <field name="x_demo_detailed_desc">
+                Affordable laptop that works great with Linux distributions.
+                4GB RAM, 128GB SSD. Perfect for learning Linux.
+            </field>
+    </record>
+</odoo>
