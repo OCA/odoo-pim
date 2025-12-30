@@ -24,8 +24,13 @@
         "views/templates.xml",
         "views/website_sale_comparison_template.xml",
     ],
+    "demo": [
+        "demo/website_attribute_demo.xml",
+    ],
     "assets": {
-        "web.assets_frontend": [],
+        "web.assets_frontend": [
+            "website_attribute_set/static/src/js/additional_attributes_filter.js",
+        ],
     },
     "installable": True,
     "application": True,
