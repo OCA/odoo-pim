@@ -22,6 +22,23 @@ class AttributeAttribute(models.Model):
         help="""If selected the attribute will be included in e-commerce search.
         Disable for large text fields to improve search performance.""",
     )
+    e_com_range_filter = fields.Boolean(
+        string="E-Commerce Range Filter",
+        default=False,
+        help="""For numeric attributes (integer/float), show min/max range inputs
+        instead of individual value selection in the shop filter.""",
+    )
+    e_com_multi_select = fields.Boolean(
+        string="E-Commerce Multi-Select",
+        default=False,
+        help="""Allow selecting multiple values for this attribute filter.
+        Products matching ANY selected value will be shown (OR logic).""",
+    )
+    e_com_show_count = fields.Boolean(
+        string="E-Commerce Show Count",
+        default=False,
+        help="""Show the number of matching products next to each filter option.""",
+    )
 
     def write(self, vals):
         """Clear attribute cache when visibility or attribute sets change."""

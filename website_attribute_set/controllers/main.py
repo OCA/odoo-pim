@@ -70,7 +70,7 @@ class WebsiteSale(main.WebsiteSale):
         if attrib_list:
             post["attribute_value"] = attrib_list
 
-        # anyalyze the url args to be used in filter and search
+        # analyze the url args to be used in filter and search
         request_args = request.httprequest.args
         additional_attrib_list = request_args.getlist("additional_attribute_value")
         additional_attrib_values = [
@@ -84,6 +84,27 @@ class WebsiteSale(main.WebsiteSale):
         )
         post["additional_attrib_set"] = additional_attrib_set
         post["additional_attrib_values"] = additional_attrib_values
+
+        # Parse range filter parameters (for numeric attributes)
+        additional_range_filters = {}
+        for key in request_args.keys():
+            if key.startswith("additional_attr_min_"):
+                attr_id = int(key.replace("additional_attr_min_", ""))
+                if attr_id not in additional_range_filters:
+                    additional_range_filters[attr_id] = {}
+                try:
+                    additional_range_filters[attr_id]["min"] = float(request_args[key])
+                except (ValueError, TypeError):
+                    continue  # Skip invalid numeric values
+            elif key.startswith("additional_attr_max_"):
+                attr_id = int(key.replace("additional_attr_max_", ""))
+                if attr_id not in additional_range_filters:
+                    additional_range_filters[attr_id] = {}
+                try:
+                    additional_range_filters[attr_id]["max"] = float(request_args[key])
+                except (ValueError, TypeError):
+                    continue  # Skip invalid numeric values
+        post["additional_range_filters"] = additional_range_filters
 
         filter_by_tags_enabled = website.is_view_active(
             "website_sale.filter_products_tags"
@@ -386,6 +407,9 @@ class WebsiteSale(main.WebsiteSale):
             }
         )
         products = values.get("products")
+        search_product = values.get(
+            "search_product"
+        )  # All matching products for counts
         all_additional_attributes = request.env["attribute.attribute"].sudo()
         if products:
             # loop to get all attributes that only haves values
@@ -399,7 +423,12 @@ class WebsiteSale(main.WebsiteSale):
                 # loop to get all assigned attribute values for all related products
                 for attribute in all_additional_attributes:
                     all_attribute_values = set()
-                    for product in products:
+                    value_counts = {}
+
+                    # Use search_product for counting if available, else use products
+                    count_products = search_product or products
+
+                    for product in count_products:
                         attribute_values = product.sudo().get_extra_attribute_values(
                             attribute
                         )
@@ -413,32 +442,79 @@ class WebsiteSale(main.WebsiteSale):
                             ):
                                 for rec in attribute_values:
                                     all_attribute_values.add(rec)
+                                    # Count products per value (use id for records)
+                                    if attribute.e_com_show_count:
+                                        key = rec.id if hasattr(rec, "id") else rec
+                                        value_counts[key] = value_counts.get(key, 0) + 1
                             else:
                                 all_attribute_values.add(attribute_values)
-                    extra_values["additional_attributes"].append(
-                        {
-                            "attribute": attribute,
-                            "all_attribute_values": list(all_attribute_values),
-                        }
-                    )
+                                # Count products per value
+                                if attribute.e_com_show_count:
+                                    if hasattr(attribute_values, "id"):
+                                        key = attribute_values.id
+                                    else:
+                                        key = attribute_values
+                                    value_counts[key] = value_counts.get(key, 0) + 1
+
+                    attr_dict = {
+                        "attribute": attribute,
+                        "all_attribute_values": list(all_attribute_values),
+                    }
+                    if attribute.e_com_show_count:
+                        attr_dict["value_counts"] = value_counts
+                    extra_values["additional_attributes"].append(attr_dict)
 
         return extra_values
 
     def _get_shop_domain(self, search, category, attrib_values, **post):
         """Extend shop domain with additional attribute filters."""
-        # Extract our custom kwargs - don't pass any post kwargs to parent
-        # as the parent _get_shop_domain only accepts (search, category, attrib_values)
         additional_attrib_values = post.get("additional_attrib_values", [])
+        additional_range_filters = post.get("additional_range_filters", {})
 
         domain = super()._get_shop_domain(search, category, attrib_values)
-        if not additional_attrib_values:
-            return domain
-
-        # Build domain conditions for each selected attribute filter
-        Attribute = request.env["attribute.attribute"].sudo()
         additional_conditions = []
 
-        for attr_id, attr_value in additional_attrib_values:
+        # Handle range and value filters
+        additional_conditions.extend(
+            self._build_range_filter_conditions(additional_range_filters)
+        )
+        additional_conditions.extend(
+            self._build_value_filter_conditions(additional_attrib_values)
+        )
+
+        if additional_conditions:
+            return Domain.AND([domain] + additional_conditions)
+        return domain
+
+    def _build_range_filter_conditions(self, range_filters):
+        """Build domain conditions for range filters (min/max)."""
+        conditions = []
+        Attribute = request.env["attribute.attribute"].sudo()
+        for attr_id, range_vals in range_filters.items():
+            attribute = Attribute.browse(attr_id)
+            if not attribute.exists():
+                continue
+            field_name = attribute.name
+            if "min" in range_vals:
+                conditions.append((field_name, ">=", range_vals["min"]))
+            if "max" in range_vals:
+                conditions.append((field_name, "<=", range_vals["max"]))
+        return conditions
+
+    def _build_value_filter_conditions(self, attrib_values):
+        """Build domain conditions for value filters (select, boolean, etc.)."""
+        if not attrib_values:
+            return []
+
+        conditions = []
+        Attribute = request.env["attribute.attribute"].sudo()
+
+        # Group values by attribute for multi-select support
+        attr_values_grouped = {}
+        for attr_id, attr_value in attrib_values:
+            attr_values_grouped.setdefault(attr_id, []).append(attr_value)
+
+        for attr_id, values in attr_values_grouped.items():
             attribute = Attribute.browse(attr_id)
             if not attribute.exists():
                 continue
@@ -446,38 +522,50 @@ class WebsiteSale(main.WebsiteSale):
             field_name = attribute.name
             attr_type = attribute.attribute_type
 
-            # Convert value based on attribute type
-            if attr_type == "boolean":
-                # Boolean values come as "True" or "False" strings
-                value = attr_value.lower() == "true"
-                additional_conditions.append((field_name, "=", value))
-            elif attr_type in ("select", "multiselect"):
-                # Select values are option IDs
-                try:
-                    option_id = int(attr_value)
-                    additional_conditions.append((field_name, "=", option_id))
-                except (ValueError, TypeError):
-                    continue
-            elif attr_type == "integer":
-                try:
-                    value = int(attr_value)
-                    additional_conditions.append((field_name, "=", value))
-                except (ValueError, TypeError):
-                    continue
-            elif attr_type == "float":
-                try:
-                    value = float(attr_value)
-                    additional_conditions.append((field_name, "=", value))
-                except (ValueError, TypeError):
-                    continue
+            # Multi-select: OR within same attribute
+            if len(values) > 1 and attribute.e_com_multi_select:
+                or_conds = [
+                    c
+                    for v in values
+                    if (c := self._build_attribute_condition(field_name, attr_type, v))
+                ]
+                if or_conds:
+                    conditions.append(Domain.OR(or_conds))
             else:
-                # char, text, date, datetime - use exact match
-                additional_conditions.append((field_name, "=", attr_value))
+                for attr_value in values:
+                    cond = self._build_attribute_condition(
+                        field_name, attr_type, attr_value
+                    )
+                    if cond:
+                        conditions.append(cond)
+        return conditions
 
-        # Combine the parent domain with our additional conditions using Domain.AND
-        if additional_conditions:
-            return Domain.AND([domain, additional_conditions])
-        return domain
+    def _build_attribute_condition(self, field_name, attr_type, attr_value):
+        """Build a single domain condition for an attribute value."""
+        if attr_type == "boolean":
+            value = attr_value.lower() == "true"
+            return [(field_name, "=", value)]
+        elif attr_type in ("select", "multiselect"):
+            try:
+                option_id = int(attr_value)
+                return [(field_name, "=", option_id)]
+            except (ValueError, TypeError):
+                return None
+        elif attr_type == "integer":
+            try:
+                value = int(attr_value)
+                return [(field_name, "=", value)]
+            except (ValueError, TypeError):
+                return None
+        elif attr_type == "float":
+            try:
+                value = float(attr_value)
+                return [(field_name, "=", value)]
+            except (ValueError, TypeError):
+                return None
+        else:
+            # char, text, date, datetime - use exact match
+            return [(field_name, "=", attr_value)]
 
     def _prepare_product_values(self, product, category, **kwargs):
         # If the product has a value for attribute_set_id

@@ -8,7 +8,18 @@
             <data>
                 <xpath expr="//field[@name='serialized']" position="after">
                     <field name="e_com_visibility" />
-                    <field name="e_com_searchable" invisible="not e_com_visibility" />
+                    <group invisible="not e_com_visibility" col="2">
+                        <field name="e_com_searchable" />
+                        <field
+                            name="e_com_range_filter"
+                            invisible="attribute_type not in ('integer', 'float')"
+                        />
+                        <field
+                            name="e_com_multi_select"
+                            invisible="attribute_type not in ('select', 'multiselect')"
+                        />
+                        <field name="e_com_show_count" />
+                    </group>
                 </xpath>
             </data>
         </field>

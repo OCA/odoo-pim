@@ -39,7 +39,7 @@
         <field name="e_com_searchable" eval="True" />
     </record>
 
-    <!-- Select Attribute: Category Type -->
+    <!-- Select Attribute: Category Type (with multi-select and count badges) -->
     <record id="demo_attr_category_type" model="attribute.attribute">
         <field name="nature">custom</field>
         <field name="field_description">Demo Category Type</field>
@@ -50,6 +50,8 @@
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
         <field name="e_com_searchable" eval="True" />
+        <field name="e_com_multi_select" eval="True" />
+        <field name="e_com_show_count" eval="True" />
     </record>
 
     <!-- Options for Category Type Select -->
@@ -66,7 +68,7 @@
         <field name="attribute_id" ref="demo_attr_category_type" />
     </record>
 
-    <!-- Integer Attribute: Warranty Years -->
+    <!-- Integer Attribute: Warranty Years (with range filter enabled) -->
     <record id="demo_attr_warranty" model="attribute.attribute">
         <field name="nature">custom</field>
         <field name="field_description">Demo Warranty (Years)</field>
@@ -77,6 +79,7 @@
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
         <field name="e_com_searchable" eval="True" />
+        <field name="e_com_range_filter" eval="True" />
     </record>
 
     <!-- Text Attribute: Detailed Description (visible but NOT searchable for performance) -->
