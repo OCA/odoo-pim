@@ -16,6 +16,12 @@ class AttributeAttribute(models.Model):
         default=False,
         help="""If selected the attribute will be shown in e-commerce website app.""",
     )
+    e_com_searchable = fields.Boolean(
+        string="E-Commerce Searchable",
+        default=False,
+        help="""If selected the attribute will be included in e-commerce search.
+        Disable for large text fields to improve search performance.""",
+    )
 
     @api.constrains("domain")
     def _validate_domain(self):

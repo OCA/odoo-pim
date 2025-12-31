@@ -145,24 +145,24 @@ class TestAttributeSetSearchable(BuildViewCase):
         )
 
     def test_search_extra(self):
-        # attributes are not visible in e-com
+        # attributes are not searchable in e-com
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(list(domain), [(0, "=", 1)])
-        # attributes are visible in e-com but
+        # attributes are searchable in e-com but
         # if they are select or multi-select then
         # they need relation_model_id value
-        self.attr_1.write({"e_com_visibility": True})
+        self.attr_1.write({"e_com_searchable": True})
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(list(domain), [(0, "=", 1)])
-        # attributes are visible in e-com
-        self.attr_2.write({"e_com_visibility": True})
+        # attributes are searchable in e-com
+        self.attr_2.write({"e_com_searchable": True})
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(
             list(domain), [("x_technical_description", "ilike", "Fast processor")]
         )
-        # select, multi-select attributes are visible in e-com as
+        # select, multi-select attributes are searchable in e-com as
         # they have relation_model_id value
-        self.attr_3.write({"e_com_visibility": True})
+        self.attr_3.write({"e_com_searchable": True})
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(
             list(domain),
@@ -171,6 +171,22 @@ class TestAttributeSetSearchable(BuildViewCase):
                 ("x_hard_disk.name", "ilike", "Fast processor"),
                 ("x_technical_description", "ilike", "Fast processor"),
             ],
+        )
+
+    def test_e_com_searchable_vs_visibility(self):
+        """Test that e_com_searchable controls search, not e_com_visibility."""
+        # Set attribute visible but NOT searchable
+        self.attr_2.write({"e_com_visibility": True, "e_com_searchable": False})
+        domain = search_extra(self.env, "Fast processor")
+        # Should NOT include this attribute in search
+        self.assertEqual(list(domain), [(0, "=", 1)])
+
+        # Now make it searchable
+        self.attr_2.write({"e_com_searchable": True})
+        domain = search_extra(self.env, "Fast processor")
+        # Should include this attribute in search
+        self.assertEqual(
+            list(domain), [("x_technical_description", "ilike", "Fast processor")]
         )
 
     def test__search_fetch(self):
@@ -212,9 +228,9 @@ class TestAttributeSetSearchable(BuildViewCase):
         )
         for i in results[1]:
             self.assertEqual(i["count"], 0)
-        # custom attributes appear in e-com search of we set visibility
-        self.attr_2.write({"e_com_visibility": True})
-        self.attr_3.write({"e_com_visibility": True})
+        # custom attributes appear in e-com search if we set searchable
+        self.attr_2.write({"e_com_searchable": True})
+        self.attr_3.write({"e_com_searchable": True})
         results = (
             self.env["website"]
             .browse(1)
