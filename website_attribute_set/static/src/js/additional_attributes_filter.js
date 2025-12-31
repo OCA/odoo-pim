@@ -9,6 +9,8 @@ publicWidget.registry.AdditionalAttributesFilter = publicWidget.Widget.extend({
             "_onAdditionalAttributeChange",
         "change input[name='additional_attribute_value']":
             "_onAdditionalAttributeChange",
+        "change input[name^='additional_attr_min_']": "_onRangeFilterChange",
+        "change input[name^='additional_attr_max_']": "_onRangeFilterChange",
     },
 
     /**
@@ -22,6 +24,20 @@ publicWidget.registry.AdditionalAttributesFilter = publicWidget.Widget.extend({
             form.submit();
         } else {
             // Fallback: manually update URL with filter parameters
+            this._updateUrlWithFilters();
+        }
+    },
+
+    /**
+     * Handle change events on range filter inputs (min/max).
+     * Submits the form to apply the range filter.
+     * @param {Event} ev
+     */
+    _onRangeFilterChange: function (ev) {
+        const form = this.el.closest("form");
+        if (form) {
+            form.submit();
+        } else {
             this._updateUrlWithFilters();
         }
     },
