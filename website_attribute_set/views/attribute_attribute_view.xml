@@ -8,6 +8,7 @@
             <data>
                 <xpath expr="//field[@name='serialized']" position="after">
                     <field name="e_com_visibility" />
+                    <field name="e_com_searchable" invisible="not e_com_visibility" />
                 </xpath>
             </data>
         </field>

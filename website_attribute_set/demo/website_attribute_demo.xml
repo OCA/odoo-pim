@@ -23,6 +23,7 @@
         <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
+        <field name="e_com_searchable" eval="True" />
     </record>
 
     <!-- Char Attribute: Brand -->
@@ -35,6 +36,7 @@
         <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
+        <field name="e_com_searchable" eval="True" />
     </record>
 
     <!-- Select Attribute: Category Type -->
@@ -47,6 +49,7 @@
         <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
+        <field name="e_com_searchable" eval="True" />
     </record>
 
     <!-- Options for Category Type Select -->
@@ -73,9 +76,10 @@
         <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
+        <field name="e_com_searchable" eval="True" />
     </record>
 
-    <!-- Text Attribute: Detailed Description -->
+    <!-- Text Attribute: Detailed Description (visible but NOT searchable for performance) -->
     <record id="demo_attr_detailed_desc" model="attribute.attribute">
         <field name="nature">custom</field>
         <field name="field_description">Demo Description</field>
@@ -85,6 +89,7 @@
         <field name="attribute_set_ids" eval="[(4, ref('demo_ecom_attribute_set'))]" />
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
+        <field name="e_com_searchable" eval="False" />
     </record>
 
     <!-- Demo Product 1: Linux Laptop -->
@@ -98,7 +103,9 @@
         <field name="x_was_demo_brand">TechPro</field>
         <field name="x_was_demo_cattype" ref="demo_option_laptop" />
         <field name="x_was_demo_warranty">3</field>
-        <field name="x_was_demo_desc">High-performance laptop pre-installed with Ubuntu Linux. Perfect for developers and open-source enthusiasts. Features 16GB RAM and 512GB NVMe SSD.</field>
+        <field
+            name="x_was_demo_desc"
+        >High-performance laptop pre-installed with Ubuntu Linux. Perfect for developers and open-source enthusiasts. Features 16GB RAM and 512GB NVMe SSD.</field>
     </record>
 
     <!-- Demo Product 2: Windows Desktop -->
@@ -112,7 +119,9 @@
         <field name="x_was_demo_brand">OfficeMate</field>
         <field name="x_was_demo_cattype" ref="demo_option_desktop" />
         <field name="x_was_demo_warranty">2</field>
-        <field name="x_was_demo_desc">Standard office desktop computer. Pre-configured for business applications. Includes 8GB RAM and 256GB SSD.</field>
+        <field
+            name="x_was_demo_desc"
+        >Standard office desktop computer. Pre-configured for business applications. Includes 8GB RAM and 256GB SSD.</field>
     </record>
 
     <!-- Demo Product 3: Linux Compatible Keyboard -->
@@ -126,7 +135,9 @@
         <field name="x_was_demo_brand">KeyMaster</field>
         <field name="x_was_demo_cattype" ref="demo_option_accessory" />
         <field name="x_was_demo_warranty">1</field>
-        <field name="x_was_demo_desc">Premium mechanical keyboard with Cherry MX switches. Full Linux compatibility with customizable keys.</field>
+        <field
+            name="x_was_demo_desc"
+        >Premium mechanical keyboard with Cherry MX switches. Full Linux compatibility with customizable keys.</field>
     </record>
 
     <!-- Demo Product 4: Another Linux Laptop (different brand) -->
@@ -140,6 +151,8 @@
         <field name="x_was_demo_brand">ValueTech</field>
         <field name="x_was_demo_cattype" ref="demo_option_laptop" />
         <field name="x_was_demo_warranty">1</field>
-        <field name="x_was_demo_desc">Affordable laptop that works great with Linux distributions. 4GB RAM, 128GB SSD. Perfect for learning Linux.</field>
+        <field
+            name="x_was_demo_desc"
+        >Affordable laptop that works great with Linux distributions. 4GB RAM, 128GB SSD. Perfect for learning Linux.</field>
     </record>
 </odoo>
