@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="product_compare_with_additional_attributes"
+        inherit_id="website_sale_comparison.product_compare"
+        active="True"
+        name="Comparator Page"
+    >
+        <xpath expr="//table[@id='o_comparelist_table']" position="after">
+            <table
+                class="table table-bordered table-hover text-center mt16 table-comparator"
+            >
+                <t
+                    t-set="attrib_groups"
+                    t-value="products.sudo()._prepare_additional_attributes_for_display()"
+                />
+                <tbody>
+                    <t t-foreach="attrib_groups" t-as="group">
+                        <t t-if="len(attrib_groups) &gt; 1">
+                            <tr
+                                class="clickable"
+                                data-bs-toggle="collapse"
+                                t-att-data-bs-target="'.o_ws_group_%d' % group.id"
+                            >
+                                <th
+                                    class="text-start"
+                                    t-att-colspan="len(products) + 1"
+                                >
+                                    <i
+                                        class="fa fa-chevron-circle-down o_product_comparison_collpase"
+                                        role="img"
+                                        aria-label="Collapse"
+                                        title="Collapse"
+                                    />
+                                    <span t-if="group" t-field="group.name" />
+                                    <span t-else="">Uncategorized</span>
+                                </th>
+                            </tr>
+                        </t>
+                        <tr
+                            t-foreach="attrib_groups[group]"
+                            t-as="attribute"
+                            t-att-class="'collapse show o_ws_group_%d' % group.id"
+                        >
+                            <td>
+                                <span t-field="attribute.field_description" />
+                            </td>
+                            <td
+                                t-foreach="attrib_groups[group][attribute]"
+                                t-as="product"
+                            >
+                                <t
+                                    t-set="values"
+                                    t-value="attrib_groups[group][attribute][product]"
+                                />
+                                <t t-if="attribute.attribute_type == 'multiselect'">
+                                    <t t-foreach="values" t-as="value">
+                                        <span t-out="value" />
+                                        <t t-if="not value_last">, </t>
+                                    </t>
+                                </t>
+                                <t
+                                    t-if="attribute.attribute_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float']"
+                                >
+                                    <t t-if="attribute.attribute_type == 'boolean'">
+                                        <span t-out="'Yes'" />
+                                    </t>
+                                    <t t-elif="attribute.attribute_type == 'integer'">
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "integer"}'
+                                        />
+                                    </t>
+                                    <t t-elif="attribute.attribute_type == 'float'">
+                                        <span t-out="values" />
+                                    </t>
+                                    <t t-if="attribute.attribute_type == 'date'">
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "date"}'
+                                        />
+                                    </t>
+                                    <t t-if="attribute.attribute_type == 'datetime'">
+                                        <t
+                                            t-set="tz_value"
+                                            t-value="request.env.user.tz or 'UTC'"
+                                        />
+                                        <span
+                                            t-out="values"
+                                            t-options='{"widget": "datetime", "tz_name": tz_value, "format": "short"}'
+                                        />
+                                    </t>
+                                    <t
+                                        t-if="attribute.attribute_type in ['char', 'text', 'select']"
+                                    >
+                                        <span t-out="values" />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                    <!-- reference section -->
+                    <tr
+                        class="clickable"
+                        data-bs-toggle="collapse"
+                        t-att-data-bs-target="'.o_ws_group_default_code'"
+                    >
+                        <th class="text-start" t-att-colspan="len(products) + 1">
+                            <i
+                                class="fa fa-chevron-circle-down o_product_comparison_collpase"
+                                role="img"
+                                aria-label="Collapse"
+                                title="Collapse"
+                            />
+                            <span>Reference Codes</span>
+                        </th>
+                    </tr>
+                    <tr
+                        class="collapse show o_ws_group_default_code"
+                        data-bs-toggle="collapse"
+                    >
+                        <td>
+                            <span>Code</span>
+                        </td>
+                        <t t-foreach="products" t-as="product">
+                            <td>
+                                <t t-if="product.default_code">
+                                    <span t-field="product.default_code" />
+                                </t>
+                            </td>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+    <template
+        id="custom_specifications_table"
+        inherit_id="website_sale_comparison.specifications_table"
+        name="Specifications Table"
+    >
+        <xpath expr="//table" position="after">
+            <table t-attf-class="table {{is_accordion and 'table-sm mb-0'}}">
+                <tr t-foreach="additional_attributes" t-as="attribute_dict">
+                    <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
+                    <t
+                        t-set="attribute_values"
+                        t-value="attribute_dict.get('attribute_values')"
+                    />
+                    <t t-if="attribute_values">
+                        <t
+                            t-set="hide_border_bottom_classes"
+                            t-value="'border-bottom-0' if attribute_last and is_accordion else ''"
+                        />
+                        <td t-attf-class="w-25 {{hide_border_bottom_classes}} ps-0 ">
+                            <span t-field="attribute.field_description" />
+                        </td>
+                        <td
+                            t-attf-class="w-75 {{hide_border_bottom_classes}} pe-0 text-muted text-end"
+                        >
+                            <t
+                                t-if="attribute.attribute_type in ['select', 'multiselect']"
+                            >
+                                <t t-foreach="attribute_values" t-as="value">
+                                    <span t-out="value.name" />
+                                    <t t-if="not value_last">, </t>
+                                </t>
+                            </t>
+                            <t
+                                t-if="attribute.attribute_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float']"
+                            >
+                                <t t-if="attribute.attribute_type == 'boolean'">
+                                    <span t-out="'Yes'" />
+                                </t>
+                                <t t-elif="attribute.attribute_type == 'integer'">
+                                    <span
+                                        t-out="attribute_values"
+                                        t-options='{"widget": "integer"}'
+                                    />
+                                </t>
+                                <t t-elif="attribute.attribute_type == 'float'">
+                                    <span t-out="attribute_values" />
+                                </t>
+                                <t t-if="attribute.attribute_type == 'date'">
+                                    <span
+                                        t-out="attribute_values"
+                                        t-options='{"widget": "date"}'
+                                    />
+                                </t>
+                                <t t-if="attribute.attribute_type == 'datetime'">
+                                    <t
+                                        t-set="tz_value"
+                                        t-value="request.env.user.tz or 'UTC'"
+                                    />
+                                    <span
+                                        t-out="attribute_values"
+                                        t-options='{"widget": "datetime", "tz_name": tz_value, "format": "short"}'
+                                    />
+                                </t>
+                                <t t-if="attribute.attribute_type in ['char', 'text']">
+                                    <span t-out="attribute_values" />
+                                </t>
+                            </t>
+                        </td>
+                    </t>
+                </tr>
+            </table>
+        </xpath>
+    </template>
+</odoo>
