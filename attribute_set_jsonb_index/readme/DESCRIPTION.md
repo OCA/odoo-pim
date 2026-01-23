@@ -18,10 +18,9 @@ B-tree indexes can be created for:
 
 ## Performance
 
-B-tree indexes enable PostgreSQL to use index scans for range queries:
-```sql
--- Without B-tree index: Sequential scan
--- With B-tree index: Index scan
-SELECT * FROM product_template
-WHERE (x_custom_json_attrs->>'x_capacity')::numeric BETWEEN 1000 AND 5000
-```
+B-tree indexes enable PostgreSQL to use index scans for range queries::
+
+    -- Without B-tree index: Sequential scan
+    -- With B-tree index: Index scan
+    SELECT * FROM product_template
+    WHERE (x_custom_json_attrs->>'x_capacity')::numeric BETWEEN 1000 AND 5000

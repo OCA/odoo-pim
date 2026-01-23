@@ -61,9 +61,9 @@ B-tree indexes can be created for:
 Performance
 -----------
 
-B-tree indexes enable PostgreSQL to use index scans for range queries:
+B-tree indexes enable PostgreSQL to use index scans for range queries::
 
-.. code:: sql
+::
 
    -- Without B-tree index: Sequential scan
    -- With B-tree index: Index scan
@@ -126,9 +126,6 @@ Contributors
 
 Other credits
 -------------
-
-Development
-~~~~~~~~~~~
 
 This module was developed by OBS Solutions B.V. as an extension to the
 OCA attribute_set_jsonb module.

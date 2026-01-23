@@ -137,7 +137,7 @@ class AttributeAttribute(models.Model):
             return False
 
         if not self._is_column_jsonb():
-            _logger.warning(
+            _logger.debug(
                 "Cannot create GIN index for attribute %s: "
                 "column is not JSONB type. Install base_sparse_field_jsonb first.",
                 self.name,
@@ -189,7 +189,7 @@ class AttributeAttribute(models.Model):
             )
             return True
         except Psycopg2Error as e:
-            _logger.warning(
+            _logger.debug(
                 "Could not create GIN expression index %s: %s",
                 index_name,
                 e,
@@ -250,7 +250,7 @@ class AttributeAttribute(models.Model):
             return False
 
         if not self._can_create_btree_index():
-            _logger.warning(
+            _logger.debug(
                 "Cannot create B-tree index for attribute %s: "
                 "type %s not supported. Use integer, float, date, or datetime.",
                 self.name,
@@ -264,7 +264,7 @@ class AttributeAttribute(models.Model):
         cast_type = BTREE_CAST_MAP.get(self.attribute_type)
 
         if not all([index_name, table_name, jsonb_column, cast_type]):
-            _logger.warning(
+            _logger.debug(
                 "Cannot create B-tree index for attribute %s: missing required info",
                 self.name,
             )
@@ -293,7 +293,7 @@ class AttributeAttribute(models.Model):
             (table_name,),
         )
         if not cr.fetchone():
-            _logger.warning(
+            _logger.debug(
                 "Table %s does not exist, skipping B-tree index creation",
                 table_name,
             )
@@ -301,7 +301,7 @@ class AttributeAttribute(models.Model):
 
         # Check if column exists and is JSONB
         if not _is_jsonb_column(cr, table_name, jsonb_column):
-            _logger.warning(
+            _logger.debug(
                 "Column %s.%s does not exist or is not JSONB, "
                 "skipping B-tree index creation",
                 table_name,
@@ -337,7 +337,7 @@ class AttributeAttribute(models.Model):
             )
             return True
         except Psycopg2Error as e:
-            _logger.warning(
+            _logger.debug(
                 "Could not create B-tree expression index %s: %s",
                 index_name,
                 e,
@@ -362,7 +362,7 @@ class AttributeAttribute(models.Model):
             _logger.info("Dropped B-tree expression index %s", index_name)
             return True
         except Psycopg2Error as e:
-            _logger.warning(
+            _logger.debug(
                 "Could not drop B-tree expression index %s: %s",
                 index_name,
                 e,
@@ -401,7 +401,7 @@ class AttributeAttribute(models.Model):
                             modified_vals["create_gin_index"] = False
                             if vals.get("index_type") == "gin":
                                 modified_vals["index_type"] = "none"
-                            _logger.warning(
+                            _logger.debug(
                                 "Blocking GIN index for new attribute %s: "
                                 "column %s.%s is not JSONB.",
                                 vals.get("name", "unknown"),
@@ -439,7 +439,7 @@ class AttributeAttribute(models.Model):
                 if not record._is_column_jsonb():
                     records_blocked_gin |= record
                     block_gin_index = True
-                    _logger.warning(
+                    _logger.debug(
                         "Blocking GIN index for attribute %s: column is not JSONB. "
                         "Install base_sparse_field_jsonb to enable JSONB storage.",
                         record.name,
@@ -471,7 +471,7 @@ class AttributeAttribute(models.Model):
                             else modified_vals
                         )
                         modified_vals["index_type"] = "none"
-                        _logger.warning(
+                        _logger.debug(
                             "Blocking GIN index_type for attribute %s: "
                             "column is not JSONB.",
                             record.name,
