@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend attribute.attribute form view for website filtering -->
+    <record id="view_attribute_attribute_form_website" model="ir.ui.view">
+        <field name="name">attribute.attribute.form.website.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field
+            name="inherit_id"
+            ref="attribute_set_jsonb_index.view_attribute_attribute_form_btree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='index_type']" position="after">
+                <separator string="Website Filtering" invisible="not serialized" />
+                <group invisible="not serialized">
+                    <field name="website_visible" />
+                    <field name="website_filter_type" invisible="not website_visible" />
+                    <field name="website_sequence" invisible="not website_visible" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend list view to show website visibility -->
+    <record id="view_attribute_attribute_tree_website" model="ir.ui.view">
+        <field name="name">attribute.attribute.tree.website.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field
+            name="inherit_id"
+            ref="attribute_set_jsonb_index.view_attribute_attribute_tree_btree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='index_type']" position="after">
+                <field name="website_visible" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add search filter for website-visible attributes -->
+    <record id="view_attribute_attribute_search_website" model="ir.ui.view">
+        <field name="name">attribute.attribute.search.website.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field
+            name="inherit_id"
+            ref="attribute_set_jsonb_index.view_attribute_attribute_search_btree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='btree_indexed']" position="after">
+                <filter
+                    string="Website Visible"
+                    name="website_visible"
+                    domain="[('website_visible', '=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
