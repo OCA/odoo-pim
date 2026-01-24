@@ -1,0 +1,3 @@
+odoo-addon-attribute_set_jsonb @ git+https://github.com/OCA/odoo-pim.git@refs/pull/236/head#subdirectory=attribute_set_jsonb
+odoo-addon-base_sparse_field_jsonb @ git+https://github.com/OCA/server-tools@refs/pull/3480/head#subdirectory=base_sparse_field_jsonb
+odoo-addon-attribute_set_jsonb_index @ git+https://github.com/OCA/odoo-pim@refs/pull/237/head#subdirectory=attribute_set_jsonb_index
