@@ -1,0 +1,57 @@
+/* Website Attribute Set JSONB - Filter Styles */
+
+.o_jsonb_attribute_filter {
+    .accordion-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .form-check {
+        padding-left: 1.5rem;
+
+        .form-check-label {
+            cursor: pointer;
+            font-size: 0.9rem;
+
+            .badge {
+                font-size: 0.75rem;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .o_jsonb_range_filter {
+        .form-control-sm {
+            font-size: 0.85rem;
+        }
+
+        .o_range_min_display,
+        .o_range_max_display {
+            font-weight: 500;
+        }
+    }
+}
+
+.o_active_jsonb_filters {
+    .badge {
+        font-weight: normal;
+
+        a {
+            text-decoration: none;
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .o_jsonb_attribute_filter {
+        .accordion-body {
+            max-height: 200px;
+        }
+    }
+}
