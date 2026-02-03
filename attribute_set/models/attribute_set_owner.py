@@ -49,9 +49,8 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             ]
         )
         for attr in native_attrs:
-            efield = eview.xpath(f"//field[@name='{attr.name}']")
-            if len(efield):
-                efield[0].getparent().remove(efield[0])
+            for efield in eview.xpath(f"//field[@name='{attr.name}']"):
+                efield.getparent().remove(efield)
 
     def _insert_attribute(self, arch):
         """Replace attributes' placeholders with real fields in form view arch."""
@@ -113,16 +112,11 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         return models
 
 
-# For basic functionality in Odoo 19, add the attribute_set_id field to res.partner
-# This allows the test view creation to work without the full mixin functionality
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = ["res.partner", "attribute.set.owner.mixin"]
+    _name = "res.partner"
 
-    # Add the attribute_set_id field to res.partner for basic functionality
-    attribute_set_id = fields.Many2one(
-        "attribute.set",
-        "Attribute Set",
-        domain=lambda self: self.env[
-            "attribute.set.owner.mixin"
-        ]._get_attribute_set_owner_model(),
-    )
+
+class ResCountry(models.Model):
+    _inherit = ["res.country", "attribute.set.owner.mixin"]
+    _name = "res.country"
