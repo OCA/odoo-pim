@@ -56,10 +56,11 @@ class AttributeAttribute(models.Model):
             ("multiselect", "Multiselect"),
             ("boolean", "Boolean"),
             ("integer", "Integer"),
+            ("float", "Float"),
             ("date", "Date"),
             ("datetime", "Datetime"),
-            ("binary", "Binary"),
-            ("float", "Float"),
+            ("binary", "Binary (file)"),
+            ("image", "Image"),
         ],
     )
 
@@ -135,7 +136,8 @@ class AttributeAttribute(models.Model):
         attrs = self._get_attrs()
         if self.widget:
             kwargs["widget"] = self.widget
-
+        if self.ttype == "binary":
+            kwargs["filename"] = f"{self.name}_filename"
         if self.readonly:
             kwargs["readonly"] = str(True)
 
@@ -184,6 +186,11 @@ class AttributeAttribute(models.Model):
             kwargs["required"] = attrs["required"]
         efield = etree.SubElement(attribute_egroup, "field", **kwargs)
         setup_modifiers(efield)
+        if self.ttype == "binary":
+            kwargs = {"name": f"{self.name}_filename"}
+            kwargs["invisible"] = str(True)
+            extra_efield = etree.SubElement(attribute_egroup, "field", **kwargs)
+            setup_modifiers(extra_efield)
 
     def _get_native_field_context(self):
         return str(self.env[self.field_id.model]._fields[self.field_id.name].context)
@@ -257,6 +264,10 @@ class AttributeAttribute(models.Model):
     def onchange_attribute_type(self):
         if self.attribute_type == "multiselect":
             self.widget = "many2many_tags"
+        elif self.attribute_type == "binary":
+            self.widget = "binary"
+        elif self.attribute_type == "image":
+            self.widget = "image"
 
     @api.onchange("relation_model_id")
     def _onchange_relation_model_id(self):
@@ -363,6 +374,9 @@ class AttributeAttribute(models.Model):
                     # avoid too long relation_table names
                     vals["relation_table"] = table_name[0:60]
 
+            elif attr_type == "image":
+                vals["ttype"] = "binary"
+
             else:
                 vals["ttype"] = attr_type
 
@@ -393,7 +407,27 @@ class AttributeAttribute(models.Model):
                     )
 
             vals["state"] = "manual"
-        return super().create(vals_list)
+        res = super().create(vals_list)
+        binary_fields = res.filtered(lambda f: f.ttype == "binary")
+        vals_list = []
+        for binary_field in binary_fields:
+            vals_list.append(
+                {
+                    "ttype": "char",
+                    "name": f"{binary_field.name}_filename",
+                    "field_description": f"Filename for {binary_field.name}",
+                    "state": binary_field.state,
+                    "create_date": binary_field.create_date,
+                    "model_id": binary_field.model_id.id,
+                }
+            )
+        if vals_list:
+            self.env["ir.model.fields"].create(vals_list)
+        return res
+
+    def _get_filename_value(self, record):
+        filename = f"{self.field_id.name}_filename"
+        return record[filename]
 
     def _delete_related_option_wizard(self, option_vals):
         """Delete related attribute's options wizards."""
@@ -550,6 +584,15 @@ class AttributeAttribute(models.Model):
         fields_to_remove = self.filtered(lambda s: s.nature == "custom").mapped(
             "field_id"
         )
+        binaries = self.filtered(lambda s: s.attribute_type == "binary")
+        if binaries:
+            self.env["ir.model.fields"].search(
+                [
+                    ("name", "in", [f"{x.name}_filename" for x in binaries]),
+                    ("model_id", "in", binaries.mapped("model_id").ids),
+                    ("create_date", "in", binaries.mapped("create_date")),
+                ]
+            ).unlink()
         res = super().unlink()
         fields_to_remove.unlink()
         return res

@@ -20,27 +20,37 @@
                 <separator invisible="nature == 'native'" />
                 <group>
                     <group colspan="2">
-                        <group invisible="nature == 'native'">
+                        <group>
                             <field
                                 name="field_description"
                                 required="nature == 'custom'"
+                                invisible="nature == 'native'"
                             />
-                            <field name="help" />
+                            <field name="help" invisible="nature == 'native'" />
                             <field
                                 name="name"
                                 readonly="create_date"
                                 required="nature == 'custom'"
+                                invisible="nature == 'native'"
                             />
                             <field
                                 name="attribute_type"
                                 required="nature == 'custom'"
+                                invisible="nature == 'native'"
                             />
-                            <field name="size" invisible="attribute_type != 'char'" />
+                            <field
+                                name="size"
+                                invisible="attribute_type != 'char' or nature == 'native'"
+                            />
                             <field
                                 name="translate"
-                                invisible="attribute_type not in ['char', 'text']"
+                                invisible="attribute_type not in ['char', 'text'] or nature == 'native'"
                             />
-                            <field name="serialized" readonly="create_date" />
+                            <field
+                                name="serialized"
+                                readonly="create_date"
+                                invisible="nature == 'native'"
+                            />
                         </group>
                         <newline />
                         <group>
@@ -105,8 +115,9 @@
                         </group>
                         <field
                             name="option_ids"
+                            groups="attribute_set.group_advanced_attribute_set"
                             widget="one2many"
-                            invisible="attribute_type not in ['select', 'multiselect'] or nature == 'native'"
+                            readonly="1"
                         >
                             <list>
                                 <field name="relation_model_id" column_invisible="1" />
