@@ -36,7 +36,7 @@ class ProductTemplate(models.Model):
         groups = OrderedDict(
             [(group, OrderedDict()) for group in attributes.attribute_group_id.sorted()]
         )
-        for attribute in attributes:
+        for attribute in attributes.filtered(lambda a: a.e_com_specification):
             values = self.get_extra_attribute_values(attribute)
             if isinstance(values, models.BaseModel):
                 if len(values) == 1:

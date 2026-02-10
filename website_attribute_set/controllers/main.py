@@ -415,11 +415,11 @@ class WebsiteSale(main.WebsiteSale):
                 "additional_attributes": [],
             }
         )
-        if values.get("products"):
-            search_product = values.get("search_product")
-            all_additional_attributes = request.env["attribute.attribute"].sudo()
-            product_attrs_map = {}
-            # loop to get all attributes that only haves values
+        search_product = values.get("search_product")
+        all_additional_attributes = request.env["attribute.attribute"].sudo()
+        product_attrs_map = {}
+        if search_product:
+            # loop to get all attributes that only have values
             # that can be displayed in e-commerce website
             for product in search_product:
                 additional_attributes = product.sudo().get_extra_attributes()
