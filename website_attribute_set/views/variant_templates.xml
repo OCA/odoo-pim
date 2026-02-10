@@ -2,10 +2,17 @@
 <odoo>
     <template id="variants" inherit_id="website_sale.variants">
         <xpath expr="//ul" position="after">
+            <t
+                t-set="additional_specification_attributes"
+                t-value="[x for x in (additional_attributes or []) if x['attribute'].e_com_specification]"
+            />
             <ul
-                t-attf-class="o_wsale_product_page_variants d-flex flex-column gap-4 list-unstyled js_add_cart_variants #{ul_class} #{'d-none' if not additional_attributes else '' }"
+                t-attf-class="o_wsale_product_page_variants d-flex flex-column gap-4 list-unstyled js_add_cart_variants #{ul_class} #{'d-none' if not additional_specification_attributes else '' }"
             >
-                <t t-foreach="additional_attributes" t-as="attribute_dict">
+                <t
+                    t-foreach="additional_specification_attributes"
+                    t-as="attribute_dict"
+                >
                     <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
                     <t
                         t-set="attribute_values"

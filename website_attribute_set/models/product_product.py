@@ -24,6 +24,7 @@ class ProductProduct(models.Model):
         attributes = self.env["attribute.attribute"]
         for product in self:
             attributes |= product.product_tmpl_id.get_extra_attributes()
+        attributes = attributes.filtered(lambda a: a.e_com_specification)
         groups = OrderedDict(
             [(group, OrderedDict()) for group in attributes.attribute_group_id.sorted()]
         )

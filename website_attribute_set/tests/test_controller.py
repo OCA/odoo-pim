@@ -42,6 +42,8 @@ class TestWebsiteAttributeController(HttpCase):
                 "attribute_set_ids": [(4, cls.attr_set.id)],
                 "model_id": cls.product_model.id,
                 "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_specification": True,
             }
         )
 
@@ -56,6 +58,8 @@ class TestWebsiteAttributeController(HttpCase):
                 "attribute_set_ids": [(4, cls.attr_set.id)],
                 "model_id": cls.product_model.id,
                 "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_specification": True,
             }
         )
 
@@ -71,6 +75,8 @@ class TestWebsiteAttributeController(HttpCase):
                 "attribute_set_ids": [(4, cls.attr_set.id)],
                 "model_id": cls.product_model.id,
                 "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_specification": True,
             }
         )
 
@@ -93,6 +99,8 @@ class TestWebsiteAttributeController(HttpCase):
                 "attribute_set_ids": [(4, cls.attr_set.id)],
                 "model_id": cls.product_model.id,
                 "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_specification": True,
             }
         )
 
