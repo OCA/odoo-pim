@@ -3,9 +3,10 @@
 
 {
     "name": "Product Information Management base",
-    "version": "14.0.1.1.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
-    "author": "Akretion, Pierre Verkest <pierre@verkest.fr>, Odoo Community Association (OCA)",
+    "author": "Akretion, Pierre Verkest <pierre@verkest.fr>, "
+    "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
     "depends": [
         "product",
