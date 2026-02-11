@@ -2,7 +2,7 @@
 # @author Pierre Verkest <pierre@verkest.fr>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import json
-from typing import List, Optional, Tuple
+from typing import Optional
 from uuid import uuid4
 
 from lxml import etree
@@ -52,14 +52,13 @@ class WizardStep:
 
 
 class Wizard:
-
-    steps: List[WizardStep] = None
+    steps: list[WizardStep] = None
     """list of ordered questions"""
 
-    step_history: List[int] = None
+    step_history: list[int] = None
     """steps processed by the user"""
 
-    def __init__(self, steps: List[WizardStep] = None, step_history: List[int] = None):
+    def __init__(self, steps: list[WizardStep] = None, step_history: list[int] = None):
         if not steps:
             steps = []
         if not step_history:
@@ -224,7 +223,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
         result["arch"] = etree.tostring(doc, encoding="unicode")
 
     @api.model
-    def _split_fieldnames(self, fields: List[str]) -> Tuple[List[str], List[str]]:
+    def _split_fieldnames(self, fields: list[str]) -> tuple[list[str], list[str]]:
         wizard_fields = []
         other_fields = []
         for fieldname in fields:

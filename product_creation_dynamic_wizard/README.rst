@@ -17,24 +17,25 @@ Product creation dynamic wizard
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-pim/tree/14.0/product_creation_dynamic_wizard
+    :target: https://github.com/OCA/odoo-pim/tree/17.0/product_creation_dynamic_wizard
     :alt: OCA/odoo-pim
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-pim-14-0/odoo-pim-14-0-product_creation_dynamic_wizard
+    :target: https://translation.odoo-community.org/projects/odoo-pim-17-0/odoo-pim-17-0-product_creation_dynamic_wizard
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module introduces a fully customizable, dynamic wizard to guide users
-through product creation.
+This module introduces a fully customizable, dynamic wizard to guide
+users through product creation.
 
 As Odoo evolves and integrates more features, the standard product form
-becomes increasingly complex. This wizard simplifies the process by presenting
-a series of dynamic questions tailored to your business needs, ensuring better
-data consistency, faster onboarding, and reduced user errors.
+becomes increasingly complex. This wizard simplifies the process by
+presenting a series of dynamic questions tailored to your business
+needs, ensuring better data consistency, faster onboarding, and reduced
+user errors.
 
 Key Features
 ------------
@@ -53,90 +54,106 @@ Key Features
 Configuration
 =============
 
-To configure the dynamic wizard, go to
-`PIM > Product Wizard Settings > Questions` as a PIM manager.
+To configure the dynamic wizard, go to PIM > Product Wizard Settings >
+Questions as a PIM manager.
 
-Wizard configuration can be a bit tricky as more features are added.
-As of now, available question attributes include:
+Wizard configuration can be a bit tricky as more features are added. As
+of now, available question attributes include:
 
-* **Name**: Question name, shown in the bottom-right of the wizard
-  to help with maintenance (especially if a screenshot is taken).
-* **Parent question**: Questions can be nested like a tree. If the parent
-  condition passes, its branch will be processed; otherwise, child questions
-  are skipped.
-* **Is Automatic**: Hides the question from the user and allows setting
+- **Name**: Question name, shown in the bottom-right of the wizard to
+  help with maintenance (especially if a screenshot is taken).
+- **Parent question**: Questions can be nested like a tree. If the
+  parent condition passes, its branch will be processed; otherwise,
+  child questions are skipped.
+- **Is Automatic**: Hides the question from the user and allows setting
   values automatically.
-* **Question**: The actual prompt shown to the user, unless it's automatic.
-* **Sequence**: Defines the question order within its branch.
-* **Question Type**:
+- **Question**: The actual prompt shown to the user, unless it's
+  automatic.
+- **Sequence**: Defines the question order within its branch.
+- **Question Type**:
 
   - **Field** – sets a product template field
   - **Custom** – lets the user choose from a custom set of values
   - **Logical** – groups multiple field updates under one step and/or
     organize questions
-* **Is Conditional**: Only displays the step and children if the condition
-  is met (requires a non-logical parent).
-* **Answer Required**: Forces the user to provide an answer before proceeding.
 
-**Apply If (page)**: Setup condition (display if *Is conditional* is checked )
+- **Is Conditional**: Only displays the step and children if the
+  condition is met (requires a non-logical parent).
+- **Answer Required**: Forces the user to provide an answer before
+  proceeding.
 
-* **Conditional Operator**: Currently supports `==` and `!=`.
-* **Expected result**: The value to match on the parent question. For:
+**Apply If (page)**: Setup condition (display if *Is conditional* is
+checked )
+
+- **Conditional Operator**: Currently supports == and !=.
+- **Expected result**: The value to match on the parent question. For:
 
   - **Custom** – select from predefined values
-  - **Field** – use the technical value (`666` for many2one,
-    `True`/`False` for booleans, technical value on field selection ie:
-    `product` / `service` / `consu`, ...)
+  - **Field** – use the technical value (666 for many2one,
+    True/\`False\` for booleans, technical value on field selection ie:
+    product / service / consu, ...)
 
 **Product Attribute (page)**: Shown if *Question Type* is **Field**.
 
-* **Field**: Product template field to set
-* **Display Field Name**: Show/hide the field label in the wizard
-* **Default Value**: A string, depending on field type:
+- **Field**: Product template field to set
 
-  - many2one → record ID (e.g., `1`)
-  - boolean → `true` for checked/true value, empty string or `false` for unchecked/false value 
-  - x2m → valid JSON string (e.g. `[[0, 0, {"name": "Box 20", "qty": 20}]]`)
-* **Custom View**: XML snippet to control how the field is rendered::
+- **Display Field Name**: Show/hide the field label in the wizard
 
-    <field
-        name="packaging_ids"
-        nolabel="1"
-        context="{'tree_view_ref':'product.product_packaging_tree_view2', 'form_view_ref':'product.product_packaging_form_view2', 'default_name': 'Box of 10', 'default_qty': 10}"
-    />
+- **Default Value**: A string, depending on field type:
+
+  - many2one → record ID (e.g., 1)
+  - boolean → true for checked/true value, empty string or false for
+    unchecked/false value
+  - x2m → valid JSON string (e.g. [[0, 0, {"name": "Box 20", "qty":
+    20}]])
+
+- **Custom View**: XML snippet to control how the field is rendered:
+
+  ::
+
+     <field
+         name="packaging_ids"
+         nolabel="1"
+         context="{'tree_view_ref':'product.product_packaging_tree_view2', 'form_view_ref':'product.product_packaging_form_view2', 'default_name': 'Box of 10', 'default_qty': 10}"
+     />
 
 **Custom Response (page)**: Shown if *Question Type* is **Custom**
 
-* List of valid responses
-* **Default Answer**: Can be set after the question is saved
+- List of valid responses
+- **Default Answer**: Can be set after the question is saved
 
 **Values (page)**: Shown if *Question Type* is **Logical**
 
-* **Default Values**: Only set values that aren't already defined by a previous step (even False or empty string counts as defined)
-* **Values**: Always override values, even if already set by another step. JSON format (e.g. `{"type": "product", "company_id": current_company_id}`)
+- **Default Values**: Only set values that aren't already defined by a
+  previous step (even False or empty string counts as defined)
+- **Values**: Always override values, even if already set by another
+  step. JSON format (e.g. {"type": "product", "company_id":
+  current_company_id})
 
 **Children Questions**: Executed only if the parent condition is met.
 
 .. note::
 
-    If a name is defined, it will be used as the wizard's title.
-    It's a good idea to ask for the product name first, so users remember what they’re doing.
+   If a name is defined, it will be used as the wizard's title. It's a
+   good idea to ask for the product name first, so users remember what
+   they’re doing.
 
-Special `company_id` cases:
+Special company_id cases:
 
-* `company_id` is auto-set by the module to the current company; a different default will be ignored.
-* You can use special variable `current_company_id` that will be replaced by the id of the company_id already
-  set. this can be used in
-  * default values for x2m fields to set the company_id
-  * in custom view to set the default_company_id in context key
-  * in logical values for x2m fields
+- company_id is auto-set by the module to the current company; a
+  different default will be ignored.
+- You can use special variable current_company_id that will be replaced
+  by the id of the company_id already set. this can be used in
+
+  - default values for x2m fields to set the company_id
+  - in custom view to set the default_company_id in context key
+  - in logical values for x2m fields
 
 Usage
 =====
 
-
-1. Go to **Products > Create via Wizard** or use the create 
-   products via the `Create (Wizard)` on form view
+1. Go to **Products > Create via Wizard** or use the create products via
+   the Create (Wizard) on form view
 2. The user is prompted with step-by-step questions
 3. Each answer may influence the next question shown
 4. At the end, the product is created and opened automatically
@@ -150,18 +167,18 @@ Benefits:
 Known issues / Roadmap
 ======================
 
-* Allow reuse of field’s values as default for other
-* Clicking "Previous" should undo values set in the current step
-* Dynamically adapt "expected value" input based on parent field type
-* Validate default values (especially for x2m)
-* Allow conditions on more than just parent question values
-* Support for complex conditions (more than one with AND / OR...)
-* Add toolbar button for wizard launch (avoid menu + action dropdown)
-* Skip validation/saving when going back with "Previous"
-* Connect to an LLM to suggest default values based on previous answers
-* managed translated fields
-* Split module to make it agnostic from product model (
-  could be useful on res.partner as well)
+- Allow reuse of field’s values as default for other
+- Clicking "Previous" should undo values set in the current step
+- Dynamically adapt "expected value" input based on parent field type
+- Validate default values (especially for x2m)
+- Allow conditions on more than just parent question values
+- Support for complex conditions (more than one with AND / OR...)
+- Add toolbar button for wizard launch (avoid menu + action dropdown)
+- Skip validation/saving when going back with "Previous"
+- Connect to an LLM to suggest default values based on previous answers
+- managed translated fields
+- Split module to make it agnostic from product model ( could be useful
+  on res.partner as well)
 
 Bug Tracker
 ===========
@@ -169,7 +186,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-pim/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_creation_dynamic_wizard%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_creation_dynamic_wizard%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -177,17 +194,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Pierre Verkest <pierre@verkest.fr>
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Pierre Verkest <pierre@verkest.fr>
+- Pierre Verkest <pierre@verkest.fr>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -207,6 +224,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-petrus-v| 
 
-This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/14.0/product_creation_dynamic_wizard>`_ project on GitHub.
+This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/17.0/product_creation_dynamic_wizard>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

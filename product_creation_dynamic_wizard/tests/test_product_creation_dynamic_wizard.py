@@ -22,7 +22,6 @@ class TestProductCreationDynamicWizardWithoutDemo(SavepointCase):
         cls.env["product.creation.question"].search([]).unlink()
 
     def test_force_false_value_in_logical_step(self):
-
         self.env["product.creation.question"].create(
             {
                 "name": "Force false purchase ok",
@@ -54,7 +53,6 @@ class TestProductCreationDynamicWizardWithoutDemo(SavepointCase):
         self.assertFalse(product.purchase_ok)
 
     def test_prepare_step_on_custom_step_already_set_shouldnt_use_default(self):
-
         question = self.env["product.creation.question"].create(
             {
                 "name": "purchase ok ?",
