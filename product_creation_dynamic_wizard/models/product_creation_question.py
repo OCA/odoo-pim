@@ -36,7 +36,7 @@ class ProductCreationQuestion(models.Model):
         translate=True, tracking=True, help="The question displayed to the end user"
     )
     complete_name = fields.Char(
-        "Complete Name", compute="_compute_complete_name", store=True, recursive=True
+        compute="_compute_complete_name", store=True, recursive=True
     )
     parent_id = fields.Many2one(
         "product.creation.question",

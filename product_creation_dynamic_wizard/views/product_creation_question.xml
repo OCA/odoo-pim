@@ -4,7 +4,7 @@
         <field name="name">product.creation.question.tree</field>
         <field name="model">product.creation.question</field>
         <field name="arch" type="xml">
-            <tree string="Product creation question">
+            <tree>
                 <field name="sequence" widget="handle" />
                 <field name="parent_id" optional="show" />
                 <field name="name" optional="show" />

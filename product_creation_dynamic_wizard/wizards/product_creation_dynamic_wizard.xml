@@ -23,7 +23,7 @@
                         string="Previous"
                         type="object"
                         name="action_open_previous"
-                        attrs="{'invisible': [('current_step', '=', 0)]}"
+                        invisible="current_step == 0"
                     />
                     <button
                         string="Next"

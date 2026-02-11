@@ -2,7 +2,7 @@
 # @author Pierre Verkest <pierre@verkest.fr>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import json
-from typing import Optional
+import logging
 from uuid import uuid4
 
 from lxml import etree
@@ -10,6 +10,8 @@ from lxml import etree
 from odoo import _, api, fields, models
 
 from odoo.addons.base_sparse_field.models.fields import Serialized
+
+logger = logging.getLogger(__name__)
 
 
 class WizardStep:
@@ -20,7 +22,7 @@ class WizardStep:
     parent_index: int = -1
     """parent position in the current question tree"""
 
-    answer_id: Optional[int] = None
+    answer_id: int | None = None
     """in case of custom question this will save the user
     answer"""
 
@@ -28,7 +30,7 @@ class WizardStep:
         self,
         record_id: int,
         parent_index: int,
-        answer_id: Optional[int] = None,
+        answer_id: int | None = None,
         odoo_env=None,
     ):
         self.record_id = record_id
@@ -129,8 +131,8 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 odoo_env=self.env,
             )
         )
-        for question in question.child_ids:
-            self._populate_wizard_steps(wizard, question, parent_index=index)
+        for child_question in question.child_ids:
+            self._populate_wizard_steps(wizard, child_question, parent_index=index)
 
     def _default_wizard_steps(self):
         wizard = Wizard()
@@ -189,7 +191,8 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 name="answer_id",
                 attrib={
                     "domain": f'[("question_id", "=", {current_step.record_id})]',
-                    "options": "{'no_create': True, 'no_create_edit': True, 'no_open': True}",
+                    "options": "{'no_create': True, 'no_create_edit': True, "
+                    "'no_open': True}",
                     "nolabel": "1",
                     "required": "1" if current_step.answer_required else "0",
                 },
@@ -340,7 +343,8 @@ class ProductCreationDynamicWizard(models.TransientModel):
             try:
                 # useful for m2m with value such as [(0,0,{...})]
                 field_value = json.loads(field_value)
-            except Exception:
+            except Exception as exc:
+                logger.warning(exception=exc)
                 pass
             return {self.step.field_id.name: field_value}
 

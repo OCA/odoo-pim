@@ -4,7 +4,7 @@
 
 {
     "name": "Product creation dynamic wizard",
-    "version": "14.0.0.1.2",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "author": "Pierre Verkest <pierre@verkest.fr>, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
