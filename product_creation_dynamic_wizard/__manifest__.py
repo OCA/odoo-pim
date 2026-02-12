@@ -26,11 +26,10 @@
         "demo/product_creation_question.xml",
     ],
     "assets": {
-
         "web.assets_backend": [
-                "static/src/js/tree_button.js",
-                "static/src/js/kanban_button.js",
-                "static/src/js/form_button.js",
+            "static/src/js/tree_button.js",
+            "static/src/js/kanban_button.js",
+            "static/src/js/form_button.js",
         ],
         "web.assets_qweb": [
             "static/src/xml/tree_button.xml",
@@ -38,7 +37,6 @@
             "static/src/xml/form_button.xml",
         ],
     },
-
     "installable": True,
     "application": False,
 }
