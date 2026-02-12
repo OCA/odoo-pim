@@ -151,12 +151,8 @@ class ProductCreationDynamicWizard(models.TransientModel):
         }
 
     @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        result = super().fields_view_get(
-            view_id, view_type, toolbar=toolbar, submenu=False
-        )
+    def get_view(self, view_id=None, view_type="form", **options):
+        result = super().get_view(view_id, view_type, **options)
         if view_type == "form":
             self._apply_step(result)
         return result
@@ -177,7 +173,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 )
             )
 
-        result["fields"].update(
+        result["models"].setdefault(self._name, {}).update(
             self.env[current_step.field_id.model].fields_get(
                 allfields=[current_step.field_id.name]
             )
@@ -198,7 +194,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 },
             )
         )
-        result["fields"]["answer_id"] = self.env[
+        result["models"].setdefault(self._name, {})["answer_id"] = self.env[
             "product.creation.question"
         ].fields_get(allfields=["default_answer_id"])["default_answer_id"]
 
@@ -209,7 +205,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
         if self.env.context.get("active_model") == self._name:
             wizard = self.browse(self.env.context.get("active_id"))
             if wizard.exists():
-                wizard.refresh()
+                wizard.invalidate_recordset()
                 current_step = wizard.step
         if not current_step:
             current_step = self.new().steps[0]
@@ -230,7 +226,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
         wizard_fields = []
         other_fields = []
         for fieldname in fields:
-            if fieldname in self._model_fields:
+            if fieldname in self._fields:
                 wizard_fields.append(fieldname)
             else:
                 other_fields.append(fieldname)
@@ -442,7 +438,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
     def _split_product_data(self):
         template_values = {}
         product_values = {}
-        template_fields = self.env["product.template"]._model_fields
+        template_fields = self.env["product.template"]._fields
         for fieldname, value in self.product_data.items():
             if fieldname in template_fields:
                 template_values[fieldname] = value
@@ -499,6 +495,5 @@ class ProductCreationDynamicWizard(models.TransientModel):
             "type": "ir.actions.act_window",
             "res_model": "product.template",
             "view_mode": "form",
-            "view_type": "form",
             "res_id": self.product_template_id.id,
         }

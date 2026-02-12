@@ -28,9 +28,9 @@ class ProductTemplate(models.Model):
         return self.env["product.creation.dynamic.wizard"].create({}).get_next_action()
 
     @api.model
-    def load_views(self, views, options=None):
-        result = super().load_views(views, options=options)
-        self._disable_create_button(result.get("fields_views", {}))
+    def get_views(self, views, options=None):
+        result = super().get_views(views, options=options)
+        self._disable_create_button(result.get("views", {}))
         return result
 
     @api.model
@@ -55,9 +55,7 @@ class ProductProduct(models.Model):
         return self.env["product.creation.dynamic.wizard"].create({}).get_next_action()
 
     @api.model
-    def load_views(self, views, options=None):
-        result = super().load_views(views, options=options)
-        self.env["product.template"]._disable_create_button(
-            result.get("fields_views", {})
-        )
+    def get_views(self, views, options=None):
+        result = super().get_views(views, options=options)
+        self.env["product.template"]._disable_create_button(result.get("views", {}))
         return result

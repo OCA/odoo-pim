@@ -18,7 +18,7 @@ class TestProduct(TransactionCase):
         self.env["ir.config_parameter"].set_param(
             "product_creation_dynamic_wizard.disable_create_product_button", "True"
         )
-        result = self.env[model].load_views(
+        result = self.env[model].get_views(
             [
                 (False, "list"),
                 (False, "form"),
@@ -26,13 +26,13 @@ class TestProduct(TransactionCase):
                 (False, "pivot"),
             ]
         )
-        for view in result["fields_views"].values():
+        for view in result["views"].values():
             doc = etree.XML(view["arch"])
             self.assertTrue(doc.attrib.get("create", False))
 
     @parameterized.expand([("product.template"), ("product.product",)])
     def test_load_views_button_create_not_disabled(self, model):
-        result = self.env[model].load_views(
+        result = self.env[model].get_views(
             [
                 (False, "list"),
                 (False, "form"),
@@ -40,7 +40,7 @@ class TestProduct(TransactionCase):
                 (False, "pivot"),
             ]
         )
-        for view in result["fields_views"].values():
+        for view in result["views"].values():
             doc = etree.XML(view["arch"])
             self.assertFalse(doc.attrib.get("create", False))
 

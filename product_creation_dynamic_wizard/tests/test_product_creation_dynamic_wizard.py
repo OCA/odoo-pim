@@ -280,7 +280,7 @@ class TestProductCreationDynamicWizard(TransactionCase):
             active_model=self.product_creation_wizard._name,
             active_id=self.product_creation_wizard.id,
         )
-        form_view = wizard.fields_view_get()
+        form_view = wizard.get_view()
 
         doc = etree.XML(form_view["arch"])
         answer_node = None
@@ -297,7 +297,7 @@ class TestProductCreationDynamicWizard(TransactionCase):
             answer_node.attrib.get("domain"),
             f'[("question_id", "=", {self.product_creation_wizard.step.id})]',
         )
-        self.assertEqual(answer_node.get("modifiers"), '{"required": true}')
+        self.assertEqual(answer_node.get("required"), "1")
 
     def test_field_with_custom_view_with_default_value(self):
         self.product_creation_wizard.current_step = 5
@@ -309,7 +309,7 @@ class TestProductCreationDynamicWizard(TransactionCase):
             active_model=self.product_creation_wizard._name,
             active_id=self.product_creation_wizard.id,
         )
-        form_view = wizard.fields_view_get()
+        form_view = wizard.get_view()
 
         doc = etree.XML(form_view["arch"])
         packaging_node = None
@@ -335,7 +335,7 @@ class TestProductCreationDynamicWizard(TransactionCase):
         result = self.product_creation_wizard.with_context(
             active_model=self.product_creation_wizard._name,
             active_id=self.product_creation_wizard.id,
-        ).fields_view_get(view_type="tree")
+        ).get_view(view_type="list")
         self.assertFalse('<field name="type"' in result["arch"])
 
     def test_fields_view_get_unknown_wizard_id(self):
@@ -343,11 +343,11 @@ class TestProductCreationDynamicWizard(TransactionCase):
         result = self.product_creation_wizard.with_context(
             active_model=self.product_creation_wizard._name,
             active_id=self.product_creation_wizard.id,
-        ).fields_view_get()
+        ).get_view()
         self.assertTrue('<field name="type"' in result["arch"], result["arch"])
         result = self.product_creation_wizard.with_context(
             active_model=self.product_creation_wizard._name, active_id=-666
-        ).fields_view_get()
+        ).get_view()
         self.assertTrue('<field name="name"' in result["arch"])
 
     def test_ignore_untraversed_tree(self):
