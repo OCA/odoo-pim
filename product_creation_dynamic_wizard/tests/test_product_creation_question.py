@@ -1,9 +1,9 @@
 from odoo.exceptions import ValidationError
-from odoo.tests import SavepointCase, tagged
+from odoo.tests import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestProductCreationQuestion(SavepointCase):
+class TestProductCreationQuestion(TransactionCase):
     def test_product_creation_question_complete_name(self):
         self.assertEqual(
             self.env.ref(

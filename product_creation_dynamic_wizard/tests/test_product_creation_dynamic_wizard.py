@@ -3,7 +3,7 @@ import json
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import Form, SavepointCase, tagged
+from odoo.tests import Form, TransactionCase, tagged
 
 from odoo.addons.product_creation_dynamic_wizard.wizards import (
     product_creation_dynamic_wizard as W,
@@ -14,7 +14,7 @@ WizardStep = W.WizardStep
 
 
 @tagged("post_install", "-at_install")
-class TestProductCreationDynamicWizardWithoutDemo(SavepointCase):
+class TestProductCreationDynamicWizardWithoutDemo(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -78,7 +78,7 @@ class TestProductCreationDynamicWizardWithoutDemo(SavepointCase):
 
 
 @tagged("post_install", "-at_install")
-class TestProductCreationDynamicWizard(SavepointCase):
+class TestProductCreationDynamicWizard(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -391,7 +391,7 @@ class TestProductCreationDynamicWizard(SavepointCase):
 
 
 @tagged("post_install", "-at_install")
-class TestProductCreationDynamicWizardWithProductAttributeStep(SavepointCase):
+class TestProductCreationDynamicWizardWithProductAttributeStep(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

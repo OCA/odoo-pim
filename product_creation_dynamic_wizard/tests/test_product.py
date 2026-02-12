@@ -1,11 +1,11 @@
 from lxml import etree
 from parameterized import parameterized
 
-from odoo.tests import SavepointCase, tagged
+from odoo.tests import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestProduct(SavepointCase):
+class TestProduct(TransactionCase):
     @parameterized.expand([("product.template"), ("product.product",)])
     def test_action_open_product_creation_dynamic_wizard(self, model):
         action = self.env[model].action_open_product_creation_dynamic_wizard()
