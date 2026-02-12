@@ -173,7 +173,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 )
             )
 
-        result["models"].setdefault(self._name, {}).update(
+        result["fields"].update(
             self.env[current_step.field_id.model].fields_get(
                 allfields=[current_step.field_id.name]
             )
@@ -194,7 +194,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 },
             )
         )
-        result["models"].setdefault(self._name, {})["answer_id"] = self.env[
+        result["fields"]["answer_id"] = self.env[
             "product.creation.question"
         ].fields_get(allfields=["default_answer_id"])["default_answer_id"]
 
@@ -340,7 +340,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 # useful for m2m with value such as [(0,0,{...})]
                 field_value = json.loads(field_value)
             except Exception as exc:
-                logger.warning(exception=exc)
+                logger.warning("Failed to parse field value as JSON: %s", exc)
                 pass
             return {self.step.field_id.name: field_value}
 
