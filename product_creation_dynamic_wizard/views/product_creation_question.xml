@@ -35,7 +35,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active == True"
                     />
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
@@ -55,31 +55,29 @@
                             <field name="question_type" />
                             <field
                                 name="is_automatic"
-                                attrs="{'readonly': [('question_type', '=', 'logical')]}"
+                                readonly="question_type == 'logical'"
                             />
                             <field name="automatic_save" />
                             <field
                                 name="conditional_question"
-                                attrs="{'invisible': ['|', ('parent_id', '=', False), ('parent_question_type', '=', 'logical')]}"
+                                invisible="not parent_id or parent_question_type == 'logical'"
                             />
                         </group>
                         <group>
                             <field
                                 name="question"
-                                attrs="{'invisible': [('is_automatic', '=', True)], 'required': [('is_automatic', '!=', True)]}"
+                                invisible="is_automatic == True"
+                                required="not is_automatic"
                             />
                             <field
                                 name="answer_required"
-                                attrs="{'invisible': [('question_type', 'in', ['logical'])]}"
+                                invisible="question_type in ['logical']"
                             />
                             <field name="sequence" />
                         </group>
                     </group>
                     <notebook>
-                        <page
-                            string="Apply if"
-                            attrs="{'invisible': [('conditional_question', '=', False)]}"
-                        >
+                        <page string="Apply if" invisible="not conditional_question">
                             <div class="alert alert-info" role="alert">
                                 This question and its children will be applied only if response to the
                                 parent questions satisfy the following operator and value.
@@ -88,18 +86,18 @@
                                 <field name="conditional_operator" />
                                 <field
                                     name="conditional_expected_result"
-                                    attrs="{'invisible': [('parent_question_type', '!=', 'field')]}"
+                                    invisible="parent_question_type != 'field'"
                                 />
                                 <field
                                     name="conditional_expected_result_answer_id"
                                     domain="[('question_id', '=', parent_id)]"
-                                    attrs="{'invisible': [('parent_question_type', '!=', 'custom')]}"
+                                    invisible="parent_question_type != 'custom'"
                                 />
                             </group>
                         </page>
                         <page
                             string="Product attribute"
-                            attrs="{'invisible':[('question_type','!=','field')]}"
+                            invisible="question_type != 'field'"
                         >
                             <group>
                                 <group>
@@ -122,7 +120,7 @@
                         </page>
                         <page
                             string="Custom response"
-                            attrs="{'invisible':[('question_type','!=','custom')]}"
+                            invisible="question_type != 'custom'"
                         >
                             <field
                                 name="answer_ids"
@@ -139,7 +137,7 @@
                                     <div
                                         class="alert alert-info"
                                         role="alert"
-                                        attrs="{'invisible': [('answer_ids','!=', False)]}"
+                                        invisible="not answer_ids"
                                     >
                                         you need to save the question before you can set the default answer.
                                     </div>
@@ -150,10 +148,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page
-                            string="Values"
-                            attrs="{'invisible':[('question_type','!=','logical')]}"
-                        >
+                        <page string="Values" invisible="question_type != 'logical'">
                             <group>
                                 <group>
                                     <label for="logical_default_values" />
