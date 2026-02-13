@@ -335,7 +335,7 @@ class TestProductCreationDynamicWizard(TransactionCase):
         result = self.product_creation_wizard.with_context(
             active_model=self.product_creation_wizard._name,
             active_id=self.product_creation_wizard.id,
-        ).get_view(view_type="list")
+        ).get_view(view_type="tree")
         self.assertFalse('<field name="type"' in result["arch"])
 
     def test_fields_view_get_unknown_wizard_id(self):

@@ -20,7 +20,7 @@ class TestProduct(TransactionCase):
         )
         result = self.env[model].get_views(
             [
-                (False, "list"),
+                (False, "tree"),
                 (False, "form"),
                 (False, "kanban"),
                 (False, "pivot"),
@@ -34,7 +34,7 @@ class TestProduct(TransactionCase):
     def test_load_views_button_create_not_disabled(self, model):
         result = self.env[model].get_views(
             [
-                (False, "list"),
+                (False, "tree"),
                 (False, "form"),
                 (False, "kanban"),
                 (False, "pivot"),
