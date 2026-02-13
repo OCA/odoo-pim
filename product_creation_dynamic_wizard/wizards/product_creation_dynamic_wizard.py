@@ -173,7 +173,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 )
             )
 
-        result["fields"].update(
+        result["models"].update(
             self.env[current_step.field_id.model].fields_get(
                 allfields=[current_step.field_id.name]
             )
@@ -194,7 +194,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 },
             )
         )
-        result["fields"]["answer_id"] = self.env[
+        result["models"]["answer_id"] = self.env[
             "product.creation.question"
         ].fields_get(allfields=["default_answer_id"])["default_answer_id"]
 

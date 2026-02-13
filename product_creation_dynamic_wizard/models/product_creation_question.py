@@ -45,6 +45,7 @@ class ProductCreationQuestion(models.Model):
     )
     parent_path = fields.Char(
         index=True,
+        unaccent=False,
     )
     child_ids = fields.One2many(
         "product.creation.question", "parent_id", string="Child questions"
