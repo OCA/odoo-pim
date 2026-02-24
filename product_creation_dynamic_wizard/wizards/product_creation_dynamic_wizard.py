@@ -172,12 +172,13 @@ class ProductCreationDynamicWizard(models.TransientModel):
                     },
                 )
             )
-
-        result["models"].update(
+        values_model = result["models"]
+        values_model[current_step.field_id.model].update(
             self.env[current_step.field_id.model].fields_get(
                 allfields=[current_step.field_id.name]
             )
         )
+        result["models"] = values_model
 
     @api.model
     def _apply_step_custom(self, current_step, node, result):
