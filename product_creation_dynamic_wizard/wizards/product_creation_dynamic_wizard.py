@@ -173,7 +173,7 @@ class ProductCreationDynamicWizard(models.TransientModel):
                 )
             )
         values_model = result["models"]
-        values_model[current_step.field_id.model].update(
+        values_model[self._name].update(
             self.env[current_step.field_id.model].fields_get(
                 allfields=[current_step.field_id.name]
             )
