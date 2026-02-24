@@ -1,0 +1,2 @@
+odoo_test_helper==2.1.1
+parameterized==0.9.0

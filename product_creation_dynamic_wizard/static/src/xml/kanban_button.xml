@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+   <t t-extend="KanbanView.buttons">
+       <t t-jquery="button" t-operation="after">
+               <button
+                t-if="widget and widget.modelName == 'product.template'"
+                class="btn btn-primary o-kanban-button-new-wizard oe_highlight"
+                type="button"
+            >
+                   Create (Wizard)
+               </button>
+               <button
+                t-if="widget and widget.modelName == 'product.product'"
+                class="btn btn-primary o-kanban-button-new-wizard oe_highlight"
+                type="button"
+            >
+                   Create (Wizard)
+               </button>
+       </t>
+   </t>
+</templates>

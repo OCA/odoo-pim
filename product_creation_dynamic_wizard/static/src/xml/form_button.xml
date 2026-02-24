@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2022-2024 Foodles (https://www.foodles.co/).
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+-->
+<templates id="form_view" xml:space="preserve">
+    <t t-extend="FormView.buttons">
+        <t t-jquery=".o_form_button_create" t-operation="after">
+            <button
+                t-if="widget and widget.modelName == 'product.template'"
+                type="button"
+                class="btn btn-secondary o_form_button_create_wizard"
+            >
+                Create (Wizard)
+            </button>
+            <button
+                t-if="widget and widget.modelName == 'product.product'"
+                type="button"
+                class="btn btn-secondary o_form_button_create_wizard"
+            >
+                Create (Wizard)
+            </button>
+        </t>
+    </t>
+</templates>

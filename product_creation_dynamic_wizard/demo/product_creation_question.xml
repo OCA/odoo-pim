@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_creation_question_name" model="product.creation.question">
+        <field name="name">0 Product name</field>
+        <field name="question">What would be the product template name?</field>
+        <field name="sequence">0</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'name')]"
+        />
+        <field name="display_field_name" eval="True" />
+        <field name="default_field_value">Product name (created from wizard)</field>
+        <field name="is_automatic" eval="False" />
+    </record>
+
+    <record id="product_creation_question_category" model="product.creation.question">
+        <field name="name">1 Product type</field>
+        <field name="question">Product type?</field>
+        <field name="sequence">1</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'type')]"
+        />
+        <field name="default_field_value" eval="False" />
+        <field name="is_automatic" eval="False" />
+    </record>
+
+    <record
+        id="product_creation_question_purchase_consu"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_category" />
+        <field name="name">1.0 Purchase consumable product auto.</field>
+        <field name="sequence">0</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'purchase_ok')]"
+        />
+        <field name="default_field_value" eval="True" />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">consu</field>
+        <field name="is_automatic" eval="True" />
+    </record>
+    <record id="product_creation_question_sale_consu" model="product.creation.question">
+        <field name="parent_id" ref="product_creation_question_category" />
+        <field name="name">1.1 Sale consumable product</field>
+        <field name="question">Sale consumable product?</field>
+        <field name="sequence">1</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'sale_ok')]"
+        />
+        <field name="default_field_value" eval="False" />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">consu</field>
+        <field name="is_automatic" eval="False" />
+    </record>
+    <record
+        id="product_creation_question_sale_consu_color"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_sale_consu" />
+        <field name="name">1.1.1 Sale consumable color?</field>
+        <field name="question">What's the color?</field>
+        <field name="sequence">1</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'color')]"
+        />
+        <field name="default_field_value">546</field>
+        <field name="is_automatic" eval="False" />
+    </record>
+    <record
+        id="product_creation_question_sale_consu_packaging_custom_view"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_sale_consu" />
+        <field name="name">1.1.2 - product packaging custom view</field>
+        <field name="question">Setup packaging?</field>
+        <field name="sequence">2</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'packaging_ids')]"
+        />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">True</field>
+        <field
+            name="custom_view"
+        ><![CDATA[
+            <field
+                name="packaging_ids"
+                nolabel="1"
+                context="{'tree_view_ref':'product.product_packaging_tree_view2', 'form_view_ref':'product.product_packaging_form_view2', 'default_name': 'Box of 10', 'default_qty': 10, 'default_company_id': current_company_id}"
+            />
+        ]]></field>
+        <field name="is_automatic" eval="False" />
+        <field name="active" eval="True" />
+    </record>
+    <record
+        id="product_creation_question_sale_consu_packaging_default_value"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_sale_consu" />
+        <field name="name">1.1.3 - product packaging custom view</field>
+        <field name="sequence">2</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'packaging_ids')]"
+        />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">False</field>
+        <field
+            name="default_field_value"
+        >[[0, 0, {"name": "Box 20", "qty": 20, "company_id": current_company_id}]]</field>
+        <field name="is_automatic" eval="True" />
+        <field name="active" eval="True" />
+    </record>
+    <record
+        id="product_creation_question_purchase_service"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_category" />
+        <field name="name">1.2 Purchase service auto.</field>
+        <field name="question">automatic step: purchase ok</field>
+        <field name="sequence">2</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'purchase_ok')]"
+        />
+        <field name="default_field_value" eval="False" />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">service</field>
+        <field name="is_automatic" eval="True" />
+    </record>
+    <record
+        id="product_creation_question_sale_service"
+        model="product.creation.question"
+    >
+        <field name="parent_id" ref="product_creation_question_category" />
+        <field name="name">1.3 Sale service product auto.</field>
+        <field name="question">automatic step: sale ok</field>
+        <field name="sequence">3</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'sale_ok')]"
+        />
+
+        <field name="default_field_value" eval="True" />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_expected_result">service</field>
+        <field name="is_automatic" eval="True" />
+    </record>
+
+
+    <record id="product_creation_question_custom" model="product.creation.question">
+        <field name="name">2 Custom question</field>
+        <field name="question">Is this product active?</field>
+        <field name="question_type">custom</field>
+        <field name="sequence">2</field>
+        <field name="is_automatic" eval="False" />
+    </record>
+    <record
+        id="product_creation_question_custom_answer_yes"
+        model="product.creation.answer"
+    >
+        <field name="sequence" eval="1" />
+        <field name="question_id" ref="product_creation_question_custom" />
+        <field name="name">Yes</field>
+     </record>
+    <record
+        id="product_creation_question_custom_answer_no"
+        model="product.creation.answer"
+    >
+        <field name="sequence" eval="1" />
+        <field name="question_id" ref="product_creation_question_custom" />
+        <field name="name">No</field>
+    </record>
+
+    <record id="product_creation_question_active" model="product.creation.question">
+        <field name="parent_id" ref="product_creation_question_custom" />
+        <field name="name">2.1 active auto.</field>
+        <field name="question">automatic step: active</field>
+        <field name="sequence">1</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'active')]"
+        />
+        <field name="default_field_value" eval="False" />
+        <field name="conditional_question" eval="True" />
+        <field
+            name="conditional_expected_result_answer_id"
+            eval="ref('product_creation_dynamic_wizard.product_creation_question_custom_answer_no')"
+        />
+        <field name="is_automatic" eval="True" />
+    </record>
+    <record id="product_creation_question_active_yes" model="product.creation.question">
+        <field name="parent_id" ref="product_creation_question_custom" />
+        <field name="name">2.2 active auto.</field>
+        <field name="question">automatic step: active</field>
+        <field name="sequence">2</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'active')]"
+        />
+        <field name="default_field_value" eval="True" />
+        <field name="conditional_question" eval="True" />
+        <field name="conditional_operator">!=</field>
+        <field
+            name="conditional_expected_result_answer_id"
+            eval="ref('product_creation_dynamic_wizard.product_creation_question_custom_answer_no')"
+        />
+        <field name="is_automatic" eval="True" />
+    </record>
+    <!-- default value is used only if not set by previous questions -->
+    <record
+        id="product_creation_question_default_active_yes"
+        model="product.creation.question"
+    >
+        <field name="name">10 default unset values</field>
+        <field name="question">automatic step: active</field>
+        <field name="sequence">10</field>
+        <field
+            name="field_id"
+            model="ir.model.fields"
+            search="[('model', '=', 'product.template'),
+                     ('name', '=', 'active')]"
+        />
+        <field name="default_field_value" eval="True" />
+        <field name="is_automatic" eval="True" />
+    </record>
+    <record
+        id="product_creation_question_logical_values"
+        model="product.creation.question"
+    >
+        <field name="name">default and force values</field>
+        <field name="question_type">logical</field>
+        <field name="sequence">30</field>
+        <field
+            name="logical_default_values"
+        >{"color": 987, "weight": 3.1, "volume": 3.1}</field>
+        <field
+            name="logical_values"
+        >{"volume": 3.2, "company_id": current_company_id}</field>
+    </record>
+</odoo>
