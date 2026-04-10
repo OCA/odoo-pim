@@ -171,19 +171,39 @@ class AttributeAttribute(models.Model):
 
         if self.ttype == "text":
             # Display field label above his value
-            field_title = etree.SubElement(attribute_egroup, "b", colspan="2")
+            field_title = etree.SubElement(attribute_egroup, "b", colspan="3")
             field_title.text = self.field_description
             kwargs["nolabel"] = "1"
-            kwargs["colspan"] = "2"
+            kwargs["colspan"] = "3"
             setup_modifiers(field_title)
-        if "invisible" in attrs:
-            kwargs["invisible"] = attrs["invisible"]
-            if "field_title" in locals():
+
+            if "invisible" in attrs:
+                kwargs["invisible"] = attrs["invisible"]
                 field_title.set("invisible", attrs["invisible"])
-        if "required" in attrs:
-            kwargs["required"] = attrs["required"]
-        efield = etree.SubElement(attribute_egroup, "field", **kwargs)
-        setup_modifiers(efield)
+            if "required" in attrs:
+                kwargs["required"] = attrs["required"]
+
+            efield = etree.SubElement(attribute_egroup, "field", **kwargs)
+            setup_modifiers(efield)
+        else:
+            # Custom Layout: Explicit Label (2 cols) + Field (1 col)
+            label_args = {"for": kwargs["name"], "colspan": "2"}
+            if "invisible" in attrs:
+                label_args["invisible"] = attrs["invisible"]
+
+            elabel = etree.SubElement(attribute_egroup, "label", **label_args)
+            setup_modifiers(elabel)
+
+            kwargs["nolabel"] = "1"
+            kwargs["colspan"] = "1"
+
+            if "invisible" in attrs:
+                kwargs["invisible"] = attrs["invisible"]
+            if "required" in attrs:
+                kwargs["required"] = attrs["required"]
+
+            efield = etree.SubElement(attribute_egroup, "field", **kwargs)
+            setup_modifiers(efield)
 
     def _get_native_field_context(self):
         return str(self.env[self.field_id.model]._fields[self.field_id.name].context)
@@ -215,6 +235,7 @@ class AttributeAttribute(models.Model):
                     "group",
                     string=att_group_name,
                     colspan="2",
+                    col="3",
                     invisible=hide_condition,
                 )
                 groups.append(att_group)
