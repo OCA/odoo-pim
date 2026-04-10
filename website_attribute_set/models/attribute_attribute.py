@@ -85,12 +85,12 @@ class AttributeAttribute(models.Model):
                         if isinstance(element, str) and element in ["|", "&", "!"]:
                             if i > 0:
                                 prev_element = domain[i - 1]
-                                if isinstance(prev_element, list | tuple):
+                                if isinstance(prev_element, (list, tuple)):
                                     raise ValueError(
                                         f"'{element}' at pos {i} wrong position."
                                         f"Operators must precede exprs."
                                     )
-                        elif isinstance(element, list | tuple):
+                        elif isinstance(element, (list, tuple)):
                             if len(element) < 2 or len(element) > 3:
                                 raise ValueError(
                                     f"Domain at pos {i}, need 2-3, got {len(element)}"
@@ -108,7 +108,7 @@ class AttributeAttribute(models.Model):
                             raise ValueError(
                                 f"Domain elem must be op/cond list, got {type(element)}"
                             )
-                except (Exception, TypeError, ValueError) as e:
+                except (ValueError, TypeError) as e:
                     raise ValidationError(
                         self.env._("Invalid domain: %s", str(e))
                     ) from e

@@ -25,6 +25,10 @@
                     t-set="all_attribute_values"
                     t-value="attribute_dict.get('all_attribute_values')"
                 />
+                <t
+                    t-set="value_counts"
+                    t-value="attribute_dict.get('value_counts', {})"
+                />
                 <t t-if="all_attribute_values">
                     <div class="accordion-item nav-item mb-1 rounded-0">
                         <h6 class="mb-3">
@@ -58,13 +62,13 @@
                                             >
                                                 <t t-out="value.name" />
                                                 <t
-                                                    t-if="attribute.e_com_show_count and attribute_dict.get('value_counts')"
+                                                    t-if="attribute.e_com_show_count and value_counts"
                                                 >
                                                     <span
                                                         class="badge bg-secondary ms-1"
                                                     >
                                                         <t
-                                                            t-out="attribute_dict.get('value_counts', {}).get(value.id, 0)"
+                                                            t-out="value_counts.get(value.id, 0)"
                                                         />
                                                     </span>
                                                 </t>
@@ -92,10 +96,10 @@
                                         >
                                             <t t-out="value.name" />
                                             <t
-                                                t-if="attribute.e_com_show_count and attribute_dict.get('value_counts')"
+                                                t-if="attribute.e_com_show_count and value_counts"
                                             >
                                                 (<t
-                                                t-out="attribute_dict.get('value_counts', {}).get(value.id, 0)"
+                                                t-out="value_counts.get(value.id, 0)"
                                             />)
                                             </t>
                                         </option>
@@ -124,13 +128,13 @@
                                             >
                                                 <t t-out="value.name" />
                                                 <t
-                                                    t-if="attribute.e_com_show_count and attribute_dict.get('value_counts')"
+                                                    t-if="attribute.e_com_show_count and value_counts"
                                                 >
                                                     <span
                                                         class="badge bg-secondary ms-1"
                                                     >
                                                         <t
-                                                            t-out="attribute_dict.get('value_counts', {}).get(value.id, 0)"
+                                                            t-out="value_counts.get(value.id, 0)"
                                                         />
                                                     </span>
                                                 </t>
@@ -158,10 +162,10 @@
                                         >
                                             <t t-out="value.name" />
                                             <t
-                                                t-if="attribute.e_com_show_count and attribute_dict.get('value_counts')"
+                                                t-if="attribute.e_com_show_count and value_counts"
                                             >
                                                 (<t
-                                                t-out="attribute_dict.get('value_counts', {}).get(value.id, 0)"
+                                                t-out="value_counts.get(value.id, 0)"
                                             />)
                                             </t>
                                         </option>
@@ -233,10 +237,10 @@
                                         >
                                             <t t-out="value" />
                                             <t
-                                                t-if="attribute.e_com_show_count and attribute_dict.get('value_counts')"
+                                                t-if="attribute.e_com_show_count and value_counts"
                                             >
                                                 (<t
-                                                t-out="attribute_dict.get('value_counts', {}).get(value, 0)"
+                                                t-out="value_counts.get(value, 0)"
                                             />)
                                             </t>
                                         </option>

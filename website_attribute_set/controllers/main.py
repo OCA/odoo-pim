@@ -204,8 +204,7 @@ class WebsiteSale(main.WebsiteSale):
                         available_min_price = available_max_price = 0
                 else:
                     available_min_price = available_max_price = 0
-            except (Exception, ValueError, TypeError):
-                # Fallback if the aggregate query fails for any reason
+            except (ValueError, TypeError):
                 available_min_price = available_max_price = 0
 
             if min_price or max_price:

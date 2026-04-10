@@ -13,7 +13,6 @@
     "depends": [
         "attribute_set",
         "product_attribute_set",
-        # "pim",
         "website",
         "website_sale",
         "website_sale_comparison",

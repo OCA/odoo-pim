@@ -29,7 +29,7 @@ def search_extra(env, search_term):
                     extra_domain = [(attribute.name, "ilike", float(search_term))]
                     extra_domains.append(extra_domain)
             except ValueError as e:
-                _logger.info(f"{e}")
+                _logger.debug("Non-numeric search term for %s: %s", attribute.name, e)
         elif attribute.relation_model_id and attribute.attribute_type in [
             "select",
             "multiselect",
