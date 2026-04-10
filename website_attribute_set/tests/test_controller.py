@@ -489,7 +489,9 @@ class TestWebsiteAttributeController(HttpCase):
 
         # Access shop with both search and filter
         attr_id = self.attr_boolean.id
-        filter_url = f"/shop?search=Searchable&additional_attribute_value={attr_id}-True"
+        filter_url = (
+            f"/shop?search=Searchable&additional_attribute_value={attr_id}-True"
+        )
         response = self.url_open(filter_url, timeout=30)
 
         # Should return 200, not 500
