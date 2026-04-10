@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field
+            name="name"
+        >product.template.form - product_attribute_set_propagation</field>
+        <field name="model">product.template</field>
+        <field
+            name="inherit_id"
+            ref="product_attribute_set.product_template_form_view"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="has_propagatable_attributes" invisible="1" />
+                <button
+                    name="action_open_attribute_propagation_wizard"
+                    type="object"
+                    string="Propagate Attributes"
+                    groups="attribute_set.group_advanced_attribute_set"
+                    attrs="{'invisible': [('has_propagatable_attributes', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
