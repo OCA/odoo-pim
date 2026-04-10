@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_attribute_propagation_wizard_form_view" model="ir.ui.view">
+        <field name="name">product.attribute.propagation.wizard.form</field>
+        <field name="model">product.attribute.propagation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Propagate Attributes">
+                <field name="propagation_model" invisible="1" />
+                <group>
+                    <field
+                        name="source_product_tmpl_id"
+                        attrs="{'invisible': [('propagation_model', '!=', 'product.template')]}"
+                    />
+                    <field
+                        name="source_product_id"
+                        attrs="{'invisible': [('propagation_model', '!=', 'product.product')]}"
+                    />
+                    <field name="attribute_set_id" />
+                </group>
+                <notebook>
+                    <page
+                        name="templates"
+                        string="Target Products"
+                        attrs="{'invisible': [('propagation_model', '!=', 'product.template')]}"
+                    >
+                        <field
+                            name="target_product_tmpl_ids"
+                            nolabel="1"
+                            attrs="{
+                                'required': [('propagation_model', '=', 'product.template')]
+                            }"
+                            domain="[('attribute_set_id', '=', attribute_set_id), ('id', '!=', source_product_tmpl_id)]"
+                        >
+                            <tree>
+                                <field name="name" />
+                                <field name="default_code" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page
+                        name="variants"
+                        string="Target Product Variants"
+                        attrs="{'invisible': [('propagation_model', '!=', 'product.product')]}"
+                    >
+                        <field
+                            name="target_product_ids"
+                            nolabel="1"
+                            attrs="{
+                                'required': [('propagation_model', '=', 'product.product')]
+                            }"
+                            domain="[('attribute_set_id', '=', attribute_set_id), ('id', '!=', source_product_id)]"
+                        >
+                            <tree>
+                                <field name="name" />
+                                <field name="default_code" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="attributes" string="Attribute Propagation">
+                        <field name="available_attribute_ids" invisible="1" />
+                        <button
+                            name="action_clear_attributes"
+                            type="object"
+                            string="Clear All"
+                            class="btn-secondary"
+                            icon="fa-times"
+                        />
+                        <button
+                            name="action_select_default_attributes"
+                            type="object"
+                            string="Select default attributes"
+                            class="btn-secondary"
+                            icon="fa-check"
+                        />
+                        <field
+                            name="attribute_ids"
+                            nolabel="1"
+                            domain="[('id', 'in', available_attribute_ids)]"
+                            options="{'no_create': 1, 'no_open': 1}"
+                        >
+                            <tree editable="bottom" create="false">
+                                <field name="field_description" readonly="1" />
+                                <field
+                                    name="attribute_group_id"
+                                    readonly="1"
+                                    options="{'no_open': 1}"
+                                />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button
+                        name="action_propagate"
+                        string="Propagate"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
