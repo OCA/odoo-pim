@@ -105,6 +105,16 @@ msgid "Binary (file)"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklist this field for web forms"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklisted in web forms"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__boolean
 msgid "Boolean"
 msgstr ""
@@ -189,6 +199,11 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_res_country
 msgid "Country"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,website_form_label:attribute_set.model_res_partner
+msgid "Create a Customer"
 msgstr ""
 
 #. module: attribute_set
