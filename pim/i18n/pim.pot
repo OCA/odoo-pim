@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -65,19 +65,24 @@ msgid "Manage your products catalogue easily"
 msgstr ""
 
 #. module: pim
-#: model:res.groups,name:pim.group_pim_manager
-msgid "Manager"
-msgstr ""
-
-#. module: pim
 #: model:ir.module.category,name:pim.module_category_pim
 #: model:ir.ui.menu,name:pim.root_menu_pim
 msgid "PIM"
 msgstr ""
 
 #. module: pim
-#: model_terms:ir.ui.view,arch_db:pim.pim_product_template_tree_view
-msgid "Product"
+#: model:res.groups,name:pim.group_pim_manager
+msgid "PIM Manager"
+msgstr ""
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "PIM Reader"
+msgstr ""
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "PIM User"
 msgstr ""
 
 #. module: pim
@@ -94,7 +99,6 @@ msgstr ""
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.product_attribute_value_action
-#: model_terms:ir.ui.view,arch_db:pim.product_attribute_value_view_form
 msgid "Product Attribute Values"
 msgstr ""
 
@@ -108,16 +112,6 @@ msgstr ""
 #: model:ir.ui.menu,name:pim.main_menu_product
 #: model:ir.ui.menu,name:pim.menu_product_template
 msgid "Products"
-msgstr ""
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_reader
-msgid "Reader"
-msgstr ""
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_user
-msgid "User"
 msgstr ""
 
 #. module: pim
