@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="attribute_attribute_form_view" model="ir.ui.view">
+        <field name="name">attribute.attribute.form</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='serialized']" position="after">
+                    <field name="e_com_visibility" />
+                    <group invisible="not e_com_visibility" col="2">
+                        <field name="e_com_searchable" />
+                        <field
+                            name="e_com_range_filter"
+                            invisible="attribute_type not in ('integer', 'float')"
+                        />
+                        <field
+                            name="e_com_multi_select"
+                            invisible="attribute_type not in ('select', 'multiselect')"
+                        />
+                        <field name="e_com_show_count" />
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

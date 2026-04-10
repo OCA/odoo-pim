@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend the filter panel to include additional attributes -->
+    <template
+        id="products_additional_attributes"
+        inherit_id="website_sale.products_attributes"
+        active="True"
+        name="Additional Attributes Filters"
+    >
+        <!-- Extend condition to show panel when additional_attributes exist -->
+        <xpath
+            expr="//div[@id='wsale_products_attributes_collapse']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >attributes or all_tags or additional_attributes</attribute>
+        </xpath>
+
+        <!-- Add additional attribute filters inside the collapse div -->
+        <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="inside">
+            <t t-foreach="additional_attributes" t-as="attribute_dict">
+                <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
+                <t
+                    t-set="all_attribute_values"
+                    t-value="attribute_dict.get('all_attribute_values')"
+                />
+                <t
+                    t-set="value_counts"
+                    t-value="attribute_dict.get('value_counts', {})"
+                />
+                <t t-if="all_attribute_values">
+                    <div class="accordion-item nav-item mb-1 rounded-0">
+                        <h6 class="mb-3">
+                            <b
+                                class="d-none d-lg-block"
+                                t-field="attribute.field_description"
+                            />
+                        </h6>
+                        <div
+                            t-attf-id="o_products_attributes_extra_{{attribute.id}}"
+                            class=""
+                        >
+                            <!-- Select type attributes with multi-select -->
+                            <t
+                                t-if="attribute.attribute_type == 'select' and attribute.e_com_multi_select"
+                            >
+                                <div class="flex-column mb-3">
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <div class="form-check mb-1">
+                                            <input
+                                                type="checkbox"
+                                                class="form-check-input"
+                                                name="additional_attribute_value"
+                                                t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                                                t-att-value="'%s-%s' % (attribute.id, value.id)"
+                                                t-att-checked="'checked' if (attribute.id, str(value.id)) in additional_attrib_set else None"
+                                            />
+                                            <label
+                                                class="form-check-label fw-normal"
+                                                t-att-for="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                                            >
+                                                <t t-out="value.name" />
+                                                <t
+                                                    t-if="attribute.e_com_show_count and value_counts"
+                                                >
+                                                    <span
+                                                        class="badge bg-secondary ms-1"
+                                                    >
+                                                        <t
+                                                            t-out="value_counts.get(value.id, 0)"
+                                                        />
+                                                    </span>
+                                                </t>
+                                            </label>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <!-- Select type attributes (single select) -->
+                            <t
+                                t-elif="attribute.attribute_type == 'select' and not attribute.e_com_multi_select"
+                            >
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                >
+                                    <option value="">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <option
+                                            t-att-value="'%s-%s' % (attribute.id, value.id)"
+                                            t-att-selected="(attribute.id, str(value.id)) in additional_attrib_set"
+                                        >
+                                            <t t-out="value.name" />
+                                            <t
+                                                t-if="attribute.e_com_show_count and value_counts"
+                                            >
+                                                (<t
+                                                t-out="value_counts.get(value.id, 0)"
+                                            />)
+                                            </t>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+
+                            <!-- Multiselect type attributes with multi-select -->
+                            <t
+                                t-elif="attribute.attribute_type == 'multiselect' and attribute.e_com_multi_select"
+                            >
+                                <div class="flex-column mb-3">
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <div class="form-check mb-1">
+                                            <input
+                                                type="checkbox"
+                                                class="form-check-input"
+                                                name="additional_attribute_value"
+                                                t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                                                t-att-value="'%s-%s' % (attribute.id, value.id)"
+                                                t-att-checked="'checked' if (attribute.id, str(value.id)) in additional_attrib_set else None"
+                                            />
+                                            <label
+                                                class="form-check-label fw-normal"
+                                                t-att-for="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                                            >
+                                                <t t-out="value.name" />
+                                                <t
+                                                    t-if="attribute.e_com_show_count and value_counts"
+                                                >
+                                                    <span
+                                                        class="badge bg-secondary ms-1"
+                                                    >
+                                                        <t
+                                                            t-out="value_counts.get(value.id, 0)"
+                                                        />
+                                                    </span>
+                                                </t>
+                                            </label>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <!-- Multiselect type attributes (single select) -->
+                            <t
+                                t-elif="attribute.attribute_type == 'multiselect' and not attribute.e_com_multi_select"
+                            >
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                >
+                                    <option value="">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <option
+                                            t-att-value="'%s-%s' % (attribute.id, value.id)"
+                                            t-att-selected="(attribute.id, str(value.id)) in additional_attrib_set"
+                                        >
+                                            <t t-out="value.name" />
+                                            <t
+                                                t-if="attribute.e_com_show_count and value_counts"
+                                            >
+                                                (<t
+                                                t-out="value_counts.get(value.id, 0)"
+                                            />)
+                                            </t>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+
+                            <!-- Boolean type attributes -->
+                            <div
+                                t-elif="attribute.attribute_type == 'boolean'"
+                                class="flex-column mb-3"
+                            >
+                                <t t-foreach="all_attribute_values" t-as="value">
+                                    <div class="form-check mb-1">
+                                        <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            name="additional_attribute_value"
+                                            t-att-id="'additional_attr_%s_%s' % (attribute.id, value)"
+                                            t-att-value="'%s-%s' % (attribute.id, value)"
+                                            t-att-checked="'checked' if (attribute.id, str(value or '')) in additional_attrib_set else None"
+                                        />
+                                        <label
+                                            class="form-check-label fw-normal"
+                                            t-att-for="'additional_attr_%s_%s' % (attribute.id, value)"
+                                        >
+                                            <t t-if="value">Yes</t>
+                                            <t t-else="">No</t>
+                                        </label>
+                                    </div>
+                                </t>
+                            </div>
+
+                            <!-- Integer/Float with range filter enabled -->
+                            <t
+                                t-elif="attribute.attribute_type in ('integer', 'float') and attribute.e_com_range_filter"
+                            >
+                                <div class="d-flex gap-2 mb-2">
+                                    <input
+                                        type="number"
+                                        class="form-control form-control-sm"
+                                        t-attf-name="additional_attr_min_{{attribute.id}}"
+                                        placeholder="Min"
+                                        t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+                                    />
+                                    <input
+                                        type="number"
+                                        class="form-control form-control-sm"
+                                        t-attf-name="additional_attr_max_{{attribute.id}}"
+                                        placeholder="Max"
+                                        t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+                                    />
+                                </div>
+                            </t>
+
+                            <!-- Other types (char, text, integer, float, date, datetime) -->
+                            <t t-else="">
+                                <select
+                                    class="form-select mb-2"
+                                    name="additional_attribute_value"
+                                >
+                                    <option value="">All <t
+                                        t-out="attribute.field_description"
+                                    /></option>
+                                    <t t-foreach="all_attribute_values" t-as="value">
+                                        <option
+                                            t-att-value="'%s-%s' % (attribute.id, value)"
+                                            t-att-selected="(attribute.id, str(value or '')) in additional_attrib_set"
+                                        >
+                                            <t t-out="value" />
+                                            <t
+                                                t-if="attribute.e_com_show_count and value_counts"
+                                            >
+                                                (<t
+                                                t-out="value_counts.get(value, 0)"
+                                            />)
+                                            </t>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

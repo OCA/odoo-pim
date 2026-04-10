@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Display additional attributes on the product page -->
+    <template
+        id="product_additional_attributes"
+        inherit_id="website_sale.product"
+        name="Product Additional Attributes"
+    >
+        <!-- Insert inside product_details div -->
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <div
+                t-if="additional_attributes"
+                class="o_wsale_additional_attributes mt-3 mb-3"
+            >
+                <h6 class="mb-2">
+                    <strong>Specifications</strong>
+                </h6>
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                        <t t-foreach="additional_attributes" t-as="attr_dict">
+                            <t t-set="attr" t-value="attr_dict.get('attribute')" />
+                            <t
+                                t-set="attr_values"
+                                t-value="attr_dict.get('attribute_values')"
+                            />
+                            <tr t-if="attr_values">
+                                <td class="text-muted" style="width: 40%;">
+                                    <t t-out="attr.field_description" />
+                                </td>
+                                <td>
+                                    <t t-if="attr.attribute_type == 'boolean'">
+                                        <t t-if="attr_values">Yes</t>
+                                        <t t-else="">No</t>
+                                    </t>
+                                    <t
+                                        t-elif="attr.attribute_type in ['select', 'multiselect']"
+                                    >
+                                        <!-- Recordset values - use mapped to get names -->
+                                        <t
+                                            t-out="', '.join(attr_values.mapped('name'))"
+                                        />
+                                    </t>
+                                    <t t-else="">
+                                        <t t-out="attr_values" />
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>
