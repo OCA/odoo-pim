@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,8 +49,6 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
 msgid "Attribute Option"
 msgstr ""
 
@@ -66,6 +64,9 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_users__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
 msgstr ""
@@ -100,7 +101,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__binary
-msgid "Binary"
+msgid "Binary (file)"
 msgstr ""
 
 #. module: attribute_set
@@ -171,18 +172,23 @@ msgid "Company Dependent"
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
-msgid "Complete Name"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__compute
 msgid "Compute"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_country
+msgid "Country"
 msgstr ""
 
 #. module: attribute_set
@@ -251,17 +257,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__domain
 msgid "Domain"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__tracking
-msgid "Enable Ordered Tracking"
 msgstr ""
 
 #. module: attribute_set
@@ -328,6 +332,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__id
 msgid "ID"
 msgstr ""
 
@@ -359,18 +366,16 @@ msgid ""
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__tracking
-msgid ""
-"If set every modification done to this field is tracked. Value is used to "
-"order tracking values."
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialization_field_id
 msgid ""
 "If set, this field will be stored in the sparse structure of the "
 "serialization field, instead of having its own database column. This cannot "
 "be changed after creation."
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__image
+msgid "Image"
 msgstr ""
 
 #. module: attribute_set
@@ -391,16 +396,6 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_id
 msgid "Ir Model Fields"
-msgstr ""
-
-#. module: attribute_set
-#. odoo-python
-#: code:addons/attribute_set/models/attribute_set_owner.py:0
-msgid ""
-"It is impossible to add Attributes on \"%(name)s\" xml\n"
-"                    view as there is\n"
-"                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
-"                    "
 msgstr ""
 
 #. module: attribute_set
@@ -436,6 +431,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Load Attribute Options"
 msgstr ""
 
@@ -487,7 +483,6 @@ msgstr ""
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Options Wizard"
 msgstr ""
 
