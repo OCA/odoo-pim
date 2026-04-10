@@ -17,7 +17,7 @@
         />
         <field
             name="domain"
-            eval="[('model_id', '=', ref('product.model_product_template'))]"
+            eval="[('model_id', 'in', [ref('product.model_product_template'), ref('product.model_product_product')])]"
         />
         <field name="help" />
     </record>
