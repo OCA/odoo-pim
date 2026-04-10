@@ -117,12 +117,24 @@ class AttributeAttribute(models.Model):
         "Sequence in Group", help="The attribute's order in his group"
     )
 
+    def _get_all_set_ids(self):
+        """Return IDs of attribute sets where this attribute should be visible.
+
+        Includes all descendant sets of the attribute's direct sets,
+        so that child sets inherit their parent's attributes.
+        """
+        self.ensure_one()
+        return (
+            self.env["attribute.set"]
+            .search([("id", "child_of", self.attribute_set_ids.ids)])
+            .ids
+        )
+
     def _get_attrs(self):
-        attrs = {"invisible": f"attribute_set_id not in {self.attribute_set_ids.ids}"}
+        all_set_ids = self._get_all_set_ids()
+        attrs = {"invisible": f"attribute_set_id not in {all_set_ids}"}
         if self.required or self.required_on_views:
-            attrs.update(
-                {"required": f"attribute_set_id in {self.attribute_set_ids.ids}"}
-            )
+            attrs.update({"required": f"attribute_set_id in {all_set_ids}"})
         return attrs
 
     @api.model
@@ -214,9 +226,16 @@ class AttributeAttribute(models.Model):
                 att_set_ids = []
                 for att in att_group.attribute_ids:
                     att_set_ids += att.attribute_set_ids.ids
+                # Expand to include all descendant sets so that child
+                # sets inherit their parent's attribute groups
+                all_set_ids = (
+                    self.env["attribute.set"]
+                    .search([("id", "child_of", list(set(att_set_ids)))])
+                    .ids
+                )
                 # Hide the Group if none of its attributes are in
                 # the destination object's Attribute set
-                hide_condition = f"attribute_set_id not in {list(set(att_set_ids))}"
+                hide_condition = f"attribute_set_id not in {all_set_ids}"
                 attribute_egroup = etree.SubElement(
                     attribute_eview,
                     "group",
