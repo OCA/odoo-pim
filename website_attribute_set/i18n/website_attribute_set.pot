@@ -1,0 +1,158 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_attribute_set
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
+msgid "<strong>Specifications</strong>"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+msgid "All"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_multi_select
+msgid ""
+"Allow selecting multiple values for this attribute filter.\n"
+"        Products matching ANY selected value will be shown (OR logic)."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_attribute_attribute
+msgid "Attribute"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_attribute_set_owner_mixin
+msgid "Attribute set owner mixin"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__display_name
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_set_owner_mixin__display_name
+#: model:ir.model.fields,field_description:website_attribute_set.field_product_product__display_name
+#: model:ir.model.fields,field_description:website_attribute_set.field_product_template__display_name
+#: model:ir.model.fields,field_description:website_attribute_set.field_website__display_name
+#: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
+msgid "E-Commerce Multi-Select"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_range_filter
+msgid "E-Commerce Range Filter"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_searchable
+msgid "E-Commerce Searchable"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
+msgid "E-Commerce Show Count"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
+msgid "E-Commerce Visibility"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
+msgid ""
+"For numeric attributes (integer/float), show min/max range inputs\n"
+"        instead of individual value selection in the shop filter."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__id
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_set_owner_mixin__id
+#: model:ir.model.fields,field_description:website_attribute_set.field_product_product__id
+#: model:ir.model.fields,field_description:website_attribute_set.field_product_template__id
+#: model:ir.model.fields,field_description:website_attribute_set.field_website__id
+#: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_searchable
+msgid ""
+"If selected the attribute will be included in e-commerce search.\n"
+"        Disable for large text fields to improve search performance."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
+msgid "If selected the attribute will be shown in e-commerce website app."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid "Invalid domain: %s"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+msgid "Max"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+msgid "Min"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+msgid "No"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_show_count
+msgid "Show the number of matching products next to each filter option."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_website
+msgid "Website"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
+msgid "Website Searchable Mixin"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+msgid "Yes"
+msgstr ""
