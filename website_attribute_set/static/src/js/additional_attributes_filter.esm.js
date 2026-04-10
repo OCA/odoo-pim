@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.AdditionalAttributesFilter = publicWidget.Widget.extend({
@@ -16,9 +14,8 @@ publicWidget.registry.AdditionalAttributesFilter = publicWidget.Widget.extend({
     /**
      * Handle change events on additional attribute filter inputs.
      * Submits the form to apply the filter.
-     * @param {Event} ev
      */
-    _onAdditionalAttributeChange: function (ev) {
+    _onAdditionalAttributeChange: function () {
         const form = this.el.closest("form");
         if (form) {
             form.submit();
@@ -31,9 +28,8 @@ publicWidget.registry.AdditionalAttributesFilter = publicWidget.Widget.extend({
     /**
      * Handle change events on range filter inputs (min/max).
      * Submits the form to apply the range filter.
-     * @param {Event} ev
      */
-    _onRangeFilterChange: function (ev) {
+    _onRangeFilterChange: function () {
         const form = this.el.closest("form");
         if (form) {
             form.submit();

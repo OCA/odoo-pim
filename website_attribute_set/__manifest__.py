@@ -29,7 +29,7 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "website_attribute_set/static/src/js/additional_attributes_filter.js",
+            "website_attribute_set/static/src/js/additional_attributes_filter.esm.js",
         ],
     },
     "installable": True,
