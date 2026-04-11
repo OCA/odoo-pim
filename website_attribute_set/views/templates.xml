@@ -3,7 +3,7 @@
     <template id="filter_select_attributes" name="Select attributes in Filter">
         <select
             class="form-select css_attribute_select"
-            name="additional_attribute_value"
+            name="additional_attribute_values"
         >
             <option value="" selected="true">All <t
                 t-out="attribute.field_description"
@@ -39,7 +39,7 @@
                     <input
                         type="checkbox"
                         class="form-check-input"
-                        name="additional_attribute_value"
+                        name="additional_attribute_values"
                         t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
                         t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
                         t-att-checked="'checked' if (attribute.id, option_code) in additional_attrib_set else None"
@@ -83,7 +83,7 @@
         <t t-foreach="all_attribute_values" t-as="value">
             <input
                 type="checkbox"
-                name="additional_attribute_value"
+                name="additional_attribute_values"
                 class="btn-check"
                 t-att-id="'%s-%s' % (attribute.id,value)"
                 t-att-value="'%s-%s' % (attribute.id,value)"
@@ -115,7 +115,7 @@
                 <div class="form-check mb-1">
                     <input
                         type="checkbox"
-                        name="additional_attribute_value"
+                        name="additional_attribute_values"
                         class="form-check-input"
                         t-att-id="'%s-%s' % (attribute.id, value)"
                         t-att-value="'%s-%s' % (attribute.id, value)"
@@ -365,7 +365,7 @@
                             >
                                 <select
                                     class="form-select css_attribute_select"
-                                    name="additional_attribute_value"
+                                    name="additional_attribute_values"
                                 >
                                     <option value="" selected="true">All <t
                                         t-out="attribute.field_description"
