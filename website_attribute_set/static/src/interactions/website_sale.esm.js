@@ -23,7 +23,7 @@ patch(WebsiteSale.prototype, {
         const tags = new Set();
         for (const filter of filters) {
             if (filter.value) {
-                if (filter.name === "additional_attribute_value") {
+                if (filter.name === "additional_attribute_values") {
                     // Group attribute value ids by attribute id.
                     const firstDash = filter.value.indexOf("-");
                     const [attributeId, attributeValueId] = [
