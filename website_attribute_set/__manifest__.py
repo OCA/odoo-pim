@@ -13,6 +13,7 @@
     "depends": [
         "attribute_set",
         "product_attribute_set",
+        "pim",
         "website",
         "website_sale",
         "website_sale_comparison",
@@ -22,13 +23,14 @@
         "views/variant_templates.xml",
         "views/templates.xml",
         "views/website_sale_comparison_template.xml",
+        "views/pim_view.xml",
     ],
     "demo": [
         "demo/website_attribute_demo.xml",
     ],
     "assets": {
         "web.assets_frontend": [
-            "website_attribute_set/static/src/js/additional_attributes_filter.esm.js",
+            "website_attribute_set/static/src/interactions/**/*",
         ],
     },
     "installable": True,

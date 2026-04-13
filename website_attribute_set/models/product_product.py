@@ -16,7 +16,7 @@ class ProductProduct(models.Model):
         :return: OrderedDict [{
             attribute.group: OrderedDict [{
                 attribute.attribute: OrderedDict [{
-                    product.product: value
+                    product.product: values
                 }]
             }]
         }]
@@ -48,4 +48,16 @@ class ProductProduct(models.Model):
                         groups[attribute.attribute_group_id][attribute][product] = (
                             values.mapped("name")
                         )
+                elif values:
+                    groups[attribute.attribute_group_id][attribute][product] = values
+        for attribute in attributes:
+            if not any(groups[attribute.attribute_group_id][attribute].values()):
+                del groups[attribute.attribute_group_id][attribute]
+        groups = OrderedDict(
+            [
+                (group, attributes)
+                for (group, attributes) in groups.items()
+                if attributes
+            ]
+        )
         return groups

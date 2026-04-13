@@ -1,24 +1,232 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Extend the filter panel to include additional attributes -->
+    <template id="filter_select_attributes" name="Select attributes in Filter">
+        <select
+            class="form-select css_attribute_select"
+            name="additional_attribute_value"
+        >
+            <option value="" selected="true">All <t
+                t-out="attribute.field_description"
+            /></option>
+            <t t-foreach="all_attribute_values" t-as="item">
+                <t t-foreach="item" t-as="value">
+                    <t
+                        t-set="option_code"
+                        t-value="'name-%s-id-%s' % (value._name,value.id)"
+                    />
+                    <option
+                        t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
+                        t-att-selected="(attribute.id, option_code) in additional_attrib_set"
+                    >
+                        <t t-out="value.display_name" />
+                        <t t-if="attribute.e_com_show_count and value_counts">
+                            (<t t-out="value_counts.get(value.id, 0)" />)
+                        </t>
+                    </option>
+                </t>
+            </t>
+        </select>
+    </template>
+
+    <template id="filter_multicheck_attributes" name="Multi-check attributes in Filter">
+        <t t-foreach="all_attribute_values" t-as="item">
+            <t t-foreach="item" t-as="value">
+                <t
+                    t-set="option_code"
+                    t-value="'name-%s-id-%s' % (value._name,value.id)"
+                />
+                <div class="form-check mb-1">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        name="additional_attribute_value"
+                        t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                        t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
+                        t-att-checked="'checked' if (attribute.id, option_code) in additional_attrib_set else None"
+                    />
+                    <label
+                        class="form-check-label fw-normal"
+                        t-att-for="'additional_attr_%s_%s' % (attribute.id, value.id)"
+                    >
+                        <t t-out="value.display_name" />
+                        <t t-if="attribute.e_com_show_count and value_counts">
+                            <span class="badge bg-secondary ms-1">
+                                <t t-out="value_counts.get(value.id, 0)" />
+                            </span>
+                        </t>
+                    </label>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="filter_range_attributes" name="Range attributes in Filter">
+        <div class="d-flex gap-2 mb-2">
+            <input
+                type="number"
+                class="form-control form-control-sm"
+                t-attf-name="additional_attr_min_{{attribute.id}}"
+                placeholder="Min"
+                t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+            />
+            <input
+                type="number"
+                class="form-control form-control-sm"
+                t-attf-name="additional_attr_max_{{attribute.id}}"
+                placeholder="Max"
+                t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+            />
+        </div>
+    </template>
+
+    <template id="filter_pills_attributes" name="Pills attributes in Filter">
+        <t t-foreach="all_attribute_values" t-as="value">
+            <input
+                type="checkbox"
+                name="additional_attribute_value"
+                class="btn-check"
+                t-att-id="'%s-%s' % (attribute.id,value)"
+                t-att-value="'%s-%s' % (attribute.id,value)"
+                t-att-checked="'checked' if (attribute.id, str(value or '')) in additional_attrib_set else None"
+                autocomplete="off"
+            />
+            <label
+                t-attf-class="btn border {{'active bg-primary-subtle border-primary text-primary-emphasis' if (attribute.id, str(value or '')) in additional_attrib_set else ''}}"
+                t-att-for="'%s-%s' % (attribute.id,value)"
+                t-field="attribute.field_description"
+            />
+        </t>
+    </template>
+
+    <template
+        id="filter_radio_and_multi_attributes"
+        name="Radio and Multi attributes in Filter"
+    >
+        <t
+            t-set="sorted_values"
+            t-value="sorted(all_attribute_values, key=lambda v: (attribute.id, str(v or '')) not in additional_attrib_set)"
+        />
+        <t t-if="len(sorted_values) &lt;= 10">
+            <div
+                t-foreach="sorted_values"
+                t-as="value"
+                t-attf-class="{{'list-group-item border-0 ps-0 pb-0' if isMobile else ''}}"
+            >
+                <div class="form-check mb-1">
+                    <input
+                        type="checkbox"
+                        name="additional_attribute_value"
+                        class="form-check-input"
+                        t-att-id="'%s-%s' % (attribute.id, value)"
+                        t-att-value="'%s-%s' % (attribute.id, value)"
+                        t-att-checked="(attribute.id, '%s' % value) in additional_attrib_set"
+                    />
+                    <label
+                        class="form-check-label fw-normal"
+                        t-att-for="'%s-%s' % (attribute.id, value)"
+                        t-field="attribute.field_description"
+                    />
+                </div>
+            </div>
+        </t>
+        <t t-elif="len(sorted_values) &gt; 10">
+            <div t-attf-class="{{'my-3' if isMobile else 'mb-3'}}">
+                <input
+                    type="text"
+                    class="o_wsale_attribute_search_bar form-control"
+                    t-att-placeholder="'Search %s (%s)' % (attribute.name, len(all_attribute_values))"
+                    t-att-data-container-id="'searchable-additional-values-%s' % attribute.id"
+                />
+            </div>
+            <div
+                t-attf-id="searchable-additional-values-{{ attribute.id }}"
+                class="overflow-auto"
+                t-attf-style="max-height:{{'290px' if isMobile else '220px'}};"
+            >
+                <t t-foreach="sorted_values" t-as="value">
+                    <div
+                        t-attf-class="form-check mb-1 {{'list-group-item border-0 ms-3 pb-0' if isMobile else 'ms-1'}}"
+                    >
+                        <input
+                            type="checkbox"
+                            name="additional-attribute_value"
+                            class="form-check-input"
+                            t-att-id="'%s-%s' % (attribute.id, value)"
+                            t-att-value="'%s-%s' % (attribute.id, value)"
+                            t-att-checked="(attribute.id, value) in additional_attrib_set"
+                        />
+                        <label
+                            class="form-check-label fw-normal"
+                            t-att-for="'%s-%s' % (attribute.id, value)"
+                            t-field="attribute.field_description"
+                        />
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
     <template
         id="products_additional_attributes"
         inherit_id="website_sale.products_attributes"
         active="True"
-        name="Additional Attributes Filters"
+        name="Attributes &amp; Variants filters"
     >
-        <!-- Extend condition to show panel when additional_attributes exist -->
         <xpath
             expr="//div[@id='wsale_products_attributes_collapse']"
             position="attributes"
         >
-            <attribute
-                name="t-if"
-            >attributes or all_tags or additional_attributes</attribute>
+            <attribute name="t-if" add="additional_attributes" separator=" or " />
         </xpath>
+    </template>
 
-        <!-- Add additional attribute filters inside the collapse div -->
-        <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="inside">
+    <template
+        id="products_with_additional_attributes"
+        name="Products"
+        inherit_id="website_sale.products"
+    >
+        <xpath
+            expr="//a[@t-att-href='keep(attribute_values=0, tags=0, min_price=0, max_price=0)']/.."
+            position="attributes"
+        >
+            <attribute name="t-if" add="additional_attrib_set" separator=" or " />
+        </xpath>
+        <xpath
+            expr="//a[@t-att-href='keep(attribute_values=0, tags=0, min_price=0, max_price=0)']"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-href"
+            >keep(attribute_values=0, additional_attribute_values=0, tags=0, min_price=0, max_price=0)</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="product_with_additional_attributes"
+        name="Product"
+        track="1"
+        inherit_id="website_sale.product"
+    >
+        <xpath expr="//t[@name='variant_info']/div" position="attributes">
+            <attribute
+                name="t-attf-class"
+                remove="{{not (product.valid_product_template_attribute_line_ids or product._has_multiple_uoms()) and 'd-none' or ''}}"
+                add="{{not (product.valid_product_template_attribute_line_ids or product.attribute_set_id.attribute_ids or product._has_multiple_uoms()) and 'd-none' or ''}}"
+                separator=" "
+            />
+        </xpath>
+    </template>
+
+    <template
+        id="product_additional_attribute_filters_form"
+        inherit_id="website_sale.product_attribute_filters_form"
+        name="Product Attribute Filters Form"
+    >
+        <xpath expr="//form" position="inside">
+            <t
+                t-set="visible_attributes"
+                t-value="len([a for a in attributes if a.value_ids and len(a.value_ids) &gt; 1]) + len([attribute_dict for attribute_dict in additional_attributes if attribute_dict.get('all_attribute_values') and len(attribute_dict.get('all_attribute_values')) &gt; 0])"
+            />
             <t t-foreach="additional_attributes" t-as="attribute_dict">
                 <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
                 <t
@@ -26,213 +234,129 @@
                     t-value="attribute_dict.get('all_attribute_values')"
                 />
                 <t
-                    t-set="value_counts"
-                    t-value="attribute_dict.get('value_counts', {})"
+                    t-foreach="all_attribute_values"
+                    t-as="value"
+                    t-if="attribute.id in dict(additional_attrib_set).keys()"
+                    t-set="_status"
+                    t-value="'active'"
                 />
-                <t t-if="all_attribute_values">
-                    <div class="accordion-item nav-item mb-1 rounded-0">
-                        <h6 class="mb-3">
-                            <b
-                                class="d-none d-lg-block"
-                                t-field="attribute.field_description"
-                            />
-                        </h6>
-                        <div
-                            t-attf-id="o_products_attributes_extra_{{attribute.id}}"
-                            class=""
+                <t
+                    t-set="_expand_attributes"
+                    t-value="_status == 'active' or visible_attributes &lt; 4"
+                />
+                <div
+                    t-if="all_attribute_values and len(all_attribute_values) &gt; 0"
+                    t-attf-class="accordion-item {{('border-top-0 ' + ('order-1' if _status == 'active' else 'order-2')) if isMobile else 'nav-item mb-1 rounded-0'}}"
+                >
+                    <h2
+                        t-if="isMobile"
+                        class="accordion-header mb-0"
+                        t-attf-id="o_wsale_offcanvas_additional_attribute_{{attribute.id}}_header"
+                    >
+                        <button
+                            t-attf-class="o_wsale_offcanvas_title accordion-button rounded-0 {{'' if _expand_attributes else 'collapsed'}}"
+                            type="button"
+                            t-att-data-status="_status"
+                            data-bs-toggle="collapse"
+                            t-attf-data-bs-target="#o_wsale_offcanvas_additional_attribute_{{attribute.id}}"
+                            t-att-aria-expanded="_expand_attributes"
+                            t-attf-aria-controls="o_wsale_offcanvas_additional_attribute_{{attribute.id}}"
                         >
-                            <!-- Select type attributes with multi-select -->
-                            <t
-                                t-if="attribute.attribute_type == 'select' and attribute.e_com_multi_select"
-                            >
-                                <div class="flex-column mb-3">
-                                    <t t-foreach="all_attribute_values" t-as="value">
-                                        <div class="form-check mb-1">
-                                            <input
-                                                type="checkbox"
-                                                class="form-check-input"
-                                                name="additional_attribute_value"
-                                                t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
-                                                t-att-value="'%s-%s' % (attribute.id, value.id)"
-                                                t-att-checked="'checked' if (attribute.id, str(value.id)) in additional_attrib_set else None"
-                                            />
-                                            <label
-                                                class="form-check-label fw-normal"
-                                                t-att-for="'additional_attr_%s_%s' % (attribute.id, value.id)"
-                                            >
-                                                <t t-out="value.name" />
-                                                <t
-                                                    t-if="attribute.e_com_show_count and value_counts"
-                                                >
-                                                    <span
-                                                        class="badge bg-secondary ms-1"
-                                                    >
-                                                        <t
-                                                            t-out="value_counts.get(value.id, 0)"
-                                                        />
-                                                    </span>
-                                                </t>
-                                            </label>
-                                        </div>
-                                    </t>
-                                </div>
-                            </t>
-
-                            <!-- Select type attributes (single select) -->
-                            <t
-                                t-elif="attribute.attribute_type == 'select' and not attribute.e_com_multi_select"
-                            >
-                                <select
-                                    class="form-select mb-2"
-                                    name="additional_attribute_value"
-                                >
-                                    <option value="">All <t
-                                        t-out="attribute.field_description"
-                                    /></option>
-                                    <t t-foreach="all_attribute_values" t-as="value">
-                                        <option
-                                            t-att-value="'%s-%s' % (attribute.id, value.id)"
-                                            t-att-selected="(attribute.id, str(value.id)) in additional_attrib_set"
-                                        >
-                                            <t t-out="value.name" />
-                                            <t
-                                                t-if="attribute.e_com_show_count and value_counts"
-                                            >
-                                                (<t
-                                                t-out="value_counts.get(value.id, 0)"
-                                            />)
-                                            </t>
-                                        </option>
-                                    </t>
-                                </select>
-                            </t>
-
-                            <!-- Multiselect type attributes with multi-select -->
-                            <t
-                                t-elif="attribute.attribute_type == 'multiselect' and attribute.e_com_multi_select"
-                            >
-                                <div class="flex-column mb-3">
-                                    <t t-foreach="all_attribute_values" t-as="value">
-                                        <div class="form-check mb-1">
-                                            <input
-                                                type="checkbox"
-                                                class="form-check-input"
-                                                name="additional_attribute_value"
-                                                t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
-                                                t-att-value="'%s-%s' % (attribute.id, value.id)"
-                                                t-att-checked="'checked' if (attribute.id, str(value.id)) in additional_attrib_set else None"
-                                            />
-                                            <label
-                                                class="form-check-label fw-normal"
-                                                t-att-for="'additional_attr_%s_%s' % (attribute.id, value.id)"
-                                            >
-                                                <t t-out="value.name" />
-                                                <t
-                                                    t-if="attribute.e_com_show_count and value_counts"
-                                                >
-                                                    <span
-                                                        class="badge bg-secondary ms-1"
-                                                    >
-                                                        <t
-                                                            t-out="value_counts.get(value.id, 0)"
-                                                        />
-                                                    </span>
-                                                </t>
-                                            </label>
-                                        </div>
-                                    </t>
-                                </div>
-                            </t>
-
-                            <!-- Multiselect type attributes (single select) -->
-                            <t
-                                t-elif="attribute.attribute_type == 'multiselect' and not attribute.e_com_multi_select"
-                            >
-                                <select
-                                    class="form-select mb-2"
-                                    name="additional_attribute_value"
-                                >
-                                    <option value="">All <t
-                                        t-out="attribute.field_description"
-                                    /></option>
-                                    <t t-foreach="all_attribute_values" t-as="value">
-                                        <option
-                                            t-att-value="'%s-%s' % (attribute.id, value.id)"
-                                            t-att-selected="(attribute.id, str(value.id)) in additional_attrib_set"
-                                        >
-                                            <t t-out="value.name" />
-                                            <t
-                                                t-if="attribute.e_com_show_count and value_counts"
-                                            >
-                                                (<t
-                                                t-out="value_counts.get(value.id, 0)"
-                                            />)
-                                            </t>
-                                        </option>
-                                    </t>
-                                </select>
-                            </t>
-
-                            <!-- Boolean type attributes -->
+                            <b t-out="attribute.field_description" />
+                        </button>
+                    </h2>
+                    <h6 t-else="" class="mb-3">
+                        <b
+                            class="d-none d-lg-block"
+                            t-field="attribute.field_description"
+                        />
+                    </h6>
+                    <div
+                        t-attf-id="{{'o_wsale_offcanvas_additional_attribute_' + str(attribute.id) if isMobile else 'o_products_additional_attributes_' + str(attribute.id)}}"
+                        t-attf-class="{{'accordion-collapse collapse ' + ('show' if _expand_attributes else '') if isMobile else ''}}"
+                    >
+                        <t
+                            t-set="attr_type"
+                            t-value="attribute.attribute_type or attribute.ttype"
+                        />
+                        <t
+                            t-set="value_counts"
+                            t-value="attribute_dict.get('value_counts', {})"
+                        />
+                        <div
+                            t-attf-class="{{'accordion-body pt-0' if isMobile else ''}}"
+                        >
+                            <!-- Select / Many2one with multi-check -->
                             <div
-                                t-elif="attribute.attribute_type == 'boolean'"
-                                class="flex-column mb-3"
+                                t-if="attr_type in ('select', 'many2one') and attribute.e_com_multi_select"
+                                t-attf-class="{{'my-2' if isMobile else 'mb-3'}}"
                             >
-                                <t t-foreach="all_attribute_values" t-as="value">
-                                    <div class="form-check mb-1">
-                                        <input
-                                            type="checkbox"
-                                            class="form-check-input"
-                                            name="additional_attribute_value"
-                                            t-att-id="'additional_attr_%s_%s' % (attribute.id, value)"
-                                            t-att-value="'%s-%s' % (attribute.id, value)"
-                                            t-att-checked="'checked' if (attribute.id, str(value or '')) in additional_attrib_set else None"
-                                        />
-                                        <label
-                                            class="form-check-label fw-normal"
-                                            t-att-for="'additional_attr_%s_%s' % (attribute.id, value)"
-                                        >
-                                            <t t-if="value">Yes</t>
-                                            <t t-else="">No</t>
-                                        </label>
-                                    </div>
+                                <t
+                                    t-call="website_attribute_set.filter_multicheck_attributes"
+                                />
+                            </div>
+                            <!-- Select / Many2one with dropdown -->
+                            <div
+                                t-elif="attr_type in ('select', 'many2one')"
+                                t-attf-class="{{'my-2' if isMobile else 'mb-3'}}"
+                            >
+                                <t
+                                    t-call="website_attribute_set.filter_select_attributes"
+                                />
+                            </div>
+                            <!-- Multiselect / Many2many with multi-check -->
+                            <div
+                                t-elif="attr_type in ('multiselect', 'many2many') and attribute.e_com_multi_select"
+                                t-attf-class="{{'my-2' if isMobile else 'mb-3'}}"
+                            >
+                                <t
+                                    t-call="website_attribute_set.filter_multicheck_attributes"
+                                />
+                            </div>
+                            <!-- Multiselect / Many2many with dropdown -->
+                            <div
+                                t-elif="attr_type in ('multiselect', 'many2many')"
+                                t-attf-class="{{'my-2' if isMobile else 'mb-3'}}"
+                            >
+                                <t
+                                    t-call="website_attribute_set.filter_select_attributes"
+                                />
+                            </div>
+                            <!-- Boolean with checkboxes -->
+                            <div
+                                t-elif="attr_type == 'boolean'"
+                                t-attf-class="{{'list-group list-group-flush' if isMobile else 'flex-column mb-3'}}"
+                            >
+                                <t
+                                    t-call="website_attribute_set.filter_radio_and_multi_attributes"
+                                >
+                                    <t t-set="isMobile" t-value="isMobile" />
                                 </t>
                             </div>
-
-                            <!-- Integer/Float with range filter enabled -->
-                            <t
-                                t-elif="attribute.attribute_type in ('integer', 'float') and attribute.e_com_range_filter"
+                            <!-- Integer / Float with range filter -->
+                            <div
+                                t-elif="attr_type in ('integer', 'float') and attribute.e_com_range_filter"
+                                t-attf-class="{{'my-2' if isMobile else 'mb-3'}}"
                             >
-                                <div class="d-flex gap-2 mb-2">
-                                    <input
-                                        type="number"
-                                        class="form-control form-control-sm"
-                                        t-attf-name="additional_attr_min_{{attribute.id}}"
-                                        placeholder="Min"
-                                        t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
-                                    />
-                                    <input
-                                        type="number"
-                                        class="form-control form-control-sm"
-                                        t-attf-name="additional_attr_max_{{attribute.id}}"
-                                        placeholder="Max"
-                                        t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
-                                    />
-                                </div>
-                            </t>
-
+                                <t
+                                    t-call="website_attribute_set.filter_range_attributes"
+                                />
+                            </div>
                             <!-- Other types (char, text, integer, float, date, datetime) -->
-                            <t t-else="">
+                            <div
+                                t-else=""
+                                t-attf-class="{{'list-group list-group-flush' if isMobile else 'flex-column mb-3'}}"
+                            >
                                 <select
-                                    class="form-select mb-2"
+                                    class="form-select css_attribute_select"
                                     name="additional_attribute_value"
                                 >
-                                    <option value="">All <t
+                                    <option value="" selected="true">All <t
                                         t-out="attribute.field_description"
                                     /></option>
                                     <t t-foreach="all_attribute_values" t-as="value">
                                         <option
-                                            t-att-value="'%s-%s' % (attribute.id, value)"
+                                            t-att-value="'%s-%s' % (attribute.id,value)"
                                             t-att-selected="(attribute.id, str(value or '')) in additional_attrib_set"
                                         >
                                             <t t-out="value" />
@@ -246,11 +370,65 @@
                                         </option>
                                     </t>
                                 </select>
-                            </t>
+                            </div>
                         </div>
                     </div>
-                </t>
+                </div>
             </t>
+        </xpath>
+    </template>
+
+    <template
+        id="products_attributes_collapsible"
+        name="Collapsed Attributes &amp; Variants filters"
+        inherit_id="product_additional_attribute_filters_form"
+    >
+        <!-- oca-hooks:disable=xml-dangerous-qweb-replace-low-priority -->
+        <xpath
+            expr="//div[contains(@t-attf-class, 'accordion-item')]//h6"
+            position="replace"
+        >
+            <div t-if="not isMobile" class="accordion-header h6 mb-0">
+                <button
+                    t-attf-class="accordion-button px-0 bg-transparent shadow-none {{'' if _expand_attributes else 'collapsed'}}"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    t-attf-data-bs-target="#o_products_additional_attributes_{{attribute.id}}"
+                    t-attf-aria-controls="o_products_additional_attributes_{{attribute.id}}"
+                    t-att-aria-expanded="_expand_attributes"
+                >
+                    <b t-field="attribute.field_description" />
+                </button>
+            </div>
+        </xpath>
+        <xpath
+            expr="//div[contains(@t-attf-id, 'o_products_additional_attributes_')]"
+            position="attributes"
+        >
+            <attribute
+                name="t-attf-class"
+                add="accordion-collapse collapse {{'show' if _expand_attributes else ''}}"
+                separator=" "
+            />
+            <attribute name="data-bs-parent" add="wsale_products_attributes_collapse" />
+        </xpath>
+    </template>
+
+    <template
+        id="o_wsale_offcanvas"
+        inherit_id="website_sale.o_wsale_offcanvas"
+        name="Offcanvas"
+    >
+        <xpath
+            expr="//a[@t-att-href='keep(attribute_values=0, tags=0, min_price=0, max_price=0)']"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-aria-disabled"
+            >(not additional_attrib_set and not attrib_values and not isFilteringByPrice and not tags) and 'true' or 'false'</attribute>
+            <attribute
+                name="t-att-href"
+            >keep(attribute_values=0, additional_attribute_values=0, tags=0, min_price=0, max_price=0)</attribute>
         </xpath>
     </template>
 </odoo>

@@ -1,79 +1,294 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Template temporarily disabled due to Odoo 19 xpath compatibility issue -->
-    <!-- The original xpath //table[@id='o_comparelist_table'] does not exist in Odoo 19 -->
-
     <template
-        id="custom_specifications_table"
-        inherit_id="website_sale_comparison.specifications_table"
-        name="Specifications Table"
+        id="product_compare_with_additional_attributes"
+        inherit_id="website_sale_comparison.product_compare"
+        active="True"
+        name="Comparator Page"
     >
-        <xpath expr="//table" position="after">
-            <table t-attf-class="table {{is_accordion and 'table-sm mb-0'}}">
-                <tr t-foreach="additional_attributes" t-as="attribute_dict">
-                    <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
-                    <t
-                        t-set="attribute_values"
-                        t-value="attribute_dict.get('attribute_values')"
-                    />
-                    <t t-if="attribute_values">
+        <xpath
+            expr="//div[@id='o_comparelist_table']/div[@t-foreach='attrib_categories']"
+            position="after"
+        >
+            <t
+                t-set="attrib_groups"
+                t-value="products.sudo()._prepare_additional_attributes_for_display()"
+            />
+            <div t-foreach="attrib_groups" t-as="group">
+                <div class="w-100 py-3 bg-light bg-opacity-50">
+                    <h6 class="d-table position-sticky start-0 mb-0 ps-2">
+                        <span t-if="group" t-field="group.name" />
+                        <t t-else="">Uncategorized</t>
+                    </h6>
+                </div>
+                <ul
+                    t-foreach="attrib_groups[group]"
+                    t-as="attribute"
+                    t-att-class="'list-unstyled d-flex mb-0 py-3 o_ws_group_%d %s' % (group.id, 'border-bottom' if not attribute_last else '')"
+                >
+                    <li
+                        t-foreach="attrib_groups[group][attribute]"
+                        t-as="product"
+                        class="o_wsale_compare_table_column d-flex flex-column flex-shrink-0"
+                    >
                         <t
-                            t-set="hide_border_bottom_classes"
-                            t-value="'border-bottom-0' if attribute_last and is_accordion else ''"
+                            t-set="values"
+                            t-value="attrib_groups[group][attribute][product]"
                         />
-                        <td t-attf-class="w-25 {{hide_border_bottom_classes}} ps-0 ">
-                            <span t-field="attribute.field_description" />
-                        </td>
-                        <td
-                            t-attf-class="w-75 {{hide_border_bottom_classes}} pe-0 text-muted text-end"
-                        >
-                            <t
-                                t-if="attribute.attribute_type in ['select', 'multiselect']"
-                            >
-                                <t t-foreach="attribute_values" t-as="value">
-                                    <span t-out="value.name" />
-                                    <t t-if="not value_last">, </t>
+                        <t
+                            t-set="attr_type"
+                            t-value="attribute.attribute_type or attribute.ttype"
+                        />
+                        <div id="o_comparelist_attribute">
+                            <div
+                                class="small text-muted"
+                                t-field="attribute.field_description"
+                            />
+                            <t t-if="values">
+                                <t t-if="attr_type in ['multiselect', 'many2many']">
+                                    <t t-foreach="values" t-as="value">
+                                        <small t-out="value" />
+                                        <t t-if="not value_last">, </t>
+                                    </t>
                                 </t>
-                            </t>
-                            <t
-                                t-if="attribute.attribute_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float']"
-                            >
-                                <t t-if="attribute.attribute_type == 'boolean'">
+                                <t t-elif="attr_type == 'boolean'">
                                     <span t-out="'Yes'" />
                                 </t>
-                                <t t-elif="attribute.attribute_type == 'integer'">
+                                <t t-elif="attr_type == 'integer'">
                                     <span
-                                        t-out="attribute_values"
+                                        t-out="values"
                                         t-options='{"widget": "integer"}'
                                     />
                                 </t>
-                                <t t-elif="attribute.attribute_type == 'float'">
-                                    <span t-out="attribute_values" />
+                                <t t-elif="attr_type == 'float'">
+                                    <span t-out="values" />
                                 </t>
-                                <t t-if="attribute.attribute_type == 'date'">
+                                <t t-elif="attr_type == 'date'">
                                     <span
-                                        t-out="attribute_values"
+                                        t-out="values"
                                         t-options='{"widget": "date"}'
                                     />
                                 </t>
-                                <t t-if="attribute.attribute_type == 'datetime'">
+                                <t t-elif="attr_type == 'datetime'">
                                     <t
                                         t-set="tz_value"
                                         t-value="request.env.user.tz or 'UTC'"
                                     />
                                     <span
-                                        t-out="attribute_values"
+                                        t-out="values"
                                         t-options='{"widget": "datetime", "tz_name": tz_value, "format": "short"}'
                                     />
                                 </t>
-                                <t t-if="attribute.attribute_type in ['char', 'text']">
-                                    <span t-out="attribute_values" />
+                                <t
+                                    t-elif="attr_type in ['char', 'text', 'select', 'many2one', 'binary', 'image']"
+                                >
+                                    <span t-out="values" />
                                 </t>
                             </t>
-                        </td>
-                    </t>
+                            <t t-else="">
+                                <h6 class="small text-muted mb-0">-</h6>
+                            </t>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <h6 class="d-table position-sticky start-0 mb-0">Reference Codes</h6>
+            <ul class="list-unstyled d-flex border-bottom mb-0 py-3">
+                <li
+                    t-foreach="products"
+                    t-as="product"
+                    class="o_wsale_compare_table_column d-flex flex-column align-items-center flex-shrink-0"
+                >
+                    <div class="small text-muted">Code</div>
+                    <td>
+                        <t t-if="product.default_code">
+                            <span t-field="product.default_code" />
+                        </t>
+                    </td>
+                </li>
+            </ul>
+        </xpath>
+    </template>
+
+    <template id="custom_specifications_table" name="Specifications Table">
+        <table t-attf-class="table {{is_accordion and 'table-sm mb-0'}}">
+            <t t-if="len(attrib_groups) > 1 and not is_accordion">
+                <tr>
+                    <th class="text-start" colspan="2">
+                        <span t-if="group" t-field="group.name" />
+                        <span t-else="">Others</span>
+                    </th>
                 </tr>
-            </table>
+            </t>
+            <tr t-foreach="attrib_groups[group]" t-as="attribute">
+                <t t-set="attribute_values" t-value="attrib_groups[group][attribute]" />
+                <t
+                    t-set="attr_type"
+                    t-value="attribute.attribute_type or attribute.ttype"
+                />
+                <t
+                    t-set="hide_border_bottom_classes"
+                    t-value="'border-bottom-0' if attribute_last and is_accordion else ''"
+                />
+                <td t-attf-class="w-25 {{hide_border_bottom_classes}} ps-0 ">
+                    <span t-field="attribute.field_description" />
+                </td>
+                <td
+                    t-attf-class="w-75 {{hide_border_bottom_classes}} pe-0 text-muted text-end"
+                >
+                    <t
+                        t-if="attr_type in ['select', 'multiselect', 'many2one', 'many2many']"
+                    >
+                        <t t-foreach="attribute_values" t-as="value">
+                            <span t-out="value" />
+                            <t t-if="not value_last">, </t>
+                        </t>
+                    </t>
+                    <t
+                        t-if="attr_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float', 'binary', 'image']"
+                    >
+                        <t t-if="attr_type == 'boolean'">
+                            <span t-out="'Yes'" />
+                        </t>
+                        <t t-elif="attr_type == 'integer'">
+                            <span
+                                t-out="attribute_values"
+                                t-options='{"widget": "integer"}'
+                            />
+                        </t>
+                        <t t-elif="attr_type == 'float'">
+                            <span t-out="attribute_values" />
+                        </t>
+                        <t t-if="attr_type == 'date'">
+                            <span
+                                t-out="attribute_values"
+                                t-options='{"widget": "date"}'
+                            />
+                        </t>
+                        <t t-if="attr_type == 'datetime'">
+                            <t
+                                t-set="tz_value"
+                                t-value="request.env.user.tz or 'UTC'"
+                            />
+                            <span
+                                t-out="attribute_values"
+                                t-options='{"widget": "datetime", "tz_name": tz_value, "format": "short"}'
+                            />
+                        </t>
+                        <t t-if="attr_type in ['char', 'text']">
+                            <span t-out="attribute_values" />
+                        </t>
+                        <t t-if="attr_type == 'binary'">
+                            <a
+                                t-attf-href="/web/content/product.template/{{ product.id }}/{{ attribute.name }}"
+                                target="_blank"
+                            >
+                                <span
+                                    t-out="attribute._get_filename_value(product.sudo())"
+                                />
+                            </a>
+                        </t>
+                        <t t-if="attr_type == 'image'">
+                            <span
+                                t-out="attribute_values"
+                                t-options='{"widget": attribute.widget}'
+                            />
+                        </t>
+                    </t>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template
+        id="product_additional_attributes_body"
+        inherit_id="website_sale_comparison.product_attributes_body"
+        name="Product attributes table"
+    >
+        <xpath expr="//section[@id='product_full_spec']/.." position="before">
+            <t
+                t-set="attrib_groups"
+                t-value="product.sudo()._prepare_simple_additional_attributes_for_display()"
+            />
+        </xpath>
+        <xpath expr="//section[@id='product_full_spec']/.." position="attributes">
+            <attribute name="t-if">attrib_categories or attrib_groups</attribute>
+        </xpath>
+        <xpath expr="//div[@id='product_specifications']/div" position="after">
+            <div class="row">
+                <t t-foreach="attrib_groups" t-as="group">
+                    <div class="col-lg-6">
+                        <t t-call="website_attribute_set.custom_specifications_table" />
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <template
+        id="accordion_specs_item_with_additional_attributes"
+        inherit_id="website_sale_comparison.accordion_specs_item"
+        name="Specifications Accordion Item"
+    >
+        <t
+            t-set="attrib_groups"
+            t-value="product.sudo()._prepare_simple_additional_attributes_for_display()"
+        />
+        <xpath
+            expr="//t[@t-if='product.valid_product_template_attribute_line_ids._prepare_categories_for_display()']"
+            position="after"
+        >
+            <t t-if="attrib_groups">
+                <t t-foreach="attrib_groups" t-as="group">
+                    <div class="accordion-item">
+                        <div class="accordion-header my-0 h6">
+                            <button
+                                t-out="group.name"
+                                class="accordion-button collapsed fw-medium"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                t-attf-data-bs-target="#category_accordion_{{category_index}}"
+                                aria-expanded="false"
+                                aria-controls="specifications"
+                            >
+                                <t t-if="category_size == 1">Specifications</t>
+                                <t t-else="">Others</t>
+                            </button>
+                        </div>
+                        <div
+                            t-attf-id="category_accordion_{{category_index}}"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#product_accordion"
+                        >
+                            <div class="accordion-body pt-0">
+                                <t
+                                    t-call="website_attribute_set.custom_specifications_table"
+                                >
+                                    <t t-set="is_accordion" t-value="True" />
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="product_add_to_compare"
+        name="Add to comparison in product page"
+        inherit_id="website_sale_comparison.product_add_to_compare"
+    >
+        <xpath expr="//button[@data-action='o_comparelist']" position="before">
+            <t
+                t-set="attrib_groups"
+                t-value="product.sudo()._prepare_simple_additional_attributes_for_display()"
+            />
+        </xpath>
+        <xpath expr="//button[@data-action='o_comparelist']" position="attributes">
+            <attribute
+                name="t-if"
+            >product_variant_id and (attrib_categories or attrib_groups)</attribute>
         </xpath>
     </template>
 </odoo>

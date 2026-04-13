@@ -40,34 +40,6 @@ class AttributeAttribute(models.Model):
         help="""Show the number of matching products next to each filter option.""",
     )
 
-    def write(self, vals):
-        """Clear attribute cache when visibility or attribute sets change."""
-        res = super().write(vals)
-        if any(
-            field in vals
-            for field in ("e_com_visibility", "attribute_set_ids", "nature", "model_id")
-        ):
-            # Clear the cache for e-commerce visible attributes
-            self.env.registry.clear_cache()
-        return res
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        """Clear attribute cache when new attributes are created."""
-        res = super().create(vals_list)
-        if any(
-            vals.get("e_com_visibility") or vals.get("attribute_set_ids")
-            for vals in vals_list
-        ):
-            self.env.registry.clear_cache()
-        return res
-
-    def unlink(self):
-        """Clear attribute cache when attributes are deleted."""
-        res = super().unlink()
-        self.env.registry.clear_cache()
-        return res
-
     @api.constrains("domain")
     def _validate_domain(self):
         """Validate that the domain input is a valid Odoo domain."""
