@@ -14,12 +14,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
-msgid "<strong>Specifications</strong>"
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
+msgid "<span class=\"sign_badge_price_extra\">✓</span>"
 msgstr ""
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
 msgstr ""
 
@@ -38,6 +39,11 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
+msgid "Code"
 msgstr ""
 
 #. module: website_attribute_set
@@ -111,19 +117,19 @@ msgid "Invalid domain: %s"
 msgstr ""
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Max"
 msgstr ""
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Min"
 msgstr ""
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
-msgid "No"
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.custom_specifications_table
+msgid "Others"
 msgstr ""
 
 #. module: website_attribute_set
@@ -132,13 +138,33 @@ msgid "Product"
 msgstr ""
 
 #. module: website_attribute_set
+#: model:ir.ui.menu,name:website_attribute_set.menu_product_category
+msgid "Product Categories"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_product
 msgid "Product Variant"
 msgstr ""
 
 #. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
+msgid "Reference Codes"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "Show the number of matching products next to each filter option."
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
+msgid "Specifications"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
+msgid "Uncategorized"
 msgstr ""
 
 #. module: website_attribute_set
@@ -152,7 +178,6 @@ msgid "Website Searchable Mixin"
 msgstr ""
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attributes
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.products_additional_attributes
-msgid "Yes"
+#: model:ir.ui.menu,name:website_attribute_set.menu_public_category
+msgid "eCommerce Categories"
 msgstr ""
