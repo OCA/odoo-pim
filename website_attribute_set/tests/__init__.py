@@ -4,3 +4,4 @@
 
 from . import test_website_attr_set
 from . import test_controller
+from . import test_shop_ui
