@@ -1,54 +1,173 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Display additional attributes on the product page -->
-    <template
-        id="product_additional_attributes"
-        inherit_id="website_sale.product"
-        name="Product Additional Attributes"
-    >
-        <!-- Insert inside product_details div -->
-        <xpath expr="//div[@id='product_details']" position="inside">
-            <div
-                t-if="additional_attributes"
-                class="o_wsale_additional_attributes mt-3 mb-3"
+    <template id="variants" inherit_id="website_sale.variants">
+        <xpath expr="//ul" position="after">
+            <ul
+                t-attf-class="o_wsale_product_page_variants d-flex flex-column gap-4 list-unstyled js_add_cart_variants #{ul_class} #{'d-none' if not additional_attributes else '' }"
             >
-                <h6 class="mb-2">
-                    <strong>Specifications</strong>
-                </h6>
-                <table class="table table-sm table-borderless">
-                    <tbody>
-                        <t t-foreach="additional_attributes" t-as="attr_dict">
-                            <t t-set="attr" t-value="attr_dict.get('attribute')" />
-                            <t
-                                t-set="attr_values"
-                                t-value="attr_dict.get('attribute_values')"
+                <t t-foreach="additional_attributes" t-as="attribute_dict">
+                    <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
+                    <t
+                        t-set="attribute_values"
+                        t-value="attribute_dict.get('attribute_values')"
+                    />
+                    <t
+                        t-set="attr_type"
+                        t-value="attribute.attribute_type or attribute.ttype"
+                    />
+                    <t t-if="attribute_values">
+                        <li
+                            t-att-data-attribute_id="attribute.id"
+                            t-att-data-attribute_name="attribute.name"
+                            t-att-data-attribute_display_type="attr_type"
+                            t-attf-class="variant_attribute"
+                        >
+                            <strong
+                                t-field="attribute.field_description"
+                                class="attribute_name"
                             />
-                            <tr t-if="attr_values">
-                                <td class="text-muted" style="width: 40%;">
-                                    <t t-out="attr.field_description" />
-                                </td>
-                                <td>
-                                    <t t-if="attr.attribute_type == 'boolean'">
-                                        <t t-if="attr_values">Yes</t>
-                                        <t t-else="">No</t>
-                                    </t>
+
+                            <t
+                                t-if="attr_type in ['select', 'multiselect', 'many2one', 'many2many']"
+                            >
+                                <ul
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                >
                                     <t
-                                        t-elif="attr.attribute_type in ['select', 'multiselect']"
+                                        t-foreach="attribute_values"
+                                        t-as="select_option"
                                     >
-                                        <!-- Recordset values - use mapped to get names -->
-                                        <t
-                                            t-out="', '.join(attr_values.mapped('name'))"
-                                        />
+                                        <li
+                                            t-att-value="select_option.id"
+                                            t-att-data-attribute-value-id="attribute.id"
+                                            t-att-data-value_id="select_option.id"
+                                            t-att-data-value_name="select_option._name"
+                                            t-att-data-attribute_name="attribute.name"
+                                            t-att-data-nature="attribute.nature"
+                                            class="list-inline-item mb-3"
+                                            style="margin: 0;"
+                                        >
+                                            <span class="badge text-bg-info border">
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="'+'"
+                                                />
+                                                <span
+                                                    t-out="select_option.name"
+                                                    class="variant_price_extra text-muted fst-italic"
+                                                    style="white-space: nowrap;"
+                                                />
+                                            </span>
+                                        </li>
                                     </t>
-                                    <t t-else="">
-                                        <t t-out="attr_values" />
-                                    </t>
-                                </td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
-            </div>
+                                </ul>
+                            </t>
+                            <t
+                                t-elif="attr_type in ['boolean', 'char', 'text', 'date', 'datetime', 'integer', 'float', 'binary', 'image']"
+                            >
+                                <ul
+                                    t-att-data-attribute_id="attribute.id"
+                                    t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
+                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                >
+                                    <li
+                                        t-att-value="'%s-%s' % (attribute.id,attribute_values)"
+                                        t-att-data-attribute-value-id="attribute.id"
+                                        t-att-data-value="attribute_values"
+                                        t-att-data-attribute_name="attribute.name"
+                                        t-att-data-nature="attribute.nature"
+                                        class="list-inline-item mb-3"
+                                        style="margin: 0;"
+                                    >
+                                        <span class="badge text-bg-info border">
+                                            <t t-if="attr_type == 'boolean'">
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                >✓</span>
+                                                <span
+                                                    t-out="'Yes'"
+                                                    class="variant_price_extra text-muted fst-italic"
+                                                    style="white-space: nowrap;"
+                                                />
+                                            </t>
+                                            <t
+                                                t-elif="attr_type in ['integer', 'float']"
+                                            >
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="attribute_values > 0 and '+' or '-'"
+                                                />
+                                                <t t-if="attr_type == 'integer'">
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "integer",
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t t-elif="attr_type == 'float'">
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "float",
+                                                            "precision": 2
+                                                        }'
+                                                    />
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <span
+                                                    class="sign_badge_price_extra"
+                                                    t-out="'+'"
+                                                />
+                                                <t t-if="attr_type == 'date'">
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "date",
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t t-elif="attr_type == 'datetime'">
+                                                    <t
+                                                        t-set="tz_value"
+                                                        t-value="request.env.user.tz or 'UTC'"
+                                                    />
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "datetime",
+                                                            "tz_name": tz_value,
+                                                            "format": "short"
+                                                        }'
+                                                    />
+                                                </t>
+                                                <t t-else="">
+                                                    <span
+                                                        t-out="attribute_values"
+                                                        class="variant_price_extra text-muted fst-italic"
+                                                        style="white-space: nowrap;"
+                                                    />
+                                                </t>
+                                            </t>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </t>
+                        </li>
+                    </t>
+                </t>
+            </ul>
         </xpath>
     </template>
 </odoo>

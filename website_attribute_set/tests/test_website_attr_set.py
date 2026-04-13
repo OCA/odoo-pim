@@ -85,6 +85,18 @@ class TestAttributeSetSearchable(BuildViewCase):
             }
         )
 
+        cls.attr_binary = cls.env["attribute.attribute"].create(
+            {
+                "nature": "custom",
+                "field_description": "Document",
+                "name": "x_document",
+                "attribute_type": "binary",
+                "attribute_group_id": cls.group_1.id,
+                "attribute_set_ids": [(4, cls.attr_set_1.id)],
+                "model_id": cls.product_model.id,
+            }
+        )
+
         cls.product_1 = cls.env["product.template"].create(
             {
                 "name": "Test Smart Product",
@@ -94,8 +106,9 @@ class TestAttributeSetSearchable(BuildViewCase):
         )
 
     def test__validate_domain(self):
-        # Test invalid domain raises ValidationError from ir.model.fields constraint
-        # In Odoo 19, the domain field is validated by _check_domain constraint
+        # Test invalid domain raises ValidationError
+        # ir_model._check_domain intercepts ValueError from safe_eval and re-raises
+        # it as ValidationError before our own _validate_domain constraint runs.
         with self.assertRaises(ValidationError):
             self.attr_select.domain = "foo"
 
@@ -269,10 +282,36 @@ class TestAttributeSetSearchable(BuildViewCase):
         )
         groups = product_1._prepare_additional_attributes_for_display()
         self.assertFalse(groups)
-        # ordered dict is exists if products are visible in e-com
+        # ordered dict exists if products are visible in e-com
         self.product_1.write({"x_technical_description": "Fast processor"})
-        self.attr_1.write({"e_com_visibility": True})
+        self.attr_2.write({"e_com_visibility": True})
         groups = product_1._prepare_additional_attributes_for_display()
         self.assertTrue(self.group_1 in groups)
-        self.assertTrue(self.attr_1 in groups[self.group_1])
-        self.assertTrue(product_1 in groups[self.group_1][self.attr_1])
+        self.assertTrue(self.attr_2 in groups[self.group_1])
+        self.assertTrue(product_1 in groups[self.group_1][self.attr_2])
+
+    def test_get_extra_attribute_values_binary(self):
+        # Without a value, returns None
+        self.assertIsNone(self.product_1.get_extra_attribute_values(self.attr_binary))
+        # For binary attributes, the filename field is read instead of the binary itself
+        self.product_1.write({"x_document_filename": "datasheet.pdf"})
+        self.assertEqual(
+            self.product_1.get_extra_attribute_values(self.attr_binary),
+            "datasheet.pdf",
+        )
+
+    def test__prepare_simple_additional_attributes_for_display(self):
+        # Empty when no attribute is e-com visible
+        groups = self.product_1._prepare_simple_additional_attributes_for_display()
+        self.assertFalse(groups)
+        # Attribute with a value and e_com_visibility appears in groups
+        self.product_1.write({"x_technical_description": "Fast processor"})
+        self.attr_2.write({"e_com_visibility": True})
+        groups = self.product_1._prepare_simple_additional_attributes_for_display()
+        self.assertIn(self.group_1, groups)
+        self.assertIn(self.attr_2, groups[self.group_1])
+        self.assertEqual(groups[self.group_1][self.attr_2], "Fast processor")
+        # Attribute with no value is excluded from groups
+        self.attr_1.write({"e_com_visibility": True})
+        groups = self.product_1._prepare_simple_additional_attributes_for_display()
+        self.assertNotIn(self.attr_1, groups[self.group_1])

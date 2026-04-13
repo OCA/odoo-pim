@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <menuitem
+        id="menu_product_category"
+        name="Product Categories"
+        parent="pim.main_menu_category"
+        action="product.product_category_action_form"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_public_category"
+        name="eCommerce Categories"
+        parent="pim.main_menu_category"
+        action="website_sale.product_public_category_action"
+        sequence="20"
+    />
+</odoo>
