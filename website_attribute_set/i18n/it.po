@@ -6,24 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-04-14 13:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
 msgid "<span class=\"sign_badge_price_extra\">✓</span>"
-msgstr ""
+msgstr "<span class=\"sign_badge_price_extra\">✓</span>"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
-msgstr ""
+msgstr "Tutti"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_multi_select
@@ -31,21 +33,24 @@ msgid ""
 "Allow selecting multiple values for this attribute filter.\n"
 "        Products matching ANY selected value will be shown (OR logic)."
 msgstr ""
+"Consente la selezione di valori multipli per questo filtro attributo.\n"
+"        Verranno visualizzati i prodotti che uno dei valori selezionati "
+"(logica OR)."
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_attribute
 msgid "Attribute"
-msgstr ""
+msgstr "Attributo"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Mixin proprietario impostazione attibuto"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Code"
-msgstr ""
+msgstr "Codice"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__display_name
@@ -55,32 +60,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__display_name
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
 msgid "E-Commerce Multi-Select"
-msgstr ""
+msgstr "Multi selezione e-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_range_filter
 msgid "E-Commerce Range Filter"
-msgstr ""
+msgstr "Filtro intervallo e-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_searchable
 msgid "E-Commerce Searchable"
-msgstr ""
+msgstr "Ricercabile e-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "E-Commerce Show Count"
-msgstr ""
+msgstr "Visualizza conteggio e-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "E-Commerce Visibility"
-msgstr ""
+msgstr "Visibilità e-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
@@ -88,6 +93,9 @@ msgid ""
 "For numeric attributes (integer/float), show min/max range inputs\n"
 "        instead of individual value selection in the shop filter."
 msgstr ""
+"Per attributi numerici (interi, decimali), visualizza gli intervalli min/max "
+"di inserimento\n"
+"        al posto di una selezione di valori singoli nel filtro negozio."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__id
@@ -97,7 +105,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__id
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_searchable
@@ -105,80 +113,87 @@ msgid ""
 "If selected the attribute will be included in e-commerce search.\n"
 "        Disable for large text fields to improve search performance."
 msgstr ""
+"Se selezionata l'attributo verrà incluso nella ricerca e-commerce.\n"
+"        Disabilitare per ampi campi di testo per migliorare i risultati "
+"della ricerca."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "If selected the attribute will be shown in e-commerce website app."
 msgstr ""
+"Se selezionata l'attributo verrà visualizzato nell'app e-commerce del sito "
+"web."
 
 #. module: website_attribute_set
 #. odoo-python
 #: code:addons/website_attribute_set/models/attribute_attribute.py:0
 msgid "Invalid domain: %s"
-msgstr ""
+msgstr "Dominio non valido: %s"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Max"
-msgstr ""
+msgstr "Massimo"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Min"
-msgstr ""
+msgstr "Minimo"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.custom_specifications_table
 msgid "Others"
-msgstr ""
+msgstr "Altri"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_product_category
 msgid "Product Categories"
-msgstr ""
+msgstr "Categorie prodotto"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Reference Codes"
-msgstr ""
+msgstr "Codici riferimento"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "Show the number of matching products next to each filter option."
 msgstr ""
+"Visualizza il numero dei prodotti corrispondenti a fianco di ogni opzione "
+"del filtro."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 msgid "Specifications"
-msgstr ""
+msgstr "Specifiche"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Uncategorized"
-msgstr ""
+msgstr "Non categorizzato"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website
 msgid "Website"
-msgstr ""
+msgstr "Sito web"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
 msgid "Website Searchable Mixin"
-msgstr ""
+msgstr "Mixin ricercabile sito web"
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
 msgid "eCommerce Categories"
-msgstr ""
+msgstr "Categorie e-commerce"
