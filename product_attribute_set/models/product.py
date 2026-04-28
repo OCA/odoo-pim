@@ -28,13 +28,15 @@ class ProductTemplate(models.Model):
         for vals in vals_list:
             if not vals.get("attribute_set_id") and vals.get("categ_id"):
                 category = category_model.browse(vals["categ_id"])
-                vals["attribute_set_id"] = category.attribute_set_id.id
+                if category.attribute_set_id:
+                    vals["attribute_set_id"] = category.attribute_set_id.id
         return super().create(vals_list)
 
     def write(self, vals):
         if not vals.get("attribute_set_id") and vals.get("categ_id"):
             category = self.env["product.category"].browse(vals["categ_id"])
-            vals["attribute_set_id"] = category.attribute_set_id.id
+            if category.attribute_set_id:
+                vals["attribute_set_id"] = category.attribute_set_id.id
         return super().write(vals)
 
     @api.onchange("categ_id")
