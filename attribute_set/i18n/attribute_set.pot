@@ -19,6 +19,12 @@ msgid "Advanced Attribute Set settings"
 msgstr ""
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__complete_attribute_ids
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "All Attributes (inherited)"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
 msgid "Allowed Attribute Set"
 msgstr ""
@@ -95,7 +101,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__attribute_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_attribute_action
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attributes"
 msgstr ""
 
@@ -142,6 +147,11 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__child_ids
+msgid "Child Sets"
 msgstr ""
 
 #. module: attribute_set
@@ -292,6 +302,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid "Error!"
+msgstr ""
+
+#. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "Error! You cannot create recursive attribute sets."
 msgstr ""
 
 #. module: attribute_set
@@ -511,6 +527,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid "Options Wizard"
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "Own Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_path
+msgid "Parent Path"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_id
+msgid "Parent Set"
 msgstr ""
 
 #. module: attribute_set
@@ -739,6 +770,12 @@ msgid ""
 "The optional domain to restrict possible values for relationship fields, "
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
+msgstr ""
+
+#. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "The parent attribute set must belong to the same model as the child."
 msgstr ""
 
 #. module: attribute_set
