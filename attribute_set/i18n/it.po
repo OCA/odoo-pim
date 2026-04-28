@@ -22,6 +22,12 @@ msgid "Advanced Attribute Set settings"
 msgstr "Impostazioni avanzate set attributo"
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__complete_attribute_ids
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "All Attributes (inherited)"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
 msgid "Allowed Attribute Set"
 msgstr "Consente impostazione attributo"
@@ -52,8 +58,6 @@ msgstr "Natura attributo"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
 msgid "Attribute Option"
 msgstr "Opzione attributo"
 
@@ -69,6 +73,9 @@ msgstr "Opzioni attributo"
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_users__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
 msgstr "Impostazione attibuto"
@@ -97,14 +104,23 @@ msgstr "Mixin proprietario impostazione attibuto"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__attribute_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_attribute_action
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attributes"
 msgstr "Attributi"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__binary
-msgid "Binary"
-msgstr "Binario"
+msgid "Binary (file)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklist this field for web forms"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklisted in web forms"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__boolean
@@ -116,7 +132,8 @@ msgstr "Booleano"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "Can't change the attribute's Relational Model in order to\n"
-"                        avoid conflicts with existing objects using this attribute.\n"
+"                        avoid conflicts with existing objects using this "
+"attribute.\n"
 "                        Please create a new one."
 msgstr ""
 "Non si può modificare il modello relazionale dell'attributo per evitare\n"
@@ -139,6 +156,11 @@ msgstr "Annulla"
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
 msgstr "Carattere"
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__child_ids
+msgid "Child Sets"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__compute
@@ -185,19 +207,29 @@ msgid "Company Dependent"
 msgstr "Dipendente dall'azienda"
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
-msgid "Complete Name"
-msgstr "Nome completo"
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__compute
 msgid "Compute"
 msgstr "Calcola"
 
 #. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
 msgstr "Copiato"
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_country
+msgid "Country"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,website_form_label:attribute_set.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
@@ -269,6 +301,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -287,6 +322,12 @@ msgstr "Abilita tracciamento ordinati"
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid "Error!"
 msgstr "Errore!"
+
+#. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "Error! You cannot create recursive attribute sets."
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__group_expand
@@ -348,6 +389,9 @@ msgstr "Gruppi"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__id
 msgid "ID"
 msgstr "ID"
 
@@ -380,9 +424,11 @@ msgstr ""
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialized
 msgid ""
 "If serialized, the attribute's field will be stored in the serialization\n"
-"            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized\n"
+"            field 'x_custom_json_attrs' (i.e. a JSON containing all the "
+"serialized\n"
 "            fields values) instead of creating a new SQL column for this\n"
-"            attribute's field. Useful to increase speed requests if creating a\n"
+"            attribute's field. Useful to increase speed requests if creating "
+"a\n"
 "            high number of attributes."
 msgstr ""
 "Se serializzato, il campo dell'attributo verrà archiviato nel campo "
@@ -415,6 +461,11 @@ msgstr ""
 "può essere modificato dopo la creazione."
 
 #. module: attribute_set
+#: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__image
+msgid "Image"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__modules
 msgid "In Apps"
 msgstr "Nelle app"
@@ -436,24 +487,11 @@ msgstr "Campi modello ir"
 
 #. module: attribute_set
 #. odoo-python
-#: code:addons/attribute_set/models/attribute_set_owner.py:0
-msgid ""
-"It is impossible to add Attributes on \"%(name)s\" xml\n"
-"                    view as there is\n"
-"                    not one \"<separator name=\"attributes_placeholder\" />\" in it.\n"
-"                    "
-msgstr ""
-"Non è possibile aggiungere attributi nella vista xml \"%(name)s\"\n"
-"                    perché in essa non c'è\n"
-"                    un \"<separator name=\"attributes_placeholder\" />\".\n"
-"                    "
-
-#. module: attribute_set
-#. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "It is not allowed to change the boolean 'Serialized'.\n"
-"                        A serialized field can not be change to non-serialized                         and vice versa."
+"                        A serialized field can not be change to non-"
+"serialized                         and vice versa."
 msgstr ""
 "Non è consentito modificare i booleani 'Serializzati'\n"
 "                        Un campo serializzato non può essere modificato in "
@@ -484,6 +522,7 @@ msgstr "Elenco dei moduli in cui è definito il campo"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Load Attribute Options"
 msgstr "Carica opzioni attributo"
 
@@ -535,9 +574,23 @@ msgstr "Proprietà 'Alla cancellazione' per campi many2one"
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Options Wizard"
 msgstr "Procedura guidata opzioni"
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "Own Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_path
+msgid "Parent Path"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_id
+msgid "Parent Set"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
@@ -773,6 +826,12 @@ msgstr ""
 "Per esempio: [('color','=','red')]"
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "The parent attribute set must belong to the same model as the child."
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence_group
 msgid "The sequence of the group"
 msgstr "Sequenza del gruppo"
@@ -806,9 +865,11 @@ msgstr "Tipo"
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid ""
 "Use the 'Load Attribute Options' button or specify a Domain\n"
-"                    in order to define the available Options linked to the Relational                    Model.\n"
+"                    in order to define the available Options linked to the "
+"Relational                    Model.\n"
 "\n"
-"                    If the button is not visible, you need to erase the Domain value                    and Save first."
+"                    If the button is not visible, you need to erase the "
+"Domain value                    and Save first."
 msgstr ""
 "Usare il pulsante 'Carica opzioni attributo' o indicare un dominio\n"
 "                    per definire le opzioni disponibili collegate al "
@@ -819,8 +880,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_table
-msgid ""
-"Used for custom many2many fields to define a custom relation table name"
+msgid "Used for custom many2many fields to define a custom relation table name"
 msgstr ""
 "Usato per campi many2many personalizzati per definire un nome tabella "
 "relazione personalizzato"
@@ -880,3 +940,22 @@ msgstr "options_placeholder"
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "or"
 msgstr "o"
+
+#~ msgid "Binary"
+#~ msgstr "Binario"
+
+#~ msgid "Complete Name"
+#~ msgstr "Nome completo"
+
+#~ msgid ""
+#~ "It is impossible to add Attributes on \"%(name)s\" xml\n"
+#~ "                    view as there is\n"
+#~ "                    not one \"<separator name=\"attributes_placeholder\" /"
+#~ ">\" in it.\n"
+#~ "                    "
+#~ msgstr ""
+#~ "Non è possibile aggiungere attributi nella vista xml \"%(name)s\"\n"
+#~ "                    perché in essa non c'è\n"
+#~ "                    un \"<separator name=\"attributes_placeholder\" /"
+#~ ">\".\n"
+#~ "                    "

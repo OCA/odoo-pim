@@ -22,6 +22,12 @@ msgid "Advanced Attribute Set settings"
 msgstr "Configuración Avanzada del Conjunto de Atributos"
 
 #. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__complete_attribute_ids
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "All Attributes (inherited)"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
 msgid "Allowed Attribute Set"
 msgstr ""
@@ -52,8 +58,6 @@ msgstr "Naturaleza del Atributo"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_popup_view
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_form_view
 msgid "Attribute Option"
 msgstr "Opción de Atributo"
 
@@ -69,6 +73,9 @@ msgstr "Opciones de Atributos"
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__attribute_set_id
+#: model:ir.model.fields,field_description:attribute_set.field_res_users__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
 msgstr "Conjunto de atributos"
@@ -97,14 +104,23 @@ msgstr "Mezcla de propietarios de conjuntos de atributos"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__attribute_ids
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_attribute_action
 #: model:ir.ui.menu,name:attribute_set.menu_attribute_in_admin
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attributes"
 msgstr "Atributos"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__binary
-msgid "Binary"
-msgstr "Binario"
+msgid "Binary (file)"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,help:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklist this field for web forms"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__website_form_blacklisted
+msgid "Blacklisted in web forms"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__boolean
@@ -140,6 +156,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
 msgid "Char"
 msgstr "Car"
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__child_ids
+msgid "Child Sets"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__compute
@@ -186,19 +207,29 @@ msgid "Company Dependent"
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
-msgid "Complete Name"
-msgstr "Nombre completo"
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__compute
 msgid "Compute"
 msgstr "Calcular"
 
 #. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
 msgstr "Copiado"
+
+#. module: attribute_set
+#: model:ir.model,name:attribute_set.model_res_country
+msgid "Country"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model,website_form_label:attribute_set.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__create_uid
@@ -270,6 +301,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__display_name
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
 
@@ -288,6 +322,12 @@ msgstr "Activar el Seguimiento de Pedidos"
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid "Error!"
 msgstr "¡Error!"
+
+#. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "Error! You cannot create recursive attribute sets."
+msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__group_expand
@@ -349,6 +389,9 @@ msgstr "Grupos"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_country__id
+#: model:ir.model.fields,field_description:attribute_set.field_res_partner__id
 msgid "ID"
 msgstr "ID"
 
@@ -418,6 +461,11 @@ msgstr ""
 "datos. Esto no se puede cambiar después de la creación."
 
 #. module: attribute_set
+#: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__image
+msgid "Image"
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__modules
 msgid "In Apps"
 msgstr "En Apps"
@@ -436,22 +484,6 @@ msgstr "Íntegro"
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__field_id
 msgid "Ir Model Fields"
 msgstr "Campos del Modelo Ir"
-
-#. module: attribute_set
-#. odoo-python
-#: code:addons/attribute_set/models/attribute_set_owner.py:0
-msgid ""
-"It is impossible to add Attributes on \"%(name)s\" xml\n"
-"                    view as there is\n"
-"                    not one \"<separator name=\"attributes_placeholder\" /"
-">\" in it.\n"
-"                    "
-msgstr ""
-"Es imposible agregar atributos en el xml \"%(name)s\"\n"
-"                    ver como hay\n"
-"                    ni un solo \"<separator name=\"attributes_placeholder\" /"
-">\" en él.\n"
-"                    "
 
 #. module: attribute_set
 #. odoo-python
@@ -490,6 +522,7 @@ msgstr "Lista de módulos en los que está definido el campo"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_attribute_form_view
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Load Attribute Options"
 msgstr "Opciones de Carga de Atributos"
 
@@ -541,8 +574,22 @@ msgstr "En la propiedad eliminar para campos many2one"
 #. module: attribute_set
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
-#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Options Wizard"
+msgstr ""
+
+#. module: attribute_set
+#: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
+msgid "Own Attributes"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_path
+msgid "Parent Path"
+msgstr ""
+
+#. module: attribute_set
+#: model:ir.model.fields,field_description:attribute_set.field_attribute_set__parent_id
+msgid "Parent Set"
 msgstr ""
 
 #. module: attribute_set
@@ -779,6 +826,12 @@ msgstr ""
 "tripletas. Por ejemplo: [('color','=','red')]"
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_set.py:0
+msgid "The parent attribute set must belong to the same model as the child."
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence_group
 msgid "The sequence of the group"
 msgstr "La secuencia del grupo"
@@ -888,6 +941,25 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "or"
 msgstr ""
+
+#~ msgid "Binary"
+#~ msgstr "Binario"
+
+#~ msgid "Complete Name"
+#~ msgstr "Nombre completo"
+
+#~ msgid ""
+#~ "It is impossible to add Attributes on \"%(name)s\" xml\n"
+#~ "                    view as there is\n"
+#~ "                    not one \"<separator name=\"attributes_placeholder\" /"
+#~ ">\" in it.\n"
+#~ "                    "
+#~ msgstr ""
+#~ "Es imposible agregar atributos en el xml \"%(name)s\"\n"
+#~ "                    ver como hay\n"
+#~ "                    ni un solo \"<separator "
+#~ "name=\"attributes_placeholder\" />\" en él.\n"
+#~ "                    "
 
 #~ msgid ""
 #~ "If set every modification done to this field is tracked in the chatter. "
