@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attribute_set](attribute_set/) | 19.0.1.0.0 |  | Attribute Set
+[attribute_set](attribute_set/) | 19.0.1.1.0 |  | Attribute Set
 [pim](pim/) | 19.0.1.0.0 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 19.0.1.0.0 |  | Product Attribute Set
 [website_attribute_set](website_attribute_set/) | 19.0.1.0.1 | <a href='https://github.com/kobros-tech'><img src='https://github.com/kobros-tech.png' width='32' height='32' style='border-radius:50%;' alt='kobros-tech'/></a> | Website Attribute Set
