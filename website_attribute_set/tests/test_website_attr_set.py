@@ -146,11 +146,13 @@ class TestAttributeSetSearchable(BuildViewCase):
         self.product_1.x_processor = test_option
         self.product_1.write({"x_technical_description": "Fast processor"})
         self.attr_1.write({"e_com_visibility": True})
+        self.attr_1.onchange_e_com_visibility()
         extra_attrs = self.product_1.get_extra_attributes()
         self.assertTrue(
             len(extra_attrs) == 1 and extra_attrs.mapped("name") == ["x_processor"]
         )
         self.attr_2.write({"e_com_visibility": True})
+        self.attr_2.onchange_e_com_visibility()
         extra_attrs = self.product_1.get_extra_attributes()
         self.assertTrue(
             len(extra_attrs) == 2
@@ -164,18 +166,21 @@ class TestAttributeSetSearchable(BuildViewCase):
         # attributes are searchable in e-com but
         # if they are select or multi-select then
         # they need relation_model_id value
-        self.attr_1.write({"e_com_searchable": True})
+        self.attr_1.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_1.onchange_e_com_visibility()
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(list(domain), [(0, "=", 1)])
         # attributes are searchable in e-com
-        self.attr_2.write({"e_com_searchable": True})
+        self.attr_2.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_2.onchange_e_com_visibility()
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(
             list(domain), [("x_technical_description", "ilike", "Fast processor")]
         )
         # select, multi-select attributes are searchable in e-com as
         # they have relation_model_id value
-        self.attr_3.write({"e_com_searchable": True})
+        self.attr_3.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_3.onchange_e_com_visibility()
         domain = search_extra(self.env, "Fast processor")
         self.assertEqual(
             list(domain),
@@ -190,6 +195,7 @@ class TestAttributeSetSearchable(BuildViewCase):
         """Test that e_com_searchable controls search, not e_com_visibility."""
         # Set attribute visible but NOT searchable
         self.attr_2.write({"e_com_visibility": True, "e_com_searchable": False})
+        self.attr_2.onchange_e_com_visibility()
         domain = search_extra(self.env, "Fast processor")
         # Should NOT include this attribute in search
         self.assertEqual(list(domain), [(0, "=", 1)])
@@ -242,8 +248,10 @@ class TestAttributeSetSearchable(BuildViewCase):
         for i in results[1]:
             self.assertEqual(i["count"], 0)
         # custom attributes appear in e-com search if we set searchable
-        self.attr_2.write({"e_com_searchable": True})
-        self.attr_3.write({"e_com_searchable": True})
+        self.attr_2.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_2.onchange_e_com_visibility()
+        self.attr_3.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_3.onchange_e_com_visibility()
         results = (
             self.env["website"]
             .browse(1)
@@ -285,6 +293,7 @@ class TestAttributeSetSearchable(BuildViewCase):
         # ordered dict exists if products are visible in e-com
         self.product_1.write({"x_technical_description": "Fast processor"})
         self.attr_2.write({"e_com_visibility": True})
+        self.attr_2.onchange_e_com_visibility()
         groups = product_1._prepare_additional_attributes_for_display()
         self.assertTrue(self.group_1 in groups)
         self.assertTrue(self.attr_2 in groups[self.group_1])
@@ -307,11 +316,83 @@ class TestAttributeSetSearchable(BuildViewCase):
         # Attribute with a value and e_com_visibility appears in groups
         self.product_1.write({"x_technical_description": "Fast processor"})
         self.attr_2.write({"e_com_visibility": True})
+        self.attr_2.onchange_e_com_visibility()
         groups = self.product_1._prepare_simple_additional_attributes_for_display()
         self.assertIn(self.group_1, groups)
         self.assertIn(self.attr_2, groups[self.group_1])
         self.assertEqual(groups[self.group_1][self.attr_2], "Fast processor")
         # Attribute with no value is excluded from groups
         self.attr_1.write({"e_com_visibility": True})
+        self.attr_1.onchange_e_com_visibility()
         groups = self.product_1._prepare_simple_additional_attributes_for_display()
         self.assertNotIn(self.attr_1, groups[self.group_1])
+
+    def test_constraints_filter_options_require_e_com_filter(self):
+        # e_com_range_filter, e_com_multi_select, e_com_show_count require e_com_filter
+        self.attr_2.write({"e_com_visibility": True, "e_com_filter": True})
+        self.attr_2.onchange_e_com_visibility()
+        with self.assertRaises(ValidationError):
+            self.attr_2.write({"e_com_filter": False, "e_com_range_filter": True})
+        with self.assertRaises(ValidationError):
+            self.attr_2.write({"e_com_filter": False, "e_com_multi_select": True})
+        with self.assertRaises(ValidationError):
+            self.attr_2.write({"e_com_filter": False, "e_com_show_count": True})
+        # Setting them with e_com_filter=True is allowed
+        self.attr_2.write(
+            {
+                "e_com_filter": True,
+                "e_com_range_filter": True,
+                "e_com_multi_select": True,
+                "e_com_show_count": True,
+            }
+        )
+
+    def test_constraint_e_com_searchable_requires_visibility(self):
+        # e_com_searchable requires e_com_visibility
+        with self.assertRaises(ValidationError):
+            self.attr_2.write({"e_com_visibility": False, "e_com_searchable": True})
+        self.attr_2.write({"e_com_visibility": True, "e_com_searchable": True})
+        self.attr_2.onchange_e_com_visibility()
+
+    def test_onchange_e_com_visibility_clears_dependents(self):
+        # Enable everything
+        self.attr_2.write(
+            {
+                "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_specification": True,
+                "e_com_searchable": True,
+                "e_com_range_filter": True,
+                "e_com_multi_select": True,
+                "e_com_show_count": True,
+            }
+        )
+        self.attr_2.onchange_e_com_visibility()
+        # Turning off visibility clears all dependent fields
+        self.attr_2.write({"e_com_visibility": False})
+        self.attr_2.onchange_e_com_visibility()
+        self.assertFalse(self.attr_2.e_com_filter)
+        self.assertFalse(self.attr_2.e_com_specification)
+        self.assertFalse(self.attr_2.e_com_searchable)
+        self.assertFalse(self.attr_2.e_com_range_filter)
+        self.assertFalse(self.attr_2.e_com_multi_select)
+        self.assertFalse(self.attr_2.e_com_show_count)
+
+    def test_onchange_e_com_filter_clears_filter_options(self):
+        # Enable filter options
+        self.attr_2.write(
+            {
+                "e_com_visibility": True,
+                "e_com_filter": True,
+                "e_com_range_filter": True,
+                "e_com_multi_select": True,
+                "e_com_show_count": True,
+            }
+        )
+        self.attr_2.onchange_e_com_visibility()
+        # Turning off e_com_filter clears filter-specific options
+        self.attr_2.write({"e_com_filter": False})
+        self.attr_2.onchange_e_com_filter()
+        self.assertFalse(self.attr_2.e_com_range_filter)
+        self.assertFalse(self.attr_2.e_com_multi_select)
+        self.assertFalse(self.attr_2.e_com_show_count)

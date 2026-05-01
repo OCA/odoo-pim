@@ -3,7 +3,7 @@
     <template id="filter_select_attributes" name="Select attributes in Filter">
         <select
             class="form-select css_attribute_select"
-            name="additional_attribute_value"
+            name="additional_attribute_values"
         >
             <option value="" selected="true">All <t
                 t-out="attribute.field_description"
@@ -39,7 +39,7 @@
                     <input
                         type="checkbox"
                         class="form-check-input"
-                        name="additional_attribute_value"
+                        name="additional_attribute_values"
                         t-att-id="'additional_attr_%s_%s' % (attribute.id, value.id)"
                         t-att-value="'%s-name-%s-id-%s' % (attribute.id,value._name,value.id)"
                         t-att-checked="'checked' if (attribute.id, option_code) in additional_attrib_set else None"
@@ -83,7 +83,7 @@
         <t t-foreach="all_attribute_values" t-as="value">
             <input
                 type="checkbox"
-                name="additional_attribute_value"
+                name="additional_attribute_values"
                 class="btn-check"
                 t-att-id="'%s-%s' % (attribute.id,value)"
                 t-att-value="'%s-%s' % (attribute.id,value)"
@@ -115,7 +115,7 @@
                 <div class="form-check mb-1">
                     <input
                         type="checkbox"
-                        name="additional_attribute_value"
+                        name="additional_attribute_values"
                         class="form-check-input"
                         t-att-id="'%s-%s' % (attribute.id, value)"
                         t-att-value="'%s-%s' % (attribute.id, value)"
@@ -166,17 +166,28 @@
         </t>
     </template>
 
+    <!-- Extend the filter panel to show when additional attributes exist -->
     <template
         id="products_additional_attributes"
         inherit_id="website_sale.products_attributes"
         active="True"
         name="Attributes &amp; Variants filters"
     >
+        <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="before">
+            <t
+                t-set="additional_filter_attributes"
+                t-value="[x for x in (additional_attributes or []) if x['attribute'].e_com_filter]"
+            />
+        </xpath>
         <xpath
             expr="//div[@id='wsale_products_attributes_collapse']"
             position="attributes"
         >
-            <attribute name="t-if" add="additional_attributes" separator=" or " />
+            <attribute
+                name="t-if"
+                add="additional_filter_attributes"
+                separator=" or "
+            />
         </xpath>
     </template>
 
@@ -211,12 +222,13 @@
             <attribute
                 name="t-attf-class"
                 remove="{{not (product.valid_product_template_attribute_line_ids or product._has_multiple_uoms()) and 'd-none' or ''}}"
-                add="{{not (product.valid_product_template_attribute_line_ids or product.attribute_set_id.attribute_ids or product._has_multiple_uoms()) and 'd-none' or ''}}"
+                add="{{not (product.valid_product_template_attribute_line_ids or product.attribute_set_id.attribute_ids.filtered(lambda a: a.e_com_specification) or product._has_multiple_uoms()) and 'd-none' or ''}}"
                 separator=" "
             />
         </xpath>
     </template>
 
+    <!-- Inject additional attribute filter inputs inside the filter form -->
     <template
         id="product_additional_attribute_filters_form"
         inherit_id="website_sale.product_attribute_filters_form"
@@ -224,10 +236,14 @@
     >
         <xpath expr="//form" position="inside">
             <t
-                t-set="visible_attributes"
-                t-value="len([a for a in attributes if a.value_ids and len(a.value_ids) &gt; 1]) + len([attribute_dict for attribute_dict in additional_attributes if attribute_dict.get('all_attribute_values') and len(attribute_dict.get('all_attribute_values')) &gt; 0])"
+                t-set="additional_filter_attributes"
+                t-value="[x for x in (additional_attributes or []) if x['attribute'].e_com_filter]"
             />
-            <t t-foreach="additional_attributes" t-as="attribute_dict">
+            <t
+                t-set="visible_attributes"
+                t-value="len([a for a in attributes if a.value_ids and len(a.value_ids) &gt; 1]) + len([attribute_dict for attribute_dict in additional_filter_attributes if attribute_dict.get('all_attribute_values') and len(attribute_dict.get('all_attribute_values')) &gt; 0])"
+            />
+            <t t-foreach="additional_filter_attributes" t-as="attribute_dict">
                 <t t-set="attribute" t-value="attribute_dict.get('attribute')" />
                 <t
                     t-set="all_attribute_values"
@@ -349,7 +365,7 @@
                             >
                                 <select
                                     class="form-select css_attribute_select"
-                                    name="additional_attribute_value"
+                                    name="additional_attribute_values"
                                 >
                                     <option value="" selected="true">All <t
                                         t-out="attribute.field_description"

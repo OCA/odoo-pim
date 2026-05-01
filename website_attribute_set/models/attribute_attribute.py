@@ -14,12 +14,22 @@ class AttributeAttribute(models.Model):
     e_com_visibility = fields.Boolean(
         string="E-Commerce Visibility",
         default=False,
-        help="""If selected the attribute will be shown in e-commerce website app.""",
+        help="""If selected, the attribute will be shown in e-commerce website app.""",
+    )
+    e_com_filter = fields.Boolean(
+        default=False,
+        help="""If selected, the attribute will be shown as a filter
+         in the e-commerce shop sidebar.""",
+    )
+    e_com_specification = fields.Boolean(
+        default=False,
+        help="""If selected, the attribute will be shown as specification
+             in e-commerce website app product view.""",
     )
     e_com_searchable = fields.Boolean(
         string="E-Commerce Searchable",
         default=False,
-        help="""If selected the attribute will be included in e-commerce search.
+        help="""If selected, the attribute will be included in e-commerce search.
         Disable for large text fields to improve search performance.""",
     )
     e_com_range_filter = fields.Boolean(
@@ -39,6 +49,81 @@ class AttributeAttribute(models.Model):
         default=False,
         help="""Show the number of matching products next to each filter option.""",
     )
+
+    @api.constrains("e_com_filter")
+    def _check_e_com_filter(self):
+        for rec in self:
+            if rec.e_com_filter and not rec.e_com_visibility:
+                raise ValidationError(
+                    self.env._(
+                        "Cannot use attribute as filter "
+                        "if it doesn't have E-Commerce Visibility enabled."
+                    )
+                )
+
+    @api.constrains("e_com_specification")
+    def _check_e_com_specification(self):
+        for rec in self:
+            if rec.e_com_specification and not rec.e_com_visibility:
+                raise ValidationError(
+                    self.env._(
+                        "Cannot use attribute as specification "
+                        "if it doesn't have E-Commerce Visibility enabled."
+                    )
+                )
+
+    @api.constrains("e_com_searchable")
+    def _check_e_com_searchable(self):
+        for rec in self:
+            if rec.e_com_searchable and not rec.e_com_visibility:
+                raise ValidationError(
+                    self.env._(
+                        "Cannot make attribute searchable "
+                        "if it doesn't have E-Commerce Visibility enabled."
+                    )
+                )
+
+    @api.constrains("e_com_range_filter", "e_com_multi_select", "e_com_show_count")
+    def _check_filter_options(self):
+        for rec in self:
+            if (
+                rec.e_com_range_filter or rec.e_com_multi_select or rec.e_com_show_count
+            ) and not rec.e_com_filter:
+                raise ValidationError(
+                    self.env._(
+                        "E-Commerce Range Filter, Multi-Select and Show Count "
+                        "require the attribute to be enabled as a filter."
+                    )
+                )
+
+    @api.onchange("e_com_visibility")
+    def onchange_e_com_visibility(self):
+        for rec in self:
+            if rec.e_com_visibility:
+                rec.write({"e_com_filter": True, "e_com_specification": True})
+            else:
+                rec.write(
+                    {
+                        "e_com_filter": False,
+                        "e_com_specification": False,
+                        "e_com_searchable": False,
+                        "e_com_range_filter": False,
+                        "e_com_multi_select": False,
+                        "e_com_show_count": False,
+                    }
+                )
+
+    @api.onchange("e_com_filter")
+    def onchange_e_com_filter(self):
+        for rec in self:
+            if not rec.e_com_filter:
+                rec.write(
+                    {
+                        "e_com_range_filter": False,
+                        "e_com_multi_select": False,
+                        "e_com_show_count": False,
+                    }
+                )
 
     @api.constrains("domain")
     def _validate_domain(self):
