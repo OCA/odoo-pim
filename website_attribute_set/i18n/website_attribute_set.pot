@@ -42,6 +42,30 @@ msgid "Attribute set owner mixin"
 msgstr ""
 
 #. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
+"enabled."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"Cannot use attribute as filter if it doesn't have E-Commerce Visibility "
+"enabled."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"Cannot use attribute as specification if it doesn't have E-Commerce "
+"Visibility enabled."
+msgstr ""
+
+#. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Code"
 msgstr ""
@@ -57,6 +81,21 @@ msgid "Display Name"
 msgstr ""
 
 #. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
+msgid "E Com Filter"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
+msgid "E Com Specification"
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
+msgid "E-Commerce"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
 msgid "E-Commerce Multi-Select"
 msgstr ""
@@ -64,6 +103,14 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_range_filter
 msgid "E-Commerce Range Filter"
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"E-Commerce Range Filter, Multi-Select and Show Count require the attribute "
+"to be enabled as a filter."
 msgstr ""
 
 #. module: website_attribute_set
@@ -101,13 +148,27 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_searchable
 msgid ""
-"If selected the attribute will be included in e-commerce search.\n"
+"If selected, the attribute will be included in e-commerce search.\n"
 "        Disable for large text fields to improve search performance."
 msgstr ""
 
 #. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_filter
+msgid ""
+"If selected, the attribute will be shown as a filter\n"
+"         in the e-commerce shop sidebar."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_specification
+msgid ""
+"If selected, the attribute will be shown as specification\n"
+"             in e-commerce website app product view."
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
-msgid "If selected the attribute will be shown in e-commerce website app."
+msgid "If selected, the attribute will be shown in e-commerce website app."
 msgstr ""
 
 #. module: website_attribute_set
