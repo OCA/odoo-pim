@@ -43,11 +43,11 @@ class ProductProduct(models.Model):
                 if isinstance(values, models.BaseModel):
                     if len(values) == 1:
                         groups[attribute.attribute_group_id][attribute][product] = (
-                            values.name
+                            values.display_name
                         )
                     elif len(values) > 1:
                         groups[attribute.attribute_group_id][attribute][product] = (
-                            values.mapped("name")
+                            values.mapped("display_name")
                         )
                 elif values:
                     groups[attribute.attribute_group_id][attribute][product] = values
