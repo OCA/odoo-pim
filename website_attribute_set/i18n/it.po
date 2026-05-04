@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-14 13:45+0000\n"
+"PO-Revision-Date: 2026-05-04 11:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -54,6 +54,8 @@ msgid ""
 "Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Non è possibile rendere un attributo ricercabile se la visibilità e-commerce "
+"non è abilitata."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -62,6 +64,8 @@ msgid ""
 "Cannot use attribute as filter if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Non è possibile utilizzare un attributo come filtro se la visibilità e-"
+"commerce non è abilitata."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -70,6 +74,8 @@ msgid ""
 "Cannot use attribute as specification if it doesn't have E-Commerce "
 "Visibility enabled."
 msgstr ""
+"Non è possibile utilizzare l'attributo come specifica se la visibilità e-"
+"commerce non è abilitata."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
@@ -89,17 +95,17 @@ msgstr "Nome visualizzato"
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
 msgid "E Com Filter"
-msgstr ""
+msgstr "Filtro E Com"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
 msgid "E Com Specification"
-msgstr ""
+msgstr "Specifica E Com"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
 msgid "E-Commerce"
-msgstr ""
+msgstr "E-Commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
@@ -118,6 +124,8 @@ msgid ""
 "E-Commerce Range Filter, Multi-Select and Show Count require the attribute "
 "to be enabled as a filter."
 msgstr ""
+"Le funzioni Filtro intervallo e-commerce, Selezione multipla e Mostra "
+"conteggio richiedono che l'attributo sia abilitato come filtro."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_searchable
@@ -160,6 +168,9 @@ msgid ""
 "If selected, the attribute will be included in e-commerce search.\n"
 "        Disable for large text fields to improve search performance."
 msgstr ""
+"Se selezionata, l'attributo verrà incluso nella ricerca e-commerce.\n"
+"        Disabilitare per ampi campi di testo per migliorare i risultati "
+"della ricerca."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_filter
@@ -167,6 +178,8 @@ msgid ""
 "If selected, the attribute will be shown as a filter\n"
 "         in the e-commerce shop sidebar."
 msgstr ""
+"Se selezionato, l'attributo verrà visualizzato come filtro\n"
+"         nella barra laterale del negozio online."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_specification
@@ -174,11 +187,15 @@ msgid ""
 "If selected, the attribute will be shown as specification\n"
 "             in e-commerce website app product view."
 msgstr ""
+"Se selezionato, l'attributo verrà visualizzato come specifica\n"
+"             nella vista prodotto dell'app del sito web di e-commerce."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "If selected, the attribute will be shown in e-commerce website app."
 msgstr ""
+"Se selezionata, l'attributo verrà visualizzato nell'app e-commerce del sito "
+"web."
 
 #. module: website_attribute_set
 #. odoo-python
