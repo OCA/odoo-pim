@@ -6,24 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-11 20:45+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
 msgid "<span class=\"sign_badge_price_extra\">✓</span>"
-msgstr ""
+msgstr "<span class=\"sign_badge_price_extra\">✓</span>"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_multi_select
@@ -31,16 +33,19 @@ msgid ""
 "Allow selecting multiple values for this attribute filter.\n"
 "        Products matching ANY selected value will be shown (OR logic)."
 msgstr ""
+"Sta het selecteren van meerdere waarden toe voor dit kenmerkfilter.\n"
+"        Producten die overeenkomen met ELKE geselecteerde waarde worden "
+"getoond (OF-logica)."
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_attribute
 msgid "Attribute"
-msgstr ""
+msgstr "Kenmerk"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Kenmerkenset eigenaar mixin"
 
 #. module: website_attribute_set
 #. odoo-python
@@ -49,6 +54,8 @@ msgid ""
 "Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Kan kenmerk niet doorzoekbaar maken als E-commerce zichtbaarheid niet is "
+"ingeschakeld."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -57,6 +64,8 @@ msgid ""
 "Cannot use attribute as filter if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Kan kenmerk niet als filter gebruiken als E-commerce zichtbaarheid niet is "
+"ingeschakeld."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -65,11 +74,13 @@ msgid ""
 "Cannot use attribute as specification if it doesn't have E-Commerce "
 "Visibility enabled."
 msgstr ""
+"Kan kenmerk niet als specificatie gebruiken als E-commerce zichtbaarheid "
+"niet is ingeschakeld."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__display_name
@@ -79,32 +90,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__display_name
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Schermnaam"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
 msgid "E Com Filter"
-msgstr ""
+msgstr "E-com filter"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
 msgid "E Com Specification"
-msgstr ""
+msgstr "E-com specificatie"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
 msgid "E-Commerce"
-msgstr ""
+msgstr "E-commerce"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
 msgid "E-Commerce Multi-Select"
-msgstr ""
+msgstr "E-commerce meervoudige selectie"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_range_filter
 msgid "E-Commerce Range Filter"
-msgstr ""
+msgstr "E-commerce bereikfilter"
 
 #. module: website_attribute_set
 #. odoo-python
@@ -113,21 +124,23 @@ msgid ""
 "E-Commerce Range Filter, Multi-Select and Show Count require the attribute "
 "to be enabled as a filter."
 msgstr ""
+"E-commerce bereikfilter, meervoudige selectie en aantal weergeven vereisen "
+"dat het kenmerk is ingeschakeld als filter."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_searchable
 msgid "E-Commerce Searchable"
-msgstr ""
+msgstr "E-commerce doorzoekbaar"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "E-Commerce Show Count"
-msgstr ""
+msgstr "E-commerce aantal weergeven"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "E-Commerce Visibility"
-msgstr ""
+msgstr "E-commerce zichtbaarheid"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
@@ -135,6 +148,8 @@ msgid ""
 "For numeric attributes (integer/float), show min/max range inputs\n"
 "        instead of individual value selection in the shop filter."
 msgstr ""
+"Toon voor numerieke kenmerken (geheel getal/float) min/max bereik-invoer\n"
+"        in plaats van individuele waardeselectie in het winkelfilter."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__id
@@ -144,7 +159,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__id
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_searchable
@@ -152,6 +167,10 @@ msgid ""
 "If selected, the attribute will be included in e-commerce search.\n"
 "        Disable for large text fields to improve search performance."
 msgstr ""
+"Indien geselecteerd, wordt het kenmerk opgenomen in de e-commerce "
+"zoekopdracht.\n"
+"        Schakel dit uit voor grote tekstvelden om de zoekprestaties te "
+"verbeteren."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_filter
@@ -159,6 +178,8 @@ msgid ""
 "If selected, the attribute will be shown as a filter\n"
 "         in the e-commerce shop sidebar."
 msgstr ""
+"Indien geselecteerd, wordt het kenmerk weergegeven als een filter\n"
+"         in de zijbalk van de e-commerce winkel."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_specification
@@ -166,80 +187,83 @@ msgid ""
 "If selected, the attribute will be shown as specification\n"
 "             in e-commerce website app product view."
 msgstr ""
+"Indien geselecteerd, wordt het kenmerk weergegeven als specificatie\n"
+"             in de productweergave van de e-commerce website."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "If selected, the attribute will be shown in e-commerce website app."
 msgstr ""
+"Indien geselecteerd, wordt het kenmerk getoond in de e-commerce website-app."
 
 #. module: website_attribute_set
 #. odoo-python
 #: code:addons/website_attribute_set/models/attribute_attribute.py:0
 msgid "Invalid domain: %s"
-msgstr ""
+msgstr "Ongeldig domein: %s"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.custom_specifications_table
 msgid "Others"
-msgstr ""
+msgstr "Andere"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Product"
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_product_category
 msgid "Product Categories"
-msgstr ""
+msgstr "Productcategorieën"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Productvariant"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Reference Codes"
-msgstr ""
+msgstr "Referentiecodes"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "Show the number of matching products next to each filter option."
-msgstr ""
+msgstr "Toon het aantal overeenkomende producten naast elke filteroptie."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 msgid "Specifications"
-msgstr ""
+msgstr "Specificaties"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Uncategorized"
-msgstr ""
+msgstr "Niet gecategoriseerd"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
 msgid "Website Searchable Mixin"
-msgstr ""
+msgstr "Website doorzoekbare mixin"
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
 msgid "eCommerce Categories"
-msgstr ""
+msgstr "E-commerce categorieën"
