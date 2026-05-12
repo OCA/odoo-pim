@@ -222,7 +222,7 @@
             <attribute
                 name="t-attf-class"
                 remove="{{not (product.valid_product_template_attribute_line_ids or product._has_multiple_uoms()) and 'd-none' or ''}}"
-                add="{{not (product.valid_product_template_attribute_line_ids or product.attribute_set_id.attribute_ids.filtered(lambda a: a.e_com_specification) or product._has_multiple_uoms()) and 'd-none' or ''}}"
+                add="{{not (product.valid_product_template_attribute_line_ids or product.sudo().attribute_set_id.attribute_ids.filtered(lambda a: a.e_com_specification) or product._has_multiple_uoms()) and 'd-none' or ''}}"
                 separator=" "
             />
         </xpath>
