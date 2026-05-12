@@ -90,8 +90,16 @@ class WebsiteSale(main.WebsiteSale):
         all_additional_attributes = request.env["attribute.attribute"].sudo()
         product_attrs_map = {}
         if search_product:
+            set_ids = list(
+                {p.attribute_set_id.id for p in search_product if p.attribute_set_id}
+            )
+            attrs_per_set = (
+                search_product.sudo()._get_extra_attributes_per_set(set_ids)
+                if set_ids
+                else {}
+            )
             for product in search_product:
-                additional_attributes = product.sudo().get_extra_attributes()
+                additional_attributes = attrs_per_set.get(product.attribute_set_id.id)
                 if additional_attributes:
                     product_attrs_map[product.id] = additional_attributes
                     all_additional_attributes |= additional_attributes

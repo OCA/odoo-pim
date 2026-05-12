@@ -2,7 +2,7 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import api, models
 
 
 class AttributeSetOwnerMixin(models.AbstractModel):
@@ -18,18 +18,37 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         set, matching the behaviour of the backend form view.
         """
         self.ensure_one()
-        domain = [
-            ("model", "=", self._name),
-            ("attribute_set_ids", "!=", False),
-        ]
+        if not self.attribute_set_id:
+            return self.env["attribute.attribute"]
+        return self._get_extra_attributes_per_set(self.attribute_set_id.ids).get(
+            self.attribute_set_id.id, self.env["attribute.attribute"]
+        )
+
+    @api.model
+    def _get_extra_attributes_per_set(self, attribute_set_ids):
+        """Return ``{attribute_set_id: attributes_recordset}`` for given sets.
+
+        Batched counterpart of :meth:`get_extra_attributes`: resolves each
+        attribute's descendant attribute sets only once instead of once per
+        owner record, which removes the quadratic ``child_of`` search cost
+        when the method is used over a listing (e.g. the shop page).
+        """
         attribute = self.env["attribute.attribute"]
-        if self.attribute_set_id:
-            attributes = attribute.search(domain)
-            attribute_set_id = self.attribute_set_id
-            filtered_attributes = attributes.filtered(
-                lambda rec: attribute_set_id.id in rec._get_all_set_ids()
-                and rec.e_com_visibility
+        if not attribute_set_ids:
+            return {}
+        attributes = attribute.search(
+            [
+                ("model", "=", self._name),
+                ("attribute_set_ids", "!=", False),
+                ("e_com_visibility", "=", True),
+            ]
+        )
+        attr_descendants = {
+            attr.id: set(attr._get_all_set_ids()) for attr in attributes
+        }
+        result = {}
+        for set_id in set(attribute_set_ids):
+            result[set_id] = attributes.filtered(
+                lambda a, sid=set_id: sid in attr_descendants[a.id]
             )
-            return filtered_attributes
-        else:
-            return attribute
+        return result
