@@ -67,7 +67,10 @@ class AttributeAttribute(models.Model):
                 rec.field_is_searchable = False
                 continue
             field = model_obj._fields.get(rec.name)
-            rec.field_is_searchable = bool(field and (field.store or field.search))
+            rec.field_is_searchable = bool(
+                field
+                and (field.store or field.search or getattr(field, "sparse", None))
+            )
 
     @api.constrains("e_com_filter")
     def _check_e_com_filter(self):

@@ -10,6 +10,8 @@ from odoo.models import BaseModel
 
 from odoo.addons.website_sale.controllers import main
 
+from ..models.mixins import _sparse_filter_by_range, _sparse_filter_by_value
+
 
 class WebsiteSale(main.WebsiteSale):
     def _parse_additional_attrib_values(self):
@@ -202,10 +204,19 @@ class WebsiteSale(main.WebsiteSale):
             if not attribute.exists() or not attribute.field_is_searchable:
                 continue
             field_name = attribute.name
+            field = request.env["product.template"]._fields.get(field_name)
+            sparse_col = getattr(field, "sparse", None) if field else None
+            if sparse_col:
+                ids = _sparse_filter_by_range(
+                    request.env, "product.template", sparse_col, field_name, range_vals
+                )
+                if ids:
+                    conditions.append([("id", "in", ids)])
+                continue
             if "min" in range_vals:
-                conditions.append((field_name, ">=", range_vals["min"]))
+                conditions.append([(field_name, ">=", range_vals["min"])])
             if "max" in range_vals:
-                conditions.append((field_name, "<=", range_vals["max"]))
+                conditions.append([(field_name, "<=", range_vals["max"])])
         return conditions
 
     def _build_value_filter_conditions(self, attrib_values):
@@ -227,6 +238,37 @@ class WebsiteSale(main.WebsiteSale):
 
             field_name = attribute.name
             attr_type = attribute.attribute_type
+            field = request.env["product.template"]._fields.get(field_name)
+            sparse_col = getattr(field, "sparse", None) if field else None
+            if sparse_col:
+                if len(values) > 1 and attribute.e_com_multi_select:
+                    all_ids = []
+                    for v in values:
+                        all_ids.extend(
+                            _sparse_filter_by_value(
+                                request.env,
+                                "product.template",
+                                sparse_col,
+                                field_name,
+                                attr_type,
+                                v,
+                            )
+                        )
+                    if all_ids:
+                        conditions.append([("id", "in", list(set(all_ids)))])
+                else:
+                    for attr_value in values:
+                        ids = _sparse_filter_by_value(
+                            request.env,
+                            "product.template",
+                            sparse_col,
+                            field_name,
+                            attr_type,
+                            attr_value,
+                        )
+                        if ids:
+                            conditions.append([("id", "in", ids)])
+                continue
 
             if len(values) > 1 and attribute.e_com_multi_select:
                 or_conds = [

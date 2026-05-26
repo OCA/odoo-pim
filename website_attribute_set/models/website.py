@@ -6,6 +6,8 @@ import re
 
 from odoo import api, models
 
+from .mixins import _sparse_filter_by_value
+
 
 class Website(models.Model):
     _inherit = "website"
@@ -28,6 +30,26 @@ class Website(models.Model):
                     if attribute_field.attribute_type in ("binary", "image"):
                         attribute_name = f"{attribute_name}_filename"
                     additional_attrib_value = additional_attrib[1]
+
+                    # Sparse (serialized) fields cannot be used in ORM domain
+                    # conditions because they are not stored in their own SQL
+                    # column.  Resolve to a set of matching IDs via a raw JSONB
+                    # query so the base_domain stays SQL-safe.
+                    pt_field = self.env["product.template"]._fields.get(attribute_name)
+                    sparse_col = getattr(pt_field, "sparse", None) if pt_field else None
+                    if sparse_col:
+                        ids = _sparse_filter_by_value(
+                            self.env,
+                            "product.template",
+                            sparse_col,
+                            attribute_name,
+                            attribute_field.attribute_type,
+                            additional_attrib_value,
+                        )
+                        if ids:
+                            base_domain.append([("id", "in", ids)])
+                        continue
+
                     if attribute_field.attribute_type in (
                         "select",
                         "multiselect",
