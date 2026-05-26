@@ -16,7 +16,14 @@ def search_extra(env, search_term):
     attributes = (
         env["attribute.attribute"].sudo().search([("e_com_searchable", "=", True)])
     )
+    product_template_fields = env["product.template"]._fields
     for attribute in attributes:
+        field = product_template_fields.get(attribute.name)
+        if not field or not (field.store or field.search):
+            _logger.debug(
+                "Skipping non-searchable field %s in e-commerce search", attribute.name
+            )
+            continue
         if attribute.attribute_type in ["char", "text"]:
             extra_domain = [(attribute.name, "ilike", search_term)]
             extra_domains.append(extra_domain)

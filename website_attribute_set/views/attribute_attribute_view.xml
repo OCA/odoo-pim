@@ -13,9 +13,16 @@
                             <field name="e_com_visibility" />
                         </group>
                         <group invisible="not e_com_visibility">
-                            <field name="e_com_filter" />
+                            <field
+                                name="e_com_filter"
+                                readonly="not field_is_searchable and not e_com_filter"
+                            />
                             <field name="e_com_specification" />
-                            <field name="e_com_searchable" />
+                            <field name="field_is_searchable" invisible="1" />
+                            <field
+                                name="e_com_searchable"
+                                readonly="not field_is_searchable and not e_com_searchable"
+                            />
                             <field
                                 name="e_com_range_filter"
                                 invisible="attribute_type not in ('integer', 'float')"

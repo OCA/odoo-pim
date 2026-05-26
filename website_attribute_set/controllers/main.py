@@ -199,7 +199,7 @@ class WebsiteSale(main.WebsiteSale):
         Attribute = request.env["attribute.attribute"].sudo()
         for attr_id, range_vals in range_filters.items():
             attribute = Attribute.browse(attr_id)
-            if not attribute.exists():
+            if not attribute.exists() or not attribute.field_is_searchable:
                 continue
             field_name = attribute.name
             if "min" in range_vals:
@@ -222,7 +222,7 @@ class WebsiteSale(main.WebsiteSale):
 
         for attr_id, values in attr_values_grouped.items():
             attribute = Attribute.browse(attr_id)
-            if not attribute.exists():
+            if not attribute.exists() or not attribute.field_is_searchable:
                 continue
 
             field_name = attribute.name
