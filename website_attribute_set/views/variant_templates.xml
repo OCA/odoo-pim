@@ -30,7 +30,7 @@
                             t-attf-class="variant_attribute"
                         >
                             <strong
-                                t-field="attribute.field_description"
+                                t-out="attribute.field_description"
                                 class="attribute_name"
                             />
 
