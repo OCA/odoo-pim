@@ -331,6 +331,29 @@ class AttributeAttribute(models.Model):
             "target": "new",
         }
 
+    # Attribute types whose ORM convert_to_read() returns a Python object that
+    # json.dumps() cannot serialise (datetime, date, bytes).  Until
+    # base_sparse_field normalises these before writing the JSON blob, combining
+    # such types with serialized=True would cause a TypeError at save time.
+    _SERIALIZED_INCOMPATIBLE_TYPES = ("date", "datetime", "binary", "image")
+
+    @api.constrains("attribute_type", "serialized")
+    def _check_serialized_type_compatibility(self):
+        for rec in self:
+            if (
+                rec.serialized
+                and rec.attribute_type in self._SERIALIZED_INCOMPATIBLE_TYPES
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "The attribute type '%(attr_type)s' is not compatible with "
+                        "the 'Serialized' option because its value cannot be stored "
+                        "as JSON. Please uncheck 'Serialized' or choose a "
+                        "different attribute type.",
+                        attr_type=rec.attribute_type,
+                    )
+                )
+
     @api.model_create_multi
     def create(self, vals_list):
         """Create an attribute.attribute
