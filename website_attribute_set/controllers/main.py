@@ -10,16 +10,36 @@ from odoo.models import BaseModel
 
 from odoo.addons.website_sale.controllers import main
 
-from ..models.mixins import _sparse_filter_by_range, _sparse_filter_by_value
+from ..models.mixins import (
+    _parse_relational_id,
+    _sparse_filter_by_range,
+    _sparse_filter_by_value,
+)
 
 
 class WebsiteSale(main.WebsiteSale):
     def _parse_additional_attrib_values(self):
-        """Parse additional_attribute_values params from the request."""
+        """Parse additional_attribute_values params from the request.
+
+        The JS handler (onChangeAttribute) groups all selected values for the
+        same attribute into a single URL param by joining them with a comma:
+          additional_attribute_values=42-val1,val2,val3
+
+        This method splits them back so every (attr_id, value) pair is
+        returned as a separate two-element list.
+        """
         request_args = request.httprequest.args
         raw_list = request_args.getlist("additional_attribute_values")
-        parsed = [[x for x in v.split("-", maxsplit=1)] for v in raw_list if v]
-        return [[int(sublist[0]), sublist[1]] for sublist in parsed]
+        result = []
+        for raw in raw_list:
+            if not raw:
+                continue
+            first_dash = raw.index("-")
+            attr_id = int(raw[:first_dash])
+            for value in raw[first_dash + 1 :].split(","):
+                if value:
+                    result.append([attr_id, value])
+        return result
 
     def _parse_additional_range_filters(self):
         """Parse additional_attr_min_/max_ params from the request."""
@@ -148,8 +168,10 @@ class WebsiteSale(main.WebsiteSale):
         all_attribute_values = set()
         value_counts = {}
         for product in attr_products:
-            attribute_values = product[field_name] or None
-            if not attribute_values:
+            attribute_values = product[field_name]
+            # For boolean, False is a valid filter value (not "no value").
+            # For every other type, falsy means nothing is set.
+            if not attribute_values and attr_type != "boolean":
                 continue
             if isinstance(attribute_values, BaseModel) and len(attribute_values) > 1:
                 for rec in attribute_values:
@@ -293,11 +315,12 @@ class WebsiteSale(main.WebsiteSale):
             value = attr_value.lower() == "true"
             return [(field_name, "=", value)]
         elif attr_type in ("select", "multiselect"):
-            try:
-                option_id = int(attr_value)
-                return [(field_name, "=", option_id)]
-            except (ValueError, TypeError):
+            # The URL value may be a plain integer string or the
+            # 'name-{model}-id-{N}' format from the filter template.
+            option_id = _parse_relational_id(attr_value)
+            if option_id is None:
                 return None
+            return [(field_name, "=", option_id)]
         elif attr_type == "integer":
             try:
                 value = int(attr_value)

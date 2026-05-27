@@ -149,11 +149,11 @@
                     >
                         <input
                             type="checkbox"
-                            name="additional-attribute_value"
+                            name="additional_attribute_values"
                             class="form-check-input"
                             t-att-id="'%s-%s' % (attribute.id, value)"
                             t-att-value="'%s-%s' % (attribute.id, value)"
-                            t-att-checked="(attribute.id, value) in additional_attrib_set"
+                            t-att-checked="(attribute.id, '%s' % value) in additional_attrib_set"
                         />
                         <label
                             class="form-check-label fw-normal"

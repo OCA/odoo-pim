@@ -3,12 +3,31 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
+import re
 from difflib import SequenceMatcher
 
 from odoo import api, models
 from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
+
+# Matches the 'name-{model.name}-id-{N}' format emitted by select/multiselect
+# filter templates, e.g. 'name-attribute.option-id-7'.
+_RE_RELATIONAL_ID = re.compile(r"-id-(\d+)$")
+
+
+def _parse_relational_id(attr_value):
+    """Return the integer record ID from a filter value string.
+
+    Handles both a plain integer string (``'7'``) and the
+    ``'name-{model}-id-{N}'`` format produced by the select/multiselect
+    filter templates.  Returns ``None`` if neither form can be parsed.
+    """
+    try:
+        return int(attr_value)
+    except (ValueError, TypeError):
+        m = _RE_RELATIONAL_ID.search(str(attr_value))
+        return int(m.group(1)) if m else None
 
 
 def _sparse_search_ilike(env, model_name, sparse_col, field_name, search_term):
@@ -21,9 +40,7 @@ def _sparse_search_ilike(env, model_name, sparse_col, field_name, search_term):
 
 
 _SPARSE_CAST = {
-    "boolean": ("boolean", lambda v: str(v).lower() == "true"),
     "integer": ("integer", int),
-    "select": ("integer", int),
     "float": ("numeric", float),
 }
 
@@ -33,13 +50,42 @@ def _sparse_filter_by_value(
 ):
     table = env[model_name]._table
     try:
-        if attr_type == "multiselect":
-            sql = (
-                f"SELECT id FROM {table}"
-                f" WHERE ({sparse_col}::jsonb -> %s)"
-                f" @> jsonb_build_array(%s::integer)"
-            )
-            env.cr.execute(sql, (field_name, int(attr_value)))
+        # Relational types store IDs; the URL value may be either a plain
+        # integer string or the 'name-{model}-id-{N}' template format.
+        if attr_type in ("select", "multiselect"):
+            option_id = _parse_relational_id(attr_value)
+            if option_id is None:
+                return []
+            if attr_type == "multiselect":
+                # many2many: stored as a JSON array of IDs
+                sql = (
+                    f"SELECT id FROM {table}"
+                    f" WHERE ({sparse_col}::jsonb -> %s)"
+                    f" @> jsonb_build_array(%s::integer)"
+                )
+            else:
+                # select (many2one): stored as a single integer ID
+                sql = (
+                    f"SELECT id FROM {table}"
+                    f" WHERE ({sparse_col}::jsonb ->> %s)::integer = %s"
+                )
+            env.cr.execute(sql, (field_name, option_id))
+            return [row[0] for row in env.cr.fetchall()]
+        if attr_type == "boolean":
+            value = str(attr_value).lower() == "true"
+            if value:
+                sql = (
+                    f"SELECT id FROM {table}"
+                    f" WHERE ({sparse_col}::jsonb ->> %s)::boolean = TRUE"
+                )
+                env.cr.execute(sql, (field_name,))
+            else:
+                sql = (
+                    f"SELECT id FROM {table}"
+                    f" WHERE ({sparse_col}::jsonb -> %s) IS NULL"
+                    f"    OR ({sparse_col}::jsonb ->> %s)::boolean = FALSE"
+                )
+                env.cr.execute(sql, (field_name, field_name))
             return [row[0] for row in env.cr.fetchall()]
         cast_info = _SPARSE_CAST.get(attr_type)
         if cast_info:
