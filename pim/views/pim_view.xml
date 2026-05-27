@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="product_attribute_value_action" model="ir.actions.act_window">
+        <field name="name">Product Attribute Values</field>
+        <field name="res_model">product.attribute.value</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="root_menu_pim"
+        name="PIM"
+        sequence="6"
+        web_icon="pim,static/description/icon.png"
+        groups="pim.group_pim_reader"
+    />
+    <!-- Main Menus -->
+    <menuitem
+        id="main_menu_product"
+        name="Products"
+        parent="root_menu_pim"
+        sequence="0"
+    />
+    <menuitem
+        id="main_menu_variant_attribute"
+        name="Variants Attributes"
+        parent="root_menu_pim"
+        sequence="10"
+    />
+    <menuitem
+        id="main_menu_category"
+        name="Categories"
+        parent="root_menu_pim"
+        action="product.product_category_action_form"
+        sequence="20"
+    />
+    <!-- Menu PRODUCT -->
+    <menuitem
+        id="menu_product_template"
+        name="Products"
+        action="pim.product_template_action"
+        parent="main_menu_product"
+        sequence="0"
+    />
+    <menuitem
+        id="menu_product_product"
+        name="Product Variants"
+        action="product.product_normal_action_sell"
+        parent="main_menu_product"
+        sequence="1"
+    />
+    <!-- Menu Attributes -->
+    <menuitem
+        id="menu_variant_attribute"
+        name="Variants Attributes"
+        action="product.attribute_action"
+        parent="main_menu_variant_attribute"
+        sequence="0"
+    />
+    <menuitem
+        id="menu_variant_attribute_value"
+        name="Attributes Values"
+        action="pim.product_attribute_value_action"
+        parent="main_menu_variant_attribute"
+        sequence="1"
+    />
+</odoo>
