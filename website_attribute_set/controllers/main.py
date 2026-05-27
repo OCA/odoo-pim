@@ -2,6 +2,8 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
+
 from odoo.fields import Domain
 from odoo.http import request
 from odoo.models import BaseModel
@@ -87,54 +89,88 @@ class WebsiteSale(main.WebsiteSale):
         extra_values["additional_attributes"] = []
 
         search_product = values.get("search_product")
+        if not search_product:
+            return extra_values
+
+        sudo_products = search_product.sudo()
+        sudo_products.fetch(["attribute_set_id"])
+        set_ids = {p.attribute_set_id.id for p in sudo_products if p.attribute_set_id}
+        if not set_ids:
+            return extra_values
+
+        attrs_per_set = sudo_products._get_extra_attributes_per_set(list(set_ids))
         all_additional_attributes = request.env["attribute.attribute"].sudo()
-        product_attrs_map = {}
-        if search_product:
-            for product in search_product:
-                additional_attributes = product.sudo().get_extra_attributes()
-                if additional_attributes:
-                    product_attrs_map[product.id] = additional_attributes
-                    all_additional_attributes |= additional_attributes
+        attr_ids_per_set = {}
+        for sid, attrs in attrs_per_set.items():
+            all_additional_attributes |= attrs
+            attr_ids_per_set[sid] = set(attrs.ids)
+        if not all_additional_attributes:
+            return extra_values
 
-            if all_additional_attributes:
-                for attribute in all_additional_attributes:
-                    all_attribute_values = set()
-                    value_counts = {}
+        product_ids_per_attr = defaultdict(list)
+        for product in sudo_products:
+            sid = product.attribute_set_id.id
+            if not sid:
+                continue
+            for attr_id in attr_ids_per_set.get(sid, ()):
+                product_ids_per_attr[attr_id].append(product.id)
 
-                    for product in search_product:
-                        if attribute not in product_attrs_map.get(product.id, []):
-                            continue
-                        attribute_values = product.sudo().get_extra_attribute_values(
-                            attribute
-                        )
-                        if attribute_values:
-                            if (
-                                isinstance(attribute_values, BaseModel)
-                                and len(attribute_values) > 1
-                            ):
-                                for rec in attribute_values:
-                                    all_attribute_values.add(rec)
-                                    if attribute.e_com_show_count:
-                                        key = rec.id if hasattr(rec, "id") else rec
-                                        value_counts[key] = value_counts.get(key, 0) + 1
-                            else:
-                                all_attribute_values.add(attribute_values)
-                                if attribute.e_com_show_count:
-                                    if hasattr(attribute_values, "id"):
-                                        key = attribute_values.id
-                                    else:
-                                        key = attribute_values
-                                    value_counts[key] = value_counts.get(key, 0) + 1
-
-                    attr_dict = {
-                        "attribute": attribute,
-                        "all_attribute_values": list(all_attribute_values),
-                    }
-                    if attribute.e_com_show_count:
-                        attr_dict["value_counts"] = value_counts
-                    extra_values["additional_attributes"].append(attr_dict)
+        for attribute in all_additional_attributes:
+            attr_dict = self._build_additional_attribute_facet(
+                attribute, sudo_products, product_ids_per_attr
+            )
+            if attr_dict is not None:
+                extra_values["additional_attributes"].append(attr_dict)
 
         return extra_values
+
+    def _build_additional_attribute_facet(
+        self, attribute, sudo_products, product_ids_per_attr
+    ):
+        """Build the facet dict for a single additional attribute.
+
+        Returns ``None`` when no product in the current shop result carries a
+        value for ``attribute``, so the caller can skip it.
+        """
+        pids = product_ids_per_attr.get(attribute.id)
+        if not pids:
+            return None
+        attr_type = attribute.attribute_type or attribute.ttype
+        field_name = (
+            f"{attribute.name}_filename"
+            if attr_type in ("binary", "image")
+            else attribute.name
+        )
+        attr_products = sudo_products.browse(pids)
+        attr_products.mapped(field_name)
+        all_attribute_values = set()
+        value_counts = {}
+        for product in attr_products:
+            attribute_values = product[field_name] or None
+            if not attribute_values:
+                continue
+            if isinstance(attribute_values, BaseModel) and len(attribute_values) > 1:
+                for rec in attribute_values:
+                    all_attribute_values.add(rec)
+                    if attribute.e_com_show_count:
+                        key = rec.id if hasattr(rec, "id") else rec
+                        value_counts[key] = value_counts.get(key, 0) + 1
+            else:
+                all_attribute_values.add(attribute_values)
+                if attribute.e_com_show_count:
+                    key = (
+                        attribute_values.id
+                        if hasattr(attribute_values, "id")
+                        else attribute_values
+                    )
+                    value_counts[key] = value_counts.get(key, 0) + 1
+        attr_dict = {
+            "attribute": attribute,
+            "all_attribute_values": list(all_attribute_values),
+        }
+        if attribute.e_com_show_count:
+            attr_dict["value_counts"] = value_counts
+        return attr_dict
 
     def _get_shop_domain(self, search, category, attribute_value_dict, **kwargs):
         """Extend shop domain with additional attribute filters."""

@@ -40,7 +40,7 @@
                                 <ul
                                     t-att-data-attribute_id="attribute.id"
                                     t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
-                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                    t-att-name="'set-%s-attr-%s' % (product.sudo().attribute_set_id.id, attribute.id)"
                                 >
                                     <t
                                         t-foreach="attribute_values"
@@ -77,7 +77,7 @@
                                 <ul
                                     t-att-data-attribute_id="attribute.id"
                                     t-attf-class="list-inline list-unstyled o_wsale_product_attribute"
-                                    t-att-name="'set-%s-attr-%s' % (product.attribute_set_id.id, attribute.id)"
+                                    t-att-name="'set-%s-attr-%s' % (product.sudo().attribute_set_id.id, attribute.id)"
                                 >
                                     <li
                                         t-att-value="'%s-%s' % (attribute.id,attribute_values)"
