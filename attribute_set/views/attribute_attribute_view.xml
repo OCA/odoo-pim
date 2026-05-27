@@ -49,7 +49,7 @@
                             <field
                                 name="serialized"
                                 readonly="create_date"
-                                invisible="nature == 'native'"
+                                invisible="nature == 'native' or attribute_type in ['date', 'datetime', 'binary', 'image']"
                             />
                         </group>
                         <newline />
@@ -143,6 +143,7 @@
                 />
                 <field name="field_description" />
                 <field name="attribute_type" />
+                <field name="serialized" optional="hide" />
                 <field name="attribute_group_id" />
                 <field name="attribute_set_ids" widget="many2many_tags" />
                 <field name="nature" />
