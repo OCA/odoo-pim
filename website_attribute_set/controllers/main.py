@@ -190,7 +190,18 @@ class WebsiteSale(main.WebsiteSale):
                     value_counts[key] = value_counts.get(key, 0) + 1
         attr_dict = {
             "attribute": attribute,
-            "all_attribute_values": list(all_attribute_values),
+            "all_attribute_values": sorted(
+                all_attribute_values,
+                key=lambda v: v.display_name
+                if hasattr(v, "display_name")
+                else (
+                    v
+                    if isinstance(v, (int, float))
+                    else str(v)
+                    if v is not None
+                    else ""
+                ),
+            ),
         }
         if attribute.e_com_show_count:
             attr_dict["value_counts"] = value_counts
