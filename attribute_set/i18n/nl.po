@@ -132,7 +132,8 @@ msgstr "Booleaans"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "Can't change the attribute's Relational Model in order to\n"
-"                        avoid conflicts with existing objects using this attribute.\n"
+"                        avoid conflicts with existing objects using this "
+"attribute.\n"
 "                        Please create a new one."
 msgstr ""
 "Kan het relationeel model van het kenmerk niet wijzigen om\n"
@@ -144,7 +145,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid "Can't change the type of an attribute. Please create a new one."
-msgstr "Kan het type van een kenmerk niet wijzigen. Maak a.u.b. een nieuwe aan."
+msgstr ""
+"Kan het type van een kenmerk niet wijzigen. Maak a.u.b. een nieuwe aan."
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
@@ -423,9 +425,11 @@ msgstr ""
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialized
 msgid ""
 "If serialized, the attribute's field will be stored in the serialization\n"
-"            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized\n"
+"            field 'x_custom_json_attrs' (i.e. a JSON containing all the "
+"serialized\n"
 "            fields values) instead of creating a new SQL column for this\n"
-"            attribute's field. Useful to increase speed requests if creating a\n"
+"            attribute's field. Useful to increase speed requests if creating "
+"a\n"
 "            high number of attributes."
 msgstr ""
 "Indien geserialiseerd, wordt het veld van het kenmerk opgeslagen in het\n"
@@ -487,7 +491,8 @@ msgstr "Ir Model Velden"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "It is not allowed to change the boolean 'Serialized'.\n"
-"                        A serialized field can not be change to non-serialized                         and vice versa."
+"                        A serialized field can not be change to non-"
+"serialized                         and vice versa."
 msgstr ""
 "Het is niet toegestaan om de boolean 'Geserialiseerd' te wijzigen.\n"
 "                        Een geserialiseerd veld kan niet worden gewijzigd "
@@ -793,6 +798,15 @@ msgid "The Group order in his attribute's Set"
 msgstr "De volgorde van de groep in de kenmerkenset"
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+msgid ""
+"The attribute type '%(attr_type)s' is not compatible with the 'Serialized' "
+"option because its value cannot be stored as JSON. Please uncheck "
+"'Serialized' or choose a different attribute type."
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence
 msgid "The attribute's order in his group"
 msgstr "De volgorde van het kenmerk in de groep"
@@ -864,9 +878,11 @@ msgstr "Type"
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid ""
 "Use the 'Load Attribute Options' button or specify a Domain\n"
-"                    in order to define the available Options linked to the Relational                    Model.\n"
+"                    in order to define the available Options linked to the "
+"Relational                    Model.\n"
 "\n"
-"                    If the button is not visible, you need to erase the Domain value                    and Save first."
+"                    If the button is not visible, you need to erase the "
+"Domain value                    and Save first."
 msgstr ""
 "Gebruik de knop 'Kenmerkopties laden' of geef een domein op om de "
 "beschikbare opties te definiëren die gekoppeld zijn aan het relationele "
@@ -876,8 +892,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_table
-msgid ""
-"Used for custom many2many fields to define a custom relation table name"
+msgid "Used for custom many2many fields to define a custom relation table name"
 msgstr ""
 "Gebruikt voor aangepaste many2many-velden om een aangepaste relatietabelnaam "
 "te definiëren"
