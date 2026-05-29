@@ -50,6 +50,7 @@
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
         <field name="e_com_searchable" eval="True" />
+        <field name="e_com_filter" eval="True" />
         <field name="e_com_multi_select" eval="True" />
         <field name="e_com_show_count" eval="True" />
     </record>
@@ -79,6 +80,7 @@
         <field name="model_id" ref="product.model_product_template" />
         <field name="e_com_visibility" eval="True" />
         <field name="e_com_searchable" eval="True" />
+        <field name="e_com_filter" eval="True" />
         <field name="e_com_range_filter" eval="True" />
     </record>
 

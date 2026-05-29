@@ -93,7 +93,7 @@
             <label
                 t-attf-class="btn border {{'active bg-primary-subtle border-primary text-primary-emphasis' if (attribute.id, str(value or '')) in additional_attrib_set else ''}}"
                 t-att-for="'%s-%s' % (attribute.id,value)"
-                t-field="attribute.field_description"
+                t-out="value.display_name if hasattr(value, 'display_name') else value"
             />
         </t>
     </template>
@@ -124,7 +124,7 @@
                     <label
                         class="form-check-label fw-normal"
                         t-att-for="'%s-%s' % (attribute.id, value)"
-                        t-field="attribute.field_description"
+                        t-out="'Yes' if value else 'No'"
                     />
                 </div>
             </div>
@@ -149,16 +149,16 @@
                     >
                         <input
                             type="checkbox"
-                            name="additional-attribute_value"
+                            name="additional_attribute_values"
                             class="form-check-input"
                             t-att-id="'%s-%s' % (attribute.id, value)"
                             t-att-value="'%s-%s' % (attribute.id, value)"
-                            t-att-checked="(attribute.id, value) in additional_attrib_set"
+                            t-att-checked="(attribute.id, '%s' % value) in additional_attrib_set"
                         />
                         <label
                             class="form-check-label fw-normal"
                             t-att-for="'%s-%s' % (attribute.id, value)"
-                            t-field="attribute.field_description"
+                            t-out="'Yes' if value else 'No'"
                         />
                     </div>
                 </t>
@@ -284,7 +284,7 @@
                     <h6 t-else="" class="mb-3">
                         <b
                             class="d-none d-lg-block"
-                            t-field="attribute.field_description"
+                            t-out="attribute.field_description"
                         />
                     </h6>
                     <div
@@ -413,7 +413,7 @@
                     t-attf-aria-controls="o_products_additional_attributes_{{attribute.id}}"
                     t-att-aria-expanded="_expand_attributes"
                 >
-                    <b t-field="attribute.field_description" />
+                    <b t-out="attribute.field_description" />
                 </button>
             </div>
         </xpath>

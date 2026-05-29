@@ -11,6 +11,12 @@ from odoo.tools.safe_eval import safe_eval
 class AttributeAttribute(models.Model):
     _inherit = "attribute.attribute"
 
+    field_is_searchable = fields.Boolean(
+        compute="_compute_field_is_searchable",
+        help="Whether the underlying field can be searched "
+        "(stored in SQL or has a search method).",
+    )
+
     e_com_visibility = fields.Boolean(
         string="E-Commerce Visibility",
         default=False,
@@ -50,6 +56,22 @@ class AttributeAttribute(models.Model):
         help="""Show the number of matching products next to each filter option.""",
     )
 
+    @api.depends("name", "model_id")
+    def _compute_field_is_searchable(self):
+        for rec in self:
+            if not rec.name or not rec.model_id:
+                rec.field_is_searchable = False
+                continue
+            model_obj = self.env.get(rec.model_id.model)
+            if model_obj is None:
+                rec.field_is_searchable = False
+                continue
+            field = model_obj._fields.get(rec.name)
+            rec.field_is_searchable = bool(
+                field
+                and (field.store or field.search or getattr(field, "sparse", None))
+            )
+
     @api.constrains("e_com_filter")
     def _check_e_com_filter(self):
         for rec in self:
@@ -58,6 +80,14 @@ class AttributeAttribute(models.Model):
                     self.env._(
                         "Cannot use attribute as filter "
                         "if it doesn't have E-Commerce Visibility enabled."
+                    )
+                )
+            if rec.e_com_filter and not rec.field_is_searchable:
+                raise ValidationError(
+                    self.env._(
+                        "Cannot use attribute '%s' as filter "
+                        "because its field is neither stored nor has a search method.",
+                        rec.field_description,
                     )
                 )
 
@@ -80,6 +110,14 @@ class AttributeAttribute(models.Model):
                     self.env._(
                         "Cannot make attribute searchable "
                         "if it doesn't have E-Commerce Visibility enabled."
+                    )
+                )
+            if rec.e_com_searchable and not rec.field_is_searchable:
+                raise ValidationError(
+                    self.env._(
+                        "Cannot make attribute '%s' searchable "
+                        "because its field is neither stored nor has a search method.",
+                        rec.field_description,
                     )
                 )
 

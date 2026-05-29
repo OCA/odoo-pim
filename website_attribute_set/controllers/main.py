@@ -10,14 +10,36 @@ from odoo.models import BaseModel
 
 from odoo.addons.website_sale.controllers import main
 
+from ..models.mixins import (
+    _parse_relational_id,
+    _sparse_filter_by_range,
+    _sparse_filter_by_value,
+)
+
 
 class WebsiteSale(main.WebsiteSale):
     def _parse_additional_attrib_values(self):
-        """Parse additional_attribute_values params from the request."""
+        """Parse additional_attribute_values params from the request.
+
+        The JS handler (onChangeAttribute) groups all selected values for the
+        same attribute into a single URL param by joining them with a comma:
+          additional_attribute_values=42-val1,val2,val3
+
+        This method splits them back so every (attr_id, value) pair is
+        returned as a separate two-element list.
+        """
         request_args = request.httprequest.args
         raw_list = request_args.getlist("additional_attribute_values")
-        parsed = [[x for x in v.split("-", maxsplit=1)] for v in raw_list if v]
-        return [[int(sublist[0]), sublist[1]] for sublist in parsed]
+        result = []
+        for raw in raw_list:
+            if not raw:
+                continue
+            first_dash = raw.index("-")
+            attr_id = int(raw[:first_dash])
+            for value in raw[first_dash + 1 :].split(","):
+                if value:
+                    result.append([attr_id, value])
+        return result
 
     def _parse_additional_range_filters(self):
         """Parse additional_attr_min_/max_ params from the request."""
@@ -146,8 +168,10 @@ class WebsiteSale(main.WebsiteSale):
         all_attribute_values = set()
         value_counts = {}
         for product in attr_products:
-            attribute_values = product[field_name] or None
-            if not attribute_values:
+            attribute_values = product[field_name]
+            # For boolean, False is a valid filter value (not "no value").
+            # For every other type, falsy means nothing is set.
+            if not attribute_values and attr_type != "boolean":
                 continue
             if isinstance(attribute_values, BaseModel) and len(attribute_values) > 1:
                 for rec in attribute_values:
@@ -166,7 +190,18 @@ class WebsiteSale(main.WebsiteSale):
                     value_counts[key] = value_counts.get(key, 0) + 1
         attr_dict = {
             "attribute": attribute,
-            "all_attribute_values": list(all_attribute_values),
+            "all_attribute_values": sorted(
+                all_attribute_values,
+                key=lambda v: v.display_name
+                if hasattr(v, "display_name")
+                else (
+                    v
+                    if isinstance(v, (int, float))
+                    else str(v)
+                    if v is not None
+                    else ""
+                ),
+            ),
         }
         if attribute.e_com_show_count:
             attr_dict["value_counts"] = value_counts
@@ -199,13 +234,22 @@ class WebsiteSale(main.WebsiteSale):
         Attribute = request.env["attribute.attribute"].sudo()
         for attr_id, range_vals in range_filters.items():
             attribute = Attribute.browse(attr_id)
-            if not attribute.exists():
+            if not attribute.exists() or not attribute.field_is_searchable:
                 continue
             field_name = attribute.name
+            field = request.env["product.template"]._fields.get(field_name)
+            sparse_col = getattr(field, "sparse", None) if field else None
+            if sparse_col:
+                ids = _sparse_filter_by_range(
+                    request.env, "product.template", sparse_col, field_name, range_vals
+                )
+                if ids:
+                    conditions.append([("id", "in", ids)])
+                continue
             if "min" in range_vals:
-                conditions.append((field_name, ">=", range_vals["min"]))
+                conditions.append([(field_name, ">=", range_vals["min"])])
             if "max" in range_vals:
-                conditions.append((field_name, "<=", range_vals["max"]))
+                conditions.append([(field_name, "<=", range_vals["max"])])
         return conditions
 
     def _build_value_filter_conditions(self, attrib_values):
@@ -222,11 +266,42 @@ class WebsiteSale(main.WebsiteSale):
 
         for attr_id, values in attr_values_grouped.items():
             attribute = Attribute.browse(attr_id)
-            if not attribute.exists():
+            if not attribute.exists() or not attribute.field_is_searchable:
                 continue
 
             field_name = attribute.name
             attr_type = attribute.attribute_type
+            field = request.env["product.template"]._fields.get(field_name)
+            sparse_col = getattr(field, "sparse", None) if field else None
+            if sparse_col:
+                if len(values) > 1 and attribute.e_com_multi_select:
+                    all_ids = []
+                    for v in values:
+                        all_ids.extend(
+                            _sparse_filter_by_value(
+                                request.env,
+                                "product.template",
+                                sparse_col,
+                                field_name,
+                                attr_type,
+                                v,
+                            )
+                        )
+                    if all_ids:
+                        conditions.append([("id", "in", list(set(all_ids)))])
+                else:
+                    for attr_value in values:
+                        ids = _sparse_filter_by_value(
+                            request.env,
+                            "product.template",
+                            sparse_col,
+                            field_name,
+                            attr_type,
+                            attr_value,
+                        )
+                        if ids:
+                            conditions.append([("id", "in", ids)])
+                continue
 
             if len(values) > 1 and attribute.e_com_multi_select:
                 or_conds = [
@@ -251,11 +326,12 @@ class WebsiteSale(main.WebsiteSale):
             value = attr_value.lower() == "true"
             return [(field_name, "=", value)]
         elif attr_type in ("select", "multiselect"):
-            try:
-                option_id = int(attr_value)
-                return [(field_name, "=", option_id)]
-            except (ValueError, TypeError):
+            # The URL value may be a plain integer string or the
+            # 'name-{model}-id-{N}' format from the filter template.
+            option_id = _parse_relational_id(attr_value)
+            if option_id is None:
                 return None
+            return [(field_name, "=", option_id)]
         elif attr_type == "integer":
             try:
                 value = int(attr_value)
