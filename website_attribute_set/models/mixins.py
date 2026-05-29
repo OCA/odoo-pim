@@ -123,6 +123,44 @@ def _sparse_filter_by_range(env, model_name, sparse_col, field_name, range_vals)
     return [row[0] for row in env.cr.fetchall()]
 
 
+def build_range_filter_domains(env, range_filters):
+    """Translate ``{attr_id: {'min': x, 'max': y}}`` into a list of ORM
+    sub-domains over ``product.template``.
+
+    Shared between the shop controller (``_build_range_filter_conditions``)
+    and the website search (``_search_get_details``) so the range filter is
+    applied consistently to the product listing, the price slider and the
+    attribute panel.
+
+    Sparse (serialized) fields have no SQL column to compare against in an ORM
+    domain, so they are resolved to a set of matching IDs via a raw JSONB query.
+    """
+    conditions = []
+    Attribute = env["attribute.attribute"].sudo()
+    pt_fields = env["product.template"]._fields
+    for attr_id, range_vals in range_filters.items():
+        if not range_vals:
+            continue
+        attribute = Attribute.browse(attr_id)
+        if not attribute.exists() or not attribute.field_is_searchable:
+            continue
+        field_name = attribute.name
+        field = pt_fields.get(field_name)
+        sparse_col = getattr(field, "sparse", None) if field else None
+        if sparse_col:
+            ids = _sparse_filter_by_range(
+                env, "product.template", sparse_col, field_name, range_vals
+            )
+            if ids:
+                conditions.append([("id", "in", ids)])
+            continue
+        if "min" in range_vals:
+            conditions.append([(field_name, ">=", range_vals["min"])])
+        if "max" in range_vals:
+            conditions.append([(field_name, "<=", range_vals["max"])])
+    return conditions
+
+
 def search_extra(env, search_term):
     extra_domains = []
     attributes = (
