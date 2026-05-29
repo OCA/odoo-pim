@@ -36,6 +36,10 @@ class AttributeAttribute(models.Model):
     _description = "Attribute"
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
+    # Allow searching attributes both by their technical name and by their
+    # visible label (``field_description``). In a related view (e.g.
+    # attribute.group) the user sees the label rather than the technical name.
+    _rec_names_search = ["name", "field_description"]
 
     field_id = fields.Many2one(
         "ir.model.fields", "Ir Model Fields", required=True, ondelete="cascade"
