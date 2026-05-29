@@ -133,7 +133,16 @@ def build_range_filter_domains(env, range_filters):
     attribute panel.
 
     Sparse (serialized) fields have no SQL column to compare against in an ORM
-    domain, so they are resolved to a set of matching IDs via a raw JSONB query.
+    domain, so they are resolved to a set of matching IDs via a raw JSONB query;
+    products that don't carry the attribute simply have no JSON key and are
+    naturally excluded.
+
+    For regular stored fields the attribute's custom column exists on every
+    ``product.template`` and defaults to ``0``, so a bare ``field >= min`` leaf
+    would also match products that don't carry the attribute at all (especially
+    when ``min`` is ``0`` or negative). The ``attribute_set_id`` leaf restricts
+    the filter to the products that actually have the attribute, mirroring the
+    value filter in ``Website._search_get_details``.
     """
     conditions = []
     Attribute = env["attribute.attribute"].sudo()
@@ -151,13 +160,17 @@ def build_range_filter_domains(env, range_filters):
             ids = _sparse_filter_by_range(
                 env, "product.template", sparse_col, field_name, range_vals
             )
-            if ids:
-                conditions.append([("id", "in", ids)])
+            # Always emit the leaf, even when ``ids`` is empty: ``("id", "in",
+            # [])`` correctly matches no product, whereas skipping it would drop
+            # the range constraint and list everything.
+            conditions.append([("id", "in", ids)])
             continue
+        sub_domain = [("attribute_set_id", "in", attribute.attribute_set_ids.ids)]
         if "min" in range_vals:
-            conditions.append([(field_name, ">=", range_vals["min"])])
+            sub_domain.append((field_name, ">=", range_vals["min"]))
         if "max" in range_vals:
-            conditions.append([(field_name, "<=", range_vals["max"])])
+            sub_domain.append((field_name, "<=", range_vals["max"]))
+        conditions.append(sub_domain)
     return conditions
 
 
