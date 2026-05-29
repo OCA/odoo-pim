@@ -45,8 +45,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_attribute_set/models/attribute_attribute.py:0
 msgid ""
+"Cannot make attribute '%s' searchable because its field is neither stored "
+"nor has a search method."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
 "Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
 "enabled."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"Cannot use attribute '%s' as filter because its field is neither stored nor "
+"has a search method."
 msgstr ""
 
 #. module: website_attribute_set
@@ -126,6 +142,11 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "E-Commerce Visibility"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__field_is_searchable
+msgid "Field Is Searchable"
 msgstr ""
 
 #. module: website_attribute_set
@@ -236,6 +257,13 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
 msgid "Website Searchable Mixin"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__field_is_searchable
+msgid ""
+"Whether the underlying field can be searched (stored in SQL or has a search "
+"method)."
 msgstr ""
 
 #. module: website_attribute_set
