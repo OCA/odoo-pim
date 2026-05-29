@@ -51,11 +51,27 @@ msgstr "Kenmerkenset eigenaar mixin"
 #. odoo-python
 #: code:addons/website_attribute_set/models/attribute_attribute.py:0
 msgid ""
+"Cannot make attribute '%s' searchable because its field is neither stored "
+"nor has a search method."
+msgstr ""
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
 "Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
 "Kan kenmerk niet doorzoekbaar maken als E-commerce zichtbaarheid niet is "
 "ingeschakeld."
+
+#. module: website_attribute_set
+#. odoo-python
+#: code:addons/website_attribute_set/models/attribute_attribute.py:0
+msgid ""
+"Cannot use attribute '%s' as filter because its field is neither stored nor "
+"has a search method."
+msgstr ""
 
 #. module: website_attribute_set
 #. odoo-python
@@ -141,6 +157,11 @@ msgstr "E-commerce aantal weergeven"
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "E-Commerce Visibility"
 msgstr "E-commerce zichtbaarheid"
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__field_is_searchable
+msgid "Field Is Searchable"
+msgstr ""
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
@@ -262,6 +283,13 @@ msgstr "Website"
 #: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
 msgid "Website Searchable Mixin"
 msgstr "Website doorzoekbare mixin"
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__field_is_searchable
+msgid ""
+"Whether the underlying field can be searched (stored in SQL or has a search "
+"method)."
+msgstr ""
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
