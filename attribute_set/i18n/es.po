@@ -796,6 +796,15 @@ msgid "The Group order in his attribute's Set"
 msgstr "El orden de Grupo en el Conjunto de sus atributos"
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+msgid ""
+"The attribute type '%(attr_type)s' is not compatible with the 'Serialized' "
+"option because its value cannot be stored as JSON. Please uncheck "
+"'Serialized' or choose a different attribute type."
+msgstr ""
+
+#. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence
 msgid "The attribute's order in his group"
 msgstr "El orden del atributo en su grupo"
