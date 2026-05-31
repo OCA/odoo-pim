@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-26 19:34+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2026-05-31 10:16+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
@@ -24,7 +24,7 @@ msgstr "Configuración Avanzada del Conjunto de Atributos"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__allowed_attribute_set_ids
 msgid "Allowed Attribute Set"
-msgstr ""
+msgstr "Conjunto de Atributos Permitido"
 
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_attribute
@@ -134,7 +134,7 @@ msgstr "No se puede cambiar el tipo de un atributo. Por favor, cree uno nuevo."
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__char
@@ -183,7 +183,7 @@ msgstr "Columna que hace referencia al registro en la tabla modelo"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__company_dependent
 msgid "Company Dependent"
-msgstr ""
+msgstr "Dependiente de la Empresa"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__complete_name
@@ -225,7 +225,7 @@ msgstr "Creado el"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__currency_field
 msgid "Currency field"
-msgstr ""
+msgstr "Campo de Divisa"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__custom
@@ -235,7 +235,7 @@ msgstr "Personalizar"
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_option_wizard
 msgid "Custom Attributes Option"
-msgstr ""
+msgstr "Opción de Atributos Personalizados"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__date
@@ -405,6 +405,8 @@ msgid ""
 "If set every modification done to this field is tracked. Value is used to "
 "order tracking values."
 msgstr ""
+"Si está definido, cada modificación realizada en este campo es registrada. "
+"El valor se usa para ordenar los valores de seguimiento."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialization_field_id
@@ -521,7 +523,7 @@ msgstr "Nombre"
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__currency_field
 msgid "Name of the Many2one field holding the res.currency"
-msgstr ""
+msgstr "Nombre del campo Many2one que contiene la res.currency"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__nature__native
@@ -543,7 +545,7 @@ msgstr "En la propiedad eliminar para campos many2one"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Options Wizard"
-msgstr ""
+msgstr "Asistente de Opciones"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option__attribute_id
@@ -569,7 +571,7 @@ msgstr "Campos Relacionados"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__related
 msgid "Related Field Definition"
-msgstr ""
+msgstr "Definición del Campo Relacionado"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__relation
@@ -615,32 +617,32 @@ msgstr "Requerido (en vistas)"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize
 msgid "Sanitize HTML"
-msgstr ""
+msgstr "Sanear HTML"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_attributes
 msgid "Sanitize HTML Attributes"
-msgstr ""
+msgstr "Sanear Atributos HTML"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_form
 msgid "Sanitize HTML Form"
-msgstr ""
+msgstr "Sanear Formulario HTML"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_style
 msgid "Sanitize HTML Style"
-msgstr ""
+msgstr "Sanear Estilo HTML"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_tags
 msgid "Sanitize HTML Tags"
-msgstr ""
+msgstr "Sanear Etiquetas HTML"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__sanitize_overridable
 msgid "Sanitize HTML overridable"
-msgstr ""
+msgstr "Sanear HTML anulable"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.view_attribute_option_search
@@ -731,12 +733,12 @@ msgstr "Almacenado"
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__strip_classes
 msgid "Strip Class Attribute"
-msgstr ""
+msgstr "Eliminar Atributo Class"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__strip_style
 msgid "Strip Style Attribute"
-msgstr ""
+msgstr "Eliminar Atributo Style"
 
 #. module: attribute_set
 #: model:ir.model.fields.selection,name:attribute_set.selection__attribute_attribute__attribute_type__text
@@ -836,7 +838,7 @@ msgstr ""
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__copied
@@ -860,7 +862,7 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__company_dependent
 msgid "Whether values for this field is company dependent"
-msgstr ""
+msgstr "Si los valores de este campo dependen de la empresa"
 
 #. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__widget
@@ -882,12 +884,12 @@ msgstr ""
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "options_placeholder"
-msgstr ""
+msgstr "options_placeholder"
 
 #. module: attribute_set
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_option_wizard_form_view
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #~ msgid ""
 #~ "If set every modification done to this field is tracked in the chatter. "
