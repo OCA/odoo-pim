@@ -5,6 +5,23 @@
 
 from odoo import api, fields, models
 
+# When this system parameter is enabled, the native attributes of a product's
+# attribute set are injected in the Attributes tab whatever action opened the
+# form, not only the ones that set "include_native_attribute_view_ref".
+SHOW_NATIVE_EVERYWHERE_PARAM = "product_attribute_set.show_native_attributes_everywhere"
+
+
+def _with_native_attributes_flag(records):
+    """Return records with "include_native_attribute_view_ref" set in the
+    context when the setting is enabled."""
+    if not records.env.context.get("include_native_attribute_view_ref") and bool(
+        records.env["ir.config_parameter"]
+        .sudo()
+        .get_param(SHOW_NATIVE_EVERYWHERE_PARAM)
+    ):
+        return records.with_context(include_native_attribute_view_ref=1)
+    return records
+
 
 class ProductTemplate(models.Model):
     _inherit = ["product.template", "attribute.set.owner.mixin"]
@@ -45,6 +62,11 @@ class ProductTemplate(models.Model):
         if self.categ_id and not self.attribute_set_id:
             self.attribute_set_id = self.categ_id.attribute_set_id
 
+    def get_view(self, view_id=None, view_type="form", **options):
+        return super(ProductTemplate, _with_native_attributes_flag(self)).get_view(
+            view_id=view_id, view_type=view_type, **options
+        )
+
 
 class ProductProduct(models.Model):
     _inherit = ["product.product", "attribute.set.owner.mixin"]
@@ -57,3 +79,8 @@ class ProductProduct(models.Model):
     @api.model
     def _get_attribute_set_owner_model(self):
         return [("model", "in", ("product.product", "product.template"))]
+
+    def get_view(self, view_id=None, view_type="form", **options):
+        return super(ProductProduct, _with_native_attributes_flag(self)).get_view(
+            view_id=view_id, view_type=view_type, **options
+        )
