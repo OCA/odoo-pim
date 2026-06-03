@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-30 11:45+0000\n"
+"PO-Revision-Date: 2026-06-03 09:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -803,6 +803,9 @@ msgid ""
 "option because its value cannot be stored as JSON. Please uncheck "
 "'Serialized' or choose a different attribute type."
 msgstr ""
+"Il tipo di attributo '%(attr_type)s' non è compatibile con l'opzione "
+"'Serializzato' perché il suo valore non può essere memorizzato in formato "
+"JSON. Deselezionare 'Serializzato' o sceglere un tipo di attributo diverso."
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__sequence
