@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-04 11:45+0000\n"
+"PO-Revision-Date: 2026-06-03 09:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -54,6 +54,8 @@ msgid ""
 "Cannot make attribute '%s' searchable because its field is neither stored "
 "nor has a search method."
 msgstr ""
+"Impossibile rendere ricercabile l'attributo '%s' perché il suo campo non è "
+"memorizzato e non dispone di un metodo di ricerca."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -72,6 +74,8 @@ msgid ""
 "Cannot use attribute '%s' as filter because its field is neither stored nor "
 "has a search method."
 msgstr ""
+"Impossibile utilizzare l'attributo '%s' come filtro perché il suo campo non "
+"è memorizzato e non dispone di un metodo di ricerca."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -161,7 +165,7 @@ msgstr "Visibilità e-commerce"
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__field_is_searchable
 msgid "Field Is Searchable"
-msgstr ""
+msgstr "Il campo è ricercabile"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
@@ -293,6 +297,8 @@ msgid ""
 "Whether the underlying field can be searched (stored in SQL or has a search "
 "method)."
 msgstr ""
+"Indica se il campo sottostante è ricercabile (memorizzato in SQL o dotato di "
+"un metodo di ricerca)."
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
