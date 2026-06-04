@@ -2,6 +2,8 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import hashlib
+import time
 from collections import defaultdict
 
 from odoo.fields import Domain
@@ -15,6 +17,17 @@ from ..models.mixins import (
     _sparse_filter_by_value,
     build_range_filter_domains,
 )
+
+# In-process TTL cache for the shop facet block: the facets only depend on
+# the matched product set and the language, and recomputing them for every
+# request (every visitor, every pagination page) is the most expensive part
+# of the shop listing on large catalogs. Entries live at most
+# ``website_attribute_set.facet_cache_ttl`` seconds (0 disables caching),
+# so attribute/product changes show up in the filter sidebar after at most
+# one TTL. The cache is per worker process.
+FACET_CACHE = {}
+FACET_CACHE_MAX_ENTRIES = 256
+FACET_CACHE_DEFAULT_TTL = 300
 
 
 class WebsiteSale(main.WebsiteSale):
@@ -123,6 +136,16 @@ class WebsiteSale(main.WebsiteSale):
             return extra_values
 
         sudo_products = search_product.sudo()
+
+        ttl = self._facet_cache_ttl()
+        cache_key = None
+        if ttl:
+            cache_key = self._facet_cache_key(sudo_products)
+            cached = self._facet_cache_get(cache_key)
+            if cached is not None:
+                extra_values["additional_attributes"] = cached
+                return extra_values
+
         # ``search_product`` is the full (unpaginated) shop result and may
         # span the whole catalog: aggregate per attribute set in SQL instead
         # of materializing ``attribute_set_id`` for every product.
@@ -136,6 +159,7 @@ class WebsiteSale(main.WebsiteSale):
             if attribute_set
         }
         if not product_ids_per_set:
+            self._facet_cache_store(cache_key, extra_values["additional_attributes"])
             return extra_values
 
         attrs_per_set = sudo_products._get_extra_attributes_per_set(
@@ -151,6 +175,7 @@ class WebsiteSale(main.WebsiteSale):
             for attr_id in attrs.ids:
                 set_ids_per_attr[attr_id].add(sid)
         if not all_additional_attributes:
+            self._facet_cache_store(cache_key, extra_values["additional_attributes"])
             return extra_values
 
         product_ids_per_attr = {
@@ -165,7 +190,112 @@ class WebsiteSale(main.WebsiteSale):
             if attr_dict is not None:
                 extra_values["additional_attributes"].append(attr_dict)
 
+        self._facet_cache_store(cache_key, extra_values["additional_attributes"])
         return extra_values
+
+    def _facet_cache_ttl(self):
+        """TTL in seconds for the facet cache; 0 disables caching."""
+        ttl = (
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("website_attribute_set.facet_cache_ttl", FACET_CACHE_DEFAULT_TTL)
+        )
+        try:
+            return max(int(ttl), 0)
+        except (ValueError, TypeError):
+            return FACET_CACHE_DEFAULT_TTL
+
+    def _facet_cache_key(self, sudo_products):
+        """The facets only depend on the matched product set and the lang."""
+        ids_blob = ",".join(map(str, sorted(sudo_products._ids))).encode()
+        return (
+            request.env.cr.dbname,
+            request.env.lang or "en_US",
+            hashlib.sha1(ids_blob).hexdigest(),
+        )
+
+    def _facet_cache_get(self, cache_key):
+        entry = FACET_CACHE.get(cache_key)
+        if entry is None:
+            return None
+        expires_at, payload = entry
+        if expires_at < time.monotonic():
+            FACET_CACHE.pop(cache_key, None)
+            return None
+        return self._facet_cache_rebuild(payload)
+
+    def _facet_cache_store(self, cache_key, additional_attributes):
+        if cache_key is None:
+            return
+        payload = self._facet_cache_serialize(additional_attributes)
+        if payload is None:
+            return
+        if len(FACET_CACHE) >= FACET_CACHE_MAX_ENTRIES:
+            # Drop expired entries first, then the oldest ones.
+            now = time.monotonic()
+            for key in [k for k, (exp, _p) in FACET_CACHE.items() if exp < now]:
+                FACET_CACHE.pop(key, None)
+            while len(FACET_CACHE) >= FACET_CACHE_MAX_ENTRIES:
+                FACET_CACHE.pop(next(iter(FACET_CACHE)), None)
+        FACET_CACHE[cache_key] = (
+            time.monotonic() + self._facet_cache_ttl(),
+            payload,
+        )
+
+    def _facet_cache_serialize(self, additional_attributes):
+        """Turn the facet dicts into primitives safe to share across requests.
+
+        Returns ``None`` when a facet cannot be represented (mixed value
+        types), in which case the result is simply not cached.
+        """
+        payload = []
+        for attr_dict in additional_attributes:
+            values = attr_dict["all_attribute_values"]
+            if values and isinstance(values[0], BaseModel):
+                model_name = values[0]._name
+                if any(
+                    not isinstance(value, BaseModel) or value._name != model_name
+                    for value in values
+                ):
+                    return None
+                ser_values = ("records", model_name, [value.id for value in values])
+            else:
+                if any(isinstance(value, BaseModel) for value in values):
+                    return None
+                ser_values = ("scalars", None, list(values))
+            payload.append(
+                {
+                    "attribute_id": attr_dict["attribute"].id,
+                    "values": ser_values,
+                    "value_counts": attr_dict.get("value_counts"),
+                }
+            )
+        return payload
+
+    def _facet_cache_rebuild(self, payload):
+        env = request.env
+        attribute_model = env["attribute.attribute"].sudo()
+        result = []
+        for item in payload:
+            attribute = attribute_model.browse(item["attribute_id"]).exists()
+            if not attribute:
+                return None
+            kind, model_name, raw_values = item["values"]
+            if kind == "records":
+                # ``exists()`` guards against records deleted within the TTL.
+                values = list(env[model_name].sudo().browse(raw_values).exists())
+                if len(values) != len(raw_values):
+                    return None
+            else:
+                values = list(raw_values)
+            attr_dict = {
+                "attribute": attribute,
+                "all_attribute_values": values,
+            }
+            if item["value_counts"] is not None:
+                attr_dict["value_counts"] = item["value_counts"]
+            result.append(attr_dict)
+        return result
 
     def _build_additional_attribute_facet(
         self, attribute, sudo_products, product_ids_per_attr
