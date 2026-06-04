@@ -43,9 +43,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
                 ("e_com_visibility", "=", True),
             ]
         )
-        attr_descendants = {
-            attr.id: set(attr._get_all_set_ids()) for attr in attributes
-        }
+        attr_descendants = attributes._get_all_set_ids_per_attribute()
         result = {}
         for set_id in set(attribute_set_ids):
             result[set_id] = attributes.filtered(

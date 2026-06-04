@@ -123,27 +123,40 @@ class WebsiteSale(main.WebsiteSale):
             return extra_values
 
         sudo_products = search_product.sudo()
-        sudo_products.fetch(["attribute_set_id"])
-        set_ids = {p.attribute_set_id.id for p in sudo_products if p.attribute_set_id}
-        if not set_ids:
+        # ``search_product`` is the full (unpaginated) shop result and may
+        # span the whole catalog: aggregate per attribute set in SQL instead
+        # of materializing ``attribute_set_id`` for every product.
+        product_ids_per_set = {
+            attribute_set.id: ids
+            for attribute_set, ids in sudo_products._read_group(
+                [("id", "in", sudo_products.ids)],
+                groupby=["attribute_set_id"],
+                aggregates=["id:array_agg"],
+            )
+            if attribute_set
+        }
+        if not product_ids_per_set:
             return extra_values
 
-        attrs_per_set = sudo_products._get_extra_attributes_per_set(list(set_ids))
+        attrs_per_set = sudo_products._get_extra_attributes_per_set(
+            list(product_ids_per_set)
+        )
         all_additional_attributes = request.env["attribute.attribute"].sudo()
-        attr_ids_per_set = {}
+        set_ids_per_attr = defaultdict(set)
         for sid, attrs in attrs_per_set.items():
+            # The shop templates only render facets for filterable attributes
+            # (``e_com_filter`` guard); skip aggregating values nobody sees.
+            attrs = attrs.filtered("e_com_filter")
             all_additional_attributes |= attrs
-            attr_ids_per_set[sid] = set(attrs.ids)
+            for attr_id in attrs.ids:
+                set_ids_per_attr[attr_id].add(sid)
         if not all_additional_attributes:
             return extra_values
 
-        product_ids_per_attr = defaultdict(list)
-        for product in sudo_products:
-            sid = product.attribute_set_id.id
-            if not sid:
-                continue
-            for attr_id in attr_ids_per_set.get(sid, ()):
-                product_ids_per_attr[attr_id].append(product.id)
+        product_ids_per_attr = {
+            attr_id: [pid for sid in sids for pid in product_ids_per_set[sid]]
+            for attr_id, sids in set_ids_per_attr.items()
+        }
 
         for attribute in all_additional_attributes:
             attr_dict = self._build_additional_attribute_facet(
@@ -171,6 +184,80 @@ class WebsiteSale(main.WebsiteSale):
             if attr_type in ("binary", "image")
             else attribute.name
         )
+        field = sudo_products._fields.get(field_name)
+        if (
+            field is not None
+            and field.store
+            and field.column_type
+            and not getattr(field, "sparse", None)
+            and field.type not in ("date", "datetime")
+        ):
+            all_attribute_values, value_counts = self._read_facet_values_grouped(
+                attribute, sudo_products, attr_type, field_name, pids
+            )
+        else:
+            all_attribute_values, value_counts = self._read_facet_values_records(
+                attribute, sudo_products, attr_type, field_name, pids
+            )
+        attr_dict = {
+            "attribute": attribute,
+            "all_attribute_values": sorted(
+                all_attribute_values,
+                key=lambda v: v.display_name
+                if hasattr(v, "display_name")
+                else (
+                    v
+                    if isinstance(v, (int, float))
+                    else str(v)
+                    if v is not None
+                    else ""
+                ),
+            ),
+        }
+        if attribute.e_com_show_count:
+            attr_dict["value_counts"] = value_counts
+        return attr_dict
+
+    def _read_facet_values_grouped(
+        self, attribute, sudo_products, attr_type, field_name, pids
+    ):
+        """Collect facet values and counts with one aggregated SQL query.
+
+        Fast path for regular stored columns: ``_read_group`` returns the
+        distinct values with their product counts without materializing
+        every product record in Python.
+        """
+        all_attribute_values = set()
+        value_counts = {}
+        show_count = attribute.e_com_show_count
+        for value, count in sudo_products._read_group(
+            [("id", "in", pids)],
+            groupby=[field_name],
+            aggregates=["__count"],
+        ):
+            # For boolean, False is a valid filter value (not "no value").
+            # For every other type, falsy means nothing is set.
+            if isinstance(value, BaseModel):
+                if not value:
+                    continue
+                key = value.id
+            else:
+                if not value and attr_type != "boolean":
+                    continue
+                key = value
+            all_attribute_values.add(value)
+            if show_count:
+                value_counts[key] = value_counts.get(key, 0) + count
+        return all_attribute_values, value_counts
+
+    def _read_facet_values_records(
+        self, attribute, sudo_products, attr_type, field_name, pids
+    ):
+        """Collect facet values and counts by iterating product records.
+
+        Fallback for fields ``_read_group`` cannot aggregate directly
+        (sparse/serialized attributes, non-stored fields, dates).
+        """
         attr_products = sudo_products.browse(pids)
         attr_products.mapped(field_name)
         all_attribute_values = set()
@@ -196,24 +283,7 @@ class WebsiteSale(main.WebsiteSale):
                         else attribute_values
                     )
                     value_counts[key] = value_counts.get(key, 0) + 1
-        attr_dict = {
-            "attribute": attribute,
-            "all_attribute_values": sorted(
-                all_attribute_values,
-                key=lambda v: v.display_name
-                if hasattr(v, "display_name")
-                else (
-                    v
-                    if isinstance(v, (int, float))
-                    else str(v)
-                    if v is not None
-                    else ""
-                ),
-            ),
-        }
-        if attribute.e_com_show_count:
-            attr_dict["value_counts"] = value_counts
-        return attr_dict
+        return all_attribute_values, value_counts
 
     def _get_shop_domain(self, search, category, attribute_value_dict, **kwargs):
         """Extend shop domain with additional attribute filters."""
