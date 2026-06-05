@@ -155,6 +155,7 @@
         <field name="model">attribute.attribute</field>
         <field name="arch" type="xml">
             <search string="Search Attributes">
+                <field name="field_description" />
                 <field name="name" />
                 <field name="attribute_group_id" />
             </search>
