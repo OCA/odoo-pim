@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_attribute_set_list_view
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_attribute_set_list_view
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_attribute_list_mixin__display_name
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_attribute_set_list_view
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_attribute_list_mixin__id
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_product__id
+#: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: product_attribute_set_list_view
+#: model:ir.model,name:product_attribute_set_list_view.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: product_attribute_set_list_view
+#: model:ir.model,name:product_attribute_set_list_view.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: product_attribute_set_list_view
+#: model:ir.model,name:product_attribute_set_list_view.model_product_attribute_list_mixin
+msgid "Product attribute list view mixin"
+msgstr ""
