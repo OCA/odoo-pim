@@ -62,7 +62,7 @@
                                                     t-out="'+'"
                                                 />
                                                 <span
-                                                    t-out="select_option.name"
+                                                    t-out="select_option.display_name"
                                                     class="variant_price_extra text-muted fst-italic"
                                                     style="white-space: nowrap;"
                                                 />

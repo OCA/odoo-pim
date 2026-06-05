@@ -40,10 +40,12 @@ class ProductTemplate(models.Model):
             values = self.get_extra_attribute_values(attribute)
             if isinstance(values, models.BaseModel):
                 if len(values) == 1:
-                    groups[attribute.attribute_group_id][attribute] = [values.name]
+                    groups[attribute.attribute_group_id][attribute] = [
+                        values.display_name
+                    ]
                 elif len(values) > 1:
                     groups[attribute.attribute_group_id][attribute] = values.mapped(
-                        "name"
+                        "display_name"
                     )
             elif values:
                 groups[attribute.attribute_group_id][attribute] = values
