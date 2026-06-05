@@ -4,7 +4,7 @@
 
 {
     "name": "Website Attribute Set",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "category": "Website/Website",
     "license": "AGPL-3",
     "author": "Kencove, Odoo Community Association (OCA)",
