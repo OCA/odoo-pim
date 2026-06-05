@@ -123,6 +123,57 @@ def _sparse_filter_by_range(env, model_name, sparse_col, field_name, range_vals)
     return [row[0] for row in env.cr.fetchall()]
 
 
+def build_range_filter_domains(env, range_filters):
+    """Translate ``{attr_id: {'min': x, 'max': y}}`` into a list of ORM
+    sub-domains over ``product.template``.
+
+    Shared between the shop controller (``_build_range_filter_conditions``)
+    and the website search (``_search_get_details``) so the range filter is
+    applied consistently to the product listing, the price slider and the
+    attribute panel.
+
+    Sparse (serialized) fields have no SQL column to compare against in an ORM
+    domain, so they are resolved to a set of matching IDs via a raw JSONB query;
+    products that don't carry the attribute simply have no JSON key and are
+    naturally excluded.
+
+    For regular stored fields the attribute's custom column exists on every
+    ``product.template`` and defaults to ``0``, so a bare ``field >= min`` leaf
+    would also match products that don't carry the attribute at all (especially
+    when ``min`` is ``0`` or negative). The ``attribute_set_id`` leaf restricts
+    the filter to the products that actually have the attribute, mirroring the
+    value filter in ``Website._search_get_details``.
+    """
+    conditions = []
+    Attribute = env["attribute.attribute"].sudo()
+    pt_fields = env["product.template"]._fields
+    for attr_id, range_vals in range_filters.items():
+        if not range_vals:
+            continue
+        attribute = Attribute.browse(attr_id)
+        if not attribute.exists() or not attribute.field_is_searchable:
+            continue
+        field_name = attribute.name
+        field = pt_fields.get(field_name)
+        sparse_col = getattr(field, "sparse", None) if field else None
+        if sparse_col:
+            ids = _sparse_filter_by_range(
+                env, "product.template", sparse_col, field_name, range_vals
+            )
+            # Always emit the leaf, even when ``ids`` is empty: ``("id", "in",
+            # [])`` correctly matches no product, whereas skipping it would drop
+            # the range constraint and list everything.
+            conditions.append([("id", "in", ids)])
+            continue
+        sub_domain = [("attribute_set_id", "in", attribute.attribute_set_ids.ids)]
+        if "min" in range_vals:
+            sub_domain.append((field_name, ">=", range_vals["min"]))
+        if "max" in range_vals:
+            sub_domain.append((field_name, "<=", range_vals["max"]))
+        conditions.append(sub_domain)
+    return conditions
+
+
 def search_extra(env, search_term):
     extra_domains = []
     attributes = (

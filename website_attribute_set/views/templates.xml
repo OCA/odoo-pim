@@ -68,6 +68,7 @@
                 t-attf-name="additional_attr_min_{{attribute.id}}"
                 placeholder="Min"
                 t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+                t-att-value="request.params.get('additional_attr_min_%s' % attribute.id, '')"
             />
             <input
                 type="number"
@@ -75,6 +76,7 @@
                 t-attf-name="additional_attr_max_{{attribute.id}}"
                 placeholder="Max"
                 t-att-step="'1' if attribute.attribute_type == 'integer' else '0.01'"
+                t-att-value="request.params.get('additional_attr_max_%s' % attribute.id, '')"
             />
         </div>
     </template>

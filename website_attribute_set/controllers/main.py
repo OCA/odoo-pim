@@ -12,8 +12,8 @@ from odoo.addons.website_sale.controllers import main
 
 from ..models.mixins import (
     _parse_relational_id,
-    _sparse_filter_by_range,
     _sparse_filter_by_value,
+    build_range_filter_domains,
 )
 
 
@@ -73,6 +73,11 @@ class WebsiteSale(main.WebsiteSale):
         )
         if additional_attrib_list:
             result["additional_attribute_values"] = additional_attrib_list
+        for key in request.httprequest.args.keys():
+            if key.startswith("additional_attr_min_") or key.startswith(
+                "additional_attr_max_"
+            ):
+                result[key] = request.httprequest.args[key]
         return result
 
     def _get_search_options(
@@ -97,6 +102,9 @@ class WebsiteSale(main.WebsiteSale):
         additional_attrib_values = self._parse_additional_attrib_values()
         if additional_attrib_values:
             values["additional_attribute_values"] = additional_attrib_values
+        additional_range_filters = self._parse_additional_range_filters()
+        if additional_range_filters:
+            values["additional_range_filters"] = additional_range_filters
         return values
 
     def _get_additional_shop_values(self, values, **kwargs):
@@ -230,27 +238,7 @@ class WebsiteSale(main.WebsiteSale):
 
     def _build_range_filter_conditions(self, range_filters):
         """Build domain conditions for range filters (min/max)."""
-        conditions = []
-        Attribute = request.env["attribute.attribute"].sudo()
-        for attr_id, range_vals in range_filters.items():
-            attribute = Attribute.browse(attr_id)
-            if not attribute.exists() or not attribute.field_is_searchable:
-                continue
-            field_name = attribute.name
-            field = request.env["product.template"]._fields.get(field_name)
-            sparse_col = getattr(field, "sparse", None) if field else None
-            if sparse_col:
-                ids = _sparse_filter_by_range(
-                    request.env, "product.template", sparse_col, field_name, range_vals
-                )
-                if ids:
-                    conditions.append([("id", "in", ids)])
-                continue
-            if "min" in range_vals:
-                conditions.append([(field_name, ">=", range_vals["min"])])
-            if "max" in range_vals:
-                conditions.append([(field_name, "<=", range_vals["max"])])
-        return conditions
+        return build_range_filter_domains(request.env, range_filters)
 
     def _build_value_filter_conditions(self, attrib_values):
         """Build domain conditions for value filters (select, boolean, etc.)."""

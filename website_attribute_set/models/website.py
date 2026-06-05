@@ -6,7 +6,7 @@ import re
 
 from odoo import api, models
 
-from .mixins import _sparse_filter_by_value
+from .mixins import _sparse_filter_by_value, build_range_filter_domains
 
 
 class Website(models.Model):
@@ -15,9 +15,22 @@ class Website(models.Model):
     @api.model
     def _search_get_details(self, search_type, order, options):
         additional_attrib_values = options.get("additional_attribute_values")
+        additional_range_filters = options.get("additional_range_filters")
         values = super()._search_get_details(
             search_type=search_type, order=order, options=options
         )
+        if additional_range_filters:
+            range_domains = build_range_filter_domains(
+                self.env, additional_range_filters
+            )
+            if range_domains:
+                for value in values:
+                    if value.get("model") != "product.template":
+                        continue
+                    base_domain = value.get("base_domain")
+                    if base_domain is None:
+                        continue
+                    base_domain.extend(range_domains)
         if additional_attrib_values and not isinstance(additional_attrib_values, str):
             for value in values:
                 base_domain = value.get("base_domain")
