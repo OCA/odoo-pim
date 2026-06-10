@@ -5,6 +5,7 @@
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
+    "maintainers": ["kobros-tech"],
     "depends": ["base", "base_sparse_field"],
     "data": [
         "security/ir.model.access.csv",
