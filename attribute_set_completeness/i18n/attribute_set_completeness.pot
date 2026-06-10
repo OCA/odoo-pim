@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* attribute_set_completeness
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set
+msgid "Attribute Set"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set_completeness
+msgid "Attribute Set Completeness"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model,name:attribute_set_completeness.model_attribute_set_owner_mixin
+msgid "Attribute set owner mixin"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_form_view
+msgid "COMPLETNESS"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__complete
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_product__attribute_set_completion_state__complete
+#: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_template__attribute_set_completion_state__complete
+msgid "Complete"
+msgstr ""
+
+#. module: attribute_set_completeness
+#: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_completeness_tree_view
+msgid "Total"
+msgstr ""
