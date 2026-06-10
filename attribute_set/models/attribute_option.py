@@ -14,7 +14,7 @@ class AttributeOption(models.Model):
 
     @api.model
     def _selection_model_list(self):
-        models = self.env["ir.model"].search([("transient", "=", False)])
+        models = self.env["ir.model"].sudo().search([("transient", "=", False)])
         return [(m.model, m.name) for m in models]
 
     name = fields.Char(translate=True, required=True)
