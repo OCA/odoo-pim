@@ -30,7 +30,7 @@ class ProductAttributeListMixin(models.AbstractModel):
             return arch
         if list_node.get("multi_edit") in (None, ""):
             list_node.set("multi_edit", "1")
-        attributes = self._get_attribute_list_columns()
+        attributes = self._get_attribute_list_columns().sudo()
         existing_field_names = {f.get("name") for f in list_node.xpath("./field")}
         for attr in attributes:
             if attr.name in existing_field_names:
