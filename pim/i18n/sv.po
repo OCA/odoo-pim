@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-09 09:46+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: pim
 #: model:res.groups,comment:pim.group_pim_manager
@@ -21,6 +23,9 @@ msgid ""
 "            the user will be able to modify products and create attributes\n"
 "        "
 msgstr ""
+"\n"
+"            användaren kommer att kunna ändra produkter och skapa attribut\n"
+"        "
 
 #. module: pim
 #: model:res.groups,comment:pim.group_pim_user
@@ -30,6 +35,11 @@ msgid ""
 "            create attributes\n"
 "        "
 msgstr ""
+"\n"
+"            användaren kommer att kunna ändra produkter men kommer inte att "
+"ha behörighet att\n"
+"            skapa attribut\n"
+"        "
 
 #. module: pim
 #: model:res.groups,comment:pim.group_pim_reader
@@ -38,85 +48,89 @@ msgid ""
 "            the user will have only the right to consult the products catalogue\n"
 "        "
 msgstr ""
+"\n"
+"            användaren kommer endast att ha rätt att titta i "
+"produktkatalogen\n"
+"        "
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.attribute_group_form_action
 #: model:ir.ui.menu,name:pim.menu_attribute_group_action
 msgid "Attribute Groups"
-msgstr ""
+msgstr "Attributgrupper"
 
 #. module: pim
 #: model:ir.ui.menu,name:pim.main_menu_attribute
 msgid "Attributes"
-msgstr ""
+msgstr "Attribut"
 
 #. module: pim
 #: model:ir.ui.menu,name:pim.menu_variant_attribute_value
 msgid "Attributes Values"
-msgstr ""
+msgstr "Attributvärden"
 
 #. module: pim
 #: model:ir.ui.menu,name:pim.main_menu_category
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 #. module: pim
 #: model:ir.module.category,description:pim.module_category_pim
 msgid "Manage your products catalogue easily"
-msgstr ""
+msgstr "Hantera din produktkatalog enkelt"
 
 #. module: pim
 #: model:ir.module.category,name:pim.module_category_pim
 #: model:ir.ui.menu,name:pim.root_menu_pim
 msgid "PIM"
-msgstr ""
+msgstr "PIM"
 
 #. module: pim
 #: model:res.groups,name:pim.group_pim_manager
 msgid "PIM Manager"
-msgstr ""
+msgstr "PIM-administratör"
 
 #. module: pim
 #: model:res.groups,name:pim.group_pim_reader
 msgid "PIM Reader"
-msgstr ""
+msgstr "PIM-läsare"
 
 #. module: pim
 #: model:res.groups,name:pim.group_pim_user
 msgid "PIM User"
-msgstr ""
+msgstr "PIM-användare"
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.attribute_attribute_form_action
 #: model:ir.ui.menu,name:pim.menu_attribute_attribute_action
 msgid "Product Attribute"
-msgstr ""
+msgstr "Produktattribut"
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.attribute_set_form_action
 #: model:ir.ui.menu,name:pim.menu_attribute_set_action
 msgid "Product Attribute Sets"
-msgstr ""
+msgstr "Produktattributuppsättningar"
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.product_attribute_value_action
 msgid "Product Attribute Values"
-msgstr ""
+msgstr "Produktattributvärden"
 
 #. module: pim
 #: model:ir.ui.menu,name:pim.menu_product_product
 msgid "Product Variants"
-msgstr ""
+msgstr "Produktvarianter"
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.product_template_action
 #: model:ir.ui.menu,name:pim.main_menu_product
 #: model:ir.ui.menu,name:pim.menu_product_template
 msgid "Products"
-msgstr ""
+msgstr "Produkter"
 
 #. module: pim
 #: model:ir.ui.menu,name:pim.main_menu_variant_attribute
 #: model:ir.ui.menu,name:pim.menu_variant_attribute
 msgid "Variants Attributes"
-msgstr ""
+msgstr "Variantattribut"
