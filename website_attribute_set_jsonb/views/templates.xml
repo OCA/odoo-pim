@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Template for JSONB attribute filters in shop sidebar -->
+    <template id="jsonb_attributes_filter" name="JSONB Attribute Filters">
+        <t t-if="jsonb_attributes">
+            <t t-foreach="jsonb_attributes" t-as="attr_data">
+                <t t-set="attr" t-value="attr_data['attribute']" />
+                <t t-set="filter_type" t-value="attr_data['filter_type']" />
+
+                <div class="accordion-item o_jsonb_attribute_filter">
+                    <h2 class="accordion-header" t-attf-id="heading_jsonb_#{attr.id}">
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            t-attf-data-bs-target="#collapse_jsonb_#{attr.id}"
+                            aria-expanded="true"
+                            t-attf-aria-controls="collapse_jsonb_#{attr.id}"
+                        >
+                            <b t-field="attr.field_description" />
+                        </button>
+                    </h2>
+                    <div
+                        t-attf-id="collapse_jsonb_#{attr.id}"
+                        class="accordion-collapse collapse show"
+                        t-attf-aria-labelledby="heading_jsonb_#{attr.id}"
+                    >
+                        <div class="accordion-body py-2">
+                            <!-- Checkbox filter -->
+                            <t t-if="filter_type == 'checkbox'">
+                                <ul class="list-unstyled mb-0">
+                                    <t t-foreach="attr_data['values']" t-as="val_data">
+                                        <li class="form-check">
+                                            <input
+                                                type="checkbox"
+                                                class="form-check-input o_jsonb_filter_checkbox"
+                                                t-attf-name="jsonb_#{attr.name}"
+                                                t-att-value="val_data['value']"
+                                                t-att-checked="val_data['selected']"
+                                                t-att-data-attr-name="attr.name"
+                                            />
+                                            <label
+                                                class="form-check-label d-flex justify-content-between w-100"
+                                            >
+                                                <span t-esc="val_data['value']" />
+                                                <span
+                                                    class="badge bg-secondary ms-2"
+                                                    t-esc="val_data['count']"
+                                                />
+                                            </label>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </t>
+
+                            <!-- Dropdown filter -->
+                            <t t-if="filter_type == 'select'">
+                                <select
+                                    class="form-select o_jsonb_filter_select"
+                                    t-attf-name="jsonb_#{attr.name}"
+                                    t-att-data-attr-name="attr.name"
+                                >
+                                    <option value="">All</option>
+                                    <t t-foreach="attr_data['values']" t-as="val_data">
+                                        <option
+                                            t-att-value="val_data['value']"
+                                            t-att-selected="val_data['selected']"
+                                        >
+                                            <t t-esc="val_data['value']" />
+                                            (<t t-esc="val_data['count']" />)
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+
+                            <!-- Range slider filter -->
+                            <t t-if="filter_type == 'range'">
+                                <div class="o_jsonb_range_filter">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted small">
+                                            Min: <span
+                                            class="o_range_min_display"
+                                            t-esc="attr_data.get('selected_min') or attr_data.get('min_value', 0)"
+                                        />
+                                        </span>
+                                        <span class="text-muted small">
+                                            Max: <span
+                                            class="o_range_max_display"
+                                            t-esc="attr_data.get('selected_max') or attr_data.get('max_value', 0)"
+                                        />
+                                        </span>
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <input
+                                                type="number"
+                                                class="form-control form-control-sm o_jsonb_range_min"
+                                                placeholder="Min"
+                                                t-att-min="attr_data.get('min_value')"
+                                                t-att-max="attr_data.get('max_value')"
+                                                t-att-value="attr_data.get('selected_min', '')"
+                                                t-att-data-attr-name="attr.name"
+                                            />
+                                        </div>
+                                        <div class="col-6">
+                                            <input
+                                                type="number"
+                                                class="form-control form-control-sm o_jsonb_range_max"
+                                                placeholder="Max"
+                                                t-att-min="attr_data.get('min_value')"
+                                                t-att-max="attr_data.get('max_value')"
+                                                t-att-value="attr_data.get('selected_max', '')"
+                                                t-att-data-attr-name="attr.name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-primary mt-2 w-100 o_apply_range_filter"
+                                        t-att-data-attr-name="attr.name"
+                                    >
+                                        Apply Range
+                                    </button>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Inject JSONB filters into shop sidebar after existing attribute filters -->
+    <template
+        id="products_jsonb_attributes"
+        inherit_id="website_sale.products"
+        name="JSONB Attribute Filters Integration"
+        active="True"
+        customize_show="True"
+    >
+        <xpath
+            expr="//div[contains(@t-attf-class, 'products_attributes_filters')]"
+            position="inside"
+        >
+            <t t-call="website_attribute_set_jsonb.jsonb_attributes_filter" />
+        </xpath>
+    </template>
+
+    <!-- Display active JSONB filters as tags (similar to standard attribute tags) -->
+    <template
+        id="active_jsonb_filters"
+        inherit_id="website_sale.products"
+        name="Active JSONB Filter Tags"
+    >
+        <xpath expr="//div[@id='o_wsale_pager']" position="before">
+            <t t-if="selected_jsonb_values">
+                <div class="o_active_jsonb_filters mb-3">
+                    <t t-foreach="selected_jsonb_values.items()" t-as="filter_item">
+                        <t t-set="attr_name" t-value="filter_item[0]" />
+                        <t t-set="values" t-value="filter_item[1]" />
+                        <t t-if="isinstance(values, list)">
+                            <t t-foreach="values" t-as="val">
+                                <span class="badge bg-primary me-1 mb-1">
+                                    <t t-esc="attr_name" />: <t t-esc="val" />
+                                    <a
+                                    t-attf-href="#"
+                                    class="text-white ms-1 o_remove_jsonb_filter"
+                                    t-att-data-attr-name="attr_name"
+                                    t-att-data-value="val"
+                                >
+                                    <i class="fa fa-times" />
+                                </a>
+                                </span>
+                            </t>
+                        </t>
+                        <t t-elif="isinstance(values, dict)">
+                            <span class="badge bg-primary me-1 mb-1">
+                                <t t-esc="attr_name" />:
+                                <t t-if="values.get('min')">
+                                <t t-esc="values['min']" />
+                            </t>
+                                -
+                                <t t-if="values.get('max')">
+                                <t t-esc="values['max']" />
+                            </t>
+                                <a
+                                t-attf-href="#"
+                                class="text-white ms-1 o_remove_jsonb_range_filter"
+                                t-att-data-attr-name="attr_name"
+                            >
+                                <i class="fa fa-times" />
+                            </a>
+                            </span>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>
