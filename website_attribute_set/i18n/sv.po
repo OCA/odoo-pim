@@ -6,24 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-09 06:22+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
 msgid "<span class=\"sign_badge_price_extra\">✓</span>"
-msgstr ""
+msgstr "<span class=\"sign_badge_price_extra\">✓</span>"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
-msgstr ""
+msgstr "Alla"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_multi_select
@@ -31,16 +33,18 @@ msgid ""
 "Allow selecting multiple values for this attribute filter.\n"
 "        Products matching ANY selected value will be shown (OR logic)."
 msgstr ""
+"Tillåt val av flera värden för detta attributfilter.\n"
+"        Produkter som matchar något av de valda värdena visas (ELLER-logik)."
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_attribute
 msgid "Attribute"
-msgstr ""
+msgstr "Attribut"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Mixin för attributuppsättningsägare"
 
 #. module: website_attribute_set
 #. odoo-python
@@ -49,6 +53,8 @@ msgid ""
 "Cannot make attribute '%s' searchable because its field is neither stored "
 "nor has a search method."
 msgstr ""
+"Det går inte att göra attributet '%s' sökbart eftersom dess fält varken är "
+"lagrat eller har en sökmetod."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -57,6 +63,8 @@ msgid ""
 "Cannot make attribute searchable if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Det går inte att göra attributet sökbart om det inte har e-handelssynlighet "
+"aktiverad."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -65,6 +73,8 @@ msgid ""
 "Cannot use attribute '%s' as filter because its field is neither stored nor "
 "has a search method."
 msgstr ""
+"Det går inte att använda attributet '%s' som filter eftersom dess fält "
+"varken är lagrat eller har en sökmetod."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -73,6 +83,8 @@ msgid ""
 "Cannot use attribute as filter if it doesn't have E-Commerce Visibility "
 "enabled."
 msgstr ""
+"Det går inte att använda attributet som filter om det inte har e-"
+"handelssynlighet aktiverad."
 
 #. module: website_attribute_set
 #. odoo-python
@@ -81,11 +93,13 @@ msgid ""
 "Cannot use attribute as specification if it doesn't have E-Commerce "
 "Visibility enabled."
 msgstr ""
+"Det går inte att använda attributet som specifikation om det inte har e-"
+"handelssynlighet aktiverad."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__display_name
@@ -95,32 +109,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__display_name
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
 msgid "E Com Filter"
-msgstr ""
+msgstr "E-handelsfilter"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
 msgid "E Com Specification"
-msgstr ""
+msgstr "E-handelsspecifikation"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
 msgid "E-Commerce"
-msgstr ""
+msgstr "E-handel"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
 msgid "E-Commerce Multi-Select"
-msgstr ""
+msgstr "E-handel flerval"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_range_filter
 msgid "E-Commerce Range Filter"
-msgstr ""
+msgstr "E-handel intervallfilter"
 
 #. module: website_attribute_set
 #. odoo-python
@@ -129,26 +143,28 @@ msgid ""
 "E-Commerce Range Filter, Multi-Select and Show Count require the attribute "
 "to be enabled as a filter."
 msgstr ""
+"E-handel intervallfilter, flerval och visa antal kräver att attributet är "
+"aktiverat som filter."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_searchable
 msgid "E-Commerce Searchable"
-msgstr ""
+msgstr "E-handel sökbar"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "E-Commerce Show Count"
-msgstr ""
+msgstr "E-handel visa antal"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "E-Commerce Visibility"
-msgstr ""
+msgstr "E-handelssynlighet"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__field_is_searchable
 msgid "Field Is Searchable"
-msgstr ""
+msgstr "Fältet är sökbart"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_range_filter
@@ -156,6 +172,8 @@ msgid ""
 "For numeric attributes (integer/float), show min/max range inputs\n"
 "        instead of individual value selection in the shop filter."
 msgstr ""
+"För numeriska attribut (heltal/flyttal) visas min/max-intervallfält\n"
+"        istället för val av enskilda värden i butiksfiltret."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__id
@@ -165,7 +183,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_attribute_set.field_website__id
 #: model:ir.model.fields,field_description:website_attribute_set.field_website_searchable_mixin__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_searchable
@@ -173,6 +191,8 @@ msgid ""
 "If selected, the attribute will be included in e-commerce search.\n"
 "        Disable for large text fields to improve search performance."
 msgstr ""
+"Om markerad inkluderas attributet i e-handelssökningen.\n"
+"        Inaktivera för stora textfält för att förbättra sökprestandan."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_filter
@@ -180,6 +200,8 @@ msgid ""
 "If selected, the attribute will be shown as a filter\n"
 "         in the e-commerce shop sidebar."
 msgstr ""
+"Om markerad visas attributet som ett filter\n"
+"         i e-handelsbutikens sidofält."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_specification
@@ -187,78 +209,80 @@ msgid ""
 "If selected, the attribute will be shown as specification\n"
 "             in e-commerce website app product view."
 msgstr ""
+"Om markerad visas attributet som specifikation\n"
+"             i produktvyn på e-handelswebbplatsen."
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_visibility
 msgid "If selected, the attribute will be shown in e-commerce website app."
-msgstr ""
+msgstr "Om markerad visas attributet i e-handelswebbplatsen."
 
 #. module: website_attribute_set
 #. odoo-python
 #: code:addons/website_attribute_set/models/attribute_attribute.py:0
 msgid "Invalid domain: %s"
-msgstr ""
+msgstr "Ogiltig domän: %s"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_range_attributes
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.custom_specifications_table
 msgid "Others"
-msgstr ""
+msgstr "Övriga"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_product_category
 msgid "Product Categories"
-msgstr ""
+msgstr "Produktkategorier"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariant"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Reference Codes"
-msgstr ""
+msgstr "Referenskoder"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "Show the number of matching products next to each filter option."
-msgstr ""
+msgstr "Visa antalet matchande produkter bredvid varje filteralternativ."
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.accordion_specs_item_with_additional_attributes
 msgid "Specifications"
-msgstr ""
+msgstr "Specifikationer"
 
 #. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_compare_with_additional_attributes
 msgid "Uncategorized"
-msgstr ""
+msgstr "Okategoriserad"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website
 msgid "Website"
-msgstr ""
+msgstr "Webbplats"
 
 #. module: website_attribute_set
 #: model:ir.model,name:website_attribute_set.model_website_searchable_mixin
 msgid "Website Searchable Mixin"
-msgstr ""
+msgstr "Mixin för webbplatssökbarhet"
 
 #. module: website_attribute_set
 #: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__field_is_searchable
@@ -266,8 +290,9 @@ msgid ""
 "Whether the underlying field can be searched (stored in SQL or has a search "
 "method)."
 msgstr ""
+"Om det underliggande fältet kan sökas (lagrat i SQL eller har en sökmetod)."
 
 #. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
 msgid "eCommerce Categories"
-msgstr ""
+msgstr "e-handelskategorier"
