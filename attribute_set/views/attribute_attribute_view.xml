@@ -169,6 +169,16 @@
         <field name="context">{}</field>
         <field name="help" />
     </record>
+    <record id="attribute_attribute_form_view_widget_ac" model="ir.ui.view">
+        <field name="name">attribute.attribute.form.widget.autocomplete</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <field name="widget" position="attributes">
+                <attribute name="widget">widget_autocomplete</attribute>
+            </field>
+        </field>
+    </record>
     <record id="attribute_attribute_sort_action" model="ir.actions.act_window">
         <field name="name">Attributes</field>
         <field name="res_model">attribute.attribute</field>
