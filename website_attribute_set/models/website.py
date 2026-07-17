@@ -85,6 +85,13 @@ class Website(models.Model):
                             ]
                             base_domain.append(additional_attrib_domain)
                     else:
+                        if attribute_field.attribute_type == "boolean":
+                            # The URL param carries the value as a string:
+                            # convert it like the shop controller does, so
+                            # that "False" does not end up truthy.
+                            additional_attrib_value = (
+                                additional_attrib_value.lower() == "true"
+                            )
                         additional_attrib_domain = [
                             (attribute_name, "=", additional_attrib_value)
                         ]
