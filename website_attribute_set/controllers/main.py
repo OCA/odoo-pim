@@ -13,6 +13,7 @@ from odoo.models import BaseModel
 from odoo.addons.website_sale.controllers import main
 
 from ..models.mixins import (
+    FACET_CACHE_VERSION_PARAM,
     _parse_relational_id,
     _sparse_filter_by_value,
     build_range_filter_domains,
@@ -23,8 +24,10 @@ from ..models.mixins import (
 # request (every visitor, every pagination page) is the most expensive part
 # of the shop listing on large catalogs. Entries live at most
 # ``website_attribute_set.facet_cache_ttl`` seconds (0 disables caching),
-# so attribute/product changes show up in the filter sidebar after at most
-# one TTL. The cache is per worker process.
+# so attribute *value* changes show up in the filter sidebar after at most
+# one TTL. PIM configuration changes (attribute set assignment, attributes,
+# sets) bump ``website_attribute_set.facet_cache_version``, which is part of
+# the cache key, so they show up immediately. The cache is per worker process.
 FACET_CACHE = {}
 FACET_CACHE_MAX_ENTRIES = 256
 FACET_CACHE_DEFAULT_TTL = 300
@@ -206,10 +209,17 @@ class WebsiteSale(main.WebsiteSale):
             return FACET_CACHE_DEFAULT_TTL
 
     def _facet_cache_key(self, sudo_products):
-        """The facets only depend on the matched product set and the lang."""
+        """The facets depend on the matched product set, the lang and the
+        PIM configuration version (bumped on any facet-relevant change)."""
         ids_blob = ",".join(map(str, sorted(sudo_products._ids))).encode()
+        version = (
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param(FACET_CACHE_VERSION_PARAM, "0")
+        )
         return (
             request.env.cr.dbname,
+            version,
             request.env.lang or "en_US",
             hashlib.sha1(ids_blob).hexdigest(),
         )
