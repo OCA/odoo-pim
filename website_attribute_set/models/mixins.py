@@ -4,12 +4,28 @@
 
 import logging
 import re
+import uuid
 from difflib import SequenceMatcher
 
 from odoo import api, models
 from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
+
+# The shop facet cache key includes this parameter, so bumping it makes every
+# cached facet entry stale at once. ``set_param`` invalidates the (ormcached)
+# ir.config_parameter value across workers through the registry cache
+# signaling, so PIM configuration changes show up on the shop immediately
+# instead of after the cache TTL.
+FACET_CACHE_VERSION_PARAM = "website_attribute_set.facet_cache_version"
+
+
+def bump_facet_cache_version(env):
+    """Invalidate the shop facet cache on all workers immediately."""
+    env["ir.config_parameter"].sudo().set_param(
+        FACET_CACHE_VERSION_PARAM, str(uuid.uuid4())
+    )
+
 
 # Matches the 'name-{model.name}-id-{N}' format emitted by select/multiselect
 # filter templates, e.g. 'name-attribute.option-id-7'.
