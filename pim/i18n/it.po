@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-01-19 13:50+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_manager
+msgid ""
+"\n"
+"            the user will be able to modify products and create attributes\n"
+"        "
+msgstr ""
+"\n"
+"            l'utente potrà modificare i prodotti e creare attributi\n"
+"        "
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_user
+msgid ""
+"\n"
+"            the user will be able to modify products but will not be authorized to\n"
+"            create attributes\n"
+"        "
+msgstr ""
+"\n"
+"            l'utente potrà modificare i prodotti ma non sarà autorizzato a\n"
+"            creare attributi\n"
+"        "
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_reader
+msgid ""
+"\n"
+"            the user will have only the right to consult the products catalogue\n"
+"        "
+msgstr ""
+"\n"
+"            l'utente avrà solo la possibilità di consultare il catalogo "
+"prodotti\n"
+"        "
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_group_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_group_action
+msgid "Attribute Groups"
+msgstr "Gruppi attributo"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_attribute
+msgid "Attributes"
+msgstr "Attributi"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_variant_attribute_value
+msgid "Attributes Values"
+msgstr "Valori attributi"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_category
+msgid "Categories"
+msgstr "Categorie"
+
+#. module: pim
+#: model:ir.module.category,description:pim.module_category_pim
+msgid "Manage your products catalogue easily"
+msgstr "Gestione semplice del catalogo prodotti"
+
+#. module: pim
+#: model:ir.module.category,name:pim.module_category_pim
+#: model:ir.ui.menu,name:pim.root_menu_pim
+msgid "PIM"
+msgstr "PIM"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_manager
+msgid "PIM Manager"
+msgstr "Gestore PIM"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "PIM Reader"
+msgstr "Lettore PIM"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "PIM User"
+msgstr "Utente PIM"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_attribute_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_attribute_action
+msgid "Product Attribute"
+msgstr "Attributo prodotto"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_set_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_set_action
+msgid "Product Attribute Sets"
+msgstr "Impostazioni attributo prodotto"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.product_attribute_value_action
+msgid "Product Attribute Values"
+msgstr "Valori attributo prodotto"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_product_product
+msgid "Product Variants"
+msgstr "Varianti prodotto"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.product_template_action
+#: model:ir.ui.menu,name:pim.main_menu_product
+#: model:ir.ui.menu,name:pim.menu_product_template
+msgid "Products"
+msgstr "Prodotti"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_variant_attribute
+#: model:ir.ui.menu,name:pim.menu_variant_attribute
+msgid "Variants Attributes"
+msgstr "Attributi varianti"
