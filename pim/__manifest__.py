@@ -3,7 +3,7 @@
 
 {
     "name": "Product Information Management",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
@@ -14,6 +14,7 @@
     "data": [
         "data/ir_module_category_data.xml",
         "security/pim_security.xml",
+        "security/ir.model.access.csv",
         "views/product_view.xml",
         "views/pim_view.xml",
         "views/attribute_set.xml",
