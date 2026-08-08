@@ -26,6 +26,7 @@
         name="Variants Attributes"
         parent="root_menu_pim"
         sequence="10"
+        groups="product.group_product_variant"
     />
     <menuitem
         id="main_menu_category"
@@ -48,6 +49,7 @@
         action="product.product_normal_action_sell"
         parent="main_menu_product"
         sequence="1"
+        groups="product.group_product_variant"
     />
     <!-- Menu Attributes -->
     <menuitem
@@ -56,6 +58,7 @@
         action="product.attribute_action"
         parent="main_menu_variant_attribute"
         sequence="0"
+        groups="product.group_product_variant"
     />
     <menuitem
         id="menu_variant_attribute_value"
@@ -63,5 +66,6 @@
         action="pim.product_attribute_value_action"
         parent="main_menu_variant_attribute"
         sequence="1"
+        groups="product.group_product_variant"
     />
 </odoo>
