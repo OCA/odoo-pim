@@ -47,6 +47,14 @@ class ProductTemplate(models.Model):
         if self.categ_id and not self.attribute_set_id:
             self.attribute_set_id = self.categ_id.attribute_set_id
 
+    @api.onchange("attribute_set_id")
+    def _onchange_attribute_set_id(self):
+        """Trigger _get_view_fields implicitly to auto update attributes in the UI"""
+        if self.attribute_set_id:
+            view_id = self.env.ref("product.product_template_only_form_view").id
+            view = self.get_views([(view_id, "form")], {})
+            view.get("models")
+
 
 class ProductProduct(models.Model):
 
