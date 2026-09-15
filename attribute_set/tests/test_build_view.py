@@ -25,13 +25,35 @@ class BuildViewCase(TransactionCase):
         return cls.env["attribute.attribute"].create(vals)
 
     @classmethod
+    def _clean_model_attributes(cls):
+        """Supprime l'attribut attribute_set_id du __dict__ des classes Python
+        pour éviter le rejet lors du contrôle de sécurité d'Odoo."""
+        models_to_clean = ["res.partner", "res.country", "res.users"]
+        for model_name in models_to_clean:
+            if model_name in cls.env:
+                model_cls = type(cls.env[model_name])
+                if "attribute_set_id" in model_cls.__dict__:
+                    delattr(model_cls, "attribute_set_id")
+
+    @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # 1. Charger et enregistrer les modèles virtuels/étendus
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+
+        from .models import ResCountry, ResPartner
+
+        cls.loader.update_registry((ResPartner, ResCountry))
+
+        # 2. Nettoyer les classes Python immédiatement après le registre
+        cls._clean_model_attributes()
 
         # Demo user will be a base user to read model
         cls.demo = cls.env.ref("base.user_demo")
 
-        # This user will have access to
+        # Config user avec droits d'accès
         cls.attribute_manager_user = cls.env.ref("base.user_admin")
         cls.attribute_manager_user.write(
             {
@@ -41,12 +63,6 @@ class BuildViewCase(TransactionCase):
             }
         )
         cls.attribute_manager_user.groups_id |= cls.env.ref("base.group_erp_manager")
-
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        from .models import ResCountry, ResPartner
-
-        cls.loader.update_registry((ResPartner, ResCountry))
 
         # Create a new inherited view with the 'attributes' placeholder.
         cls.view = cls.env["ir.ui.view"].create(
@@ -64,7 +80,8 @@ class BuildViewCase(TransactionCase):
                 """,
             }
         )
-        # Create some attributes
+
+        # Initalisation des données de test...
         cls.model_id = cls.env.ref("base.model_res_partner").id
         cls.partner = cls.env.ref("base.res_partner_12")
         cls.set_1 = cls._create_set("Set 1")
@@ -139,7 +156,6 @@ class BuildViewCase(TransactionCase):
                 "attribute_set_ids": [(6, 0, [cls.set_1.id, cls.set_2.id])],
             }
         )
-
         cls.multi_attribute = cls._create_attribute(
             {
                 "attribute_type": "multiselect",
@@ -153,16 +169,25 @@ class BuildViewCase(TransactionCase):
             }
         )
 
-        # Add attributes for country
         cls.model_id = cls.env.ref("base.model_res_country").id
         cls.be = cls.env.ref("base.be")
         cls.set_country = cls._create_set("Set Country")
         cls.model_id = cls.env.ref("base.model_res_partner").id
 
+    def tearDown(self):
+        # S'assure de re-nettoyer après l'exécution de CHAQUE test individuel
+        self._clean_model_attributes()
+        super().tearDown()
+
     @classmethod
     def tearDownClass(cls):
-        cls.loader.restore_registry()
-        return super().tearDownClass()
+        try:
+            cls._clean_model_attributes()
+            if hasattr(cls, "loader"):
+                cls.loader.restore_registry()
+                cls.env.registry.setup_models(cls.env.cr)
+        finally:
+            super().tearDownClass()
 
     # TEST write on attributes
     @users("demo")
@@ -356,5 +381,6 @@ class BuildViewCase(TransactionCase):
         # Test attributes modifications through form
         partner = self.partner.with_user(self.env.user)
         self.assertFalse(partner.x_attr_3)
-        sets = partner.attribute_set_id.search(partner._get_attribute_set_owner_model())
+        domain = partner._get_attribute_set_owner_model()
+        sets = self.env["attribute.set"].search(domain)
         self.assertEqual(self.set_1 | self.set_2, sets)
