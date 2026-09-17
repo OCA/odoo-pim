@@ -75,12 +75,13 @@ class Website(models.Model):
                             search_rec_value = (
                                 self.env[model_name].sudo().browse(int(model_id))
                             )
+                            # Child sets inherit their parent's attributes.
                             additional_attrib_domain = [
                                 (attribute_name, "in", [search_rec_value.id]),
                                 (
                                     "attribute_set_id",
                                     "in",
-                                    attribute_field.attribute_set_ids.ids,
+                                    attribute_field._get_all_set_ids(),
                                 ),
                             ]
                             base_domain.append(additional_attrib_domain)
