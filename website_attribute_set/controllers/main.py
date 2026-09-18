@@ -5,7 +5,7 @@
 from collections import defaultdict
 
 from odoo.fields import Domain
-from odoo.http import request
+from odoo.http import request, route
 from odoo.models import BaseModel
 
 from odoo.addons.website_sale.controllers import main
@@ -63,6 +63,24 @@ class WebsiteSale(main.WebsiteSale):
                 except (ValueError, TypeError):
                     continue
         return range_filters
+
+    @route()
+    def shop(self, **post):
+        """Keep every additional attribute filter across the pager pages.
+
+        ``request.params`` keeps only the first occurrence of a repeated query
+        param, so a listing filtered on more than one additional attribute
+        reaches ``website.pager()`` with a single ``additional_attribute_values``
+        entry and the remaining filters are dropped from the page links. Put the
+        whole list back in ``post``, the same way ``website_sale`` does for its
+        own ``attribute_values`` param.
+        """
+        additional_attrib_list = request.httprequest.args.getlist(
+            "additional_attribute_values"
+        )
+        if additional_attrib_list:
+            post["additional_attribute_values"] = additional_attrib_list
+        return super().shop(**post)
 
     def _shop_get_query_url_kwargs(self, search, min_price, max_price, **post):
         result = super()._shop_get_query_url_kwargs(
