@@ -1,0 +1,2 @@
+- Nicolas Delbovier <nicolas.delbovier@acsone.eu>
+- Laurent Mignon <laurent.mignon@acsone.eu>
