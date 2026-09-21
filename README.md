@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [attribute_set](attribute_set/) | 16.0.1.4.0 |  | Attribute Set
 [attribute_set_completeness](attribute_set_completeness/) | 16.0.1.0.0 |  | Attribute Set Completeness
+[attribute_set_searchable](attribute_set_searchable/) | 16.0.1.0.0 |  | Attribute Set Searchable
 [pim](pim/) | 16.0.1.0.0 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 16.0.1.2.0 |  | Product Attribute Set
 [product_search_multi_value](product_search_multi_value/) | 16.0.1.0.1 |  | Product Search Multi Value
