@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="attribute_attribute_form_view">
+        <field name="name">attribute.attribute.form (in attribut_set_searchable)</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <field name="required_on_views" position="after">
+                <field name="searchable" />
+            </field>
+        </field>
+    </record>
+</odoo>
