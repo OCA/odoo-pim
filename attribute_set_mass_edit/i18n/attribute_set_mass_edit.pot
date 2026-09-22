@@ -14,13 +14,42 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: attribute_set_mass_edit
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__allow_mass_editing
+msgid "Allow Mass Editing"
+msgstr ""
+
+#. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_attribute_attribute
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_actions_server_mass_edit_line__attribute_id
 msgid "Attribute"
 msgstr ""
 
 #. module: attribute_set_mass_edit
 #: model:ir.model,name:attribute_set_mass_edit.model_attribute_group
 msgid "Attribute Group"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#. odoo-python
+#: code:addons/attribute_set_mass_edit/models/attribute_group.py:0
+#, python-format
+msgid "Edit %s fields"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_group__mass_edit_action_ids
+msgid "Mass Edit Action"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_actions_server__mass_edit_attribute_group_id
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_ir_cron__mass_edit_attribute_group_id
+msgid "Mass Edit Attribute Group"
+msgstr ""
+
+#. module: attribute_set_mass_edit
+#: model:ir.model.fields,field_description:attribute_set_mass_edit.field_attribute_attribute__mass_editing_line_ids
+msgid "Mass Editing Line"
 msgstr ""
 
 #. module: attribute_set_mass_edit
