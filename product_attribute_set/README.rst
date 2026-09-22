@@ -69,6 +69,7 @@ Contributors
 * David Dufresne <david.dufresne@savoirfairelinux.com>
 * El Hadji Dem <elhadji.dem@savoirfairelinux.com>
 * Denis Roussel <denis.roussel@acsone.eu>
+* Mohamed Alkobrosli <malkobrosly@kencove.com>
 
 Maintainers
 ~~~~~~~~~~~
