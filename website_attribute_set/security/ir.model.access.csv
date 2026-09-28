@@ -7,3 +7,4 @@ access_attribute_option_public,attribute.option website public read,attribute_se
 access_attribute_option_portal,attribute.option website portal read,attribute_set.model_attribute_option,base.group_portal,1,0,0,0
 access_attribute_set_public,attribute.set website public read,attribute_set.model_attribute_set,base.group_public,1,0,0,0
 access_attribute_set_portal,attribute.set website portal read,attribute_set.model_attribute_set,base.group_portal,1,0,0,0
+access_product_public_category_pim_user,product.public.category pim user,website_sale.model_product_public_category,pim.group_pim_user,1,1,1,0
