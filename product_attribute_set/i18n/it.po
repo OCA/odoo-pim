@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-22 08:58+0000\n"
+"PO-Revision-Date: 2026-09-28 07:54+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_attribute_set
 #: model:ir.model,name:product_attribute_set.model_attribute_attribute
@@ -32,37 +32,37 @@ msgstr "Impostazione attibuto"
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_completion_rate
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completion_rate
 msgid "Attribute Set Completion Rate"
-msgstr ""
+msgstr "Tasso di completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_completion_state
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completion_state
 msgid "Attribute Set Completion State"
-msgstr ""
+msgstr "Stato completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_completed_ids
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completed_ids
 msgid "Attribute Set completed criterias"
-msgstr ""
+msgstr "Criteri completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_not_completed_ids
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_not_completed_ids
 msgid "Attribute Set not completed criterias"
-msgstr ""
+msgstr "Criteri non completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model:ir.model.fields,help:product_attribute_set.field_product_product__attribute_set_completion_rate
 #: model:ir.model.fields,help:product_attribute_set.field_product_template__attribute_set_completion_rate
 msgid "Attribute set completeness percentage"
-msgstr ""
+msgstr "Percentuale completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model:ir.model.fields,help:product_attribute_set.field_product_product__attribute_set_completion_state
 #: model:ir.model.fields,help:product_attribute_set.field_product_template__attribute_set_completion_state
 msgid "Attribute set completeness status"
-msgstr ""
+msgstr "Stato completamento del set di attributi"
 
 #. module: product_attribute_set
 #: model_terms:ir.ui.view,arch_db:product_attribute_set.product_template_form_view
@@ -74,7 +74,7 @@ msgstr "Attributi"
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_completeness_ids
 #: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_completeness_ids
 msgid "Completeness Requirements"
-msgstr ""
+msgstr "Richieste completamento"
 
 #. module: product_attribute_set
 #: model:attribute.set,name:product_attribute_set.computer_attribute_set
