@@ -6,39 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-10-01 15:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_attribute_set_list_view
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_attribute_list_mixin__display_name
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_product__display_name
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_template__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: product_attribute_set_list_view
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_attribute_list_mixin__id
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_product__id
 #: model:ir.model.fields,field_description:product_attribute_set_list_view.field_product_template__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_attribute_set_list_view
 #: model:ir.model,name:product_attribute_set_list_view.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: product_attribute_set_list_view
 #: model:ir.model,name:product_attribute_set_list_view.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: product_attribute_set_list_view
 #: model:ir.model,name:product_attribute_set_list_view.model_product_attribute_list_mixin
 msgid "Product attribute list view mixin"
-msgstr ""
+msgstr "Mixin vista elenco attributo prodotto"
