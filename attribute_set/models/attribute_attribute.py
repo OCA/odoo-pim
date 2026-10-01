@@ -250,7 +250,7 @@ class AttributeAttribute(models.Model):
     @api.onchange("name")
     def onchange_name(self):
         name = self.name
-        if not name.startswith("x_"):
+        if name and not name.startswith("x_"):
             self.name = f"x_{name}"
 
     @api.onchange("attribute_type")
@@ -413,6 +413,20 @@ class AttributeAttribute(models.Model):
                             obj.write({custom_field: [(3, value.id, 0)]})
 
     def write(self, vals):
+        # Native attributes are linked to an existing base field that cannot be
+        # modified (see create()): drop the values of the inherited
+        # 'ir.model.fields' fields for them, but not for the custom ones.
+        native_attrs = self.filtered(lambda att: att.nature == "native")
+        if native_attrs and any(self._fields[key].inherited for key in vals):
+            custom_attrs = self - native_attrs
+            if custom_attrs:
+                custom_attrs.write(dict(vals))
+            native_vals = {
+                key: value
+                for key, value in vals.items()
+                if not self._fields[key].inherited
+            }
+            return native_attrs.write(native_vals)
         # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
             if self.search_count(
@@ -486,6 +500,33 @@ class AttributeAttribute(models.Model):
                 att._delete_old_fields_options(options)
 
         return res
+
+    def copy_data(self, default=None):
+        """Give duplicated custom attributes a free field name, as the name of
+        the 'ir.model.fields' record they create must be unique per model, and
+        a distinct label."""
+        default = default or {}
+        vals_list = super().copy_data(default=default)
+        if "name" in default:
+            return vals_list
+        for attribute, vals in zip(self, vals_list, strict=True):
+            if attribute.nature != "custom":
+                continue
+            counter = 1
+            new_name = f"{attribute.name}_copy{counter}"
+            while self.env["ir.model.fields"].search_count(
+                [("model_id", "=", attribute.model_id.id), ("name", "=", new_name)]
+            ):
+                counter += 1
+                new_name = f"{attribute.name}_copy{counter}"
+            vals["name"] = new_name
+            if "field_description" not in default:
+                vals["field_description"] = self.env._(
+                    "%(label)s (copy %(counter)s)",
+                    label=attribute.field_description,
+                    counter=counter,
+                )
+        return vals_list
 
     def unlink(self):
         """Delete the Attribute's related field when deleting a custom Attribute"""
