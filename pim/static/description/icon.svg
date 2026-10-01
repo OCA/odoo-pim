@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D0C2"/>
+      <stop offset="100%" stop-color="#00A09D"/>
+    </linearGradient>
+    <linearGradient id="purple-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#875A7B"/>
+      <stop offset="100%" stop-color="#5C3B53"/>
+    </linearGradient>
+    <linearGradient id="coral-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A59"/>
+      <stop offset="100%" stop-color="#F05A28"/>
+    </linearGradient>
+    <filter id="odoo-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1B0F1A" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#odoo-shadow)">
+    <!-- connectors -->
+    <g stroke="#875A7B" stroke-width="4" stroke-linecap="round" opacity="0.85">
+      <path d="M 64 54 L 64 24"/>
+      <path d="M 64 54 L 36 33"/>
+      <path d="M 64 54 L 92 33"/>
+    </g>
+
+    <!-- product cube (catalog base) -->
+    <path d="M 64 54 L 96 70 L 64 86 L 32 70 Z" fill="url(#teal-grad)"/>
+    <path d="M 32 70 L 64 86 L 64 114 L 32 98 Z" fill="url(#purple-grad)"/>
+    <path d="M 64 86 L 96 70 L 96 98 L 64 114 Z" fill="#42293C"/>
+
+    <!-- attribute nodes -->
+    <!-- category (check) -->
+    <circle cx="64" cy="24" r="10" fill="#00A09D"/>
+    <path d="M 60 24 L 63 27 L 68 21" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- media (dot) -->
+    <circle cx="36" cy="33" r="9" fill="url(#coral-grad)"/>
+    <circle cx="36" cy="33" r="3.4" fill="#FFFFFF"/>
+    <!-- spec (square) -->
+    <circle cx="92" cy="33" r="9" fill="#F39C12"/>
+    <rect x="89" y="30" width="6" height="6" rx="1.2" fill="#FFFFFF"/>
+
+    <!-- central hub -->
+    <circle cx="64" cy="54" r="8" fill="#FFFFFF"/>
+    <circle cx="64" cy="54" r="4.5" fill="#875A7B"/>
+  </g>
+</svg>
