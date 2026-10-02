@@ -63,3 +63,40 @@ class TestAttributeSet(common.TransactionCase):
 
         self.assertEqual(attribute.ttype, "many2many")
         self.assertEqual(attribute.relation, "attribute.option")
+
+    def test_wizard_validate(self):
+        model_id = self.env["ir.model"].search([("model", "=", "res.partner")])
+        attribute = self._create_attribute(
+            {
+                "attribute_type": "select",
+                "option_ids": [
+                    (0, 0, {"name": "Value 1"}),
+                    (0, 0, {"name": "Value 2"}),
+                ],
+                "relation_model_id": model_id.id,
+            }
+        )
+        PartnerModel = self.env["res.partner"]
+        partner = PartnerModel.create({"name": "John Doe"})
+        vals = {
+            "attribute_id": attribute.id,
+            "option_ids": [[[attribute.id], partner.name, [partner.id]]],
+        }
+        OptionWizard = self.env["attribute.option.wizard"]
+        # attribute has only two options
+        len_2 = len(attribute.option_ids)
+        self.assertTrue(len_2 == 2)
+        # a new option should be created
+        wizard1 = OptionWizard.create(vals)
+        len_3 = len(attribute.option_ids)
+        self.assertTrue(len_3 > 2)
+        self.assertIn(partner.name, attribute.option_ids.mapped("name"))
+        vals = {
+            "attribute_id": attribute.id,
+        }
+        # no option should be created
+        # as option_ids key is not passed in vals
+        wizard2 = OptionWizard.create(vals)
+        len_default = len(attribute.option_ids)
+        self.assertTrue(wizard1 != wizard2)
+        self.assertEqual(len_default, len_3)
