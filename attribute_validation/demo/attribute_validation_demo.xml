@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- A group to hold the demo attributes (on product templates). -->
+    <record id="demo_attribute_group" model="attribute.group">
+        <field name="name">Equipment Specs (Demo)</field>
+        <field name="model_id" ref="product.model_product_template" />
+    </record>
+
+    <!-- Allowed-values rule: showcases autocomplete suggestions. -->
+    <record id="demo_rule_fuel_type" model="attribute.validation.rule">
+        <field name="name">Fuel Type (Demo)</field>
+        <field name="code">demo_fuel_type</field>
+        <field name="validation_type">allowed_values</field>
+        <field name="error_message">'{value}' is not a known fuel type</field>
+    </record>
+    <record id="demo_fuel_diesel" model="attribute.validation.allowed.value">
+        <field name="rule_id" ref="demo_rule_fuel_type" />
+        <field name="value">Diesel</field>
+    </record>
+    <record id="demo_fuel_electric" model="attribute.validation.allowed.value">
+        <field name="rule_id" ref="demo_rule_fuel_type" />
+        <field name="value">Electric</field>
+    </record>
+    <record id="demo_fuel_hybrid" model="attribute.validation.allowed.value">
+        <field name="rule_id" ref="demo_rule_fuel_type" />
+        <field name="value">Hybrid</field>
+    </record>
+    <record id="demo_fuel_lpg" model="attribute.validation.allowed.value">
+        <field name="rule_id" ref="demo_rule_fuel_type" />
+        <field name="value">LPG</field>
+    </record>
+
+    <!-- Attributes using the rules. -->
+    <record id="demo_attr_fuel_type" model="attribute.attribute">
+        <field name="name">x_demo_fuel_type</field>
+        <field name="field_description">Fuel Type</field>
+        <field name="attribute_type">char</field>
+        <field name="nature">custom</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="attribute_group_id" ref="demo_attribute_group" />
+        <field name="enable_autocomplete" eval="True" />
+        <field name="validation_rule_ids" eval="[(4, ref('demo_rule_fuel_type'))]" />
+    </record>
+    <record id="demo_attr_brand" model="attribute.attribute">
+        <field name="name">x_demo_brand</field>
+        <field name="field_description">Brand</field>
+        <field name="attribute_type">char</field>
+        <field name="nature">custom</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="attribute_group_id" ref="demo_attribute_group" />
+    </record>
+    <record id="demo_attr_engine" model="attribute.attribute">
+        <field name="name">x_demo_engine</field>
+        <field name="field_description">Engine Model</field>
+        <field name="attribute_type">char</field>
+        <field name="nature">custom</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="attribute_group_id" ref="demo_attribute_group" />
+    </record>
+
+    <!-- Cascade: a Caterpillar machine must have its engine model filled in. -->
+    <record id="demo_cascade_brand_engine" model="attribute.validation.cascade">
+        <field name="name">Caterpillar requires engine model (Demo)</field>
+        <field name="trigger_attribute_id" ref="demo_attr_brand" />
+        <field name="trigger_operator">=</field>
+        <field name="trigger_value">Caterpillar</field>
+        <field name="target_attribute_id" ref="demo_attr_engine" />
+        <field name="effect_type">required</field>
+    </record>
+</odoo>

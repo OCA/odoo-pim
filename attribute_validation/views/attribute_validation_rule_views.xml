@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_attribute_validation_rule_tree" model="ir.ui.view">
+        <field name="name">attribute.validation.rule.tree</field>
+        <field name="model">attribute.validation.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="code" />
+                <field name="validation_type" />
+                <field name="usage_count" />
+                <field name="active" column_invisible="True" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_attribute_validation_rule_form" model="ir.ui.view">
+        <field name="name">attribute.validation.rule.form</field>
+        <field name="model">attribute.validation.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_attributes"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tags"
+                            invisible="usage_count == 0"
+                        >
+                            <field
+                                name="usage_count"
+                                string="Attributes"
+                                widget="statinfo"
+                            />
+                        </button>
+                        <button
+                            name="action_clear_cache"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-refresh"
+                            invisible="validation_type != 'dynamic_source'"
+                            string="Clear Cache"
+                        />
+                    </div>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="code" />
+                            <field name="validation_type" />
+                            <field name="active" invisible="1" />
+                        </group>
+                        <group>
+                            <field name="sequence" />
+                            <field
+                                name="error_message"
+                                placeholder="Custom error message..."
+                            />
+                        </group>
+                    </group>
+
+                    <!-- Regex Configuration -->
+                    <group
+                        string="Regular Expression"
+                        invisible="validation_type != 'regex'"
+                    >
+                        <field name="regex_pattern" placeholder="^[A-Z]{2}[0-9]{4}$" />
+                        <field name="regex_flags" />
+                    </group>
+
+                    <!-- Allowed Values Configuration -->
+                    <group
+                        string="Allowed Values"
+                        invisible="validation_type != 'allowed_values'"
+                    >
+                        <field name="allowed_value_ids" nolabel="1">
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle" />
+                                <field name="value" />
+                                <field name="display_value" optional="show" />
+                                <field name="active" />
+                            </list>
+                        </field>
+                    </group>
+
+                    <!-- Dynamic Source Configuration -->
+                    <group
+                        string="Dynamic Source"
+                        invisible="validation_type != 'dynamic_source'"
+                    >
+                        <group>
+                            <field
+                                name="source_model_id"
+                                options="{'no_create': True, 'no_open': True}"
+                            />
+                            <field name="source_field" />
+                            <field name="source_display_field" />
+                        </group>
+                        <group>
+                            <field name="source_domain" />
+                            <field name="source_order" />
+                            <field name="cache_timeout" />
+                        </group>
+                    </group>
+
+                    <!-- Range Configuration -->
+                    <group
+                        string="Numeric Range"
+                        invisible="validation_type != 'range'"
+                    >
+                        <group>
+                            <field name="range_min" />
+                            <field name="range_min_inclusive" />
+                        </group>
+                        <group>
+                            <field name="range_max" />
+                            <field name="range_max_inclusive" />
+                        </group>
+                        <group>
+                            <field name="range_step" />
+                        </group>
+                    </group>
+
+                    <!-- Python Expression Configuration -->
+                    <group
+                        string="Python Expression"
+                        invisible="validation_type != 'python'"
+                    >
+                        <field
+                            name="python_code"
+                            widget="code"
+                            options="{'mode': 'python'}"
+                            nolabel="1"
+                            colspan="2"
+                        />
+                    </group>
+
+                    <!-- Used by attributes -->
+                    <group string="Used By Attributes" invisible="usage_count == 0">
+                        <field name="attribute_ids" nolabel="1" colspan="2">
+                            <list>
+                                <field name="name" />
+                                <field name="field_description" />
+                                <field name="model_id" />
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_attribute_validation_rule_search" model="ir.ui.view">
+        <field name="name">attribute.validation.rule.search</field>
+        <field name="model">attribute.validation.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="code" />
+                <filter
+                    name="filter_regex"
+                    string="Regex"
+                    domain="[('validation_type', '=', 'regex')]"
+                />
+                <filter
+                    name="filter_allowed"
+                    string="Allowed Values"
+                    domain="[('validation_type', '=', 'allowed_values')]"
+                />
+                <filter
+                    name="filter_dynamic"
+                    string="Dynamic Source"
+                    domain="[('validation_type', '=', 'dynamic_source')]"
+                />
+                <filter
+                    name="filter_range"
+                    string="Range"
+                    domain="[('validation_type', '=', 'range')]"
+                />
+                <filter
+                    name="filter_python"
+                    string="Python"
+                    domain="[('validation_type', '=', 'python')]"
+                />
+                <separator />
+                <filter
+                    name="filter_archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                <separator />
+                <filter
+                    name="groupby_type"
+                    string="Type"
+                    context="{'group_by': 'validation_type'}"
+                />
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_attribute_validation_rule" model="ir.actions.act_window">
+        <field name="name">Validation Rules</field>
+        <field name="res_model">attribute.validation.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_attribute_validation_rule_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first validation rule
+            </p>
+            <p>
+                Validation rules enforce data quality for attribute values without
+                requiring Many2one relations.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu.
+         Lives under Settings > Technical (base.menu_custom). No explicit group
+         gate: visibility is driven by the child action's model ACL
+         (attribute.validation.rule is readable only by the Validation
+         User/Manager roles, and admins imply Validation Manager). Note the
+         Technical menu itself is Developer-Mode / role gated on this deployment,
+         so a user also needs Technical menu access (dev mode or a technical
+         group) to reach it. -->
+    <menuitem
+        id="menu_attribute_validation_root"
+        name="Attribute Validation"
+        parent="base.menu_custom"
+        sequence="90"
+    />
+
+    <menuitem
+        id="menu_attribute_validation_rules"
+        name="Validation Rules"
+        parent="menu_attribute_validation_root"
+        action="action_attribute_validation_rule"
+        sequence="10"
+    />
+</odoo>

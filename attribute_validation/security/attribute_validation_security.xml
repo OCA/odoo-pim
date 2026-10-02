@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Odoo 19 groups a set of User/Manager groups under a res.groups.privilege
+         (itself filed under an ir.module.category). This makes the two groups
+         show as one "Attribute Validation" User/Manager selection in the user
+         form instead of hard-to-find standalone checkboxes. -->
+    <record id="module_category_attribute_validation" model="ir.module.category">
+        <field name="name">Attribute Validation</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="privilege_attribute_validation" model="res.groups.privilege">
+        <field name="name">Attribute Validation</field>
+        <field name="category_id" ref="module_category_attribute_validation" />
+    </record>
+
+    <!-- Security Groups -->
+    <record id="group_validation_user" model="res.groups">
+        <field name="name">Validation User</field>
+        <field name="privilege_id" ref="privilege_attribute_validation" />
+        <field name="comment">Can use validated fields and see validation rules</field>
+    </record>
+
+    <record id="group_validation_manager" model="res.groups">
+        <field name="name">Validation Manager</field>
+        <field name="privilege_id" ref="privilege_attribute_validation" />
+        <field name="implied_ids" eval="[(4, ref('group_validation_user'))]" />
+        <field name="comment">Can create and manage validation rules</field>
+    </record>
+
+    <!-- Administrators (Settings access) manage validation rules out of the
+         box, so the Settings > Technical > Attribute Validation menu is visible
+         without hand-assigning a group. The model access is otherwise limited
+         to the Validation User/Manager roles, and a plain admin is in neither. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_validation_manager'))]" />
+    </record>
+</odoo>
