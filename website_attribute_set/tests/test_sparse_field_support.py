@@ -1,11 +1,12 @@
 # Copyright 2026 ForgeFlow (http://www.forgeflow.com).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.attribute_set.tests.test_build_view import BuildViewCase
+from odoo.tests import TransactionCase
+
 from odoo.addons.website_attribute_set.models.mixins import search_extra
 
 
-class TestSparseFieldSupport(BuildViewCase):
+class TestSparseFieldSupport(TransactionCase):
     """Regression tests: sparse (base_sparse_field) attributes must work with
     e-commerce search and filter without crashing.
 

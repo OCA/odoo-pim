@@ -110,13 +110,3 @@ class AttributeSetOwnerMixin(models.AbstractModel):
             attributes = self.env["attribute.attribute"].search(domain)
             models[self._name].update(attributes.sudo().mapped("name"))
         return models
-
-
-class ResPartner(models.Model):
-    _inherit = ["res.partner", "attribute.set.owner.mixin"]
-    _name = "res.partner"
-
-
-class ResCountry(models.Model):
-    _inherit = ["res.country", "attribute.set.owner.mixin"]
-    _name = "res.country"
