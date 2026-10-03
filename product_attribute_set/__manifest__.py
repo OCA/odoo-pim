@@ -7,8 +7,12 @@
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/odoo-pim",
-    "depends": ["product", "attribute_set"],
-    "data": ["views/product.xml", "views/product_category.xml"],
+    "depends": ["base_setup", "product", "attribute_set"],
+    "data": [
+        "views/product.xml",
+        "views/product_category.xml",
+        "views/res_config_settings.xml",
+    ],
     "demo": ["demo/product_attribute.xml"],
     "installable": True,
 }
