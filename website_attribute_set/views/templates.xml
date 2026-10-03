@@ -236,6 +236,14 @@
         inherit_id="website_sale.product_attribute_filters_form"
         name="Product Attribute Filters Form"
     >
+        <!-- Exclude additional_attribute_values from the form action: the JS
+             handler rebuilds it from the checked inputs, so a stale value kept
+             by keep() would make unchecking a filter impossible. -->
+        <xpath expr="//form" position="attributes">
+            <attribute
+                name="t-att-action"
+            >keep(attribute_values=0, tags=0, additional_attribute_values=0)</attribute>
+        </xpath>
         <xpath expr="//form" position="inside">
             <t
                 t-set="additional_filter_attributes"
