@@ -307,6 +307,26 @@ class BuildViewCase(TransactionCase):
             )
         )
 
+    @users("demo")
+    def test_remove_native_fields_as_plain_user(self):
+        """A user without "Access Rights" must be able to strip native fields.
+
+        ``attribute.attribute`` delegates ``name`` to ``ir.model.fields``, and
+        regular users have no read access on that model, so the attributes must
+        be looked up in sudo.
+
+        The method is called directly, and the record cache emptied first,
+        because going through ``get_views()`` cannot catch the regression:
+        ``_get_view_fields()`` reads the same names in sudo beforehand, leaving
+        them in the record cache, so the un-sudoed read never reaches the
+        database and no access check happens.
+        """
+        native_field_name = self.attr_native.sudo().name
+        eview = etree.fromstring(f"<form><field name='{native_field_name}'/></form>")
+        self.env.invalidate_all()
+        self.env["res.partner"].remove_native_fields(eview)
+        self.assertFalse(eview.xpath(f"//field[@name='{native_field_name}']"))
+
     # TESTS UNLINK
     def test_unlink_custom_attribute(self):
         attr_1_field_id = self.attr_1.field_id.id
