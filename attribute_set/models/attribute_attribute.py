@@ -509,6 +509,20 @@ class AttributeAttribute(models.Model):
             offset += batch_size
 
     def write(self, vals):
+        # Native attributes are linked to an existing base field that cannot be
+        # modified (see create()): drop the values of the inherited
+        # 'ir.model.fields' fields for them, but not for the custom ones.
+        native_attrs = self.filtered(lambda att: att.nature == "native")
+        if native_attrs and any(self._fields[key].inherited for key in vals):
+            custom_attrs = self - native_attrs
+            if custom_attrs:
+                custom_attrs.write(dict(vals))
+            native_vals = {
+                key: value
+                for key, value in vals.items()
+                if not self._fields[key].inherited
+            }
+            return native_attrs.write(native_vals)
         # Prevent from changing Attribute's type
         if "attribute_type" in list(vals.keys()):
             if self.search_count(
@@ -554,10 +568,6 @@ class AttributeAttribute(models.Model):
                         and vice versa."""
                     )
                 )
-        # For native attributes, remove field-related values to prevent
-        # modification of base fields
-        self._handle_native_attribute_updates(vals)
-
         # Set the new values to self
         res = super().write(vals)
 
@@ -587,43 +597,32 @@ class AttributeAttribute(models.Model):
 
         return res
 
-    def _handle_native_attribute_updates(self, vals):
-        """Helper method to handle field updates for native attributes."""
-        for att in self:
-            if att.nature == "native":
-                # Remove field-related keys that would modify the underlying
-                # ir.model.fields record
-                field_related_keys = {
-                    "name",
-                    "field_description",
-                    "ttype",
-                    "relation",
-                    "size",
-                    "required",
-                    "readonly",
-                    "translate",
-                    "selection",
-                    "domain",
-                }
-                for key in field_related_keys.intersection(set(vals.keys())):
-                    vals.pop(key, None)
-
-    def copy(self, default=None):
-        """Ensure unique name when duplicating attribute."""
+    def copy_data(self, default=None):
+        """Give duplicated custom attributes a free field name, as the name of
+        the 'ir.model.fields' record they create must be unique per model, and
+        a distinct label."""
         default = default or {}
-        if "name" not in default:
-            # Get the original name and add a suffix to make it unique
-            original_name = self.name
+        vals_list = super().copy_data(default=default)
+        if "name" in default:
+            return vals_list
+        for attribute, vals in zip(self, vals_list, strict=True):
+            if attribute.nature != "custom":
+                continue
             counter = 1
-            new_name = f"{original_name}_copy{counter}"
-
-            # Keep incrementing counter until we find a unique name
-            while self.search_count([("name", "=", new_name)]) > 0:
+            new_name = f"{attribute.name}_copy{counter}"
+            while self.env["ir.model.fields"].search_count(
+                [("model_id", "=", attribute.model_id.id), ("name", "=", new_name)]
+            ):
                 counter += 1
-                new_name = f"{original_name}_copy{counter}"
-
-            default["name"] = new_name
-        return super().copy(default)
+                new_name = f"{attribute.name}_copy{counter}"
+            vals["name"] = new_name
+            if "field_description" not in default:
+                vals["field_description"] = self.env._(
+                    "%(label)s (copy %(counter)s)",
+                    label=attribute.field_description,
+                    counter=counter,
+                )
+        return vals_list
 
     def unlink(self):
         """Delete the Attribute's related field when deleting a custom Attribute"""
