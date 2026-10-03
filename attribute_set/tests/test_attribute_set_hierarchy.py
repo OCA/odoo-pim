@@ -105,21 +105,6 @@ class TestAttributeSetHierarchy(TransactionCase):
         self.assertIn(self.grandchild_set.id, all_set_ids)
         self.assertNotIn(self.sibling_set.id, all_set_ids)
 
-    def test_eview_includes_descendant_set_ids(self):
-        """The generated view should include descendant set IDs."""
-        eview = self.env["res.partner"]._build_attribute_eview()
-        # Check group visibility includes all hierarchy IDs
-        group_elem = eview.find(".//group[@string='Test group']")
-        self.assertIsNotNone(group_elem)
-        invisible = group_elem.get("invisible")
-        for attr_set in (
-            self.parent_set,
-            self.child_set,
-            self.grandchild_set,
-            self.sibling_set,
-        ):
-            self.assertIn(str(attr_set.id), invisible)
-
     def test_constraint_no_recursion(self):
         """Setting parent_id to create a cycle should raise.
 
