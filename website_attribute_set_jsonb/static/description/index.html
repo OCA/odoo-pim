@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>README.rst</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: gray; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic, pre.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<a class="reference external image-reference" href="https://odoo-community.org/get-involved?utm_source=readme">
+<img alt="Odoo Community Association" src="https://odoo-community.org/readme-banner-image" />
+</a>
+<div class="section" id="website-attribute-set-jsonb">
+<h1>Website Attribute Set JSONB</h1>
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:af4197ed08299d8d7f1d64646b2a8ce76b676bfc1540c77fe350543bf6e5d9ce
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/odoo-pim/tree/19.0/website_attribute_set_jsonb"><img alt="OCA/odoo-pim" src="https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/odoo-pim-19-0/odoo-pim-19-0-website_attribute_set_jsonb"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module integrates OCA’s <tt class="docutils literal">attribute_set</tt> JSONB serialized
+attributes with Odoo’s website shop filtering system.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><strong>Website Visibility Configuration</strong>: Mark JSONB attributes as visible
+in website shop filters</li>
+<li><strong>Multiple Filter Types</strong>: Support for checkbox, dropdown, and range
+slider filters</li>
+<li><strong>Facet Counting</strong>: Displays count of products matching each filter
+value</li>
+<li><strong>Range Queries</strong>: Efficient range filtering for numeric/date
+attributes using B-tree indexes</li>
+<li><strong>URL Parameter Preservation</strong>: Filter selections persist across
+pagination and sorting</li>
+<li><strong>Active Filter Tags</strong>: Visual display of currently applied filters
+with easy removal</li>
+</ul>
+<p><strong>Use Cases</strong></p>
+<ul class="simple">
+<li>Heavy equipment dealers: Filter machines by capacity, year, brand</li>
+<li>E-commerce sites: Filter products by custom dynamic attributes</li>
+<li>B2B portals: Filter by technical specifications stored in JSONB</li>
+</ul>
+<p><strong>Performance</strong></p>
+<p>This module uses PostgreSQL JSONB operators directly for efficient
+filtering:</p>
+<ul class="simple">
+<li>GIN indexes for equality/containment queries</li>
+<li>B-tree expression indexes for range queries (&gt;, &lt;, BETWEEN)</li>
+<li>Direct SQL for facet counting to avoid ORM overhead</li>
+</ul>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a><ul>
+<li><a class="reference internal" href="#prerequisites" id="toc-entry-2">Prerequisites</a></li>
+<li><a class="reference internal" href="#index-configuration" id="toc-entry-3">Index Configuration</a><ul>
+<li><a class="reference internal" href="#equality-filters-checkbox-dropdown" id="toc-entry-4">Equality Filters (checkbox, dropdown)</a></li>
+<li><a class="reference internal" href="#range-filters" id="toc-entry-5">Range Filters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#template-customization" id="toc-entry-6">Template Customization</a></li>
+<li><a class="reference internal" href="#styling" id="toc-entry-7">Styling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage" id="toc-entry-8">Usage</a><ul>
+<li><a class="reference internal" href="#configuration-1" id="toc-entry-9">Configuration</a></li>
+<li><a class="reference internal" href="#filter-types" id="toc-entry-10">Filter Types</a><ul>
+<li><a class="reference internal" href="#checkbox-filter" id="toc-entry-11">Checkbox Filter</a></li>
+<li><a class="reference internal" href="#dropdown-filter" id="toc-entry-12">Dropdown Filter</a></li>
+<li><a class="reference internal" href="#range-filter" id="toc-entry-13">Range Filter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#url-parameters" id="toc-entry-14">URL Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-15">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-16">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-17">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-18">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="toc-entry-19">Other credits</a><ul>
+<li><a class="reference internal" href="#development" id="toc-entry-20">Development</a></li>
+<li><a class="reference internal" href="#sponsors" id="toc-entry-21">Sponsors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-22">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
+<div class="section" id="prerequisites">
+<h3><a class="toc-backref" href="#toc-entry-2">Prerequisites</a></h3>
+<ol class="arabic simple">
+<li>Install <tt class="docutils literal">attribute_set</tt> from OCA/odoo-pim</li>
+<li>Install <tt class="docutils literal">base_sparse_field_jsonb</tt> for JSONB support</li>
+<li>Create serialized attributes on <tt class="docutils literal">product.template</tt></li>
+</ol>
+</div>
+<div class="section" id="index-configuration">
+<h3><a class="toc-backref" href="#toc-entry-3">Index Configuration</a></h3>
+<p>For optimal performance, configure indexes based on filter type:</p>
+<div class="section" id="equality-filters-checkbox-dropdown">
+<h4><a class="toc-backref" href="#toc-entry-4">Equality Filters (checkbox, dropdown)</a></h4>
+<p>Set <strong>Index Type</strong> to <strong>GIN (equality/containment)</strong> on the attribute.</p>
+</div>
+<div class="section" id="range-filters">
+<h4><a class="toc-backref" href="#toc-entry-5">Range Filters</a></h4>
+<p>Set <strong>Index Type</strong> to <strong>B-tree (range queries)</strong> on the attribute.</p>
+</div>
+</div>
+<div class="section" id="template-customization">
+<h3><a class="toc-backref" href="#toc-entry-6">Template Customization</a></h3>
+<p>The filter template can be customized by inheriting:</p>
+<ul class="simple">
+<li><tt class="docutils literal">website_attribute_set_jsonb.jsonb_attributes_filter</tt></li>
+<li><tt class="docutils literal">website_attribute_set_jsonb.products_jsonb_attributes</tt></li>
+</ul>
+<p>Example:</p>
+<pre class="code xml literal-block">
+<span class="nt">&lt;template</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;custom_jsonb_filter&quot;</span><span class="w"> </span><span class="na">inherit_id=</span><span class="s">&quot;website_attribute_set_jsonb.jsonb_attributes_filter&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;xpath</span><span class="w"> </span><span class="na">expr=</span><span class="s">&quot;//div[hasclass('accordion-body')]&quot;</span><span class="w"> </span><span class="na">position=</span><span class="s">&quot;attributes&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span><span class="nt">&lt;attribute</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;class&quot;</span><span class="w"> </span><span class="na">add=</span><span class="s">&quot;custom-filter-body&quot;</span><span class="nt">/&gt;</span><span class="w">
+    </span><span class="nt">&lt;/xpath&gt;</span><span class="w">
+</span><span class="nt">&lt;/template&gt;</span>
+</pre>
+</div>
+<div class="section" id="styling">
+<h3><a class="toc-backref" href="#toc-entry-7">Styling</a></h3>
+<p>Override SCSS variables or add custom styles:</p>
+<pre class="code scss literal-block">
+<span class="nc">.o_jsonb_attribute_filter</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nc">.accordion-body</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">max-height</span><span class="nd">:</span><span class="w"> </span><span class="nt">400px</span><span class="o">;</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nt">Increase</span><span class="w"> </span><span class="nt">max</span><span class="w"> </span><span class="nt">height</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+</div>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-8">Usage</a></h2>
+<div class="section" id="configuration-1">
+<h3><a class="toc-backref" href="#toc-entry-9">Configuration</a></h3>
+<ol class="arabic simple">
+<li>Navigate to <strong>Settings &gt; Technical &gt; Attributes &gt; Attributes</strong></li>
+<li>Select a serialized attribute you want to show in website filters</li>
+<li>Enable <strong>Show in Website Filters</strong></li>
+<li>Choose the <strong>Filter Display Type</strong>:<ul>
+<li><strong>Checkbox</strong>: Multiple selection with checkboxes</li>
+<li><strong>Dropdown</strong>: Single selection dropdown</li>
+<li><strong>Range Slider</strong>: For numeric/date attributes with min/max input</li>
+</ul>
+</li>
+<li>Set the <strong>Website Filter Sequence</strong> to control display order</li>
+</ol>
+</div>
+<div class="section" id="filter-types">
+<h3><a class="toc-backref" href="#toc-entry-10">Filter Types</a></h3>
+<div class="section" id="checkbox-filter">
+<h4><a class="toc-backref" href="#toc-entry-11">Checkbox Filter</a></h4>
+<p>Best for attributes with multiple discrete values where users may want
+to select multiple options:</p>
+<ul class="simple">
+<li>Brand: Caterpillar, Komatsu, Volvo</li>
+<li>Color: Red, Blue, Green</li>
+</ul>
+</div>
+<div class="section" id="dropdown-filter">
+<h4><a class="toc-backref" href="#toc-entry-12">Dropdown Filter</a></h4>
+<p>Best for single-selection attributes or when there are many values:</p>
+<ul class="simple">
+<li>Country of Origin</li>
+<li>Condition (New, Used, Refurbished)</li>
+</ul>
+</div>
+<div class="section" id="range-filter">
+<h4><a class="toc-backref" href="#toc-entry-13">Range Filter</a></h4>
+<p>Best for numeric attributes where users want to filter by range:</p>
+<ul class="simple">
+<li>Capacity (kg): 1000 - 5000</li>
+<li>Manufacturing Year: 2020 - 2024</li>
+<li>Operating Weight: 10 - 50 tons</li>
+</ul>
+<p><strong>Note</strong>: Range filters work best when the attribute has a B-tree index
+configured in <tt class="docutils literal">base_sparse_field_jsonb</tt>.</p>
+</div>
+</div>
+<div class="section" id="url-parameters">
+<h3><a class="toc-backref" href="#toc-entry-14">URL Parameters</a></h3>
+<p>Filter selections are passed as URL parameters:</p>
+<ul class="simple">
+<li>Equality: <tt class="docutils literal"><span class="pre">?jsonb_x_brand=caterpillar,komatsu</span></tt></li>
+<li>Range: <tt class="docutils literal"><span class="pre">?jsonb_range_x_capacity=1000-5000</span></tt></li>
+</ul>
+<p>This allows for:</p>
+<ul class="simple">
+<li>Bookmarkable filtered URLs</li>
+<li>SEO-friendly filter pages</li>
+<li>Integration with external marketing tools</li>
+</ul>
+</div>
+</div>
+<div class="section" id="bug-tracker">
+<h2><a class="toc-backref" href="#toc-entry-15">Bug Tracker</a></h2>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/odoo-pim/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/odoo-pim/issues/new?body=module:%20website_attribute_set_jsonb%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h2><a class="toc-backref" href="#toc-entry-16">Credits</a></h2>
+<div class="section" id="authors">
+<h3><a class="toc-backref" href="#toc-entry-17">Authors</a></h3>
+<ul class="simple">
+<li>OBS Solutions B.V.</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h3><a class="toc-backref" href="#toc-entry-18">Contributors</a></h3>
+<ul class="simple">
+<li>OBS Solutions B.V. <a class="reference external" href="https://www.obs-solutions.com">https://www.obs-solutions.com</a></li>
+</ul>
+</div>
+<div class="section" id="other-credits">
+<h3><a class="toc-backref" href="#toc-entry-19">Other credits</a></h3>
+<div class="section" id="development">
+<h4><a class="toc-backref" href="#toc-entry-20">Development</a></h4>
+<p>This module was developed by OBS Solutions B.V.</p>
+</div>
+<div class="section" id="sponsors">
+<h4><a class="toc-backref" href="#toc-entry-21">Sponsors</a></h4>
+<ul class="simple">
+<li>International Heavy Equipment Dealer (Netherlands)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="maintainers">
+<h3><a class="toc-backref" href="#toc-entry-22">Maintainers</a></h3>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/odoo-pim/tree/19.0/website_attribute_set_jsonb">OCA/odoo-pim</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
