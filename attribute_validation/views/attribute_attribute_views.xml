@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Extend attribute.attribute form view -->
+    <record id="view_attribute_attribute_form_validation" model="ir.ui.view">
+        <field name="name">attribute.attribute.form.validation</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Validation" name="validation">
+                    <group>
+                        <group>
+                            <field name="enable_autocomplete" />
+                        </group>
+                        <group>
+                            <field name="validation_rule_count" invisible="1" />
+                            <button
+                                name="action_view_validation_rules"
+                                type="object"
+                                string="View Rules"
+                                class="btn-link"
+                                invisible="validation_rule_count == 0"
+                            />
+                        </group>
+                    </group>
+                    <group string="Validation Rules">
+                        <field
+                            name="validation_rule_ids"
+                            nolabel="1"
+                            colspan="2"
+                            options="{'no_create': False}"
+                        >
+                            <list>
+                                <field name="sequence" widget="handle" />
+                                <field name="name" />
+                                <field name="validation_type" />
+                                <field name="active" />
+                            </list>
+                        </field>
+                    </group>
+                    <group
+                        string="Cascade Rules - Triggers"
+                        invisible="not cascade_trigger_ids"
+                    >
+                        <field name="cascade_trigger_ids" nolabel="1" colspan="2">
+                            <list>
+                                <field name="name" />
+                                <field name="trigger_operator" />
+                                <field name="trigger_value" />
+                                <field name="target_attribute_id" />
+                                <field name="effect_type" />
+                            </list>
+                        </field>
+                    </group>
+                    <group
+                        string="Cascade Rules - Affected By"
+                        invisible="not cascade_target_ids"
+                    >
+                        <field name="cascade_target_ids" nolabel="1" colspan="2">
+                            <list>
+                                <field name="name" />
+                                <field name="trigger_attribute_id" />
+                                <field name="trigger_operator" />
+                                <field name="trigger_value" />
+                                <field name="effect_type" />
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

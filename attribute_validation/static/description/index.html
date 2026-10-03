@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Documentation for the attribute_validation Odoo module">
+        <meta name="keywords"
+              content="attribute_validation, Odoo, module, documentation">
+        <title>attribute_validation Documentation</title>
+        <!-- Bootstrap CSS from CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+              crossorigin="anonymous">
+        <!-- highlight.js CSS from CDN -->
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/default.min.css"
+              integrity="sha256-KMAHCDsQR0wz2x4eM5sMo/2l2YIEnETnClf6xQDo2oI="
+              crossorigin="anonymous">
+        <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            margin-bottom: 1.5rem;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        pre code.hljs {
+            border-radius: 0.375rem; /* Match Bootstrap's border-radius */
+        }
+        .mermaid {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">attribute_validation Documentation</div>
+                <div class="card-body"><h2>Introduction</h2>
+<h1>Attribute Validation</h1>
+<p>This module provides data validation for <code>attribute.attribute</code> fields from
+<code>product_attribute_set</code> without requiring Many2one relations.</p>
+<h2>Key Features</h2>
+<ul>
+<li><strong>Validation Types</strong>: Regex, allowed values, dynamic source, numeric range, Python expressions</li>
+<li><strong>Dynamic Sources</strong>: Fetch allowed values from any Odoo model without foreign keys</li>
+<li><strong>Cascading Rules</strong>: Conditional validation based on other attribute values</li>
+<li><strong>Autocomplete</strong>: Show suggestions from validation rules in the UI</li>
+<li><strong>Pre-built Templates</strong>: Common patterns for years, serials, emails, etc.</li>
+</ul>
+<h2>Benefits</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation without FK</td>
+<td>Keep data in JSONB while enforcing data quality</td>
+</tr>
+<tr>
+<td>Range queries</td>
+<td>Integer/float fields with validation enable BETWEEN queries</td>
+</tr>
+<tr>
+<td>Dynamic sources</td>
+<td>Autocomplete from any model without schema changes</td>
+</tr>
+<tr>
+<td>Cascading rules</td>
+<td>Conditional logic without complex domain expressions</td>
+</tr>
+<tr>
+<td>Caching</td>
+<td>Efficient validation for large datasets</td>
+</tr>
+</tbody>
+</table>
+<p>This enables the best of both worlds: the performance and flexibility of JSONB
+storage with the data integrity guarantees typically associated with relational
+constraints.</p>
+<h2>Configuration</h2>
+<h1>Configuration</h1>
+<h2>Pre-built Rule Templates</h2>
+<p>The module includes these ready-to-use templates:</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Year (1900-2100)</td>
+<td>Range</td>
+<td>General year validation</td>
+</tr>
+<tr>
+<td>Construction Year</td>
+<td>Range</td>
+<td>Equipment construction years</td>
+</tr>
+<tr>
+<td>Serial (Alphanumeric)</td>
+<td>Regex</td>
+<td>6-20 character serials</td>
+</tr>
+<tr>
+<td>VIN Number</td>
+<td>Regex</td>
+<td>17-character vehicle IDs</td>
+</tr>
+<tr>
+<td>Country Code</td>
+<td>Dynamic</td>
+<td>ISO codes from res.country</td>
+</tr>
+<tr>
+<td>Currency Code</td>
+<td>Dynamic</td>
+<td>Active currencies</td>
+</tr>
+<tr>
+<td>Email Address</td>
+<td>Regex</td>
+<td>Standard email format</td>
+</tr>
+<tr>
+<td>Phone (International)</td>
+<td>Regex</td>
+<td>International phone numbers</td>
+</tr>
+<tr>
+<td>Running Hours</td>
+<td>Range</td>
+<td>Equipment hour meters</td>
+</tr>
+</tbody>
+</table>
+<h2>Cache Configuration</h2>
+<p>For dynamic source rules, configure the cache timeout based on how often
+the source data changes:</p>
+<ul>
+<li>Static data (countries): 86400 seconds (24 hours)</li>
+<li>Semi-static (brands): 3600 seconds (1 hour)</li>
+<li>Frequently changing: 0 (no cache)</li>
+</ul>
+<h2>Security Groups</h2>
+<ul>
+<li><strong>Validation User</strong>: Can use validated fields</li>
+<li><strong>Validation Manager</strong>: Can create/edit validation rules</li>
+</ul>
+<p>Assign users to appropriate groups in Settings &gt; Users.</p>
+<h2>Usage</h2>
+<h1>Usage</h1>
+<h2>Creating Validation Rules</h2>
+<ol>
+<li>Go to <strong>Settings &gt; Technical &gt; Attribute Validation &gt; Validation Rules</strong></li>
+<li>Create a new rule with appropriate type:
+<ul>
+<li><strong>Regex</strong>: For pattern matching (e.g., serial numbers, VINs)</li>
+<li><strong>Allowed Values</strong>: For static lists</li>
+<li><strong>Dynamic Source</strong>: For values from another model</li>
+<li><strong>Range</strong>: For numeric boundaries</li>
+<li><strong>Python</strong>: For complex custom logic</li>
+</ul>
+</li>
+</ol>
+<h2>Assigning Rules to Attributes</h2>
+<ol>
+<li>Go to the attribute form (Settings &gt; Technical &gt; Attributes)</li>
+<li>Navigate to the “Validation” tab</li>
+<li>Add one or more validation rules</li>
+<li>Enable autocomplete if desired</li>
+</ol>
+<h2>Example: Year Validation</h2>
+<p>For a construction year field that should only accept years 1950-2030:</p>
+<ol>
+<li>Use the pre-built rule “Construction Year (1950-2030)”</li>
+<li>Or create a custom range rule:
+<ul>
+<li>Type: Range</li>
+<li>Min: 1950</li>
+<li>Max: 2030</li>
+<li>Step: 1 (whole numbers only)</li>
+</ul>
+</li>
+</ol>
+<h2>Example: Brand from Dynamic Source</h2>
+<p>To validate brand names from <code>product.brand</code>:</p>
+<ol>
+<li>
+<p>Create a Dynamic Source rule:</p>
+<ul>
+<li>Source Model: Product Brand</li>
+<li>Source Field: name</li>
+<li>Cache Timeout: 3600 (1 hour)</li>
+</ul>
+</li>
+<li>
+<p>Assign to your brand attribute</p>
+</li>
+<li>
+<p>Enable autocomplete for dropdown-like behavior</p>
+</li>
+</ol>
+<h2>History</h2>
+<h2>19.0.1.1.0 (2026-08-05)</h2>
+<h3>Changed</h3>
+<ul>
+<li>The <strong>Validation User</strong> / <strong>Validation Manager</strong> groups now live under a
+proper <em>Attribute Validation</em> category (Odoo 19 <code>res.groups.privilege</code>), so
+they show as a single User/Manager selection in Settings &gt; Users instead of
+loose checkboxes.</li>
+<li><strong>Administrators (Settings access) now imply Validation Manager</strong>, so they
+have read/write access to validation rules – and the
+<em>Settings &gt; Technical &gt; Attribute Validation &gt; Validation Rules</em> menu – out
+of the box (a plain admin was previously in neither validation group, so the
+menu’s action model was inaccessible and the menu was hidden).</li>
+<li>The menu no longer carries an explicit group gate; visibility follows the
+action’s model ACL, so it does not depend on the manager-&gt;user implication
+being materialised.</li>
+<li>Upgrade path: <code>base.group_system</code> is a core <code>noupdate</code> record, so the
+admin-&gt;manager implication is applied by a post-migration script on upgrade
+(the data file alone only takes effect on a fresh install). The manager group
+is this module’s own, so an uninstall deletes it and cascades away the
+implication – admins do not retain a dangling group.</li>
+</ul>
+<h2>Contributors</h2>
+<ul>
+<li>OBS Solutions B.V. <a href="https://www.obs-solutions.com">https://www.obs-solutions.com</a></li>
+</ul>
+<h2>Credits</h2>
+<h2>Development</h2>
+<p>This module was developed by OBS Solutions B.V.</p>
+<h2>Funding</h2>
+<p>Development was funded by OBS Solutions B.V. for the Heavy Equipment Dealer
+implementation project.</p>
+</div>
+            </div>
+        </div>
+        <!-- Bootstrap JS Bundle from CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+        <!-- highlight.js from CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"
+                integrity="sha384-2ylqO2Q3fssN/2wV2p5J1DFwbjK5m3lI3k2yQ2E2T/qT2TNAk53Hxlh2Lw1T3d2i"
+                crossorigin="anonymous"></script>
+        <!-- Mermaid JS from CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
+                integrity="sha384-BCSLYw/mmh3oG+8B/6B2Mh2fGlIot3Hh/T2aMPJ0H4Yp/UqOCFBZt2sU3Ptcg77a"
+                crossorigin="anonymous"></script>
+        <script>mermaid.initialize({ startOnLoad: true });</script>
+        <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            hljs.highlightAll();
+        });
+        </script>
+    </body>
+</html>
