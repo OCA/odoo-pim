@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_attribute_attribute_public,attribute.attribute website public read,attribute_set.model_attribute_attribute,base.group_public,1,0,0,0
+access_attribute_attribute_portal,attribute.attribute website portal read,attribute_set.model_attribute_attribute,base.group_portal,1,0,0,0
+access_attribute_group_public,attribute.group website public read,attribute_set.model_attribute_group,base.group_public,1,0,0,0
+access_attribute_group_portal,attribute.group website portal read,attribute_set.model_attribute_group,base.group_portal,1,0,0,0
+access_attribute_option_public,attribute.option website public read,attribute_set.model_attribute_option,base.group_public,1,0,0,0
+access_attribute_option_portal,attribute.option website portal read,attribute_set.model_attribute_option,base.group_portal,1,0,0,0
+access_attribute_set_public,attribute.set website public read,attribute_set.model_attribute_set,base.group_public,1,0,0,0
+access_attribute_set_portal,attribute.set website portal read,attribute_set.model_attribute_set,base.group_portal,1,0,0,0
