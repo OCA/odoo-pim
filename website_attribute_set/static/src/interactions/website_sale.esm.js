@@ -28,9 +28,10 @@ patch(WebsiteSale.prototype, {
         // instead of triggering a search as soon as the first bound changes.
         this.dynamicContent = {
             ...this.dynamicContent,
-            "form.js_attributes input[type='number']": {
-                "t-on-input": this.onChangeAttribute,
-            },
+            "form.js_attributes input[name^='additional_attr_min_'], form.js_attributes input[name^='additional_attr_max_']":
+                {
+                    "t-on-input": this.onChangeAttribute,
+                },
         };
     },
 
@@ -50,7 +51,9 @@ patch(WebsiteSale.prototype, {
             }
             const form = wSaleUtils.getClosestProductForm(target);
             const filters = form.querySelectorAll("input:checked, select");
-            const rangeInputs = form.querySelectorAll("input[type='number']");
+            const rangeInputs = form.querySelectorAll(
+                "input[name^='additional_attr_min_'], input[name^='additional_attr_max_']"
+            );
             const additional_attributeValues = new Map();
             const attributeValues = new Map();
             const tags = new Set();
