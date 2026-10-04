@@ -303,6 +303,21 @@ class TestProductPageUI(HttpCase):
             }
         )
 
+        cls.attr_year = cls.env["attribute.attribute"].create(
+            {
+                "nature": "custom",
+                "field_description": "UI Spec Year",
+                "name": "x_uispec_year",
+                "attribute_type": "integer",
+                "attribute_group_id": cls.attr_group.id,
+                "attribute_set_ids": [(4, cls.attr_set.id)],
+                "model_id": cls.product_model.id,
+                "e_com_visibility": True,
+                "e_com_filter": False,
+                "e_com_specification": True,
+            }
+        )
+
         cls.product = cls.env["product.template"].create(
             {
                 "name": "UI Spec Test Product",
@@ -311,6 +326,7 @@ class TestProductPageUI(HttpCase):
                 "attribute_set_id": cls.attr_set.id,
                 "x_uispec_material": "Stainless Steel",
                 "x_uispec_sku": "SKU-12345",
+                "x_uispec_year": 2025,
             }
         )
 
@@ -324,7 +340,9 @@ class TestProductPageUI(HttpCase):
         """Attributes with e_com_specification=True should appear in the
         specifications table on the product page."""
         tree = self._get_html(f"/shop/{self.product.id}")
-        spec_items = tree.xpath("//li[contains(@class, 'variant_attribute')]")
+        spec_items = tree.xpath(
+            "//tr[contains(@class, 'o_wsale_additional_attribute')]"
+        )
         self.assertTrue(
             spec_items,
             "Specifications section should be present on the product page",
@@ -343,11 +361,27 @@ class TestProductPageUI(HttpCase):
             "Specification attribute label should appear on the product page",
         )
 
+    def test_specification_values_are_plain_text(self):
+        """Specification values are shown as plain text, not as variant
+        price extra badges, and integers have no thousands separator."""
+        tree = self._get_html(f"/shop/{self.product.id}")
+        spec_table = tree.xpath(
+            "//table[contains(@class, 'o_wsale_additional_attributes')]"
+        )
+        self.assertTrue(spec_table)
+        self.assertFalse(spec_table[0].xpath(".//*[contains(@class, 'badge')]"))
+        self.assertFalse(tree.xpath("//*[contains(@class, 'sign_badge_price_extra')]"))
+        spec_text = etree.tostring(spec_table[0], encoding="unicode", method="text")
+        self.assertIn("2025", spec_text)
+        self.assertNotIn("2,025", spec_text)
+
     def test_non_specification_attribute_hidden_on_product_page(self):
         """Attributes with e_com_specification=False should NOT appear
         in the specifications table."""
         tree = self._get_html(f"/shop/{self.product.id}")
-        spec_items = tree.xpath("//li[contains(@class, 'variant_attribute')]")
+        spec_items = tree.xpath(
+            "//tr[contains(@class, 'o_wsale_additional_attribute')]"
+        )
         if spec_items:
             spec_text = "".join(
                 etree.tostring(li, encoding="unicode", method="text")
@@ -376,7 +410,9 @@ class TestProductPageUI(HttpCase):
             }
         )
         tree = self._get_html(f"/shop/{product.id}")
-        spec_items = tree.xpath("//li[contains(@class, 'variant_attribute')]")
+        spec_items = tree.xpath(
+            "//tr[contains(@class, 'o_wsale_additional_attribute')]"
+        )
         self.assertFalse(
             spec_items,
             "Product without attribute set should not have a specifications section",
