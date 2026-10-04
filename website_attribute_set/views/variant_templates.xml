@@ -39,9 +39,8 @@
                                 />
                                 <t t-elif="attr_type == 'boolean'">Yes</t>
                                 <t
-                                    t-elif="attr_type == 'float'"
-                                    t-out="attribute_values"
-                                    t-options='{"widget": "float", "precision": 2}'
+                                    t-elif="attr_type in ['integer', 'float']"
+                                    t-out="attribute._format_e_com_number(attribute_values)"
                                 />
                                 <t
                                     t-elif="attr_type == 'date'"

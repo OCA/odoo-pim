@@ -397,3 +397,39 @@ class TestAttributeSetSearchable(BuildViewCase):
         self.assertFalse(self.attr_2.e_com_range_filter)
         self.assertFalse(self.attr_2.e_com_multi_select)
         self.assertFalse(self.attr_2.e_com_show_count)
+
+    def test_format_e_com_number(self):
+        Attribute = self.env["attribute.attribute"].with_context(lang="en_US")
+        vals = {
+            "nature": "custom",
+            "attribute_group_id": self.group_1.id,
+            "model_id": self.product_model.id,
+        }
+        capacity = Attribute.create(
+            dict(
+                vals,
+                name="x_capacity_kg",
+                field_description="Capacity kg",
+                attribute_type="integer",
+            )
+        )
+        year = Attribute.create(
+            dict(
+                vals,
+                name="x_manufacturing_year",
+                field_description="Manufacturing Year",
+                attribute_type="integer",
+                e_com_digit_grouping=False,
+            )
+        )
+        weight = Attribute.create(
+            dict(
+                vals,
+                name="x_weight_t",
+                field_description="Weight t",
+                attribute_type="float",
+            )
+        )
+        self.assertEqual(capacity._format_e_com_number(42000), "42,000")
+        self.assertEqual(year._format_e_com_number(2025), "2025")
+        self.assertEqual(weight._format_e_com_number(1234.5), "1,234.50")

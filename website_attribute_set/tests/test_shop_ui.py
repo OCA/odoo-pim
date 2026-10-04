@@ -315,6 +315,21 @@ class TestProductPageUI(HttpCase):
                 "e_com_visibility": True,
                 "e_com_filter": False,
                 "e_com_specification": True,
+                "e_com_digit_grouping": False,
+            }
+        )
+        cls.attr_capacity = cls.env["attribute.attribute"].create(
+            {
+                "nature": "custom",
+                "field_description": "UI Spec Capacity",
+                "name": "x_uispec_capacity",
+                "attribute_type": "integer",
+                "attribute_group_id": cls.attr_group.id,
+                "attribute_set_ids": [(4, cls.attr_set.id)],
+                "model_id": cls.product_model.id,
+                "e_com_visibility": True,
+                "e_com_filter": False,
+                "e_com_specification": True,
             }
         )
 
@@ -327,6 +342,7 @@ class TestProductPageUI(HttpCase):
                 "x_uispec_material": "Stainless Steel",
                 "x_uispec_sku": "SKU-12345",
                 "x_uispec_year": 2025,
+                "x_uispec_capacity": 42000,
             }
         )
 
@@ -363,7 +379,7 @@ class TestProductPageUI(HttpCase):
 
     def test_specification_values_are_plain_text(self):
         """Specification values are shown as plain text, not as variant
-        price extra badges, and integers have no thousands separator."""
+        price extra badges, with digit grouping set per attribute."""
         tree = self._get_html(f"/shop/{self.product.id}")
         spec_table = tree.xpath(
             "//table[contains(@class, 'o_wsale_additional_attributes')]"
@@ -374,6 +390,7 @@ class TestProductPageUI(HttpCase):
         spec_text = etree.tostring(spec_table[0], encoding="unicode", method="text")
         self.assertIn("2025", spec_text)
         self.assertNotIn("2,025", spec_text)
+        self.assertIn("42,000", spec_text)
 
     def test_non_specification_attribute_hidden_on_product_page(self):
         """Attributes with e_com_specification=False should NOT appear
