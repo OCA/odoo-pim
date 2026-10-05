@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="attribute_attribute_form_view" model="ir.ui.view">
+        <field
+            name="name"
+        >attribute.attribute.form - product_attribute_set_propagation</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <field name="required_on_views" position="after">
+                <field name="default_is_propagated" />
+            </field>
+        </field>
+    </record>
+</odoo>
