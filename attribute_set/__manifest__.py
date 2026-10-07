@@ -16,6 +16,12 @@
         "views/attribute_set_view.xml",
         "wizard/attribute_option_wizard_view.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "attribute_set/static/src/components/widget_autocomplete/widget_autocomplete.esm.js",
+            "attribute_set/static/src/components/widget_autocomplete/widget_autocomplete.xml",
+        ],
+    },
     "external_dependencies": {"python": ["unidecode"]},
     "installable": True,
 }

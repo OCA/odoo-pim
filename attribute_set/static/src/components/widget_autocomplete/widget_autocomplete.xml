@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.CharField" t-inherit-mode="extension">
+        <xpath expr="//input" position="attributes">
+            <attribute name="list" t-esc="'datalist_' + props.name" />
+        </xpath>
+
+        <xpath expr="//input" position="after">
+            <datalist t-att-id="'datalist_' + props.name">
+                <t t-foreach="suggestions" t-as="suggestion" t-key="suggestion">
+                    <option t-att-value="suggestion" />
+                </t>
+            </datalist>
+        </xpath>
+    </t>
+</templates>
