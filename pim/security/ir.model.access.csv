@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pim_attribute_set_manager,attribute.set pim manager,attribute_set.model_attribute_set,pim.group_pim_manager,1,1,1,1
+access_pim_attribute_group_manager,attribute.group pim manager,attribute_set.model_attribute_group,pim.group_pim_manager,1,1,1,1
+access_pim_attribute_attribute_manager,attribute.attribute pim manager,attribute_set.model_attribute_attribute,pim.group_pim_manager,1,1,1,1
+access_pim_attribute_option_manager,attribute.option pim manager,attribute_set.model_attribute_option,pim.group_pim_manager,1,1,1,1
+access_pim_product_template_user,product.template pim user,product.model_product_template,pim.group_pim_user,1,1,0,0
+access_pim_product_product_user,product.product pim user,product.model_product_product,pim.group_pim_user,1,1,0,0
