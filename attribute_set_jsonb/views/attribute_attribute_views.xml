@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend attribute.attribute form view to add expression index checkbox -->
+    <record id="view_attribute_attribute_form_jsonb" model="ir.ui.view">
+        <field name="name">attribute.attribute.form.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_form_view" />
+        <field name="arch" type="xml">
+            <!-- Add create_gin_index field after serialized checkbox -->
+            <xpath expr="//field[@name='serialized']" position="after">
+                <field
+                    name="create_gin_index"
+                    invisible="not serialized"
+                    readonly="not serialized"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend list view to show indexed attributes -->
+    <record id="view_attribute_attribute_tree_jsonb" model="ir.ui.view">
+        <field name="name">attribute.attribute.tree.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.attribute_attribute_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='nature']" position="after">
+                <field name="create_gin_index" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add search filter for indexed attributes -->
+    <record id="view_attribute_attribute_search_jsonb" model="ir.ui.view">
+        <field name="name">attribute.attribute.search.jsonb</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.view_attribute_attribute_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter
+                    string="Expression Indexed"
+                    name="expression_indexed"
+                    domain="[('create_gin_index', '=', True)]"
+                />
+                <filter
+                    string="Serialized"
+                    name="serialized"
+                    domain="[('serialized', '=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Server action to regenerate all expression indexes -->
+    <record id="action_regenerate_expression_indexes" model="ir.actions.server">
+        <field name="name">Regenerate Expression Indexes</field>
+        <field name="model_id" ref="attribute_set.model_attribute_attribute" />
+        <field name="binding_model_id" ref="attribute_set.model_attribute_attribute" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records.action_regenerate_all_indexes()
+        </field>
+    </record>
+</odoo>
