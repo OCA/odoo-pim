@@ -1,0 +1,26 @@
+<odoo>
+    <record id="product_field_vectorization_wizard_form_view" model="ir.ui.view">
+        <field name="name">product.field.vectorization.wizard.form</field>
+        <field name="model">product.field.vectorization.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Select Product Field">
+                <sheet>
+                    <group>
+                        <field name="field_id" />
+                        <field name="weight" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        name="put_in_vector_action"
+                        string="Put in Vector"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
