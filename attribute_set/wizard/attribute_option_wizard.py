@@ -22,6 +22,10 @@ class AttributeOptionWizard(models.TransientModel):
         default=lambda self: self.env.context.get("attribute_id", False),
         ondelete="cascade",
     )
+    option_ids = fields.Many2many(
+        "attribute.option",
+        string="Attribute Options",
+    )
 
     def validate(self):
         return True
@@ -38,6 +42,8 @@ class AttributeOptionWizard(models.TransientModel):
                 model = attr.relation_model_id.model
 
                 name = self.env[model].browse(op_id).name_get()[0][1]
+                vals["option_ids"][0][1] = name
+                vals["option_ids"][0][0] = [vals["attribute_id"]]
                 opt_obj.create(
                     {
                         "attribute_id": vals["attribute_id"],
@@ -47,16 +53,7 @@ class AttributeOptionWizard(models.TransientModel):
                         ),
                     }
                 )
-            if vals.get("option_ids"):
-                del vals["option_ids"]
         return super().create(vals_list)
-
-    # Hack to circumvent the fact that option_ids never actually exists in the DB,
-    # thus crashing when read is called after create
-    def read(self, fields=None, load="_classic_read"):
-        if "option_ids" in fields:
-            fields.remove("option_ids")
-        return super().read(fields, load)
 
     @api.model
     def get_views(self, views, options=None):
@@ -88,7 +85,7 @@ class AttributeOptionWizard(models.TransientModel):
             )
 
             eview = etree.fromstring(res["views"]["form"]["arch"])
-            options = etree.Element("field", name="option_ids", nolabel="1")
+            options = etree.Element("field", name="option_ids", widget="many2many_tags")
             placeholder = eview.xpath("//separator[@string='options_placeholder']")[0]
             placeholder.getparent().replace(placeholder, options)
             res["views"]["form"]["arch"] = etree.tostring(eview, pretty_print=True)
