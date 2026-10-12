@@ -82,6 +82,12 @@ patch(WebsiteSale.prototype, {
             }
             const url = new URL(form.action);
             const searchParams = url.searchParams;
+            // `form.action` is built with keep(), which carries over the
+            // current `additional_attribute_values` from the URL. Clear them
+            // first so the param is rebuilt purely from the checked inputs --
+            // otherwise a de-selected value survives the reload (you can tick a
+            // value but un-ticking it has no effect).
+            searchParams.delete("additional_attribute_values");
             // Aggregate all attribute values belonging to the same attribute into a
             // single `additional_attribute_values` search param.
             for (const entry of additional_attributeValues.entries()) {

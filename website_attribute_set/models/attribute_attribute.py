@@ -55,6 +55,23 @@ class AttributeAttribute(models.Model):
         default=False,
         help="""Show the number of matching products next to each filter option.""",
     )
+    e_com_digit_grouping = fields.Boolean(
+        string="E-Commerce Digit Grouping",
+        default=True,
+        help="""For numeric attributes (integer/float), show the value with a
+        thousands separator on the website (e.g. 42,000). Disable it for years,
+        serial numbers or codes.""",
+    )
+
+    def _format_e_com_number(self, value):
+        """Format an integer or float attribute value for the website."""
+        self.ensure_one()
+        fmt = "%.2f" if self.attribute_type == "float" else "%d"
+        return (
+            self.env["ir.qweb.field"]
+            .user_lang()
+            .format(fmt, value, grouping=self.e_com_digit_grouping)
+        )
 
     @api.depends("name", "model_id")
     def _compute_field_is_searchable(self):
