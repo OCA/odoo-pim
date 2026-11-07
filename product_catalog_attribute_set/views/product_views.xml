@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_view_search_catalog" model="ir.ui.view">
+        <field name="name">custom.product.view.search.catalog</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_view_search_catalog" />
+        <field name="arch" type="xml">
+            <field name="product_tmpl_id" position="inside">
+                <separator name="attributes_search_placeholder" />
+            </field>
+
+            <searchpanel position="inside">
+                <separator name="attributes_filter_placeholder" />
+            </searchpanel>
+        </field>
+    </record>
+</odoo>
