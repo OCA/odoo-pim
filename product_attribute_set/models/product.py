@@ -5,6 +5,16 @@
 
 from odoo import api, fields, models
 
+# When this system parameter is enabled, the native attributes of a product's
+# attribute set are injected in the Attributes tab whatever action opened the
+# form, not only the ones that set "include_native_attribute_view_ref".
+SHOW_NATIVE_EVERYWHERE_PARAM = "product_attribute_set.show_native_attributes_everywhere"
+
+
+def _show_native_attributes_everywhere(env):
+    value = env["ir.config_parameter"].sudo().get_param(SHOW_NATIVE_EVERYWHERE_PARAM)
+    return value not in (False, None, "", "False", "0")
+
 
 class ProductTemplate(models.Model):
     _inherit = ["product.template", "attribute.set.owner.mixin"]
@@ -45,6 +55,20 @@ class ProductTemplate(models.Model):
         if self.categ_id and not self.attribute_set_id:
             self.attribute_set_id = self.categ_id.attribute_set_id
 
+    def get_view(self, view_id=None, view_type="form", **options):
+        # The product form is reached through many actions (Sales, Inventory,
+        # Purchase, Accounting, MRP...) and only a couple of them set the
+        # "include_native_attribute_view_ref" flag. Without it the Attributes
+        # tab only injects "custom" attributes, so a product whose set is made
+        # of native attributes shows an empty tab depending on the menu used.
+        # When the setting is enabled, force the flag so the product's own
+        # Attributes tab is populated consistently from any originating action.
+        if _show_native_attributes_everywhere(self.env) and not self.env.context.get(
+            "include_native_attribute_view_ref"
+        ):
+            self = self.with_context(include_native_attribute_view_ref=1)
+        return super().get_view(view_id=view_id, view_type=view_type, **options)
+
 
 class ProductProduct(models.Model):
     _inherit = ["product.product", "attribute.set.owner.mixin"]
@@ -57,3 +81,12 @@ class ProductProduct(models.Model):
     @api.model
     def _get_attribute_set_owner_model(self):
         return [("model", "in", ("product.product", "product.template"))]
+
+    def get_view(self, view_id=None, view_type="form", **options):
+        # See ProductTemplate.get_view: ensure native attributes are injected
+        # in the variant form too, whatever action opened it.
+        if _show_native_attributes_everywhere(self.env) and not self.env.context.get(
+            "include_native_attribute_view_ref"
+        ):
+            self = self.with_context(include_native_attribute_view_ref=1)
+        return super().get_view(view_id=view_id, view_type=view_type, **options)

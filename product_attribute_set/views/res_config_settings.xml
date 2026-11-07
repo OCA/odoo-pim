@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ForgeFlow (http://www.forgeflow.com).
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.product_attribute_set</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']" position="inside">
+                <block title="Attribute Sets" name="attribute_set_setting_container">
+                    <setting
+                        id="attribute_set_native_everywhere"
+                        string="Native attributes on every product form"
+                        help="Show the native attributes of a product's attribute set in the Attributes tab whatever the menu (Sales, Inventory, Purchase...) used to open the product form."
+                    >
+                        <field name="attribute_set_show_native_everywhere" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
