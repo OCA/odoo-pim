@@ -7,3 +7,4 @@ from . import test_sparse_field_support
 from . import test_controller
 from . import test_shop_ui
 from . import test_range_filter
+from . import test_pim_category_access
