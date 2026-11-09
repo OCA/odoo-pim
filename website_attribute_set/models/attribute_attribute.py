@@ -7,9 +7,27 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 
+from .mixins import bump_facet_cache_version
+
 
 class AttributeAttribute(models.Model):
     _inherit = "attribute.attribute"
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        bump_facet_cache_version(self.env)
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        bump_facet_cache_version(self.env)
+        return res
+
+    def unlink(self):
+        res = super().unlink()
+        bump_facet_cache_version(self.env)
+        return res
 
     field_is_searchable = fields.Boolean(
         compute="_compute_field_is_searchable",

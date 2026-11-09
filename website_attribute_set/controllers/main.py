@@ -2,6 +2,8 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import hashlib
+import time
 from collections import defaultdict
 
 from odoo.fields import Domain
@@ -11,10 +13,24 @@ from odoo.models import BaseModel
 from odoo.addons.website_sale.controllers import main
 
 from ..models.mixins import (
+    FACET_CACHE_VERSION_PARAM,
     _parse_relational_id,
     _sparse_filter_by_value,
     build_range_filter_domains,
 )
+
+# In-process TTL cache for the shop facet block: the facets only depend on
+# the matched product set and the language, and recomputing them for every
+# request (every visitor, every pagination page) is the most expensive part
+# of the shop listing on large catalogs. Entries live at most
+# ``website_attribute_set.facet_cache_ttl`` seconds (0 disables caching),
+# so attribute *value* changes show up in the filter sidebar after at most
+# one TTL. PIM configuration changes (attribute set assignment, attributes,
+# sets) bump ``website_attribute_set.facet_cache_version``, which is part of
+# the cache key, so they show up immediately. The cache is per worker process.
+FACET_CACHE = {}
+FACET_CACHE_MAX_ENTRIES = 256
+FACET_CACHE_DEFAULT_TTL = 300
 
 
 class WebsiteSale(main.WebsiteSale):
@@ -123,27 +139,52 @@ class WebsiteSale(main.WebsiteSale):
             return extra_values
 
         sudo_products = search_product.sudo()
-        sudo_products.fetch(["attribute_set_id"])
-        set_ids = {p.attribute_set_id.id for p in sudo_products if p.attribute_set_id}
-        if not set_ids:
+
+        ttl = self._facet_cache_ttl()
+        cache_key = None
+        if ttl:
+            cache_key = self._facet_cache_key(sudo_products)
+            cached = self._facet_cache_get(cache_key)
+            if cached is not None:
+                extra_values["additional_attributes"] = cached
+                return extra_values
+
+        # ``search_product`` is the full (unpaginated) shop result and may
+        # span the whole catalog: aggregate per attribute set in SQL instead
+        # of materializing ``attribute_set_id`` for every product.
+        product_ids_per_set = {
+            attribute_set.id: ids
+            for attribute_set, ids in sudo_products._read_group(
+                [("id", "in", sudo_products.ids)],
+                groupby=["attribute_set_id"],
+                aggregates=["id:array_agg"],
+            )
+            if attribute_set
+        }
+        if not product_ids_per_set:
+            self._facet_cache_store(cache_key, extra_values["additional_attributes"])
             return extra_values
 
-        attrs_per_set = sudo_products._get_extra_attributes_per_set(list(set_ids))
+        attrs_per_set = sudo_products._get_extra_attributes_per_set(
+            list(product_ids_per_set)
+        )
         all_additional_attributes = request.env["attribute.attribute"].sudo()
-        attr_ids_per_set = {}
+        set_ids_per_attr = defaultdict(set)
         for sid, attrs in attrs_per_set.items():
+            # The shop templates only render facets for filterable attributes
+            # (``e_com_filter`` guard); skip aggregating values nobody sees.
+            attrs = attrs.filtered("e_com_filter")
             all_additional_attributes |= attrs
-            attr_ids_per_set[sid] = set(attrs.ids)
+            for attr_id in attrs.ids:
+                set_ids_per_attr[attr_id].add(sid)
         if not all_additional_attributes:
+            self._facet_cache_store(cache_key, extra_values["additional_attributes"])
             return extra_values
 
-        product_ids_per_attr = defaultdict(list)
-        for product in sudo_products:
-            sid = product.attribute_set_id.id
-            if not sid:
-                continue
-            for attr_id in attr_ids_per_set.get(sid, ()):
-                product_ids_per_attr[attr_id].append(product.id)
+        product_ids_per_attr = {
+            attr_id: [pid for sid in sids for pid in product_ids_per_set[sid]]
+            for attr_id, sids in set_ids_per_attr.items()
+        }
 
         for attribute in all_additional_attributes:
             attr_dict = self._build_additional_attribute_facet(
@@ -152,7 +193,119 @@ class WebsiteSale(main.WebsiteSale):
             if attr_dict is not None:
                 extra_values["additional_attributes"].append(attr_dict)
 
+        self._facet_cache_store(cache_key, extra_values["additional_attributes"])
         return extra_values
+
+    def _facet_cache_ttl(self):
+        """TTL in seconds for the facet cache; 0 disables caching."""
+        ttl = (
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("website_attribute_set.facet_cache_ttl", FACET_CACHE_DEFAULT_TTL)
+        )
+        try:
+            return max(int(ttl), 0)
+        except (ValueError, TypeError):
+            return FACET_CACHE_DEFAULT_TTL
+
+    def _facet_cache_key(self, sudo_products):
+        """The facets depend on the matched product set, the lang and the
+        PIM configuration version (bumped on any facet-relevant change)."""
+        ids_blob = ",".join(map(str, sorted(sudo_products._ids))).encode()
+        version = (
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param(FACET_CACHE_VERSION_PARAM, "0")
+        )
+        return (
+            request.env.cr.dbname,
+            version,
+            request.env.lang or "en_US",
+            hashlib.sha1(ids_blob).hexdigest(),
+        )
+
+    def _facet_cache_get(self, cache_key):
+        entry = FACET_CACHE.get(cache_key)
+        if entry is None:
+            return None
+        expires_at, payload = entry
+        if expires_at < time.monotonic():
+            FACET_CACHE.pop(cache_key, None)
+            return None
+        return self._facet_cache_rebuild(payload)
+
+    def _facet_cache_store(self, cache_key, additional_attributes):
+        if cache_key is None:
+            return
+        payload = self._facet_cache_serialize(additional_attributes)
+        if payload is None:
+            return
+        if len(FACET_CACHE) >= FACET_CACHE_MAX_ENTRIES:
+            # Drop expired entries first, then the oldest ones.
+            now = time.monotonic()
+            for key in [k for k, (exp, _p) in FACET_CACHE.items() if exp < now]:
+                FACET_CACHE.pop(key, None)
+            while len(FACET_CACHE) >= FACET_CACHE_MAX_ENTRIES:
+                FACET_CACHE.pop(next(iter(FACET_CACHE)), None)
+        FACET_CACHE[cache_key] = (
+            time.monotonic() + self._facet_cache_ttl(),
+            payload,
+        )
+
+    def _facet_cache_serialize(self, additional_attributes):
+        """Turn the facet dicts into primitives safe to share across requests.
+
+        Returns ``None`` when a facet cannot be represented (mixed value
+        types), in which case the result is simply not cached.
+        """
+        payload = []
+        for attr_dict in additional_attributes:
+            values = attr_dict["all_attribute_values"]
+            if values and isinstance(values[0], BaseModel):
+                model_name = values[0]._name
+                if any(
+                    not isinstance(value, BaseModel) or value._name != model_name
+                    for value in values
+                ):
+                    return None
+                ser_values = ("records", model_name, [value.id for value in values])
+            else:
+                if any(isinstance(value, BaseModel) for value in values):
+                    return None
+                ser_values = ("scalars", None, list(values))
+            payload.append(
+                {
+                    "attribute_id": attr_dict["attribute"].id,
+                    "values": ser_values,
+                    "value_counts": attr_dict.get("value_counts"),
+                }
+            )
+        return payload
+
+    def _facet_cache_rebuild(self, payload):
+        env = request.env
+        attribute_model = env["attribute.attribute"].sudo()
+        result = []
+        for item in payload:
+            attribute = attribute_model.browse(item["attribute_id"]).exists()
+            if not attribute:
+                return None
+            kind, model_name, raw_values = item["values"]
+            if kind == "records":
+                # ``exists()`` guards against records deleted within the TTL.
+                values = list(env[model_name].sudo().browse(raw_values).exists())
+                if len(values) != len(raw_values):
+                    return None
+            else:
+                values = list(raw_values)
+            attr_dict = {
+                "attribute": attribute,
+                "all_attribute_values": values,
+            }
+            if item["value_counts"] is not None:
+                attr_dict["value_counts"] = item["value_counts"]
+            result.append(attr_dict)
+        return result
 
     def _build_additional_attribute_facet(
         self, attribute, sudo_products, product_ids_per_attr
@@ -171,6 +324,80 @@ class WebsiteSale(main.WebsiteSale):
             if attr_type in ("binary", "image")
             else attribute.name
         )
+        field = sudo_products._fields.get(field_name)
+        if (
+            field is not None
+            and field.store
+            and field.column_type
+            and not getattr(field, "sparse", None)
+            and field.type not in ("date", "datetime")
+        ):
+            all_attribute_values, value_counts = self._read_facet_values_grouped(
+                attribute, sudo_products, attr_type, field_name, pids
+            )
+        else:
+            all_attribute_values, value_counts = self._read_facet_values_records(
+                attribute, sudo_products, attr_type, field_name, pids
+            )
+        attr_dict = {
+            "attribute": attribute,
+            "all_attribute_values": sorted(
+                all_attribute_values,
+                key=lambda v: v.display_name
+                if hasattr(v, "display_name")
+                else (
+                    v
+                    if isinstance(v, (int, float))
+                    else str(v)
+                    if v is not None
+                    else ""
+                ),
+            ),
+        }
+        if attribute.e_com_show_count:
+            attr_dict["value_counts"] = value_counts
+        return attr_dict
+
+    def _read_facet_values_grouped(
+        self, attribute, sudo_products, attr_type, field_name, pids
+    ):
+        """Collect facet values and counts with one aggregated SQL query.
+
+        Fast path for regular stored columns: ``_read_group`` returns the
+        distinct values with their product counts without materializing
+        every product record in Python.
+        """
+        all_attribute_values = set()
+        value_counts = {}
+        show_count = attribute.e_com_show_count
+        for value, count in sudo_products._read_group(
+            [("id", "in", pids)],
+            groupby=[field_name],
+            aggregates=["__count"],
+        ):
+            # For boolean, False is a valid filter value (not "no value").
+            # For every other type, falsy means nothing is set.
+            if isinstance(value, BaseModel):
+                if not value:
+                    continue
+                key = value.id
+            else:
+                if not value and attr_type != "boolean":
+                    continue
+                key = value
+            all_attribute_values.add(value)
+            if show_count:
+                value_counts[key] = value_counts.get(key, 0) + count
+        return all_attribute_values, value_counts
+
+    def _read_facet_values_records(
+        self, attribute, sudo_products, attr_type, field_name, pids
+    ):
+        """Collect facet values and counts by iterating product records.
+
+        Fallback for fields ``_read_group`` cannot aggregate directly
+        (sparse/serialized attributes, non-stored fields, dates).
+        """
         attr_products = sudo_products.browse(pids)
         attr_products.mapped(field_name)
         all_attribute_values = set()
@@ -196,24 +423,7 @@ class WebsiteSale(main.WebsiteSale):
                         else attribute_values
                     )
                     value_counts[key] = value_counts.get(key, 0) + 1
-        attr_dict = {
-            "attribute": attribute,
-            "all_attribute_values": sorted(
-                all_attribute_values,
-                key=lambda v: v.display_name
-                if hasattr(v, "display_name")
-                else (
-                    v
-                    if isinstance(v, (int, float))
-                    else str(v)
-                    if v is not None
-                    else ""
-                ),
-            ),
-        }
-        if attribute.e_com_show_count:
-            attr_dict["value_counts"] = value_counts
-        return attr_dict
+        return all_attribute_values, value_counts
 
     def _get_shop_domain(self, search, category, attribute_value_dict, **kwargs):
         """Extend shop domain with additional attribute filters."""

@@ -128,11 +128,30 @@ class AttributeAttribute(models.Model):
         so that child sets inherit their parent's attributes.
         """
         self.ensure_one()
-        return (
-            self.env["attribute.set"]
-            .search([("id", "child_of", self.attribute_set_ids.ids)])
-            .ids
-        )
+        return list(self._get_all_set_ids_per_attribute()[self.id])
+
+    def _get_all_set_ids_per_attribute(self):
+        """Batched :meth:`_get_all_set_ids`.
+
+        Return ``{attribute_id: set(attribute_set_ids)}`` for every attribute
+        in ``self``, resolving the whole attribute-set hierarchy with a single
+        ``parent_path`` read instead of one ``child_of`` search per attribute.
+        """
+        sets = self.env["attribute.set"].search_fetch([], ["parent_path"])
+        descendants_per_ancestor = {}
+        for attribute_set in sets:
+            for ancestor in attribute_set.parent_path.split("/"):
+                if ancestor:
+                    descendants_per_ancestor.setdefault(int(ancestor), set()).add(
+                        attribute_set.id
+                    )
+        result = {}
+        for attribute in self:
+            all_set_ids = set()
+            for set_id in attribute.attribute_set_ids.ids:
+                all_set_ids |= descendants_per_ancestor.get(set_id, set())
+            result[attribute.id] = all_set_ids
+        return result
 
     def _get_attrs(self):
         all_set_ids = self._get_all_set_ids()
