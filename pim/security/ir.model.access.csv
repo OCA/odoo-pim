@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ir_model_fields_pim_reader,ir.model.fields pim reader,base.model_ir_model_fields,group_pim_reader,1,0,0,0
