@@ -6,163 +6,165 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-11-11 00:49+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: attribute_set_completeness
 #: model:ir.model,name:attribute_set_completeness.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__attribute_set_id
 msgid "Attribute Set"
-msgstr ""
+msgstr "Set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model,name:attribute_set_completeness.model_attribute_set_completeness
 msgid "Attribute Set Completeness"
-msgstr ""
+msgstr "Completezza set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_rate
 msgid "Attribute Set Completion Rate"
-msgstr ""
+msgstr "Tasso di completamento set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_state
 msgid "Attribute Set Completion State"
-msgstr ""
+msgstr "Stato di completamento set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completed_ids
 msgid "Attribute Set completed criterias"
-msgstr ""
+msgstr "Criteri completati del set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_not_completed_ids
 msgid "Attribute Set not completed criterias"
-msgstr ""
+msgstr "Criteri non completati del set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__available_field_ids
 msgid "Attribute Set's fields"
-msgstr ""
+msgstr "Campi del set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_rate
 msgid "Attribute set completeness percentage"
-msgstr ""
+msgstr "Percentuale di completezza set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completion_state
 msgid "Attribute set completeness status"
-msgstr ""
+msgstr "Stato di completezza set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model,name:attribute_set_completeness.model_attribute_set_owner_mixin
 msgid "Attribute set owner mixin"
-msgstr ""
+msgstr "Mixin proprietario set di attributi"
 
 #. module: attribute_set_completeness
 #: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_form_view
 msgid "COMPLETNESS"
-msgstr ""
+msgstr "COMPLETEZZA"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__complete
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_product__attribute_set_completion_state__complete
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_template__attribute_set_completion_state__complete
 msgid "Complete"
-msgstr ""
+msgstr "Completo"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set__attribute_set_completeness_ids
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_owner_mixin__attribute_set_completeness_ids
 msgid "Completeness Requirements"
-msgstr ""
+msgstr "Requisiti di completezza"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__completion_rate
 msgid "Completion Rate"
-msgstr ""
+msgstr "Tasso di completamento"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__completion_rate_progress
 msgid "Completion Rate Progress"
-msgstr ""
+msgstr "Avanzamento tasso di completamento"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__field_description
 msgid "Field Description"
-msgstr ""
+msgstr "Descrizione campo"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__field_id
 msgid "Field Name"
-msgstr ""
+msgstr "Nome campo"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,help:attribute_set_completeness.field_attribute_set_completeness__available_field_ids
 msgid "Fields related to the Attribute set's attributes"
-msgstr ""
+msgstr "Campi relativi agli attributi del set di attributi"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields,field_description:attribute_set_completeness.field_attribute_set_completeness__model_id
 msgid "Model"
-msgstr ""
+msgstr "Modello"
 
 #. module: attribute_set_completeness
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__attribute_set_owner_mixin__attribute_set_completion_state__not_complete
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_product__attribute_set_completion_state__not_complete
 #: model:ir.model.fields.selection,name:attribute_set_completeness.selection__product_template__attribute_set_completion_state__not_complete
 msgid "Not complete"
-msgstr ""
+msgstr "Non completo"
 
 #. module: attribute_set_completeness
 #: model_terms:ir.ui.view,arch_db:attribute_set_completeness.attribute_set_completeness_tree_view
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #. module: attribute_set_completeness
 #. odoo-python
 #: code:addons/attribute_set_completeness/models/attribute_set.py:0
 #, python-format
 msgid "Total of completion rate must be 100 %"
-msgstr ""
+msgstr "Il totale del tasso di completamento deve essere 100 %"
