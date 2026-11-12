@@ -42,12 +42,18 @@ class AttributeSetOwnerMixin(models.AbstractModel):
     @api.model
     def remove_native_fields(self, eview):
         """Remove native fields related to native attributes from eview"""
-        native_attrs = self.env["attribute.attribute"].search(
-            [
-                ("model", "=", self._name),
-                ("attribute_set_ids", "!=", False),
-                ("nature", "=", "native"),
-            ]
+        # Read attributes as sudo: attribute.attribute inherits from
+        # ir.model.fields, whose name field PIM users cannot read.
+        native_attrs = (
+            self.env["attribute.attribute"]
+            .sudo()
+            .search(
+                [
+                    ("model", "=", self._name),
+                    ("attribute_set_ids", "!=", False),
+                    ("nature", "=", "native"),
+                ]
+            )
         )
         for attr in native_attrs:
             efield = eview.xpath(f"//field[@name='{attr.name}']")

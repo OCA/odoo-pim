@@ -107,12 +107,12 @@
                             name="option_ids"
                             groups="attribute_set.group_advanced_attribute_set"
                             widget="one2many"
-                            readonly="1"
+                            readonly="relation_model_id"
                         >
-                            <list>
+                            <list editable="bottom">
                                 <field name="relation_model_id" column_invisible="1" />
                                 <field name="value_ref" column_invisible="1" />
-                                <field name="sequence" column_invisible="1" />
+                                <field name="sequence" widget="handle" />
                                 <field name="name" />
                             </list>
                         </field>
