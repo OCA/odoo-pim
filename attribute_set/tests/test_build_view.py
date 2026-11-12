@@ -45,8 +45,9 @@ class BuildViewCase(TransactionCase):
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from .models import ResCountry, ResPartner
+        from ..models.attribute_set_owner import AttributeSetOwnerMixin
 
-        cls.loader.update_registry((ResPartner, ResCountry))
+        cls.loader.update_registry((AttributeSetOwnerMixin, ResPartner, ResCountry))
 
         # Create a new inherited view with the 'attributes' placeholder.
         cls.view = cls.env["ir.ui.view"].create(

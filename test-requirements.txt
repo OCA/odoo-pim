@@ -1,1 +1,2 @@
 odoo_test_helper
+odoo-addon-website_attribute_set @ git+https://github.com/OCA/odoo-pim.git@refs/pull/202/head#subdirectory=website_attribute_set
