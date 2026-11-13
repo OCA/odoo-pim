@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem
         id="main_menu_attribute"
@@ -22,8 +22,8 @@
         <field name="help" />
     </record>
     <menuitem
-        action="attribute_set_form_action"
         id="menu_attribute_set_action"
+        action="attribute_set_form_action"
         parent="main_menu_attribute"
         sequence="0"
     />
