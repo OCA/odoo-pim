@@ -7,12 +7,11 @@ from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = ["product.template", "attribute.set.owner.mixin"]
+    _inherit = ("product.template", "attribute.set.owner.mixin")
     _name = "product.template"
 
     attribute_set_id = fields.Many2one(
         "attribute.set",
-        "Attribute Set",
         default=lambda self: self._get_default_att_set(),
     )
 
@@ -47,7 +46,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = ["product.product", "attribute.set.owner.mixin"]
+    _inherit = ("product.product", "attribute.set.owner.mixin")
     _name = "product.product"
 
     attribute_set_id = fields.Many2one(
