@@ -42,13 +42,6 @@
         parent="main_menu_product"
         sequence="0"
     />
-    <menuitem
-        id="menu_product_product"
-        name="Product Variants"
-        action="product.product_normal_action_sell"
-        parent="main_menu_product"
-        sequence="1"
-    />
     <!-- Menu Attributes -->
     <menuitem
         id="menu_variant_attribute"
