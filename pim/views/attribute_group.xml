@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="attribute_group_form_action" model="ir.actions.act_window">
         <field name="name">Attribute Groups</field>
@@ -12,8 +12,8 @@
         <field name="help" />
     </record>
     <menuitem
-        action="attribute_group_form_action"
         id="menu_attribute_group_action"
+        action="attribute_group_form_action"
         parent="main_menu_attribute"
         sequence="1"
     />
