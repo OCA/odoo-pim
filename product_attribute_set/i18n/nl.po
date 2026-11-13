@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_attribute_set
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-05-11 20:41+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: product_attribute_set
+#: model:ir.model,name:product_attribute_set.model_attribute_attribute
+msgid "Attribute"
+msgstr "Kenmerk"
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_product__attribute_set_id
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__attribute_set_id
+#: model_terms:ir.ui.view,arch_db:product_attribute_set.product_template_search_view
+msgid "Attribute Set"
+msgstr "Kenmerkenset"
+
+#. module: product_attribute_set
+#: model_terms:ir.ui.view,arch_db:product_attribute_set.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:product_attribute_set.product_variant_easy_edit_view
+msgid "Attributes"
+msgstr "Kenmerken"
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_category__attribute_set_id
+msgid "Default Attribute Set"
+msgstr "Standaard kenmerkenset"
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_attribute_attribute__display_name
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_category__display_name
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: product_attribute_set
+#: model:ir.model.fields,field_description:product_attribute_set.field_attribute_attribute__id
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_category__id
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_product__id
+#: model:ir.model.fields,field_description:product_attribute_set.field_product_template__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_attribute_set
+#: model:ir.model,name:product_attribute_set.model_product_template
+msgid "Product"
+msgstr "Product"
+
+#. module: product_attribute_set
+#: model:ir.model,name:product_attribute_set.model_product_category
+msgid "Product Category"
+msgstr "Productcategorie"
+
+#. module: product_attribute_set
+#: model:ir.model,name:product_attribute_set.model_product_product
+msgid "Product Variant"
+msgstr "Productvariant"
