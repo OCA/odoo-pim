@@ -49,31 +49,4 @@
             </xpath>
         </field>
     </record>
-    <!-- Product Variant -->
-    <record id="product.product_normal_action" model="ir.actions.act_window">
-        <field name="context">
-            {"include_native_attribute_view_ref": 1}
-        </field>
-    </record>
-    <record id="product.product_normal_action_sell" model="ir.actions.act_window">
-        <field name="context">
-            {"include_native_attribute_view_ref": 1, "search_default_filter_to_sell": 1}
-        </field>
-    </record>
-    <!-- Do not display all the attributes in the easy edit view -->
-    <record id="product_variant_easy_edit_view" model="ir.ui.view">
-        <field
-            name="name"
-        >product.product.view.form.easy - product_attribute_set</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='barcode']" position="after">
-                <group name="product_attributes" string="Attributes" invisible="1">
-                    <field name="attribute_set_id" />
-                    <separator name="attributes_placeholder" />
-                </group>
-            </xpath>
-        </field>
-    </record>
 </odoo>

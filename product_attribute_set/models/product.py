@@ -12,7 +12,6 @@ class ProductTemplate(models.Model):
 
     attribute_set_id = fields.Many2one(
         "attribute.set",
-        "Attribute Set",
         default=lambda self: self._get_default_att_set(),
     )
 
