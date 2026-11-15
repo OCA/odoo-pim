@@ -1,5 +1,2 @@
-[ Enumerate known caveats and future potential improvements.
-  It is mostly intended for end-users, and can also help
-  potential new contributors discovering new features to implement. ]
-
-- ...
+- Compute and store the characteristics vector of each product.
+- Compute the distance between products and find their nearest neighbours.

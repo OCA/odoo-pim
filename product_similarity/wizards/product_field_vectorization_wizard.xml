@@ -1,21 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="product_field_vectorization_wizard_form_view" model="ir.ui.view">
-        <field name="name">product.field.vectorization.wizard.form</field>
         <field name="model">product.field.vectorization.wizard</field>
         <field name="arch" type="xml">
-            <form string="Select Product Field">
-                <sheet>
-                    <group>
-                        <field name="field_id" />
-                        <field name="weight" />
-                    </group>
-                </sheet>
+            <form string="Vectorize Field">
+                <group>
+                    <field name="field_id" options="{'no_create': True}" />
+                    <field name="weight" />
+                </group>
                 <footer>
                     <button
                         name="put_in_vector_action"
                         string="Put in Vector"
                         type="object"
-                        class="oe_highlight"
+                        class="btn-primary"
                     />
                     <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
@@ -23,4 +23,13 @@
         </field>
     </record>
 
+    <record
+        id="product_field_vectorization_wizard_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Vectorize Field</field>
+        <field name="res_model">product.field.vectorization.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 </odoo>

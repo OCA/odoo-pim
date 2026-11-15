@@ -1,0 +1,212 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_similarity
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_similarity
+#: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_check_vector_index_non_negative
+msgid "A vector index must be >= 0"
+msgstr ""
+
+#. module: product_similarity
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_field_vectorization_wizard_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: product_similarity
+#. odoo-python
+#: code:addons/product_similarity/wizards/product_field_vectorization_wizard.py:0
+msgid "Created %(nb_new)s new vector characteristics."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__create_uid
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__create_date
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__display_name
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__field_id
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__field_id
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_search_view
+msgid "Field"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__field_id
+msgid ""
+"Field inside the `product.product` model linked to the current "
+"characteristic."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__id
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__id
+msgid "ID"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__vector_index
+msgid "Index of current characteristic inside the characteristics vector"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__write_uid
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__write_date
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__model_id
+msgid "Model"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__model_id
+msgid "Model name of the given characteristic"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__name
+msgid "Name"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__possible_values_string
+msgid "Possible Values String"
+msgstr ""
+
+#. module: product_similarity
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_form_view
+msgid "Product"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model,name:product_similarity.model_product_field_vectorization_wizard
+msgid "Product Field Vectorization Wizard"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model,name:product_similarity.model_product_vector_characteristic
+msgid "Product Vector Characteristic"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.actions.act_window,name:product_similarity.product_vector_characteristic_act_window
+#: model:ir.ui.menu,name:product_similarity.product_vector_characteristic_menu
+msgid "Product Vector Characteristics"
+msgstr ""
+
+#. module: product_similarity
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_field_vectorization_wizard_form_view
+msgid "Put in Vector"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_unique_field_value
+msgid "The given pair (field_id, value_id) already exists."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__value_id
+msgid ""
+"The id of the specific value of the characteristic from the linked model.\n"
+"For example, if the characteristic's model is \"Color(0: 'red', 1: 'green', 2: 'blue')\", then to represent the color 'green', you would choose `1`."
+msgstr ""
+
+#. module: product_similarity
+#. odoo-python
+#: code:addons/product_similarity/models/product_vector_characteristic.py:0
+msgid "The value %(value)s is not a possible value of field %(field)s."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_unique_vector_index
+msgid ""
+"There cannot be two characteristics pointing to the same index in the "
+"vector."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_id
+msgid "Value"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_id_visible
+msgid "Value Id Visible"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_name
+msgid "Value Name"
+msgstr ""
+
+#. module: product_similarity
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_form_view
+msgid "Vector"
+msgstr ""
+
+#. module: product_similarity
+#. odoo-python
+#: code:addons/product_similarity/wizards/product_field_vectorization_wizard.py:0
+msgid "Vector Characteristics Created"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__vector_index
+msgid "Vector Index"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.actions.act_window,name:product_similarity.product_field_vectorization_wizard_action
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_field_vectorization_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_list_view
+msgid "Vectorize Field"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_field_vectorization_wizard__weight
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__weight
+msgid "Weight"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__weight
+msgid ""
+"Weight applied to the current characteristic's index when computing vector "
+"distances."
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_check_weight_positive
+msgid "Weight must be > 0"
+msgstr ""

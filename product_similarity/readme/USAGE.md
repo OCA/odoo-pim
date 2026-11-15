@@ -1,21 +1,10 @@
-[ This file is required and contains the instructions on **“how”** to use the module for end-users. 
+To define the characteristics, you need to:
 
-If the module does not have a visible impact on the user interface, just add the following sentence: 
-
-> This module does not impact the user interface.
-
-If that’s not the case, please make sure that every usage step is covered and remember that images speak more than words!]
-
-To use this module, you need to:
-
-- Go to *App* > Menu > Menu item
-
-  *insert screenshot!*
-
-- In “Contact” form, add a value to field *xyz* > save
-
-  *insert screenshot!*
-
-- The value of *xyz* is now displayed in the list view.
-
-  *insert screenshot!*
+- Activate the developer mode.
+- Go to *Settings > Technical > Product Vector Characteristics*.
+- Click on *Vectorize Field*, select a product field and a weight, then click
+  on *Put in Vector*. One characteristic is created for each possible value of
+  the field (a single one for boolean fields). Running it again only adds the
+  missing values.
+- Characteristics can also be created one by one with *New*. A free vector
+  index is assigned automatically.

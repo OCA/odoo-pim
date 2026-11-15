@@ -4,64 +4,48 @@
 from .common import TestProductSimilarityCommon
 
 
-class TestProductVectorCharacteristic(TestProductSimilarityCommon):
-    def test_wizard_vectorize_biary_field(self):
-        wizard_action = self.env[
-            "product.vector.characteristic"
-        ].field_vectorization_wizard_action()
-        wizard = self.env[wizard_action["res_model"]].create(
-            {"field_id": self.boolean_field.id}
-        )
-        wizard.put_in_vector_action()
+class TestFieldVectorizationWizard(TestProductSimilarityCommon):
+    def _run_wizard(self, field, weight=1):
+        wizard = self.Wizard.create({"field_id": field.id, "weight": weight})
+        return wizard.put_in_vector_action()
 
-        characteristic = self.env["product.vector.characteristic"].search([])
-        self.assertEqual(
-            len(characteristic),
-            1,
-            "Expected exactly one characteristic to be created by wizard for binary field.",
-        )
+    def test_wizard_vectorize_boolean_field(self):
+        action = self._run_wizard(self.boolean_field, weight=2)
+        characteristics = self.Characteristic.search([])
+        self.assertEqual(len(characteristics), 1)
+        self.assertEqual(characteristics.weight, 2)
+        self.assertEqual(action["tag"], "display_notification")
+        # Running it again does not create duplicates
+        self._run_wizard(self.boolean_field)
+        self.assertEqual(self.Characteristic.search_count([]), 1)
 
     def test_wizard_vectorize_selection_field(self):
-        wizard_action = self.env[
-            "product.vector.characteristic"
-        ].field_vectorization_wizard_action()
-        wizard = self.env[wizard_action["res_model"]].create(
-            {"field_id": self.selection_field.id}
-        )
-        wizard.put_in_vector_action()
-
-        characteristic = self.env["product.vector.characteristic"].search([])
+        self._run_wizard(self.selection_field)
         self.assertEqual(
-            len(characteristic),
-            len(self.selection_field_values),
+            self.Characteristic.search_count([]), len(self.selection_field_values)
         )
 
     def test_wizard_vectorize_many_to_one_field(self):
-        wizard_action = self.env[
-            "product.vector.characteristic"
-        ].field_vectorization_wizard_action()
-        wizard = self.env[wizard_action["res_model"]].create(
-            {"field_id": self.many_to_one_field.id}
-        )
-        wizard.put_in_vector_action()
-
-        characteristic = self.env["product.vector.characteristic"].search([])
+        self._run_wizard(self.many_to_one_field)
         self.assertEqual(
-            len(characteristic),
-            len(self.many_to_one_field_values),
+            self.Characteristic.search_count([]), len(self.many_to_one_field_values)
         )
 
     def test_wizard_vectorize_many_to_many_field(self):
-        wizard_action = self.env[
-            "product.vector.characteristic"
-        ].field_vectorization_wizard_action()
-        wizard = self.env[wizard_action["res_model"]].create(
-            {"field_id": self.many_to_many_field.id}
-        )
-        wizard.put_in_vector_action()
-
-        characteristic = self.env["product.vector.characteristic"].search([])
+        self._run_wizard(self.many_to_many_field)
+        characteristics = self.Characteristic.search([])
+        self.assertEqual(len(characteristics), len(self.many_to_many_field_values))
         self.assertEqual(
-            len(characteristic),
-            len(self.many_to_many_field_values),
+            characteristics.mapped("vector_index"), list(range(len(characteristics)))
         )
+
+    def test_wizard_only_adds_missing_values(self):
+        value_ids = list(self.many_to_many_field_values)
+        self.Characteristic.create(
+            {"field_id": self.many_to_many_field.id, "value_id": value_ids[0]}
+        )
+        action = self._run_wizard(self.many_to_many_field)
+        self.assertEqual(
+            self.Characteristic.search_count([]), len(self.many_to_many_field_values)
+        )
+        self.assertIn(str(len(value_ids) - 1), action["params"]["message"])

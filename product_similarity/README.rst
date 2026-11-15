@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ===================
 Products Similarity
 ===================
@@ -13,149 +17,55 @@ Products Similarity
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--pim-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-pim/tree/16.0/product_similarity
+    :target: https://github.com/OCA/odoo-pim/tree/19.0/product_similarity
     :alt: OCA/odoo-pim
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-pim-16-0/odoo-pim-16-0-product_similarity
+    :target: https://translation.odoo-community.org/projects/odoo-pim-19-0/odoo-pim-19-0-product_similarity
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/odoo-pim&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-[ This file must be max 2-3 paragraphs, and is required.
+This module lets you define the product characteristics used to
+represent each product as a vector, as a base to compute a similarity
+score between products (e.g. for product recommendations).
 
-The goal of this document is to explain quickly the features of this
-module: “what” this module does and “what” it is for. ]
-
-Example:
-
-This module extends the functionality of ... to support ... and to allow
-users to ...
+Each *Product Vector Characteristic* links a field of
+``product.product`` (boolean, selection, many2one or many2many), and for
+non boolean fields one of its possible values, to a dimension (index) of
+the vector and a weight used when computing distances between vectors.
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Use Cases / Context
-===================
-
-[ This file is optional but strongly suggested to allow end-users to
-evaluate the module's usefulness in their context. ]
-
-BUSINESS NEED: It should explain the “why” of the module:
-
-- what is the business requirement that generated the need to develop
-  this module
-- in which context or use cases this module can be useful (practical
-  examples are welcome!).
-
-APPROACH: It could also explain the approach to address the mentioned
-need.
-
-USEFUL INFORMATION: It can also inform on related modules:
-
-- modules it depends on and their features
-- other modules that can work well together with this one
-- suggested setups where the module is useful (eg: multicompany,
-  multi-website)
-
-Installation
-============
-
-[ This file must only be present if there are very specific installation
-instructions, such as installing non-python dependencies. The audience
-is systems administrators. ]
-
-To install this module, you need to:
-
-1. Do this ...
-
-Configuration
-=============
-
-[ This file is not always required; it should explain **how to configure
-the module before using it**; it is aimed at users with administration
-privileges.
-
-Please be detailed on the path to configuration (eg: do you need to
-activate developer mode?), describe step by step configurations and the
-use of screenshots is strongly recommended.]
-
-To configure this module, you need to:
-
-- Go to *App* > Menu > Menu item
-- Activate boolean… > save
-- …
-
 Usage
 =====
 
-[ This file is required and contains the instructions on **“how”** to
-use the module for end-users.
+To define the characteristics, you need to:
 
-If the module does not have a visible impact on the user interface, just
-add the following sentence:
-
-   This module does not impact the user interface.
-
-If that’s not the case, please make sure that every usage step is
-covered and remember that images speak more than words!]
-
-To use this module, you need to:
-
-- Go to *App* > Menu > Menu item
-
-  *insert screenshot!*
-
-- In “Contact” form, add a value to field *xyz* > save
-
-  *insert screenshot!*
-
-- The value of *xyz* is now displayed in the list view.
-
-  *insert screenshot!*
+- Activate the developer mode.
+- Go to *Settings > Technical > Product Vector Characteristics*.
+- Click on *Vectorize Field*, select a product field and a weight, then
+  click on *Put in Vector*. One characteristic is created for each
+  possible value of the field (a single one for boolean fields). Running
+  it again only adds the missing values.
+- Characteristics can also be created one by one with *New*. A free
+  vector index is assigned automatically.
 
 Known issues / Roadmap
 ======================
 
-[ Enumerate known caveats and future potential improvements. It is
-mostly intended for end-users, and can also help potential new
-contributors discovering new features to implement. ]
-
-- ...
-
-Changelog
-=========
-
-[ The change log. The goal of this file is to help readers understand
-changes between version. The primary audience is end users and
-integrators. Purely technical changes such as code refactoring must not
-be mentioned here.
-
-This file may contain ONE level of section titles, underlined with the ~
-(tilde) character. Other section markers are forbidden and will likely
-break the structure of the README.rst or other documents where this
-fragment is included. ]
-
-11.0.x.y.z (YYYY-MM-DD)
------------------------
-
-- [BREAKING] Breaking changes come first.
-  (`#70 <https://github.com/OCA/repo/issues/70>`__)
-- [ADD] New feature. (`#74 <https://github.com/OCA/repo/issues/74>`__)
-- [FIX] Correct this. (`#71 <https://github.com/OCA/repo/issues/71>`__)
-
-11.0.x.y.z (YYYY-MM-DD)
------------------------
-
-- ...
+- Compute and store the characteristics vector of each product.
+- Compute the distance between products and find their nearest
+  neighbours.
 
 Bug Tracker
 ===========
@@ -163,7 +73,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-pim/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_similarity%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/odoo-pim/issues/new?body=module:%20product_similarity%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -181,17 +91,6 @@ Contributors
 - Nicolas Delbovier nicolas.delbovier@acsone.eu
 - Laurent Mignon laurent.mignon@acsone.eu
 
-Other credits
--------------
-
-[ This file is optional and contains additional credits, other than
-authors, contributors, and maintainers. ]
-
-The development of this module has been financially supported by:
-
-- Company 1 name
-- Company 2 name
-
 Maintainers
 -----------
 
@@ -205,6 +104,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/16.0/product_similarity>`_ project on GitHub.
+This module is part of the `OCA/odoo-pim <https://github.com/OCA/odoo-pim/tree/19.0/product_similarity>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

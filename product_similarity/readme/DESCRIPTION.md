@@ -1,7 +1,8 @@
-[ This file must be max 2-3 paragraphs, and is required.
+This module lets you define the product characteristics used to represent
+each product as a vector, as a base to compute a similarity score between
+products (e.g. for product recommendations).
 
-The goal of this document is to explain quickly the features of this module: “what” this module does and “what” it is for. ]
-
-Example:
-
-This module extends the functionality of ... to support ... and to allow users to ...
+Each *Product Vector Characteristic* links a field of `product.product`
+(boolean, selection, many2one or many2many), and for non boolean fields one
+of its possible values, to a dimension (index) of the vector and a weight
+used when computing distances between vectors.
