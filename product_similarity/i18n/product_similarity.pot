@@ -55,6 +55,18 @@ msgid "Field"
 msgstr ""
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__field_type
+msgid "Field Type"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__selection_field_id
+msgid ""
+"Field holding the selection values (the related field for related or "
+"inherited selection fields)"
+msgstr ""
+
+#. module: product_similarity
 #: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__field_id
 msgid ""
 "Field inside the `product.product` model linked to the current "
@@ -131,6 +143,21 @@ msgid "Put in Vector"
 msgstr ""
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__selection_field_id
+msgid "Selection Field"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__selection_value_id
+msgid "Selection Value"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__value_model
+msgid "Technical name of the model holding the values of the field"
+msgstr ""
+
+#. module: product_similarity
 #: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_unique_field_value
 msgid "The given pair (field_id, value_id) already exists."
 msgstr ""
@@ -166,8 +193,18 @@ msgid "Value Id Visible"
 msgstr ""
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_model
+msgid "Value Model"
+msgstr ""
+
+#. module: product_similarity
 #: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_name
 msgid "Value Name"
+msgstr ""
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__selection_value_id
+msgid "Value of the selection field linked to the current characteristic."
 msgstr ""
 
 #. module: product_similarity

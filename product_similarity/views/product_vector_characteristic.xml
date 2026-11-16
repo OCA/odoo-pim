@@ -11,7 +11,21 @@
                         <field name="field_id" options="{'no_create': True}" />
                         <field name="model_id" invisible="not field_id" />
                         <field name="value_id_visible" invisible="1" />
-                        <field name="value_id" invisible="not value_id_visible" />
+                        <field name="field_type" invisible="1" />
+                        <field name="value_model" invisible="1" />
+                        <field name="selection_field_id" invisible="1" />
+                        <field
+                            name="value_id"
+                            invisible="field_type not in ('many2one', 'many2many')"
+                            required="field_type in ('many2one', 'many2many')"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
+                        <field
+                            name="selection_value_id"
+                            invisible="field_type != 'selection'"
+                            required="field_type == 'selection'"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
                         <field
                             name="possible_values_string"
                             invisible="not value_id_visible"

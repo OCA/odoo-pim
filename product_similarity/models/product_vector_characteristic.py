@@ -36,8 +36,26 @@ class ProductVectorCharacteristic(models.Model):
         compute="_compute_model_id",
         help="Model name of the given characteristic",
     )
+    value_model = fields.Char(
+        compute="_compute_value_model",
+        help="Technical name of the model holding the values of the field",
+    )
+    selection_field_id = fields.Many2one(
+        "ir.model.fields",
+        compute="_compute_value_model",
+        help="Field holding the selection values (the related field for related "
+        "or inherited selection fields)",
+    )
+    field_type = fields.Selection(related="field_id.ttype")
+    selection_value_id = fields.Many2one(
+        "ir.model.fields.selection",
+        compute="_compute_selection_value_id",
+        inverse="_inverse_selection_value_id",
+        domain="[('field_id', '=', selection_field_id)]",
+        help="Value of the selection field linked to the current characteristic.",
+    )
     value_id = fields.Many2oneReference(
-        model_field="model_id",
+        model_field="value_model",
         help="The id of the specific value of the characteristic from the linked "
         "model.\nFor example, if the characteristic's model is \"Color(0: 'red', "
         "1: 'green', 2: 'blue')\", then to represent the color 'green', you would "
@@ -84,7 +102,9 @@ class ProductVectorCharacteristic(models.Model):
     @api.depends("field_id", "value_name")
     def _compute_name(self):
         for record in self:
-            if record.field_id.ttype == "boolean":
+            if not record.field_id:
+                record.name = ""
+            elif record.field_id.ttype == "boolean":
                 record.name = record.field_id.name
             else:
                 record.name = f"{record.field_id.name} = '{record.value_name}'"
@@ -97,12 +117,54 @@ class ProductVectorCharacteristic(models.Model):
             )
 
     @api.model
+    def _get_selection_field(self, field):
+        """Return the field holding the selection values of ``field``
+
+        Related and inherited (e.g. from ``product.template``) selection fields
+        do not have selection values of their own.
+        """
+        if not field or field.selection_ids or field.model not in self.env:
+            return field
+        orm_field = self.env[field.model]._fields[field.name]
+        while orm_field.related_field is not None:
+            orm_field = orm_field.related_field
+        return field._get(orm_field.model_name, orm_field.name)
+
+    @api.depends("field_id")
+    def _compute_value_model(self):
+        for record in self:
+            field = record.field_id
+            record.selection_field_id = False
+            if field.ttype == "selection":
+                record.value_model = "ir.model.fields.selection"
+                record.selection_field_id = self._get_selection_field(field)
+            elif field.ttype in ["many2one", "many2many"]:
+                record.value_model = field.relation
+            else:
+                record.value_model = False
+
+    @api.depends("field_id", "value_id")
+    def _compute_selection_value_id(self):
+        for record in self:
+            if record.field_id.ttype == "selection" and record.value_id:
+                record.selection_value_id = self.env[
+                    "ir.model.fields.selection"
+                ].browse(record.value_id)
+            else:
+                record.selection_value_id = False
+
+    def _inverse_selection_value_id(self):
+        for record in self:
+            if record.field_id.ttype == "selection":
+                record.value_id = record.selection_value_id.id
+
+    @api.model
     def get_possible_values(self, field):
         """Return a {value_id: display name} dict of the values of ``field``"""
         if not field or field.ttype == "boolean":
             return {}
         if field.ttype == "selection":
-            records = field.selection_ids
+            records = self._get_selection_field(field).selection_ids
         else:
             # every value of the related model is a candidate characteristic
             records = self.env[field.relation].search([])  # pylint: disable=no-search-all
@@ -154,11 +216,23 @@ class ProductVectorCharacteristic(models.Model):
                 return i
         return len(indices)
 
+    @api.model
+    def _selection_value_to_value_id(self, vals):
+        # value_id must be set before the constraints are checked, which
+        # happens before the inverse of selection_value_id is called
+        if vals.get("selection_value_id"):
+            vals["value_id"] = vals["selection_value_id"]
+        return vals
+
+    def write(self, vals):
+        return super().write(self._selection_value_to_value_id(vals))
+
     @api.model_create_multi
     def create(self, vals_list):
         # Assign free indices before creating the records
         already_assigned_indices = []
         for vals in vals_list:
+            self._selection_value_to_value_id(vals)
             index = self._get_empty_index(already_assigned_indices)
             vals["vector_index"] = index
             already_assigned_indices.append(index)

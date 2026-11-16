@@ -12,6 +12,8 @@ class TestProductSimilarityCommon(BaseCommon):
         cls.Wizard = cls.env["product.field.vectorization.wizard"]
         cls.boolean_field = cls._get_field("sale_ok")
         cls.selection_field = cls._get_field("activity_exception_decoration")
+        # selection field inherited from product.template
+        cls.related_selection_field = cls._get_field("type")
         cls.many_to_many_field = cls._get_field("product_tag_ids")
         cls.many_to_one_field = cls._get_field("cost_currency_id")
         cls.env["product.tag"].create([{"name": n} for n in ["red", "green", "blue"]])

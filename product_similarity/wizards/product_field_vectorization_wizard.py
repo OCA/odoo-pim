@@ -42,7 +42,7 @@ class ProductFieldVectorizationWizard(models.TransientModel):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "type": "success",
+                "type": "success" if vals_list else "warning",
                 "title": self.env._("Vector Characteristics Created"),
                 "message": self.env._(
                     "Created %(nb_new)s new vector characteristics.",

@@ -25,6 +25,19 @@ class TestFieldVectorizationWizard(TestProductSimilarityCommon):
             self.Characteristic.search_count([]), len(self.selection_field_values)
         )
 
+    def test_wizard_vectorize_related_selection_field(self):
+        self._run_wizard(self.related_selection_field)
+        template_field = self.env["ir.model.fields"]._get("product.template", "type")
+        self.assertTrue(template_field.selection_ids)
+        self.assertEqual(
+            self.Characteristic.search_count([]), len(template_field.selection_ids)
+        )
+
+    def test_wizard_nothing_to_create(self):
+        self._run_wizard(self.boolean_field)
+        action = self._run_wizard(self.boolean_field)
+        self.assertEqual(action["params"]["type"], "warning")
+
     def test_wizard_vectorize_many_to_one_field(self):
         self._run_wizard(self.many_to_one_field)
         self.assertEqual(

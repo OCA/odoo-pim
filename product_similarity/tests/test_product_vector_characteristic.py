@@ -4,6 +4,7 @@
 from psycopg2.errors import CheckViolation
 
 from odoo.exceptions import ValidationError
+from odoo.tests import Form
 from odoo.tools import mute_logger
 
 from .common import TestProductSimilarityCommon
@@ -69,6 +70,12 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         self.assertFalse(characteristic.value_name)
         self.assertFalse(characteristic.possible_values_string)
         self.assertEqual(characteristic.model_id.model, "product.product")
+        self.assertFalse(characteristic.value_model)
+
+    def test_characteristic_without_field(self):
+        characteristic = self.Characteristic.new({})
+        self.assertEqual(characteristic.name, "")
+        self.assertFalse(characteristic.value_model)
 
     def test_relational_characteristic(self):
         tag = self.env["product.tag"].search([("name", "=", "green")], limit=1)
@@ -77,6 +84,7 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         self.assertEqual(characteristic.value_name, "green")
         self.assertEqual(characteristic.name, "product_tag_ids = 'green'")
         self.assertEqual(characteristic.model_id.model, "product.tag")
+        self.assertEqual(characteristic.value_model, "product.tag")
         self.assertIn("green", characteristic.possible_values_string)
 
     def test_selection_characteristic(self):
@@ -86,6 +94,38 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         )
         self.assertEqual(characteristic.value_name, selection.display_name)
         self.assertEqual(characteristic.model_id.model, "product.product")
+        self.assertEqual(characteristic.value_model, "ir.model.fields.selection")
+        self.assertEqual(characteristic.selection_field_id, self.selection_field)
+
+    def test_related_selection_characteristic(self):
+        selection_field = self.Characteristic._get_selection_field(
+            self.related_selection_field
+        )
+        self.assertEqual(selection_field.model, "product.template")
+        selection = selection_field.selection_ids.filtered(lambda s: s.value == "consu")
+        characteristic = self.Characteristic.create(
+            {"field_id": self.related_selection_field.id, "value_id": selection.id}
+        )
+        self.assertEqual(characteristic.selection_field_id, selection_field)
+        self.assertEqual(characteristic.value_name, selection.display_name)
+        self.assertEqual(characteristic.selection_value_id, selection)
+
+    def test_selection_characteristic_form(self):
+        selection = self.selection_field.selection_ids[-1]
+        with Form(self.Characteristic) as form:
+            form.field_id = self.selection_field
+            form.selection_value_id = selection
+        characteristic = form.record
+        self.assertEqual(characteristic.value_id, selection.id)
+        self.assertEqual(characteristic.selection_value_id, selection)
+
+    def test_relational_characteristic_form(self):
+        tag = self.env["product.tag"].search([("name", "=", "blue")], limit=1)
+        with Form(self.Characteristic) as form:
+            form.field_id = self.many_to_many_field
+            form.value_id = tag.id
+        self.assertEqual(form.record.value_name, "blue")
+        self.assertFalse(form.record.selection_value_id)
 
     def test_unsupported_field_type(self):
         char_field = self._get_field("default_code")

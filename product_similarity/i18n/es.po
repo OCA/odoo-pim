@@ -56,6 +56,20 @@ msgid "Field"
 msgstr "Campo"
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__field_type
+msgid "Field Type"
+msgstr "Tipo de campo"
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__selection_field_id
+msgid ""
+"Field holding the selection values (the related field for related or "
+"inherited selection fields)"
+msgstr ""
+"Campo que contiene los valores de selección (el campo relacionado para "
+"campos de selección relacionados o heredados)"
+
+#. module: product_similarity
 #: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__field_id
 msgid ""
 "Field inside the `product.product` model linked to the current "
@@ -134,6 +148,21 @@ msgid "Put in Vector"
 msgstr "Añadir al vector"
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__selection_field_id
+msgid "Selection Field"
+msgstr "Campo de selección"
+
+#. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__selection_value_id
+msgid "Selection Value"
+msgstr "Valor de selección"
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__value_model
+msgid "Technical name of the model holding the values of the field"
+msgstr "Nombre técnico del modelo que contiene los valores del campo"
+
+#. module: product_similarity
 #: model:ir.model.constraint,message:product_similarity.constraint_product_vector_characteristic_unique_field_value
 msgid "The given pair (field_id, value_id) already exists."
 msgstr "El par (field_id, value_id) indicado ya existe."
@@ -172,9 +201,19 @@ msgid "Value Id Visible"
 msgstr "Id de valor visible"
 
 #. module: product_similarity
+#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_model
+msgid "Value Model"
+msgstr "Modelo del valor"
+
+#. module: product_similarity
 #: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__value_name
 msgid "Value Name"
 msgstr "Nombre del valor"
+
+#. module: product_similarity
+#: model:ir.model.fields,help:product_similarity.field_product_vector_characteristic__selection_value_id
+msgid "Value of the selection field linked to the current characteristic."
+msgstr "Valor del campo de selección vinculado a la característica actual."
 
 #. module: product_similarity
 #: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_form_view
