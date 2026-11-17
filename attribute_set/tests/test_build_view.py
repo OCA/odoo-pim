@@ -330,7 +330,6 @@ class BuildViewCase(TransactionCase):
             partner_form.x_attr_3 = True
             partner_form.x_attr_select = self.attr_select_option
             partner_form.x_multi_attribute.add(self.multi_attribute.option_ids[0])
-            pass
         partner = partner_form.save().with_user(self.attribute_manager_user)
         self.assertTrue(partner.x_attr_3)
         self.assertTrue(partner.x_attr_select)

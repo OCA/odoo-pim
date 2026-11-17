@@ -7,7 +7,6 @@ from odoo.tools.safe_eval import safe_eval
 
 def transfer_field_to_modifiers(field, modifiers):
     """This module is not used all over the project, but may has a value"""
-    pass
 
 
 # Don't deal with groups, it is done by check_group().
