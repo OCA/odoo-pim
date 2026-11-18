@@ -25,7 +25,7 @@
                     string="Sort Attribute"
                     name="%(attribute_attribute_sort_action)d"
                     type="action"
-                    icon="fa-sort-amount-asc"
+                    icon="sort"
                 />
             </list>
         </field>

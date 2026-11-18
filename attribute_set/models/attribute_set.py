@@ -42,7 +42,7 @@ class AttributeSet(models.Model):
         compute="_compute_complete_attribute_ids",
         recursive=True,
     )
-    model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
+    model_id = fields.Many2one("ir.model", required=True, ondelete="cascade")
     model = fields.Char(
         related="model_id.model",
         string="Model Name",

@@ -16,7 +16,6 @@ class AttributeSetOwnerMixin(models.AbstractModel):
 
     attribute_set_id = fields.Many2one(
         "attribute.set",
-        "Attribute Set",
         domain=lambda self: self._get_attribute_set_owner_model(),
     )
 
@@ -90,11 +89,13 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         result = super().get_view(view_id=view_id, view_type=view_type, **options)
         if view_type == "form":
             form_arch = result.get("arch")
-            if form_arch:
+            if (
+                form_arch
                 # to prevent recursive or duplicate insertion
-                if not self.env.context.get("attribute_insertion_in_progress"):
-                    # Prevent processing on all res.partner calls by checking conditions
-                    result["arch"] = self._insert_attribute(result["arch"])
+                and not self.env.context.get("attribute_insertion_in_progress")
+            ):
+                # Prevent processing on all res.partner calls by checking conditions
+                result["arch"] = self._insert_attribute(result["arch"])
         return result
 
     @api.model

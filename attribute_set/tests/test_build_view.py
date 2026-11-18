@@ -27,12 +27,11 @@ class BuildViewCase(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        # Create demo user instead of using demo data
-        cls.demo = cls.env["res.users"].create(
+        cls.attribute_user = cls.env["res.users"].create(
             {
-                "name": "Demo User",
-                "login": "demo",
-                "email": "demo@test.example.com",
+                "name": "Attribute User",
+                "login": "attribute_user",
+                "email": "attribute_user@test.example.com",
             }
         )
 
@@ -165,7 +164,7 @@ class BuildViewCase(TransactionCase):
         return super().tearDownClass()
 
     # TEST write on attributes
-    @users("demo")
+    @users("attribute_user")
     def test_write_attribute_values_text(self):
         self.partner.write({"x_attr_2": "abcd"})
         self.assertEqual(self.partner.x_attr_2, "abcd")
@@ -335,7 +334,7 @@ class BuildViewCase(TransactionCase):
         self.assertTrue(partner.x_attr_select)
         # As options are Many2many, Form() is not able to render the sub form
         # This should pass, checking fields are rendered without error with
-        # demo user
+        # attribute_user user
         with Form(partner.x_multi_attribute):
             pass
 
@@ -350,7 +349,7 @@ class BuildViewCase(TransactionCase):
         self.assertIn("x_attr_3", fields)
         self.assertIn("x_attr_4", fields)
 
-    @users("demo")
+    @users("attribute_user")
     def test_model_form_domain(self):
         # Test attributes modifications through form
         partner = self.partner.with_user(self.env.user)

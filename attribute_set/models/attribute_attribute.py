@@ -33,6 +33,7 @@ def safe_column_name(string):
 
 class AttributeAttribute(models.Model):
     _name = "attribute.attribute"
+    _check_inherits_access = False
     _description = "Attribute"
     _inherits = {"ir.model.fields": "field_id"}
     _order = "sequence_group,sequence,name"
@@ -107,7 +108,7 @@ class AttributeAttribute(models.Model):
     )
 
     attribute_group_id = fields.Many2one(
-        "attribute.group", "Attribute Group", required=True, ondelete="cascade"
+        "attribute.group", required=True, ondelete="cascade"
     )
 
     sequence_group = fields.Integer(
@@ -177,7 +178,7 @@ class AttributeAttribute(models.Model):
                 # Add color options if the attribute's Relational Model
                 # has a color field
                 relation_model_obj = self.env[self.relation_model_id.model]
-                if "color" in relation_model_obj.fields_get().keys():
+                if "color" in relation_model_obj.fields_get():
                     kwargs["options"] = "{'color_field': 'color', 'no_create': True}"
             elif self.nature == "custom":
                 # Define field's domain and context with attribute's id to go along with
@@ -528,32 +529,30 @@ class AttributeAttribute(models.Model):
         # Prevent from changing relation_model_id for multiselect Attributes
         # as the values of the existing many2many Attribute fields won't be
         # deleted if changing relation_model_id
-        if "relation_model_id" in list(vals.keys()):
-            if self.search_count(
-                [
-                    ("relation_model_id", "!=", vals["relation_model_id"]),
-                    ("id", "in", self.ids),
-                ]
-            ):
-                raise ValidationError(
-                    self.env._(
-                        """Can't change the attribute's Relational Model in order to
+        if "relation_model_id" in vals and self.search_count(
+            [
+                ("relation_model_id", "!=", vals["relation_model_id"]),
+                ("id", "in", self.ids),
+            ]
+        ):
+            raise ValidationError(
+                self.env._(
+                    """Can't change the attribute's Relational Model in order to
                         avoid conflicts with existing objects using this attribute.
                         Please create a new one."""
-                    )
                 )
+            )
         # Prevent from changing 'Serialized'
-        if "serialized" in list(vals.keys()):
-            if self.search_count(
-                [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
-            ):
-                raise ValidationError(
-                    self.env._(
-                        """It is not allowed to change the boolean 'Serialized'.
+        if "serialized" in vals and self.search_count(
+            [("serialized", "!=", vals["serialized"]), ("id", "in", self.ids)]
+        ):
+            raise ValidationError(
+                self.env._(
+                    """It is not allowed to change the boolean 'Serialized'.
                         A serialized field can not be change to non-serialized \
                         and vice versa."""
-                    )
                 )
+            )
         # For native attributes, remove field-related values to prevent
         # modification of base fields
         self._handle_native_attribute_updates(vals)
