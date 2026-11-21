@@ -117,11 +117,6 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: product_similarity
-#: model:ir.model.fields,field_description:product_similarity.field_product_vector_characteristic__possible_values_string
-msgid "Possible Values String"
-msgstr "Valores posibles"
-
-#. module: product_similarity
 #: model_terms:ir.ui.view,arch_db:product_similarity.product_vector_characteristic_form_view
 msgid "Product"
 msgstr "Producto"

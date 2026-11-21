@@ -63,7 +63,6 @@ class ProductVectorCharacteristic(models.Model):
     )
     value_name = fields.Text(compute="_compute_value_name")
     value_id_visible = fields.Boolean(compute="_compute_value_id_visible")
-    possible_values_string = fields.Text(compute="_compute_possible_values_string")
     name = fields.Text(compute="_compute_name")
     weight = fields.Float(
         required=True,
@@ -158,6 +157,11 @@ class ProductVectorCharacteristic(models.Model):
             if record.field_id.ttype == "selection":
                 record.value_id = record.selection_value_id.id
 
+    @api.onchange("selection_value_id")
+    def _onchange_selection_value_id(self):
+        # keep value_id (and so the name) in sync before saving
+        self._inverse_selection_value_id()
+
     @api.model
     def get_possible_values(self, field):
         """Return a {value_id: display name} dict of the values of ``field``"""
@@ -169,15 +173,6 @@ class ProductVectorCharacteristic(models.Model):
             # every value of the related model is a candidate characteristic
             records = self.env[field.relation].search([])  # pylint: disable=no-search-all
         return {record.id: record.display_name for record in records}
-
-    @api.depends("field_id")
-    def _compute_possible_values_string(self):
-        for record in self:
-            possible_values = record.get_possible_values(record.field_id)
-            record.possible_values_string = "\n".join(
-                f"{value_id: <4n} {value_name}"
-                for value_id, value_name in sorted(possible_values.items())
-            )
 
     @api.model
     def get_related_model(self, field):

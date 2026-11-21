@@ -68,7 +68,6 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         self.assertEqual(characteristic.name, "sale_ok")
         self.assertFalse(characteristic.value_id_visible)
         self.assertFalse(characteristic.value_name)
-        self.assertFalse(characteristic.possible_values_string)
         self.assertEqual(characteristic.model_id.model, "product.product")
         self.assertFalse(characteristic.value_model)
 
@@ -85,7 +84,6 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         self.assertEqual(characteristic.name, "product_tag_ids = 'green'")
         self.assertEqual(characteristic.model_id.model, "product.tag")
         self.assertEqual(characteristic.value_model, "product.tag")
-        self.assertIn("green", characteristic.possible_values_string)
 
     def test_selection_characteristic(self):
         selection = self.selection_field.selection_ids[0]
@@ -118,6 +116,23 @@ class TestProductVectorCharacteristic(TestProductSimilarityCommon):
         characteristic = form.record
         self.assertEqual(characteristic.value_id, selection.id)
         self.assertEqual(characteristic.selection_value_id, selection)
+
+    def test_selection_characteristic_form_change_value(self):
+        first, last = (
+            self.selection_field.selection_ids[0],
+            self.selection_field.selection_ids[-1],
+        )
+        characteristic = self.Characteristic.create(
+            {"field_id": self.selection_field.id, "value_id": first.id}
+        )
+        with Form(characteristic) as form:
+            form.selection_value_id = last
+            # value_id follows before saving, so the name is up to date
+            self.assertEqual(form.value_id, last.id)
+        self.assertEqual(
+            characteristic.name,
+            f"activity_exception_decoration = '{last.display_name}'",
+        )
 
     def test_relational_characteristic_form(self):
         tag = self.env["product.tag"].search([("name", "=", "blue")], limit=1)

@@ -26,10 +26,6 @@
                             required="field_type == 'selection'"
                             options="{'no_create': True, 'no_open': True}"
                         />
-                        <field
-                            name="possible_values_string"
-                            invisible="not value_id_visible"
-                        />
                     </group>
                     <group name="vector" string="Vector">
                         <field name="weight" />
