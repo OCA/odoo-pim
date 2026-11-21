@@ -1,0 +1,2 @@
+- Compute and store the characteristics vector of each product.
+- Compute the distance between products and find their nearest neighbours.

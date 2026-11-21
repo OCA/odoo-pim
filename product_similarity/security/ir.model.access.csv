@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_vector_characteristic_user,product.vector.characteristic.user,model_product_vector_characteristic,base.group_user,1,0,0,0
+access_product_vector_characteristic_manager,product.vector.characteristic.manager,model_product_vector_characteristic,product.group_product_manager,1,1,1,1
+access_product_field_vectorization_wizard,product.field.vectorization.wizard,model_product_field_vectorization_wizard,product.group_product_manager,1,1,1,1
