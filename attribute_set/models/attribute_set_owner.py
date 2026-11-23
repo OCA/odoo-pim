@@ -81,6 +81,7 @@ class AttributeSetOwnerMixin(models.AbstractModel):
 
         # Insert the Attributes view
         placeholder[0].getparent().replace(placeholder[0], attribute_eview)
+        self.env["ir.ui.view"]._postprocess_on_change(eview, self)
 
         # Convert back to string
         result_arch = etree.tostring(eview, pretty_print=True)
