@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-05-11 23:45+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_manager
+msgid ""
+"\n"
+"            the user will be able to modify products and create attributes\n"
+"        "
+msgstr ""
+"\n"
+"            de gebruiker kan producten wijzigen en kenmerken aanmaken\n"
+"        "
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_user
+msgid ""
+"\n"
+"            the user will be able to modify products but will not be authorized to\n"
+"            create attributes\n"
+"        "
+msgstr ""
+"\n"
+"            de gebruiker kan producten wijzigen maar is niet gemachtigd om\n"
+"            kenmerken aan te maken\n"
+"        "
+
+#. module: pim
+#: model:res.groups,comment:pim.group_pim_reader
+msgid ""
+"\n"
+"            the user will have only the right to consult the products catalogue\n"
+"        "
+msgstr ""
+"\n"
+"            de gebruiker heeft enkel het recht om de productcatalogus te "
+"raadplegen\n"
+"        "
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_group_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_group_action
+msgid "Attribute Groups"
+msgstr "Kenmerkengroepen"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_attribute
+msgid "Attributes"
+msgstr "Kenmerken"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_variant_attribute_value
+msgid "Attributes Values"
+msgstr "Kenmerkwaarden"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_category
+msgid "Categories"
+msgstr "Categorieën"
+
+#. module: pim
+#: model:ir.module.category,description:pim.module_category_pim
+msgid "Manage your products catalogue easily"
+msgstr "Beheer je productcatalogus eenvoudig"
+
+#. module: pim
+#: model:ir.module.category,name:pim.module_category_pim
+#: model:ir.ui.menu,name:pim.root_menu_pim
+msgid "PIM"
+msgstr "PIM"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_manager
+msgid "PIM Manager"
+msgstr "PIM Manager"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "PIM Reader"
+msgstr "PIM Lezer"
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "PIM User"
+msgstr "PIM Gebruiker"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_attribute_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_attribute_action
+msgid "Product Attribute"
+msgstr "Productkenmerk"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.attribute_set_form_action
+#: model:ir.ui.menu,name:pim.menu_attribute_set_action
+msgid "Product Attribute Sets"
+msgstr "Productkenmerkensets"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.product_attribute_value_action
+msgid "Product Attribute Values"
+msgstr "Productkenmerkwaarden"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.menu_product_product
+msgid "Product Variants"
+msgstr "Productvarianten"
+
+#. module: pim
+#: model:ir.actions.act_window,name:pim.product_template_action
+#: model:ir.ui.menu,name:pim.main_menu_product
+#: model:ir.ui.menu,name:pim.menu_product_template
+msgid "Products"
+msgstr "Producten"
+
+#. module: pim
+#: model:ir.ui.menu,name:pim.main_menu_variant_attribute
+#: model:ir.ui.menu,name:pim.menu_variant_attribute
+msgid "Variants Attributes"
+msgstr "Variantkenmerken"
