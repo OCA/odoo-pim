@@ -102,3 +102,52 @@ class TestAttributeSet(common.TransactionCase):
         len_default = len(attribute.option_ids)
         self.assertTrue(wizard1 != wizard2)
         self.assertEqual(len_default, len_3)
+
+    def test_copy_custom_attribute(self):
+        attribute = self._create_attribute({"attribute_type": "char"})
+        copy_1 = attribute.copy()
+        copy_2 = attribute.copy()
+        self.assertEqual(copy_1.name, "x_char_copy1")
+        self.assertEqual(copy_2.name, "x_char_copy2")
+        self.assertEqual(copy_2.field_description, "Attribute char (copy 2)")
+        self.assertNotEqual(copy_1.field_id, attribute.field_id)
+
+    def test_copy_multiple_custom_attributes(self):
+        attributes = self._create_attribute(
+            {"attribute_type": "char"}
+        ) | self._create_attribute({"attribute_type": "integer"})
+        copies = attributes.copy()
+        self.assertEqual(copies.mapped("name"), ["x_char_copy1", "x_integer_copy1"])
+
+    def test_write_native_attribute_keeps_base_field(self):
+        base_field = self.env.ref("base.field_res_partner__website")
+        base_description = base_field.field_description
+        native = self.env["attribute.attribute"].create(
+            {
+                "nature": "native",
+                "field_id": base_field.id,
+                "attribute_group_id": self.group.id,
+            }
+        )
+        custom = self._create_attribute({"attribute_type": "char"})
+        # Writing base field properties on a native attribute would raise
+        # "Properties of base fields cannot be altered in this manner!"
+        (native | custom).write({"readonly": True, "sequence": 42})
+        (native | custom).write({"field_description": "Renamed"})
+        self.assertEqual(base_field.field_description, base_description)
+        self.assertFalse(base_field.readonly)
+        self.assertEqual(native.sequence, 42)
+        # The custom attribute is updated as usual
+        self.assertEqual(custom.field_description, "Renamed")
+        self.assertTrue(custom.readonly)
+        self.assertEqual(custom.sequence, 42)
+
+    def test_onchange_empty_name(self):
+        attribute = self.env["attribute.attribute"].new({"name": False})
+        attribute.onchange_name()
+        self.assertFalse(attribute.name)
+
+    def test_option_reference_excludes_transient_models(self):
+        models = dict(self.env["attribute.option"]._selection_model_list())
+        self.assertIn("res.partner", models)
+        self.assertNotIn("attribute.option.wizard", models)
