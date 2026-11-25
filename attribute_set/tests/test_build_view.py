@@ -199,6 +199,14 @@ class BuildViewCase(TransactionCase):
         self.assertIn(f"{self.set_1.id}", group.get("invisible"))
         self.assertIn(f"{self.set_2.id}", group.get("invisible"))
 
+    def test_group_name_with_quote(self):
+        """A quote in a group name must not break the view (issue #290)."""
+        self.group_1.name = "Étiquette de l'UE"
+        eview = self.env["res.partner"]._build_attribute_eview()
+        egroup = eview.find("group/field[@name='x_attr_1']/..")
+        self.assertEqual(egroup.get("string"), "Étiquette de l'ue")
+        self.assertIsNotNone(egroup.find("field[@name='x_attr_2']"))
+
     def test_attribute_order(self):
         eview = self.env["res.partner"]._build_attribute_eview()
         attrs = []
