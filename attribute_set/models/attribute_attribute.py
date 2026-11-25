@@ -219,13 +219,12 @@ class AttributeAttribute(models.Model):
         Attribute's group.
         """
         attribute_eview = etree.Element("group", name="attributes_group", col="4")
-        groups = []
+        egroups = {}
         for attribute in self:
             att_group = attribute.attribute_group_id
             att_group_name = att_group.name.capitalize()
-            if att_group in groups:
-                xpath = f".//group[@string='{att_group_name}']"
-                attribute_egroup = attribute_eview.find(xpath)
+            if att_group in egroups:
+                attribute_egroup = egroups[att_group]
             else:
                 att_set_ids = []
                 for att in att_group.attribute_ids:
@@ -247,7 +246,7 @@ class AttributeAttribute(models.Model):
                     colspan="2",
                     invisible=hide_condition,
                 )
-                groups.append(att_group)
+                egroups[att_group] = attribute_egroup
             setup_modifiers(attribute_egroup)
             attribute_with_env = (
                 attribute.sudo() if not attribute.check_access("read") else attribute
