@@ -113,19 +113,14 @@ msgid "Display Name"
 msgstr "Vis navn"
 
 #. module: website_attribute_set
-#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
-msgid "E Com Filter"
-msgstr "E-handelsfilter"
-
-#. module: website_attribute_set
-#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
-msgid "E Com Specification"
-msgstr "E-handelsspecifikation"
-
-#. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
 msgid "E-Commerce"
 msgstr "E-handel"
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
+msgid "E-Commerce Filter"
+msgstr ""
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_multi_select
@@ -156,6 +151,11 @@ msgstr "E-handel søgbar"
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "E-Commerce Show Count"
 msgstr "E-handel vis antal"
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
+msgid "E-Commerce Specification"
+msgstr ""
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_visibility
@@ -298,3 +298,9 @@ msgstr ""
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
 msgid "eCommerce Categories"
 msgstr "e-handelskategorier"
+
+#~ msgid "E Com Filter"
+#~ msgstr "E-handelsfilter"
+
+#~ msgid "E Com Specification"
+#~ msgstr "E-handelsspecifikation"
