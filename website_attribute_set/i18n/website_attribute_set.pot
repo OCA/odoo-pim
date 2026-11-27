@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
-msgid "<span class=\"sign_badge_price_extra\">✓</span>"
-msgstr ""
-
-#. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
@@ -102,6 +97,11 @@ msgid "E-Commerce"
 msgstr ""
 
 #. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_digit_grouping
+msgid "E-Commerce Digit Grouping"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
 msgid "E-Commerce Filter"
 msgstr ""
@@ -154,6 +154,14 @@ msgstr ""
 msgid ""
 "For numeric attributes (integer/float), show min/max range inputs\n"
 "        instead of individual value selection in the shop filter."
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_digit_grouping
+msgid ""
+"For numeric attributes (integer/float), show the value with a\n"
+"        thousands separator on the website (e.g. 42,000). Disable it for years,\n"
+"        serial numbers or codes."
 msgstr ""
 
 #. module: website_attribute_set
@@ -264,6 +272,11 @@ msgstr ""
 msgid ""
 "Whether the underlying field can be searched (stored in SQL or has a search "
 "method)."
+msgstr ""
+
+#. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
+msgid "Yes"
 msgstr ""
 
 #. module: website_attribute_set
