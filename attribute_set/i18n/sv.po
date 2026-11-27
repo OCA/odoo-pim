@@ -17,6 +17,12 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: attribute_set
+#. odoo-python
+#: code:addons/attribute_set/models/attribute_attribute.py:0
+msgid "%(label)s (copy %(counter)s)"
+msgstr ""
+
+#. module: attribute_set
 #: model:res.groups,name:attribute_set.group_advanced_attribute_set
 msgid "Advanced Attribute Set settings"
 msgstr "Avancerade inställningar för attributuppsättning"
@@ -132,7 +138,8 @@ msgstr "Boolskt"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "Can't change the attribute's Relational Model in order to\n"
-"                        avoid conflicts with existing objects using this attribute.\n"
+"                        avoid conflicts with existing objects using this "
+"attribute.\n"
 "                        Please create a new one."
 msgstr ""
 "Det går inte att ändra attributets relationsmodell för att\n"
@@ -422,9 +429,11 @@ msgstr ""
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__serialized
 msgid ""
 "If serialized, the attribute's field will be stored in the serialization\n"
-"            field 'x_custom_json_attrs' (i.e. a JSON containing all the serialized\n"
+"            field 'x_custom_json_attrs' (i.e. a JSON containing all the "
+"serialized\n"
 "            fields values) instead of creating a new SQL column for this\n"
-"            attribute's field. Useful to increase speed requests if creating a\n"
+"            attribute's field. Useful to increase speed requests if creating "
+"a\n"
 "            high number of attributes."
 msgstr ""
 "Om serialiserad kommer attributets fält att lagras i serialiseringsfältet\n"
@@ -485,7 +494,8 @@ msgstr "Ir Model Fields"
 #: code:addons/attribute_set/models/attribute_attribute.py:0
 msgid ""
 "It is not allowed to change the boolean 'Serialized'.\n"
-"                        A serialized field can not be change to non-serialized                         and vice versa."
+"                        A serialized field can not be change to non-"
+"serialized                         and vice versa."
 msgstr ""
 "Det är inte tillåtet att ändra det booleska fältet 'Serialiserad'.\n"
 "                        Ett serialiserat fält kan inte ändras till icke-"
@@ -873,9 +883,11 @@ msgstr "Typ"
 #: code:addons/attribute_set/models/attribute_option.py:0
 msgid ""
 "Use the 'Load Attribute Options' button or specify a Domain\n"
-"                    in order to define the available Options linked to the Relational                    Model.\n"
+"                    in order to define the available Options linked to the "
+"Relational                    Model.\n"
 "\n"
-"                    If the button is not visible, you need to erase the Domain value                    and Save first."
+"                    If the button is not visible, you need to erase the "
+"Domain value                    and Save first."
 msgstr ""
 "Använd knappen 'Läs in attributalternativ' eller ange en domän\n"
 "                    för att definiera de tillgängliga alternativen kopplade "
@@ -886,8 +898,7 @@ msgstr ""
 
 #. module: attribute_set
 #: model:ir.model.fields,help:attribute_set.field_attribute_attribute__relation_table
-msgid ""
-"Used for custom many2many fields to define a custom relation table name"
+msgid "Used for custom many2many fields to define a custom relation table name"
 msgstr ""
 "Används för anpassade many2many-fält för att definiera ett anpassat "
 "tabellnamn för relationen"
