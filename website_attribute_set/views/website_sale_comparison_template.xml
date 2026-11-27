@@ -54,14 +54,10 @@
                                 <t t-elif="attr_type == 'boolean'">
                                     <span t-out="'Yes'" />
                                 </t>
-                                <t t-elif="attr_type == 'integer'">
+                                <t t-elif="attr_type in ['integer', 'float']">
                                     <span
-                                        t-out="values"
-                                        t-options='{"widget": "integer"}'
+                                        t-out="attribute._format_e_com_number(values)"
                                     />
-                                </t>
-                                <t t-elif="attr_type == 'float'">
-                                    <span t-out="values" />
                                 </t>
                                 <t t-elif="attr_type == 'date'">
                                     <span
@@ -150,14 +146,10 @@
                         <t t-if="attr_type == 'boolean'">
                             <span t-out="'Yes'" />
                         </t>
-                        <t t-elif="attr_type == 'integer'">
+                        <t t-elif="attr_type in ['integer', 'float']">
                             <span
-                                t-out="attribute_values"
-                                t-options='{"widget": "integer"}'
+                                t-out="attribute._format_e_com_number(attribute_values)"
                             />
-                        </t>
-                        <t t-elif="attr_type == 'float'">
-                            <span t-out="attribute_values" />
                         </t>
                         <t t-if="attr_type == 'date'">
                             <span
