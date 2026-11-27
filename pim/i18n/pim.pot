@@ -65,24 +65,15 @@ msgid "Manage your products catalogue easily"
 msgstr ""
 
 #. module: pim
+#: model:res.groups,name:pim.group_pim_manager
+msgid "Manager"
+msgstr ""
+
+#. module: pim
 #: model:ir.module.category,name:pim.module_category_pim
 #: model:ir.ui.menu,name:pim.root_menu_pim
+#: model:res.groups.privilege,name:pim.res_groups_privilege_pim
 msgid "PIM"
-msgstr ""
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_manager
-msgid "PIM Manager"
-msgstr ""
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_reader
-msgid "PIM Reader"
-msgstr ""
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_user
-msgid "PIM User"
 msgstr ""
 
 #. module: pim
@@ -112,6 +103,16 @@ msgstr ""
 #: model:ir.ui.menu,name:pim.main_menu_product
 #: model:ir.ui.menu,name:pim.menu_product_template
 msgid "Products"
+msgstr ""
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "Reader"
+msgstr ""
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "User"
 msgstr ""
 
 #. module: pim
