@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend attribute.attribute form view to add index_type selection -->
+    <record id="view_attribute_attribute_form_btree" model="ir.ui.view">
+        <field name="name">attribute.attribute.form.btree</field>
+        <field name="model">attribute.attribute</field>
+        <field
+            name="inherit_id"
+            ref="attribute_set_jsonb.view_attribute_attribute_form_jsonb"
+        />
+        <field name="arch" type="xml">
+            <!-- Add index_type field after create_gin_index -->
+            <xpath expr="//field[@name='create_gin_index']" position="after">
+                <field
+                    name="index_type"
+                    invisible="not serialized"
+                    readonly="not serialized"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend list view to show index_type -->
+    <record id="view_attribute_attribute_tree_btree" model="ir.ui.view">
+        <field name="name">attribute.attribute.tree.btree</field>
+        <field name="model">attribute.attribute</field>
+        <field
+            name="inherit_id"
+            ref="attribute_set_jsonb.view_attribute_attribute_tree_jsonb"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_gin_index']" position="after">
+                <field name="index_type" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add search filter for B-tree indexed attributes -->
+    <record id="view_attribute_attribute_search_btree" model="ir.ui.view">
+        <field name="name">attribute.attribute.search.btree</field>
+        <field name="model">attribute.attribute</field>
+        <field name="inherit_id" ref="attribute_set.view_attribute_attribute_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter
+                    string="B-tree Indexed"
+                    name="btree_indexed"
+                    domain="[('index_type', '=', 'btree')]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
