@@ -36,16 +36,18 @@ class AttributeSetOwnerMixin(models.AbstractModel):
         attribute = self.env["attribute.attribute"]
         if not attribute_set_ids:
             return {}
-        attributes = attribute.search(
+        # search_fetch loads e_com_filter together with the search: consumers
+        # immediately filter on it through small per-set subsets, which would
+        # otherwise fetch the attribute records one by one.
+        attributes = attribute.search_fetch(
             [
                 ("model", "=", self._name),
                 ("attribute_set_ids", "!=", False),
                 ("e_com_visibility", "=", True),
-            ]
+            ],
+            ["e_com_filter"],
         )
-        attr_descendants = {
-            attr.id: set(attr._get_all_set_ids()) for attr in attributes
-        }
+        attr_descendants = attributes._get_all_set_ids_per_attribute()
         result = {}
         for set_id in set(attribute_set_ids):
             result[set_id] = attributes.filtered(

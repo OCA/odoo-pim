@@ -5,9 +5,19 @@ from collections import OrderedDict
 
 from odoo import models
 
+from .mixins import bump_facet_cache_version
+
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "attribute_set_id" in vals:
+            # Assigning/removing an attribute set changes which facets the
+            # shop must show for the same matched product set.
+            bump_facet_cache_version(self.env)
+        return res
 
     def get_extra_attribute_values(self, extra_attribute=None):
         self.ensure_one()
