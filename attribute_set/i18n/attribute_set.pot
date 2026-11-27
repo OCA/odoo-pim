@@ -76,9 +76,6 @@ msgstr ""
 #. module: attribute_set
 #: model:ir.model,name:attribute_set.model_attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__attribute_set_id
-#: model:ir.model.fields,field_description:attribute_set.field_res_country__attribute_set_id
-#: model:ir.model.fields,field_description:attribute_set.field_res_partner__attribute_set_id
-#: model:ir.model.fields,field_description:attribute_set.field_res_users__attribute_set_id
 #: model_terms:ir.ui.view,arch_db:attribute_set.attribute_set_form_view
 msgid "Attribute Set"
 msgstr ""
@@ -203,23 +200,8 @@ msgid "Compute"
 msgstr ""
 
 #. module: attribute_set
-#: model:ir.model,name:attribute_set.model_res_partner
-msgid "Contact"
-msgstr ""
-
-#. module: attribute_set
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_attribute__copied
 msgid "Copied"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model,name:attribute_set.model_res_country
-msgid "Country"
-msgstr ""
-
-#. module: attribute_set
-#: model:ir.model,website_form_label:attribute_set.model_res_partner
-msgid "Create a Customer"
 msgstr ""
 
 #. module: attribute_set
@@ -289,8 +271,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__display_name
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__display_name
-#: model:ir.model.fields,field_description:attribute_set.field_res_country__display_name
-#: model:ir.model.fields,field_description:attribute_set.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -375,8 +355,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_option_wizard__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set__id
 #: model:ir.model.fields,field_description:attribute_set.field_attribute_set_owner_mixin__id
-#: model:ir.model.fields,field_description:attribute_set.field_res_country__id
-#: model:ir.model.fields,field_description:attribute_set.field_res_partner__id
 msgid "ID"
 msgstr ""
 
