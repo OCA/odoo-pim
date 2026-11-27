@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [pim](pim/) | 19.0.1.2.0 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 19.0.1.0.1 |  | Product Attribute Set
 [product_attribute_set_list_view](product_attribute_set_list_view/) | 19.0.1.0.0 |  | Product Attribute Set List View
-[website_attribute_set](website_attribute_set/) | 19.0.1.1.9 | <a href='https://github.com/kobros-tech'><img src='https://github.com/kobros-tech.png' width='32' height='32' style='border-radius:50%;' alt='kobros-tech'/></a> | Website Attribute Set
+[website_attribute_set](website_attribute_set/) | 19.0.1.1.10 | <a href='https://github.com/kobros-tech'><img src='https://github.com/kobros-tech.png' width='32' height='32' style='border-radius:50%;' alt='kobros-tech'/></a> | Website Attribute Set
 
 [//]: # (end addons)
 
