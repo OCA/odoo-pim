@@ -301,6 +301,22 @@ class BuildViewCase(TransactionCase):
         attr = eview.xpath(f"//field[@name='{self.attr_native_readonly.name}']")
         self.assertTrue(attr[0].get("readonly"))
 
+    def test_include_native_attr_keeps_on_change(self):
+        self._create_attribute(
+            {
+                "nature": "native",
+                "field_id": self.env.ref("base.field_res_partner__country_id").id,
+                "attribute_group_id": self.group_2.id,
+                "attribute_set_ids": [(6, 0, [self.set_1.id])],
+            }
+        )
+        eview = self._get_eview_from_get_views()
+        attr = eview.xpath(
+            "//page[@name='partner_attributes']//field[@name='country_id']"
+        )
+        self.assertEqual(len(attr), 1)
+        self.assertEqual(attr[0].get("on_change"), "1")
+
     def test_no_include_native_attr(self):
         # Run get_views on the test view with no "include_native_attribute_view_ref"
         eview = self._get_eview_from_get_views(include_native_attribute_view_ref=False)
