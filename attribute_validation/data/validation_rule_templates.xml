@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <!-- Pre-built validation rule templates -->
+
+    <!-- Year Range (1900-2100) - common for vehicles/equipment -->
+    <record id="rule_year_1900_2100" model="attribute.validation.rule">
+        <field name="name">Year (1900-2100)</field>
+        <field name="code">year_range</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">1900</field>
+        <field name="range_max">2100</field>
+        <field name="range_step">1</field>
+        <field name="error_message">Year must be between 1900 and 2100</field>
+    </record>
+
+    <!-- Construction Year (1950-current+5) - for heavy equipment -->
+    <record id="rule_construction_year" model="attribute.validation.rule">
+        <field name="name">Construction Year (1950-2030)</field>
+        <field name="code">construction_year</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">1950</field>
+        <field name="range_max">2030</field>
+        <field name="range_step">1</field>
+        <field
+            name="error_message"
+        >Construction year must be between 1950 and 2030</field>
+    </record>
+
+    <!-- Serial Number - Alphanumeric -->
+    <record id="rule_serial_alphanumeric" model="attribute.validation.rule">
+        <field name="name">Serial (Alphanumeric 6-20)</field>
+        <field name="code">serial_alphanum</field>
+        <field name="validation_type">regex</field>
+        <field name="regex_pattern">^[A-Z0-9]{6,20}$</field>
+        <field name="regex_flags">ignorecase</field>
+        <field name="error_message">Serial must be 6-20 alphanumeric characters</field>
+    </record>
+
+    <!-- VIN Number - Standard 17 character format -->
+    <record id="rule_vin_number" model="attribute.validation.rule">
+        <field name="name">VIN Number (17 chars)</field>
+        <field name="code">vin_number</field>
+        <field name="validation_type">regex</field>
+        <field name="regex_pattern">^[A-HJ-NPR-Z0-9]{17}$</field>
+        <field name="regex_flags">none</field>
+        <field
+            name="error_message"
+        >VIN must be exactly 17 characters (excluding I, O, Q)</field>
+    </record>
+
+    <!-- Country Codes from res.country -->
+    <record id="rule_country_code" model="attribute.validation.rule">
+        <field name="name">Country Code (ISO)</field>
+        <field name="code">country_iso</field>
+        <field name="validation_type">dynamic_source</field>
+        <field name="source_model_id" ref="base.model_res_country" />
+        <field name="source_field">code</field>
+        <field name="source_display_field">name</field>
+        <field name="source_domain">[]</field>
+        <field name="cache_timeout">86400</field>
+        <field name="error_message">'{value}' is not a valid country code</field>
+    </record>
+
+    <!-- Currency Codes -->
+    <record id="rule_currency_code" model="attribute.validation.rule">
+        <field name="name">Currency Code</field>
+        <field name="code">currency_code</field>
+        <field name="validation_type">dynamic_source</field>
+        <field name="source_model_id" ref="base.model_res_currency" />
+        <field name="source_field">name</field>
+        <field name="source_display_field">full_name</field>
+        <field name="source_domain">[('active', '=', True)]</field>
+        <field name="cache_timeout">86400</field>
+    </record>
+
+    <!-- Percentage (0-100) -->
+    <record id="rule_percentage" model="attribute.validation.rule">
+        <field name="name">Percentage (0-100)</field>
+        <field name="code">percentage</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">100</field>
+        <field name="range_step">0</field>
+        <field name="error_message">Percentage must be between 0 and 100</field>
+    </record>
+
+    <!-- Positive Integer -->
+    <record id="rule_positive_integer" model="attribute.validation.rule">
+        <field name="name">Positive Integer</field>
+        <field name="code">positive_int</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">1</field>
+        <field name="range_max">999999999</field>
+        <field name="range_step">1</field>
+        <field name="error_message">Value must be a positive integer</field>
+    </record>
+
+    <!-- Email Address -->
+    <record id="rule_email" model="attribute.validation.rule">
+        <field name="name">Email Address</field>
+        <field name="code">email</field>
+        <field name="validation_type">regex</field>
+        <field
+            name="regex_pattern"
+        >^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</field>
+        <field name="regex_flags">none</field>
+        <field name="error_message">Please enter a valid email address</field>
+    </record>
+
+    <!-- Phone Number (International) -->
+    <record id="rule_phone_international" model="attribute.validation.rule">
+        <field name="name">Phone (International)</field>
+        <field name="code">phone_intl</field>
+        <field name="validation_type">regex</field>
+        <field name="regex_pattern">^\+?[0-9\s\-\(\)]{7,20}$</field>
+        <field name="regex_flags">none</field>
+        <field name="error_message">Please enter a valid phone number</field>
+    </record>
+
+    <!-- URL -->
+    <record id="rule_url" model="attribute.validation.rule">
+        <field name="name">URL</field>
+        <field name="code">url</field>
+        <field name="validation_type">regex</field>
+        <field name="regex_pattern">^https?://[^\s/$.?#].[^\s]*$</field>
+        <field name="regex_flags">ignorecase</field>
+        <field
+            name="error_message"
+        >Please enter a valid URL starting with http:// or https://</field>
+    </record>
+
+    <!-- Hours (0-24) -->
+    <record id="rule_hours_24" model="attribute.validation.rule">
+        <field name="name">Hours (0-24)</field>
+        <field name="code">hours_24</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">24</field>
+        <field name="range_step">0.5</field>
+        <field name="error_message">Hours must be between 0 and 24</field>
+    </record>
+
+    <!-- Running Hours (0-99999) - for equipment -->
+    <record id="rule_running_hours" model="attribute.validation.rule">
+        <field name="name">Running Hours (0-99999)</field>
+        <field name="code">running_hours</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">99999</field>
+        <field name="range_step">0</field>
+        <field name="error_message">Running hours must be between 0 and 99,999</field>
+    </record>
+
+    <!-- Weight in KG (0-1000000) -->
+    <record id="rule_weight_kg" model="attribute.validation.rule">
+        <field name="name">Weight (kg)</field>
+        <field name="code">weight_kg</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">1000000</field>
+        <field name="range_step">0</field>
+        <field name="error_message">Weight must be between 0 and 1,000,000 kg</field>
+    </record>
+
+    <!-- Engine Displacement (0-20000 cc) -->
+    <record id="rule_engine_displacement" model="attribute.validation.rule">
+        <field name="name">Engine Displacement (cc)</field>
+        <field name="code">engine_cc</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">20000</field>
+        <field name="range_step">0</field>
+        <field
+            name="error_message"
+        >Engine displacement must be between 0 and 20,000 cc</field>
+    </record>
+
+    <!-- Horsepower (0-2000) -->
+    <record id="rule_horsepower" model="attribute.validation.rule">
+        <field name="name">Horsepower (HP)</field>
+        <field name="code">horsepower</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">2000</field>
+        <field name="range_step">0</field>
+        <field name="error_message">Horsepower must be between 0 and 2,000 HP</field>
+    </record>
+
+    <!-- Kilowatts (0-1500) -->
+    <record id="rule_kilowatts" model="attribute.validation.rule">
+        <field name="name">Power (kW)</field>
+        <field name="code">kilowatts</field>
+        <field name="validation_type">range</field>
+        <field name="range_min">0</field>
+        <field name="range_max">1500</field>
+        <field name="range_step">0</field>
+        <field name="error_message">Power must be between 0 and 1,500 kW</field>
+    </record>
+</odoo>

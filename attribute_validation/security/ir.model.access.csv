@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_validation_rule_user,validation rule user,model_attribute_validation_rule,group_validation_user,1,0,0,0
+access_validation_rule_manager,validation rule manager,model_attribute_validation_rule,group_validation_manager,1,1,1,1
+access_allowed_value_user,allowed value user,model_attribute_validation_allowed_value,group_validation_user,1,0,0,0
+access_allowed_value_manager,allowed value manager,model_attribute_validation_allowed_value,group_validation_manager,1,1,1,1
+access_cascade_user,cascade user,model_attribute_validation_cascade,group_validation_user,1,0,0,0
+access_cascade_manager,cascade manager,model_attribute_validation_cascade,group_validation_manager,1,1,1,1
