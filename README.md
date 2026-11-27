@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attribute_set](attribute_set/) | 19.0.1.1.4 |  | Attribute Set
+[attribute_set](attribute_set/) | 19.0.1.1.5 |  | Attribute Set
 [pim](pim/) | 19.0.1.1.0 |  | Product Information Management
 [product_attribute_set](product_attribute_set/) | 19.0.1.0.1 |  | Product Attribute Set
 [product_attribute_set_list_view](product_attribute_set_list_view/) | 19.0.1.0.0 |  | Product Attribute Set List View
