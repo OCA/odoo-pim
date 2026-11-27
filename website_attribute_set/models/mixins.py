@@ -165,7 +165,8 @@ def build_range_filter_domains(env, range_filters):
             # the range constraint and list everything.
             conditions.append([("id", "in", ids)])
             continue
-        sub_domain = [("attribute_set_id", "in", attribute.attribute_set_ids.ids)]
+        # Child sets inherit their parent's attributes.
+        sub_domain = [("attribute_set_id", "in", attribute._get_all_set_ids())]
         if "min" in range_vals:
             sub_domain.append((field_name, ">=", range_vals["min"]))
         if "max" in range_vals:
