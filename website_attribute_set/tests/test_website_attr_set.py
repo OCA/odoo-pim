@@ -4,12 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
+from odoo.tests import TransactionCase
 
-from odoo.addons.attribute_set.tests.test_build_view import BuildViewCase
 from odoo.addons.website_attribute_set.models.mixins import search_extra
 
 
-class TestAttributeSetSearchable(BuildViewCase):
+class TestAttributeSetSearchable(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
