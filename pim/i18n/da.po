@@ -31,7 +31,8 @@ msgstr ""
 #: model:res.groups,comment:pim.group_pim_user
 msgid ""
 "\n"
-"            the user will be able to modify products but will not be authorized to\n"
+"            the user will be able to modify products but will not be "
+"authorized to\n"
 "            create attributes\n"
 "        "
 msgstr ""
@@ -45,7 +46,8 @@ msgstr ""
 #: model:res.groups,comment:pim.group_pim_reader
 msgid ""
 "\n"
-"            the user will have only the right to consult the products catalogue\n"
+"            the user will have only the right to consult the products "
+"catalogue\n"
 "        "
 msgstr ""
 "\n"
@@ -79,25 +81,16 @@ msgid "Manage your products catalogue easily"
 msgstr "Administrer dit produktkatalog nemt"
 
 #. module: pim
+#: model:res.groups,name:pim.group_pim_manager
+msgid "Manager"
+msgstr ""
+
+#. module: pim
 #: model:ir.module.category,name:pim.module_category_pim
 #: model:ir.ui.menu,name:pim.root_menu_pim
+#: model:res.groups.privilege,name:pim.res_groups_privilege_pim
 msgid "PIM"
 msgstr "PIM"
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_manager
-msgid "PIM Manager"
-msgstr "PIM-administrator"
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_reader
-msgid "PIM Reader"
-msgstr "PIM-læser"
-
-#. module: pim
-#: model:res.groups,name:pim.group_pim_user
-msgid "PIM User"
-msgstr "PIM-bruger"
 
 #. module: pim
 #: model:ir.actions.act_window,name:pim.attribute_attribute_form_action
@@ -129,7 +122,26 @@ msgid "Products"
 msgstr "Produkter"
 
 #. module: pim
+#: model:res.groups,name:pim.group_pim_reader
+msgid "Reader"
+msgstr ""
+
+#. module: pim
+#: model:res.groups,name:pim.group_pim_user
+msgid "User"
+msgstr ""
+
+#. module: pim
 #: model:ir.ui.menu,name:pim.main_menu_variant_attribute
 #: model:ir.ui.menu,name:pim.menu_variant_attribute
 msgid "Variants Attributes"
 msgstr "Variantattributter"
+
+#~ msgid "PIM Manager"
+#~ msgstr "PIM-administrator"
+
+#~ msgid "PIM Reader"
+#~ msgstr "PIM-læser"
+
+#~ msgid "PIM User"
+#~ msgstr "PIM-bruger"
