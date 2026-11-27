@@ -23,11 +23,13 @@ class AttributeAttribute(models.Model):
         help="""If selected, the attribute will be shown in e-commerce website app.""",
     )
     e_com_filter = fields.Boolean(
+        string="E-Commerce Filter",
         default=False,
         help="""If selected, the attribute will be shown as a filter
          in the e-commerce shop sidebar.""",
     )
     e_com_specification = fields.Boolean(
+        string="E-Commerce Specification",
         default=False,
         help="""If selected, the attribute will be shown as specification
              in e-commerce website app product view.""",

@@ -97,18 +97,13 @@ msgid "Display Name"
 msgstr ""
 
 #. module: website_attribute_set
-#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
-msgid "E Com Filter"
-msgstr ""
-
-#. module: website_attribute_set
-#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
-msgid "E Com Specification"
-msgstr ""
-
-#. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.attribute_attribute_form_view
 msgid "E-Commerce"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
+msgid "E-Commerce Filter"
 msgstr ""
 
 #. module: website_attribute_set
@@ -137,6 +132,11 @@ msgstr ""
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_show_count
 msgid "E-Commerce Show Count"
+msgstr ""
+
+#. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_specification
+msgid "E-Commerce Specification"
 msgstr ""
 
 #. module: website_attribute_set
