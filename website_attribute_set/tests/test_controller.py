@@ -1,5 +1,8 @@
 """Unit tests for website_attribute_set controllers."""
 
+import html
+import re
+
 from odoo.tests import HttpCase, tagged
 
 
@@ -515,3 +518,102 @@ class TestWebsiteAttributeController(HttpCase):
             response.text,
             "Shop page should not have internal server errors",
         )
+
+    def test_pager_keeps_every_additional_attribute_filter(self):
+        """Test that paging does not drop any additional attribute filter.
+
+        Every selected attribute adds its own ``additional_attribute_values``
+        query param, but the controller kwargs only carry the first one, so the
+        pager used to build the page links with a single filter.
+        """
+        self.authenticate("admin", "admin")
+        self.website.shop_ppg = 2
+
+        wool_option = self.env["attribute.option"].create(
+            {
+                "name": "Wool",
+                "attribute_id": self.attr_select.id,
+            }
+        )
+        ProductTemplate = self.env["product.template"]
+        common_values = {
+            "is_published": True,
+            "website_id": self.website.id,
+            "attribute_set_id": self.attr_set.id,
+        }
+        for index in range(3):
+            ProductTemplate.create(
+                dict(
+                    common_values,
+                    name=f"Organic Cotton Product {index}",
+                    x_ecom_material=self.material_option.id,
+                    x_ecom_organic=True,
+                )
+            )
+        ProductTemplate.create(
+            dict(
+                common_values,
+                name="Non Organic Cotton Product",
+                x_ecom_material=self.material_option.id,
+                x_ecom_organic=False,
+            )
+        )
+        ProductTemplate.create(
+            dict(
+                common_values,
+                name="Organic Wool Product",
+                x_ecom_material=wool_option.id,
+                x_ecom_organic=True,
+            )
+        )
+
+        # Same value format as the one rendered by the filter templates.
+        material_filter = (
+            f"{self.attr_select.id}-name-attribute.option-id-{self.material_option.id}"
+        )
+        organic_filter = f"{self.attr_boolean.id}-True"
+        filter_url = (
+            f"/shop?additional_attribute_values={material_filter}"
+            f"&additional_attribute_values={organic_filter}"
+        )
+        response = self.url_open(filter_url, timeout=30)
+        self.assertEqual(response.status_code, 200)
+
+        # The 3 matching products span 2 pages, so the pager is rendered.
+        page_2_link = re.search(r'href="(/shop/page/2\?[^"]+)"', response.text)
+        self.assertTrue(
+            page_2_link,
+            "The filtered listing should be paginated and link to a second page",
+        )
+        page_2_url = html.unescape(page_2_link.group(1))
+        self.assertIn(
+            f"additional_attribute_values={material_filter}",
+            page_2_url,
+            "The pager link should keep the select attribute filter",
+        )
+        self.assertIn(
+            f"additional_attribute_values={organic_filter}",
+            page_2_url,
+            "The pager link should keep the boolean attribute filter",
+        )
+
+        page_2_content = self.url_open(page_2_url, timeout=30).text
+        self.assertNotIn(
+            "Non Organic Cotton Product",
+            page_2_content,
+            "The boolean filter should still exclude products on page 2",
+        )
+        self.assertNotIn(
+            "Organic Wool Product",
+            page_2_content,
+            "The select filter should still exclude products on page 2",
+        )
+        for filter_value in (material_filter, organic_filter):
+            self.assertTrue(
+                re.search(
+                    rf'<(?:option|input)[^>]*value="{re.escape(filter_value)}"'
+                    r"[^>]*(?:selected|checked)",
+                    page_2_content,
+                ),
+                f"The filter {filter_value} should still be selected on page 2",
+            )
