@@ -19,6 +19,7 @@
         "website_sale_comparison",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/attribute_attribute_view.xml",
         "views/variant_templates.xml",
         "views/templates.xml",
