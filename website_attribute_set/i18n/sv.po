@@ -17,11 +17,6 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: website_attribute_set
-#: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
-msgid "<span class=\"sign_badge_price_extra\">✓</span>"
-msgstr "<span class=\"sign_badge_price_extra\">✓</span>"
-
-#. module: website_attribute_set
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.filter_select_attributes
 #: model_terms:ir.ui.view,arch_db:website_attribute_set.product_additional_attribute_filters_form
 msgid "All"
@@ -117,6 +112,11 @@ msgid "E-Commerce"
 msgstr "E-handel"
 
 #. module: website_attribute_set
+#: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_digit_grouping
+msgid "E-Commerce Digit Grouping"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__e_com_filter
 msgid "E-Commerce Filter"
 msgstr ""
@@ -174,6 +174,15 @@ msgid ""
 msgstr ""
 "För numeriska attribut (heltal/flyttal) visas min/max-intervallfält\n"
 "        istället för val av enskilda värden i butiksfiltret."
+
+#. module: website_attribute_set
+#: model:ir.model.fields,help:website_attribute_set.field_attribute_attribute__e_com_digit_grouping
+msgid ""
+"For numeric attributes (integer/float), show the value with a\n"
+"        thousands separator on the website (e.g. 42,000). Disable it for "
+"years,\n"
+"        serial numbers or codes."
+msgstr ""
 
 #. module: website_attribute_set
 #: model:ir.model.fields,field_description:website_attribute_set.field_attribute_attribute__id
@@ -293,9 +302,17 @@ msgstr ""
 "Om det underliggande fältet kan sökas (lagrat i SQL eller har en sökmetod)."
 
 #. module: website_attribute_set
+#: model_terms:ir.ui.view,arch_db:website_attribute_set.variants
+msgid "Yes"
+msgstr ""
+
+#. module: website_attribute_set
 #: model:ir.ui.menu,name:website_attribute_set.menu_public_category
 msgid "eCommerce Categories"
 msgstr "e-handelskategorier"
+
+#~ msgid "<span class=\"sign_badge_price_extra\">✓</span>"
+#~ msgstr "<span class=\"sign_badge_price_extra\">✓</span>"
 
 #~ msgid "E Com Filter"
 #~ msgstr "E-handelsfilter"
